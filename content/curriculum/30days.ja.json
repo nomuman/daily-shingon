@@ -1,0 +1,497 @@
+{
+  "schemaVersion": "1.0",
+  "locale": "ja-JP",
+  "program": "30days",
+  "generatedAt": "2025-12-26",
+  "sourceIndex": {
+    "SRC_KOYASAN_PAMPHLET": "https://www.koyasan.or.jp/wp-content/themes/koyasan-child/pdf/kokusaikyoku_english_panfu.pdf",
+    "SRC_CHISAN_AJIKAN": "https://chisan.or.jp/en/learn%E3%83%BBexperience/ajikan-meditation/",
+    "SRC_KOYASAN_EXPERIENCE": "https://www.koyasan.or.jp/en/experience/",
+    "SRC_NINNAJI_GO_SHIN": "https://ninnaji.jp/news/sermonsep/"
+  },
+  "days": [
+    {
+      "id": "day001",
+      "day": 1,
+      "title": "入口：この30日は“型”を作る",
+      "learn": "このアプリは、学びを増やすより先に「毎日回る型」を作るためのもの。朝は身・口・意を短く整え、夜は整えて閉じる。途切れても、戻れたら十分。",
+      "example": "今日は“完璧”を狙わず、1回だけ「整えた」を作る。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "朝、背筋を伸ばして一礼（10秒）" },
+        { "key": "speech", "text": "朝、短い誓いを1回だけ言う（心の中でもOK）" },
+        { "key": "mind", "text": "朝、呼吸に1分だけ戻る" }
+      ],
+      "nightQuestion": "今日いちばん乱れたのは、身／口／意のどれ？",
+      "tags": ["week1", "start", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day002",
+      "day": 2,
+      "title": "身：姿勢は最短の“整え”",
+      "learn": "身（からだ）を整える入口は、姿勢と所作。背筋を立てるだけで、心の急ぎが少し落ち着く。まずは“気づいたら戻す”を増やす。",
+      "example": "通知を見た瞬間に姿勢が崩れるなら、そこが練習場所。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "返信前に背筋を一度だけ立てる" },
+        { "key": "speech", "text": "話す前に口を閉じて1呼吸" },
+        { "key": "mind", "text": "焦りに気づいたら、目線を下げて呼吸1回" }
+      ],
+      "nightQuestion": "姿勢が崩れた時、心も急いでいた？",
+      "tags": ["week1", "body", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day003",
+      "day": 3,
+      "title": "口：言葉は“勢い”で乱れやすい",
+      "learn": "口（ことば）は、勢いが出るほど乱れやすい。短く、丁寧に。言い直すより、言う前に一呼吸して整える。",
+      "example": "強い言葉は、スピードとセットで出やすい。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "言う前に1呼吸してから話す" },
+        { "key": "body", "text": "早口になったら肩の力を抜く（1回）" },
+        { "key": "mind", "text": "イラッとしたら、心の中で『今、熱い』とラベル" }
+      ],
+      "nightQuestion": "今日、余計な一言が出そうになった瞬間はあった？",
+      "tags": ["week1", "speech", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day004",
+      "day": 4,
+      "title": "意：散るのは自然、戻るのが練習",
+      "learn": "意（こころ）は散るのが自然。大事なのは“散らないこと”じゃなく、気づいて戻る回数。戻れた時点で整えは始まっている。",
+      "example": "1分の間に10回散っても、10回戻れたなら練習は成功。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "呼吸に1分だけ戻る（散ってOK）" },
+        { "key": "body", "text": "目線を少し下げ、顎を引く（10秒）" },
+        { "key": "speech", "text": "心の中で『落ち着いて』を1回だけ言う" }
+      ],
+      "nightQuestion": "散った回数より、戻れた回数を数えられた？",
+      "tags": ["week1", "mind", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day005",
+      "day": 5,
+      "title": "三密：短く“揃える”だけでいい",
+      "learn": "三密は、身・口・意を合わせて行うという説明がある。最初は長さより“揃える”を優先。10秒ずつでも、3つ揃うと一日の軸になる。",
+      "example": "できない日は“身だけ”でもいい。翌日にまた揃えればOK。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "身→口→意を各10秒ずつ（合計30秒）" },
+        { "key": "speech", "text": "短い誓いを1回、ゆっくり言う" },
+        { "key": "mind", "text": "呼吸に3回だけ戻る" }
+      ],
+      "nightQuestion": "今日は身・口・意のうち、どれが一番助けになった？",
+      "tags": ["week1", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day006",
+      "day": 6,
+      "title": "気づけた時点で“整え”は始まる",
+      "learn": "乱れをゼロにするより、早く気づく。気づいた瞬間に、ひとつだけ整えを入れる（姿勢・一呼吸・言葉を止める）。それで十分。",
+      "example": "気づいた瞬間が、いちばん短い“修行の入口”。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "乱れた瞬間に一礼（できれば心の中で）" },
+        { "key": "speech", "text": "強い言葉が出そうなら一度黙る" },
+        { "key": "mind", "text": "『今、乱れた』と気づいて呼吸1回" }
+      ],
+      "nightQuestion": "乱れに“早く”気づけた瞬間はあった？",
+      "tags": ["week1", "reset"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day007",
+      "day": 7,
+      "title": "週まとめ：偏りを責めず“育てる”",
+      "learn": "1週間の身・口・意の偏りを見る。偏りは欠点じゃなく、育てる場所の目印。来週は弱い1つだけ丁寧にする。",
+      "example": "偏りを直そうとしない。1段階だけ丁寧に。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "弱い1つを選び、明日の発願にする" },
+        { "key": "body", "text": "朝だけは姿勢を整える、と決める" },
+        { "key": "speech", "text": "今日だけは言葉を短くする、と決める" }
+      ],
+      "nightQuestion": "来週、身／口／意のどれを“1段階だけ”丁寧にする？",
+      "tags": ["week1", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+
+    {
+      "id": "day008",
+      "day": 8,
+      "title": "夜の型：整えて閉じる（入口）",
+      "learn": "夜は“整えて閉じる”。このアプリでは、懺悔→発願→回向の順で短く閉じる。今日はまず「懺悔」だけでもOK。",
+      "example": "夜が整うと、翌朝が軽くなる。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "夜、懺悔（身/口/意）を1つ選ぶだけ" },
+        { "key": "speech", "text": "『すみません』を心の中で1回だけ" },
+        { "key": "body", "text": "寝る前に肩の力を抜く（10秒）" }
+      ],
+      "nightQuestion": "今日いちばん乱れたのは、身／口／意のどれ？",
+      "tags": ["week2", "night"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day009",
+      "day": 9,
+      "title": "懺悔：責めるためじゃなく整えるため",
+      "learn": "懺悔は、自分を責めるためではなく、乱れに気づいて整えるための入口。『すみません』は反省の心として紹介されることがある。",
+      "example": "責めのループに入ったら、いったん小さく戻る。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "『すみません』を心で1回 → 呼吸1回" },
+        { "key": "speech", "text": "言い過ぎたら、短く言い直す（1回だけ）" },
+        { "key": "body", "text": "顎を引いて目線を下げる（10秒）" }
+      ],
+      "nightQuestion": "責める気持ちが出た？出たなら、短く戻れた？",
+      "tags": ["week2", "sange"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day010",
+      "day": 10,
+      "title": "発願：明日“1つだけ”を決める",
+      "learn": "発願は、明日の整えを“1つだけ”決めること。大きくしない。短く、具体的に。実践は小さいほど続く。",
+      "example": "『毎日30分』より『毎日1分』が勝つ。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "明日、返信前に背筋を立てる（1回）" },
+        { "key": "speech", "text": "明日、言う前に1呼吸" },
+        { "key": "mind", "text": "明日、呼吸に1分戻る" }
+      ],
+      "nightQuestion": "明日の発願、重すぎない？“1つだけ”になってる？",
+      "tags": ["week2", "hatsugan"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day011",
+      "day": 11,
+      "title": "回向：自分だけで閉じない",
+      "learn": "回向は、整えを自分の中だけで終わらせず、誰かを思って閉じる型。対象は大きくなくていい。1人でいい。",
+      "example": "“誰かを思う”だけで、言葉が少し柔らかくなる。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "回向：家族を思って『よく眠れますように』と1回" },
+        { "key": "mind", "text": "回向：チームを思って1呼吸" },
+        { "key": "body", "text": "回向：一礼して閉じる（10秒）" }
+      ],
+      "nightQuestion": "今日は誰に回向したい？（自分／家族／チーム／みんな）",
+      "tags": ["week2", "eko"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day012",
+      "day": 12,
+      "title": "口：止まる力を育てる",
+      "learn": "口の乱れはスピードで起きやすい。『止まる』は強い実践。止まれた回数が増えるほど、言葉は整う。",
+      "example": "止まる＝負けではなく、整えの勝ち。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "早口に気づいたら一度止める（1回）" },
+        { "key": "mind", "text": "止めた後に呼吸1回" },
+        { "key": "body", "text": "止めた後に肩を落とす（10秒）" }
+      ],
+      "nightQuestion": "止まれた回数は何回？0回でも気づけた？",
+      "tags": ["week2", "speech"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day013",
+      "day": 13,
+      "title": "意：焦りのサインを知る",
+      "learn": "意の乱れは焦りで増える。焦りのサイン（早口、目線が上がる、肩が上がる）に気づけたら、整えを入れられる。",
+      "example": "サインに気づく＝戻る合図を手に入れる。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "焦りに気づいたら呼吸1回" },
+        { "key": "body", "text": "肩を下げる（10秒）" },
+        { "key": "speech", "text": "『大丈夫』を心で1回だけ" }
+      ],
+      "nightQuestion": "焦りのサインは何だった？（体／言葉／心）",
+      "tags": ["week2", "mind"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day014",
+      "day": 14,
+      "title": "週まとめ：できた日より“戻れた日”",
+      "learn": "継続は連続より復帰。できない日があっても、戻れたらそれが実践。夜だけでも型を回せばOK。",
+      "example": "“また始める”がいちばん尊い。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "夜の型（懺悔→発願→回向）を45秒でやる" },
+        { "key": "body", "text": "できない日は一礼だけ" },
+        { "key": "speech", "text": "できない日は『また明日』を1回だけ" }
+      ],
+      "nightQuestion": "戻るために必要だった一言は何？",
+      "tags": ["week2", "review", "reset"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+
+    {
+      "id": "day015",
+      "day": 15,
+      "title": "学び→行い：知識で終わらせない",
+      "learn": "学びは“覚える”より“今日の行い”に変換する。行いに落ちると、理解は体に残る。",
+      "example": "学びが増えるほど散るなら、行いを小さくする。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "今日の行いを1つ選んで実行する" },
+        { "key": "speech", "text": "『今日はこれだけ』と言って短くする" },
+        { "key": "mind", "text": "迷ったら呼吸1回してから選ぶ" }
+      ],
+      "nightQuestion": "行いに落とせた？落とすと何が変わった？",
+      "tags": ["week3", "learn"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day016",
+      "day": 16,
+      "title": "身：環境も“身”の一部",
+      "learn": "身は姿勢だけでなく、作業環境にも出る。机の上を1分整えるだけで、意が散りにくくなる。",
+      "example": "散らばった机＝散らばった心、になりやすい。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "作業前に机の上を1分整える" },
+        { "key": "mind", "text": "整えながら呼吸を3回数える" },
+        { "key": "speech", "text": "『今から整える』を1回だけ言う" }
+      ],
+      "nightQuestion": "整える前と後で、集中はどう変わった？",
+      "tags": ["week3", "body"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day017",
+      "day": 17,
+      "title": "口：短く、清く、必要なことだけ",
+      "learn": "口の実践は、言葉を減らすことでもできる。短い言葉は、乱れを減らす。",
+      "example": "会議で“もう一言”足したくなる時が練習場所。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "会話で一言だけ減らす" },
+        { "key": "mind", "text": "減らす前に呼吸1回" },
+        { "key": "body", "text": "話す前に背筋を立てる（10秒）" }
+      ],
+      "nightQuestion": "減らしたことで、場はどうなった？",
+      "tags": ["week3", "speech"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day018",
+      "day": 18,
+      "title": "意：追い払わず、見守る",
+      "learn": "意を整えるとき、雑念を追い払うより“気づいて戻る”。『思考』とラベルするだけで距離ができる。",
+      "example": "追い払うほど強くなるなら、見守る方が短い。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "思考が出たら『思考』と心でラベル" },
+        { "key": "body", "text": "ラベルの後に肩を落とす（10秒）" },
+        { "key": "speech", "text": "ラベルの後に『よし』を1回だけ" }
+      ],
+      "nightQuestion": "ラベルすると、少し距離はできた？",
+      "tags": ["week3", "mind"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day019",
+      "day": 19,
+      "title": "三密：同時が難しければ“順番”でいい",
+      "learn": "三密は合わせて行う説明があるが、初心者は順番でOK。身→口→意と短く回せば、揃う感覚が育つ。",
+      "example": "同時にやろうとして固まるなら、順番が勝つ。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "身→口→意を30秒ずつ（合計90秒）" },
+        { "key": "speech", "text": "身→口→意の“口”だけ丁寧に（10秒）" },
+        { "key": "mind", "text": "身→口→意の“意”だけ1分" }
+      ],
+      "nightQuestion": "順番を決めると、迷いは減った？",
+      "tags": ["week3", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day020",
+      "day": 20,
+      "title": "日常五心：『ありがとう』を丁寧に",
+      "learn": "日常五心は、日々の心がけとして紹介され、三密・三業の話につなげて説明されることがある。今日は『ありがとう』を丁寧に。",
+      "example": "丁寧な一言は、口を整えるいちばん短い実践。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "『ありがとう』を1回だけ丁寧に言う" },
+        { "key": "mind", "text": "言う前に“相手を思う”を1呼吸" },
+        { "key": "body", "text": "言う時に軽く会釈（1回）" }
+      ],
+      "nightQuestion": "丁寧に言うと、心はどう動いた？",
+      "tags": ["week3", "goshin", "speech"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day021",
+      "day": 21,
+      "title": "週まとめ：整った瞬間を“再現”する",
+      "learn": "今週、整った瞬間を1つ覚えておく。次に乱れた時、その姿勢・呼吸を“再現”するのが実践になる。",
+      "example": "再現できると、整えは運任せじゃなくなる。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "整った瞬間の姿勢を10秒再現する" },
+        { "key": "mind", "text": "その時の呼吸の速さを思い出す" },
+        { "key": "speech", "text": "その時の短い言葉を1回だけ言う" }
+      ],
+      "nightQuestion": "整った瞬間を1つ、思い出せた？",
+      "tags": ["week3", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+
+    {
+      "id": "day022",
+      "day": 22,
+      "title": "阿字観：入口は“3分”で十分",
+      "learn": "阿字観は真言系で重要な瞑想として紹介される。まずは特別な体験を狙わず、姿勢→呼吸→静かに眺める、を3分。",
+      "example": "3分で終える勇気が、継続を守る。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "3分：姿勢→呼吸（散ってOK）" },
+        { "key": "body", "text": "背筋を立て、顎を引く（10秒）" },
+        { "key": "speech", "text": "始める前に『静かに』を1回だけ" }
+      ],
+      "nightQuestion": "3分でも十分だった？（足りない欲は出た？）",
+      "tags": ["week4", "ajikan", "mind"],
+      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE"]
+    },
+    {
+      "id": "day023",
+      "day": 23,
+      "title": "阿字観：散る→戻るを数える",
+      "learn": "散るのは自然。戻るのが練習。今日は“戻れた回数”を静かに数える。数えられたらそれでOK。",
+      "example": "数えるのは評価じゃなく、気づきの補助。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "3分で“戻れた回数”を数える" },
+        { "key": "body", "text": "散ったら肩の力を抜く（毎回）" },
+        { "key": "speech", "text": "終わったら『よし』を1回だけ" }
+      ],
+      "nightQuestion": "戻れた回数を責めず数えられた？",
+      "tags": ["week4", "ajikan", "mind"],
+      "sources": ["SRC_CHISAN_AJIKAN"]
+    },
+    {
+      "id": "day024",
+      "day": 24,
+      "title": "阿字観：特別さより“淡々と型”",
+      "learn": "阿字観は“特別な体験”より、淡々と型を続ける。今日は同じ時間にやってみる（時間固定は最強）。",
+      "example": "固定できると、やる気に左右されにくい。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "同じ時刻に3分やる（朝でも夜でも）" },
+        { "key": "body", "text": "座る場所を固定する" },
+        { "key": "speech", "text": "始める合図の短い言葉を固定する" }
+      ],
+      "nightQuestion": "時間固定で、迷いは減った？",
+      "tags": ["week4", "ajikan", "habit"],
+      "sources": ["SRC_CHISAN_AJIKAN"]
+    },
+    {
+      "id": "day025",
+      "day": 25,
+      "title": "口→意：短い誓いで心が揃う",
+      "learn": "口を整えると意も整いやすい。今日は短い誓いを1つだけ。長くしない。重くしない。",
+      "example": "『丁寧に』くらい短い方が続く。",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "短い誓いを1回だけ（例：丁寧に）" },
+        { "key": "mind", "text": "誓いの後に呼吸1回" },
+        { "key": "body", "text": "誓いの後に背筋を立てる（10秒）" }
+      ],
+      "nightQuestion": "誓いは重くなってない？短く保てた？",
+      "tags": ["week4", "speech", "ajikan"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day026",
+      "day": 26,
+      "title": "身→意：身が崩れると心も散りやすい",
+      "learn": "身が崩れると、意も散りやすい。今日は“立て直す回数”を増やす。立て直すたびに、整えが深くなる。",
+      "example": "崩れないより、戻れる方が強い。",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "1日で“背骨を立て直す”を3回やる" },
+        { "key": "mind", "text": "立て直すたびに呼吸1回" },
+        { "key": "speech", "text": "立て直すたびに『今ここ』を心で1回" }
+      ],
+      "nightQuestion": "立て直すと、気持ちはどう変わった？",
+      "tags": ["week4", "body"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day027",
+      "day": 27,
+      "title": "夜の型：45秒で閉じる（完成）",
+      "learn": "夜は懺悔→発願→回向の3点セット。今日は45秒で全部やる。短く閉じられたら成功。",
+      "example": "夜を閉じると、翌朝の入りが変わる。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "懺悔（身/口/意）を選ぶ" },
+        { "key": "mind", "text": "発願（身/口/意）を選ぶ" },
+        { "key": "mind", "text": "回向（自分/家族/チーム/みんな）を選ぶ" }
+      ],
+      "nightQuestion": "型があると、迷いは減った？",
+      "tags": ["week4", "night", "eko"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day028",
+      "day": 28,
+      "title": "学びは少ない方が続く",
+      "learn": "学びが増えるほど散りやすい。続けるために、学びは少なくていい。今日は1枚だけ読む。それで勝ち。",
+      "example": "“足りない”は伸びしろ。追加は次の30日へ。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "学びカードを1枚だけ読む（深掘りしない）" },
+        { "key": "body", "text": "読んだ後に一礼（10秒）" },
+        { "key": "speech", "text": "『今日はこれで十分』を1回だけ" }
+      ],
+      "nightQuestion": "増やしたくなった？（それは良い兆候）",
+      "tags": ["week4", "learn"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day029",
+      "day": 29,
+      "title": "来月の方針：弱い1つを育てる",
+      "learn": "身・口・意のうち、弱い1つを育てる。欠点じゃない。来月のテーマ。今日は明日の発願にセットする。",
+      "example": "“1つだけ丁寧に”が長期の勝ち方。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "弱い1つ（身/口/意）を選ぶ" },
+        { "key": "speech", "text": "選んだら短い言葉で宣言（1回）" },
+        { "key": "body", "text": "宣言したら一礼（10秒）" }
+      ],
+      "nightQuestion": "弱い1つを“責めずに”選べた？",
+      "tags": ["week4", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day030",
+      "day": 30,
+      "title": "締め：薄く長く（あなたの最小ルーティン）",
+      "learn": "30日は入口。これからは薄く長く。続けるために、あなたの“最小ルーティン”を決める（朝は身だけ、夜は型だけ、でもOK）。",
+      "example": "続けられる形に落とせたら、勝ち。",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "最小ルーティンを1行で決める" },
+        { "key": "body", "text": "朝は一礼だけ、を許可する" },
+        { "key": "speech", "text": "夜は『また明日』だけ、を許可する" }
+      ],
+      "nightQuestion": "続けるために“捨てるもの”は何？",
+      "tags": ["week4", "finish"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    }
+  ]
+}
