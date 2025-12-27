@@ -3,12 +3,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import ErrorState from '../../components/ErrorState';
-import { curriculum30Ja, getDayCard } from '../../content/curriculum30.ja';
-import { getProgramDayInfo } from '../../lib/programDay';
-import { getTodayActionSelection, setTodayActionSelection } from '../../lib/todayLog';
-import type { CurriculumDay, SanmitsuKey } from '../../types/curriculum';
-import { cardShadow, theme } from '../../ui/theme';
+import ErrorState from '../../../components/ErrorState';
+import { curriculum30Ja, getDayCard } from '../../../content/curriculum30.ja';
+import { getProgramDayInfo } from '../../../lib/programDay';
+import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
+import type { CurriculumDay, SanmitsuKey } from '../../../types/curriculum';
+import { cardShadow, theme } from '../../../ui/theme';
 
 type SelectedAction = {
   key: SanmitsuKey;
@@ -148,6 +148,25 @@ export default function LearnScreen() {
             ))}
           </View>
         )}
+
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>さらに学ぶ</Text>
+          <Text style={styles.mutedText}>カードや用語集を一覧で読む。</Text>
+          <View style={styles.linkRow}>
+            <Pressable
+              onPress={() => router.push('/learn/cards')}
+              style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
+            >
+              <Text style={styles.linkButtonText}>学びカード</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/learn/glossary')}
+              style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
+            >
+              <Text style={styles.linkButtonText}>用語集</Text>
+            </Pressable>
+          </View>
+        </View>
 
         <Pressable
           onPress={async () => {
@@ -294,5 +313,28 @@ const styles = StyleSheet.create({
     color: theme.colors.surface,
     fontWeight: '700',
     fontFamily: theme.font.body,
+  },
+  linkRow: {
+    flexDirection: 'row',
+    gap: theme.spacing.sm,
+    marginTop: theme.spacing.sm,
+  },
+  linkButton: {
+    flex: 1,
+    minHeight: 44,
+    borderRadius: theme.radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
+  },
+  linkButtonPressed: {
+    opacity: 0.85,
+  },
+  linkButtonText: {
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+    fontWeight: '600',
   },
 });
