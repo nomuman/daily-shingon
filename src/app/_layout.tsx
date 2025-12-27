@@ -1,54 +1,10 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
 
-export default function TabLayout() {
+export default function RootLayout() {
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="(tabs)/index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(tabs)/learn"
-        options={{
-          title: "Learn",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="menu-book" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(tabs)/morning"
-        options={{
-          title: "Morning",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="wb-sunny" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(tabs)/night"
-        options={{
-          title: "Night",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="nights-stay" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(tabs)/settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="+not-found" />
+    </Stack>
   );
 }
