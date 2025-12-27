@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30.ja';
@@ -11,6 +11,7 @@ import { getProgramDayInfo } from '../../lib/programDay';
 import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
 import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
+import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function HomeScreen() {
   const [nightDone, setNightDone] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<DailyStatus[]>([]);
 
   const refresh = useCallback(async () => {
     setError(null);
@@ -44,6 +46,9 @@ export default function HomeScreen() {
 
       const n = await getNightLog();
       setNightDone(isNightComplete(n));
+
+      const h = await getLastNDaysStatus(7);
+      setHistory(h);
 
       const returnStatus = await getReturnStatus();
       if (info.isComplete) {
@@ -73,12 +78,16 @@ export default function HomeScreen() {
     return { label: '今日はここまで', route: null };
   }, [morningDone, nightDone, todayAction]);
 
+  const StatusPill = ({ done }: { done: boolean }) => (
+    <Text style={{ fontWeight: '700' }}>{done ? '✅' : '—'}</Text>
+  );
+
   if (error) {
     return <ErrorState message={error} onRetry={refresh} />;
   }
 
   return (
-    <View style={{ flex: 1, padding: 16, gap: 12 }}>
+    <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
       <Text style={{ fontSize: 20, fontWeight: '700' }}>Home</Text>
 
       {!!statusMessage && (
@@ -290,11 +299,60 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <View style={{ flex: 1 }} />
+      {/* 直近7日 */}
+      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
+        <Text style={{ fontSize: 16, fontWeight: '700' }}>直近7日（朝 / 夜）</Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingBottom: 8,
+            borderBottomWidth: 1,
+            borderBottomColor: '#eee',
+          }}
+        >
+          <Text style={{ fontWeight: '700', opacity: 0.7 }}>日付</Text>
+          <Text style={{ fontWeight: '700', opacity: 0.7 }}>朝</Text>
+          <Text style={{ fontWeight: '700', opacity: 0.7 }}>夜</Text>
+          <Text style={{ fontWeight: '700', opacity: 0.7 }}>メモ</Text>
+        </View>
+
+        {history.map((h) => (
+          <View
+            key={h.dateISO}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 8,
+              borderBottomWidth: 1,
+              borderBottomColor: '#f3f3f3',
+            }}
+          >
+            <Text style={{ width: 110, fontVariant: ['tabular-nums'] }}>
+              {h.dateISO}
+            </Text>
+            <View style={{ width: 30, alignItems: 'center' }}>
+              <StatusPill done={h.morningDone} />
+            </View>
+            <View style={{ width: 30, alignItems: 'center' }}>
+              <StatusPill done={h.nightDone} />
+            </View>
+            <View style={{ width: 40, alignItems: 'center' }}>
+              <Text>{h.nightHasNote ? '📝' : '—'}</Text>
+            </View>
+          </View>
+        ))}
+
+        <Text style={{ opacity: 0.65, lineHeight: 18, fontSize: 12 }}>
+          ※これはスコアではなく「ふり返りの足場」。抜けても責めない。
+        </Text>
+      </View>
 
       <Text style={{ opacity: 0.6 }}>
         ※ タブ移動・戻る操作で最新を反映するため、フォーカス時に再読み込みしています。
       </Text>
-    </View>
+    </ScrollView>
   );
 }
