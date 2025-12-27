@@ -1,8 +1,9 @@
 
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 
+import ErrorState from '../../components/ErrorState';
 import { clearMorningLog, getMorningLog, isMorningComplete, setMorningLog } from '../../lib/morningLog';
 
 type CheckKey = 'body' | 'speech' | 'mind';
@@ -14,21 +15,28 @@ export default function MorningScreen() {
   const [bodyDone, setBodyDone] = useState(false);
   const [speechDone, setSpeechDone] = useState(false);
   const [mindDone, setMindDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const saved = await getMorningLog();
+      if (saved) {
+        setBodyDone(saved.bodyDone);
+        setSpeechDone(saved.speechDone);
+        setMindDone(saved.mindDone);
+      }
+    } catch {
+      setError('朝の記録の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const saved = await getMorningLog();
-        if (saved) {
-          setBodyDone(saved.bodyDone);
-          setSpeechDone(saved.speechDone);
-          setMindDone(saved.mindDone);
-        }
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+    void load();
+  }, [load]);
 
   const complete = useMemo(() => {
     return isMorningComplete({
@@ -94,6 +102,10 @@ export default function MorningScreen() {
     );
   }
 
+  if (error) {
+    return <ErrorState message={error} onRetry={load} />;
+  }
+
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
       <Text style={{ fontSize: 20, fontWeight: '700' }}>Morning（朝の整え）</Text>
@@ -133,8 +145,14 @@ export default function MorningScreen() {
 
       <Pressable
         onPress={async () => {
-          await setMorningLog({ bodyDone, speechDone, mindDone });
-          router.replace('/'); // Homeへ戻る
+          try {
+            await setMorningLog({ bodyDone, speechDone, mindDone });
+            router.replace('/'); // Homeへ戻る
+          } catch {
+            setError(
+              '保存に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+            );
+          }
         }}
         style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#000' }}
       >
@@ -143,10 +161,16 @@ export default function MorningScreen() {
 
       <Pressable
         onPress={async () => {
-          await clearMorningLog();
-          setBodyDone(false);
-          setSpeechDone(false);
-          setMindDone(false);
+          try {
+            await clearMorningLog();
+            setBodyDone(false);
+            setSpeechDone(false);
+            setMindDone(false);
+          } catch {
+            setError(
+              '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+            );
+          }
         }}
         style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#ddd' }}
       >

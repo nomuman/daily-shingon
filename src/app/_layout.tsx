@@ -32,6 +32,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="(tabs)/night"
+        options={{
+          title: "Night",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="nights-stay" size={size ?? 24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="(tabs)/settings"
         options={{
           title: "Settings",

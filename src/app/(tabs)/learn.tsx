@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 
+import ErrorState from '../../components/ErrorState';
 import { curriculum30Ja, getDayCard } from '../../content/curriculum30.ja';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { getTodayActionSelection, setTodayActionSelection } from '../../lib/todayLog';
@@ -18,34 +19,41 @@ export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
   const [dayInfo, setDayInfo] = useState<{ dayNumber: number; isComplete: boolean } | null>(null);
   const [card, setCard] = useState<CurriculumDay | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // 選択状態（3択のうちどれを選んでるか）
   const [selected, setSelected] = useState<SelectedAction | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const info = await getProgramDayInfo();
-        setDayInfo({ dayNumber: info.dayNumber, isComplete: info.isComplete });
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const info = await getProgramDayInfo();
+      setDayInfo({ dayNumber: info.dayNumber, isComplete: info.isComplete });
 
-        const c = getDayCard(info.dayNumber);
-        setCard(c);
+      const c = getDayCard(info.dayNumber);
+      setCard(c);
 
-        // 今日すでに選んでるなら復元
-        const saved = await getTodayActionSelection();
-        if (saved) {
-          setSelected({ key: saved.selectedKey, text: saved.selectedText });
-        } else {
-          // まだなら「おすすめ」をデフォルトにする
-          const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
-          const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
-          setSelected({ key: c.recommendedActionKey, text: fallbackText });
-        }
-      } finally {
-        setLoading(false);
+      // 今日すでに選んでるなら復元
+      const saved = await getTodayActionSelection();
+      if (saved) {
+        setSelected({ key: saved.selectedKey, text: saved.selectedText });
+      } else {
+        // まだなら「おすすめ」をデフォルトにする
+        const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
+        const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
+        setSelected({ key: c.recommendedActionKey, text: fallbackText });
       }
-    })();
+    } catch {
+      setError('学びデータの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。');
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const sourceLinks = useMemo(() => {
     if (!card?.sources?.length) return [];
@@ -60,6 +68,10 @@ export default function LearnScreen() {
         <ActivityIndicator />
       </View>
     );
+  }
+
+  if (error) {
+    return <ErrorState message={error} onRetry={load} />;
   }
 
   if (!card || !dayInfo || !selected) {
@@ -156,11 +168,17 @@ export default function LearnScreen() {
       {/* 保存ボタン */}
       <Pressable
         onPress={async () => {
-          await setTodayActionSelection({
-            selectedKey: selected.key,
-            selectedText: selected.text,
-          });
-          router.replace('/'); // Homeへ
+          try {
+            await setTodayActionSelection({
+              selectedKey: selected.key,
+              selectedText: selected.text,
+            });
+            router.replace('/'); // Homeへ
+          } catch {
+            setError(
+              '保存に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+            );
+          }
         }}
         style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#000' }}
       >

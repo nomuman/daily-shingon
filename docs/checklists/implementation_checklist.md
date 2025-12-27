@@ -75,9 +75,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### B3. エラーハンドリング
-- [ ] Routerのエラーハンドリング方針に従う（NotFound / Error UI） :contentReference[oaicite:17]{index=17}
-- [ ] JSON読み込み失敗時のフォールバックUI
-- [ ] AsyncStorage読み書き失敗時のリトライ or “再起動案内”導線
+- [x] Routerのエラーハンドリング方針に従う（NotFound / Error UI） :contentReference[oaicite:17]{index=17}
+- [x] JSON読み込み失敗時のフォールバックUI
+- [x] AsyncStorage読み書き失敗時のリトライ or “再起動案内”導線
 
 **DoD**
 - 例外でアプリが落ちず、ユーザーが次の行動を取れる

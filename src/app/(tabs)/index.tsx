@@ -1,12 +1,14 @@
-// app/(tabs)/index.tsx
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30.ja';
-import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getProgramDayInfo } from '../../lib/programDay';
+
+import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
+import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
 import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
 
 export default function HomeScreen() {
@@ -18,22 +20,29 @@ export default function HomeScreen() {
   const [todayAction, setTodayAction] = useState<{ key: string; text: string } | null>(null);
 
   const [morningDone, setMorningDone] = useState<boolean>(false);
+  const [nightDone, setNightDone] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
-    // Day情報
-    const info = await getProgramDayInfo();
-    setDayNumber(info.dayNumber);
+    setError(null);
+    try {
+      const info = await getProgramDayInfo();
+      setDayNumber(info.dayNumber);
 
-    const card = getDayCard(info.dayNumber);
-    setTitle(card.title);
+      const card = getDayCard(info.dayNumber);
+      setTitle(card.title);
 
-    // 今日の行い
-    const sel = await getTodayActionSelection();
-    setTodayAction(sel ? { key: sel.selectedKey, text: sel.selectedText } : null);
+      const sel = await getTodayActionSelection();
+      setTodayAction(sel ? { key: sel.selectedKey, text: sel.selectedText } : null);
 
-    // 朝チェック
-    const m = await getMorningLog();
-    setMorningDone(isMorningComplete(m));
+      const m = await getMorningLog();
+      setMorningDone(isMorningComplete(m));
+
+      const n = await getNightLog();
+      setNightDone(isNightComplete(n));
+    } catch {
+      setError('保存データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。');
+    }
   }, []);
 
   useFocusEffect(
@@ -41,6 +50,11 @@ export default function HomeScreen() {
       void refresh();
     }, [refresh])
   );
+  // useFocusEffectは「画面がフォーカスされた時に処理を走らせる」ためのフック（公式）。:contentReference[oaicite:5]{index=5}
+
+  if (error) {
+    return <ErrorState message={error} onRetry={refresh} />;
+  }
 
   return (
     <View style={{ flex: 1, padding: 16, gap: 12 }}>
@@ -55,9 +69,7 @@ export default function HomeScreen() {
       {/* 朝の整え */}
       <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
         <Text style={{ fontSize: 16, fontWeight: '700' }}>朝の整え（身・口・意）</Text>
-        <Text style={{ opacity: 0.75 }}>
-          状態：{morningDone ? '完了 ✅' : '未完了'}
-        </Text>
+        <Text style={{ opacity: 0.75 }}>状態：{morningDone ? '完了 ✅' : '未完了'}</Text>
 
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
           <Pressable
@@ -71,8 +83,14 @@ export default function HomeScreen() {
 
           <Pressable
             onPress={async () => {
-              await clearMorningLog();
-              await refresh();
+              try {
+                await clearMorningLog();
+                await refresh();
+              } catch {
+                setError(
+                  '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+                );
+              }
             }}
             style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
           >
@@ -89,7 +107,9 @@ export default function HomeScreen() {
             ・[{todayAction.key}] {todayAction.text}
           </Text>
         ) : (
-          <Text style={{ opacity: 0.7 }}>まだ選んでない。Learnで「今日はこれでいく」を押してね。</Text>
+          <Text style={{ opacity: 0.7 }}>
+            まだ選んでない。Learnで「今日はこれでいく」を押してね。
+          </Text>
         )}
 
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
@@ -102,12 +122,51 @@ export default function HomeScreen() {
 
           <Pressable
             onPress={async () => {
-              await clearTodayActionSelection();
-              await refresh();
+              try {
+                await clearTodayActionSelection();
+                await refresh();
+              } catch {
+                setError(
+                  '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+                );
+              }
             }}
             style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
           >
             <Text style={{ fontWeight: '700' }}>選択を解除</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* 夜のしめ */}
+      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
+        <Text style={{ fontSize: 16, fontWeight: '700' }}>夜のしめ（懺悔→発願→回向）</Text>
+        <Text style={{ opacity: 0.75 }}>状態：{nightDone ? '完了 ✅' : '未完了'}</Text>
+
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
+          <Pressable
+            onPress={() => router.push('/night')}
+            style={{ padding: 12, borderRadius: 12, backgroundColor: '#000' }}
+          >
+            <Text style={{ color: '#fff', fontWeight: '700' }}>
+              {nightDone ? '見直す' : 'やる'}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={async () => {
+              try {
+                await clearNightLog();
+                await refresh();
+              } catch {
+                setError(
+                  '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。'
+                );
+              }
+            }}
+            style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
+          >
+            <Text style={{ fontWeight: '700' }}>リセット</Text>
           </Pressable>
         </View>
       </View>
