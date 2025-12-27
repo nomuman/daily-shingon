@@ -1,14 +1,27 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
+import { useEffect, useMemo, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 
-import { curriculum30Ja, getDayCard } from '../../content/curriculum30.ja';
-import { getProgramDayInfo } from '../../lib/programDay';
-import type { CurriculumDay } from '../../types/curriculum';
+import { useRouter } from "expo-router";
+import LearnCard from "../../components/LearnCard";
+import { curriculum30Ja, getDayCard } from "../../content/curriculum30.ja";
+import { getProgramDayInfo } from "../../lib/programDay";
+import { setTodayActionSelection } from '../../lib/todayLog';
+import type { CurriculumDay } from "../../types/curriculum";
 
 export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
-  const [dayInfo, setDayInfo] = useState<{ dayNumber: number; isComplete: boolean } | null>(null);
+  const [dayInfo, setDayInfo] = useState<{
+    dayNumber: number;
+    isComplete: boolean;
+  } | null>(null);
   const [card, setCard] = useState<CurriculumDay | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -31,7 +44,7 @@ export default function LearnScreen() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator />
       </View>
     );
@@ -47,62 +60,40 @@ export default function LearnScreen() {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
-      <Text style={{ fontSize: 20, fontWeight: '700' }}>
-        Day {dayInfo.dayNumber} / 30
-      </Text>
-
-      {dayInfo.isComplete && (
-        <Text style={{ opacity: 0.8 }}>
-          30日を完走した。ここからは薄く長く。必要なら開始日をリセットしてもう一周もできる。
-        </Text>
-      )}
-
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 18, fontWeight: '700' }}>{card.title}</Text>
-        <Text style={{ lineHeight: 20 }}>{card.learn}</Text>
-
-        {!!card.example && (
-          <Text style={{ opacity: 0.75, lineHeight: 20 }}>
-            例：{card.example}
-          </Text>
-        )}
-      </View>
-
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>今日の行い（1つ選ぶ）</Text>
-        {card.actionOptions.map((opt, idx) => (
-          <View key={`${opt.key}-${idx}`} style={{ paddingVertical: 8 }}>
-            <Text style={{ fontWeight: opt.key === card.recommendedActionKey ? '700' : '400' }}>
-              ・[{opt.key}] {opt.text}
-            </Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>夜の問い</Text>
-        <Text style={{ lineHeight: 20 }}>{card.nightQuestion}</Text>
-      </View>
-
-      {!!sourceLinks.length && (
-        <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
-          <Text style={{ fontSize: 16, fontWeight: '700' }}>参考</Text>
-          {sourceLinks.map((s) => (
-            <Text key={s.id} style={{ opacity: 0.8 }}>
-              ・{s.id}
-            </Text>
-          ))}
-          {/* URLを表示したいならここで出してもOK（今はIDのみ） */}
-        </View>
-      )}
+      <LearnCard
+        dayNumber={dayInfo.dayNumber}
+        isComplete={dayInfo.isComplete}
+        card={card}
+        sourceLinks={sourceLinks}
+      />
 
       <Pressable
-        onPress={() => {
-          // TODO: “今日の行い”の選択を保存する（次ステップ）
+        onPress={async () => {
+          // まずは「おすすめの行い」をそのまま採用（後で選択UIに拡張）
+          const recommended = card.actionOptions.find(
+            (o) => o.key === card.recommendedActionKey
+          );
+          const selectedText =
+            recommended?.text ?? card.actionOptions[0]?.text ?? "";
+
+          await setTodayActionSelection({
+            selectedKey: card.recommendedActionKey,
+            selectedText,
+          });
+
+          // Homeに戻る（Tabsのindexへ）
+          router.replace("/"); // or router.push('/')
         }}
-        style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#000' }}
+        style={{
+          padding: 14,
+          borderRadius: 12,
+          alignItems: "center",
+          backgroundColor: "#000",
+        }}
       >
-        <Text style={{ color: '#fff', fontWeight: '700' }}>今日はこれでいく</Text>
+        <Text style={{ color: "#fff", fontWeight: "700" }}>
+          今日はこれでいく
+        </Text>
       </Pressable>
     </ScrollView>
   );

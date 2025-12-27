@@ -21,9 +21,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## A. プロジェクト準備（開発が詰まらないための土台）
 
 ### A1. ローカル環境
-- [ ] Node / npm（または pnpm/yarn）をインストール
-- [ ] Expo CLIの基本操作を理解（start / run / install）
-- [ ] 実機（iOS/Android）で動かす準備（通知は実機必要が多い） :contentReference[oaicite:7]{index=7}
+- [x] Node / npm（または pnpm/yarn）をインストール
+- [x] Expo CLIの基本操作を理解（start / run / install）
+- [x] 実機（iOS/Android）で動かす準備（通知は実機必要が多い） :contentReference[oaicite:7]{index=7}
 
 **DoD**
 - `npx expo start` がエラーなく起動し、端末で表示できる
@@ -31,10 +31,10 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### A2. 初期生成・構成
-- [ ] `create-expo-app` でプロジェクト作成（テンプレはExpo Router前提） :contentReference[oaicite:8]{index=8}
-- [ ] `app/` 配下がルーティングの中心だと理解（file-based routing） :contentReference[oaicite:9]{index=9}
-- [ ] `app/_layout.tsx` と `app/(tabs)/_layout.tsx` の役割を理解 :contentReference[oaicite:10]{index=10}
-- [ ] `+not-found.tsx` を用意して未定義ルートを安全に処理 :contentReference[oaicite:11]{index=11}
+- [x] `create-expo-app` でプロジェクト作成（テンプレはExpo Router前提） :contentReference[oaicite:8]{index=8}
+- [x] `app/` 配下がルーティングの中心だと理解（file-based routing） :contentReference[oaicite:9]{index=9}
+- [x] `app/_layout.tsx` と `app/(tabs)/_layout.tsx` の役割を理解 :contentReference[oaicite:10]{index=10}
+- [x] `+not-found.tsx` を用意して未定義ルートを安全に処理 :contentReference[oaicite:11]{index=11}
 
 **DoD**
 - タブ（Home/Learn/Settings）が表示され、存在しないルートに行くとNotFound画面になる
@@ -42,9 +42,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### A3. 環境変数・設定
-- [ ] `.env` を導入（公開OKなものは `EXPO_PUBLIC_` 接頭辞） :contentReference[oaicite:12]{index=12}
-- [ ] `app.json` / `app.config.ts` の役割を理解（OTAやビルド設定の根本） :contentReference[oaicite:13]{index=13}
-- [ ] `EXPO_PUBLIC_` を `process.env` で参照できることを確認 :contentReference[oaicite:14]{index=14}
+- [x] `.env` を導入（公開OKなものは `EXPO_PUBLIC_` 接頭辞） :contentReference[oaicite:12]{index=12}
+- [x] `app.json` / `app.config.ts` の役割を理解（OTAやビルド設定の根本） :contentReference[oaicite:13]{index=13}
+- [x] `EXPO_PUBLIC_` を `process.env` で参照できることを確認 :contentReference[oaicite:14]{index=14}
 
 **DoD**
 - `.env` の値がアプリ起動時に読み込まれ、ログに出せる（本番ではログに出さない）
@@ -54,9 +54,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## B. 開発品質（“スーパーなExpoエンジニア”の土台）
 
 ### B1. フォーマット・Lint
-- [ ] Expo推奨の ESLint/Prettier セットアップ :contentReference[oaicite:15]{index=15}
-- [ ] `npm run lint`（or `npx expo lint`）をCIで実行できる状態にする
-- [ ] import順・unused・any濫用を抑制（ルールを決めて統一）
+- [x] Expo推奨の ESLint/Prettier セットアップ :contentReference[oaicite:15]{index=15}
+- [x] `npm run lint`（or `npx expo lint`）をCIで実行できる状態にする
+- [x] import順・unused・any濫用を抑制（ルールを決めて統一）
 
 **DoD**
 - PRごとにLintが通る（落ちたら直すまでマージ不可）
@@ -64,9 +64,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### B2. テスト（最低ライン）
-- [ ] Jestのセットアップ（`jest-expo`） :contentReference[oaicite:16]{index=16}
-- [ ] 純粋関数（day計算 / JSONローダー）をユニットテスト
-- [ ] 重要UI（LearnCard）が崩れないスナップショット or 画面レンダリングテスト
+- [x] Jestのセットアップ（`jest-expo`） :contentReference[oaicite:16]{index=16}
+- [x] 純粋関数（day計算 / JSONローダー）をユニットテスト
+- [x] 重要UI（LearnCard）が崩れないスナップショット or 画面レンダリングテスト
 
 **DoD**
 - `npm test` が通る
