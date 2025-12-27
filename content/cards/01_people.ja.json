@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "ja",
+    "pack_id": "people",
+    "title": "人物（空海・弘法大師）",
+    "description": "人物理解を、崇拝ではなく“学び→行い”に落とすためのカード群。",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "people.kukai_overview",
+      "type": "learn",
+      "level": "beginner",
+      "title": "空海（Kūkai）：日本の真言密教の創始者として知られる",
+      "summary": "SEP は空海を、真言密教の創始者として著名と説明している。",
+      "body_md": "Stanford Encyclopedia of Philosophy（SEP）の「Kūkai」項目は、空海（774–835）を、日本の真言密教（Shingon esoteric Buddhism）の創始者として最も有名だと述べている。\n\nアプリでは、人物への尊崇を“生活の整え”へ翻訳する：身口意の実践を積むこと。",
+      "micro_practice": {
+        "morning": "今日の“学び”を1つだけ決める（欲張らない）。",
+        "day": "言葉を1回だけ丁寧に言い直す（口）。",
+        "night": "今日の実践を1行で記録する。"
+      },
+      "reflection_questions": ["人物の偉大さを、今日の行いに置き換えるなら？"],
+      "tags": ["人物", "空海", "歴史"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "people.kobo_daishi_title",
+      "type": "learn",
+      "level": "beginner",
+      "title": "弘法大師：空海を指す尊称（追号）として扱う",
+      "summary": "このアプリでは、呼称を統一して混乱を減らす。",
+      "body_md": "学術的概説（SEP）では人物名を Kūkai と表記することが多い。\n\nアプリ文面では「空海（弘法大師）」のように最初だけ併記し、その後は同一人物として扱う（ユーザー混乱防止）。",
+      "micro_practice": {
+        "morning": "用語を“同一視”する：空海＝弘法大師、と心に置く。",
+        "day": "知らない語が出たら用語集を開く（迷いを放置しない）。",
+        "night": "今日出会った用語を1つメモする。"
+      },
+      "reflection_questions": ["今日、混乱した言葉は？それを一言で言い換えると？"],
+      "tags": ["人物", "呼称", "UX"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "people.kukai_and_practice_bridge",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "空海の理解：知識より“実践の回路”をつくる",
+      "summary": "公式解説が強調する三密（身口意）を、日常の回路にする。",
+      "body_md": "高野山真言宗（公式）は、三密加持（三密瑜伽）を説明し、身口意のはたらきが互いに感応すること、そして「入我我入」に言及している。\n\n人物理解は、その回路（身口意）を日常で回すことに接続していく。",
+      "micro_practice": {
+        "morning": "まず身（姿勢）→次に口（丁寧な言葉）→最後に意（今日の焦点）。",
+        "day": "乱れたら順番通りに戻す：身→口→意。",
+        "night": "一番効いたのは身口意のどれか、1つ選んで記録する。"
+      },
+      "reflection_questions": [
+        "今日いちばん効いたのは身・口・意のどれ？",
+        "明日同じ状況なら、順番をどうする？"
+      ],
+      "tags": ["人物", "三密", "実践"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "people.toji_as_learning_place",
+      "type": "learn",
+      "level": "beginner",
+      "title": "東寺：曼荼羅を“立体化”して伝える構想の説明がある",
+      "summary": "東寺（公式）に、曼荼羅と立体曼荼羅（羯磨曼荼羅）の説明がある。",
+      "body_md": "東寺（公式）は、密教の教えをわかりやすく表現したものが曼荼羅であり、胎蔵界曼荼羅と金剛界曼荼羅があること、さらにそれを具現化する構想として羯磨曼荼羅（一般に立体曼荼羅）を説明している。\n\nアプリでは「図（見る）」だけでなく「動き（やる）」へつなぐ発想として学べる。",
+      "micro_practice": {
+        "morning": "“見る→やる”の順を作る：読む→1つ行う。",
+        "day": "気づいたら1つだけ姿勢を直す（動き）。",
+        "night": "今日“動きで整えた”瞬間を1つ書く。"
+      },
+      "reflection_questions": ["今日は“見るだけ”で終わった？“やる”まで行けた？"],
+      "tags": ["場所", "東寺", "曼荼羅"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "people.koyasan_as_learning_place",
+      "type": "learn",
+      "level": "beginner",
+      "title": "高野山：公式解説を“規準”として参照する",
+      "summary": "アプリの説明は、まず公式解説をベースラインに置く。",
+      "body_md": "高野山真言宗（公式）の説明は、密教と顕教、三密加持、入我我入、法身仏など、アプリの中核語彙の基準として使える。\n\n将来カードを増やすときも「まず公式→次に辞書→次に学術」の順で根拠を積む。",
+      "micro_practice": {
+        "morning": "用語の根拠（出典）を見る癖をつける。",
+        "day": "曖昧な言い回しを避け、定義に戻る。",
+        "night": "今日学んだ用語の出典を1つ開く。"
+      },
+      "reflection_questions": ["今日の学びは、どの出典に支えられている？"],
+      "tags": ["場所", "高野山", "出典"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "people.respect_and_daily_life",
+      "type": "practice",
+      "level": "beginner",
+      "title": "尊敬を“日常の一手”に落とす",
+      "summary": "尊崇は良いが、アプリでは“今日の一手”に変換する。",
+      "body_md": "このカードはアプリ設計の実践カード。\n\n尊敬（敬意）を、今日の行い（1つ）へ変換する：\n- 身：姿勢を戻す\n- 口：一言を丁寧にする\n- 意：苛立ちを観察する\n\n※教義の断定ではなく、アプリ上の行動設計。",
+      "micro_practice": {
+        "morning": "姿勢を整えてから始める。",
+        "day": "攻撃語を1つ減らす。",
+        "night": "今日の自分を責めず、修正案を1つ書く。"
+      },
+      "reflection_questions": ["尊敬が“行い”に変換された瞬間は？"],
+      "tags": ["人物", "実践", "UX"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_SEP_KUKAI": {
+      "title": "Kūkai",
+      "publisher": "Stanford Encyclopedia of Philosophy",
+      "url": "https://plato.stanford.edu/entries/kukai/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "高野山真言宗とは",
+      "publisher": "高野山真言宗（公式）",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_MANDALA": {
+      "title": "立体曼荼羅",
+      "publisher": "東寺（公式）",
+      "url": "https://toji.or.jp/smp/mandala/",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "お寺からのメッセージ（「三密加持すれば速疾に顕る」）",
+      "publisher": "高野山真言宗総本山金剛峯寺 高野山（公式）",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}

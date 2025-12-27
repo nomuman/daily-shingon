@@ -24,7 +24,7 @@ function addDays(base: Date, deltaDays: number): Date {
 export async function getLastNDaysStatusBatched(
   days: number,
   batchSize = 28,
-  baseDate = new Date()
+  baseDate = new Date(),
 ): Promise<DailyStatus[]> {
   const n = Math.max(1, Math.min(days, 400));
   const size = Math.max(1, Math.min(batchSize, 90));
@@ -52,7 +52,7 @@ export async function getLastNDaysStatusBatched(
           nightDone: isNightComplete(night),
           nightHasNote: !!(night?.note && night.note.trim().length > 0),
         };
-      })
+      }),
     );
 
     results.push(...chunkResults);

@@ -1,13 +1,42 @@
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert, Linking, Platform, Pressable, ScrollView, Switch, Text, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  Linking,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ErrorState from '../../components/ErrorState';
-import { cancelDailyReminders, ensureNotificationPermission, scheduleDailyReminders } from '../../lib/notifications';
+import {
+  cancelDailyReminders,
+  ensureNotificationPermission,
+  scheduleDailyReminders,
+} from '../../lib/notifications';
 import { resetAllProgress } from '../../lib/reset';
 import { DEFAULT_SETTINGS, getSettings, setSettings } from '../../lib/settings';
+import { cardShadow, theme } from '../../ui/theme';
 
 type TimeField = 'morning' | 'night';
+
+const entranceStyle = (anim: Animated.Value) => ({
+  opacity: anim,
+  transform: [
+    {
+      translateY: anim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [14, 0],
+      }),
+    },
+  ],
+});
 
 export default function SettingsScreen() {
   const [loading, setLoading] = useState(true);
@@ -19,6 +48,11 @@ export default function SettingsScreen() {
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
+  const headerAnim = useRef(new Animated.Value(0)).current;
+  const notifyAnim = useRef(new Animated.Value(0)).current;
+  const timeAnim = useRef(new Animated.Value(0)).current;
+  const resetAnim = useRef(new Animated.Value(0)).current;
+
   const load = useCallback(async () => {
     setLoading(true);
     setFatalError(null);
@@ -29,7 +63,9 @@ export default function SettingsScreen() {
       setMorningInput(saved.notifications.morningTime);
       setNightInput(saved.notifications.nightTime);
     } catch {
-      setFatalError('設定の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。');
+      setFatalError(
+        '設定の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
+      );
     } finally {
       setLoading(false);
     }
@@ -39,11 +75,20 @@ export default function SettingsScreen() {
     void load();
   }, [load]);
 
+  useEffect(() => {
+    Animated.stagger(140, [
+      Animated.timing(headerAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
+      Animated.timing(notifyAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
+      Animated.timing(timeAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
+      Animated.timing(resetAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
+    ]).start();
+  }, [headerAnim, notifyAnim, resetAnim, timeAnim]);
+
   const reminderEnabled = settings.notifications.enabled;
   const permissionStatus = settings.notifications.permissionStatus;
 
   const validateTime = (value: string) => {
-    return /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
+    return /^([01]\\d|2[0-3]):([0-5]\\d)$/.test(value);
   };
 
   const toTimeString = (date: Date) => {
@@ -91,7 +136,7 @@ export default function SettingsScreen() {
         await cancelDailyReminders(prevIds);
         const ids = await scheduleDailyReminders(
           next.notifications.morningTime,
-          next.notifications.nightTime
+          next.notifications.nightTime,
         );
         await persistSettings({
           ...next,
@@ -105,20 +150,19 @@ export default function SettingsScreen() {
     }
   };
 
-  const handleTimeChange =
-    (field: TimeField) => (event: DateTimePickerEvent, date?: Date) => {
-      if (Platform.OS === 'android') {
-        setShowMorningPicker(false);
-        setShowNightPicker(false);
-      }
+  const handleTimeChange = (field: TimeField) => (event: DateTimePickerEvent, date?: Date) => {
+    if (Platform.OS === 'android') {
+      setShowMorningPicker(false);
+      setShowNightPicker(false);
+    }
 
-      if (event.type === 'dismissed' || !date) return;
+    if (event.type === 'dismissed' || !date) return;
 
-      const value = toTimeString(date);
-      if (field === 'morning') setMorningInput(value);
-      if (field === 'night') setNightInput(value);
-      void applyTime(field, value);
-    };
+    const value = toTimeString(date);
+    if (field === 'morning') setMorningInput(value);
+    if (field === 'night') setNightInput(value);
+    void applyTime(field, value);
+  };
 
   const toggleReminders = async (nextEnabled: boolean) => {
     setNotice(null);
@@ -157,7 +201,7 @@ export default function SettingsScreen() {
     try {
       const ids = await scheduleDailyReminders(
         settings.notifications.morningTime,
-        settings.notifications.nightTime
+        settings.notifications.nightTime,
       );
       await persistSettings({
         ...settings,
@@ -198,7 +242,7 @@ export default function SettingsScreen() {
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -208,8 +252,8 @@ export default function SettingsScreen() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Loading...</Text>
+      <View style={styles.loading}>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -219,64 +263,69 @@ export default function SettingsScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
-      <Text style={{ fontSize: 20, fontWeight: '700' }}>Settings</Text>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
+        <Text style={styles.kicker}>設定</Text>
+        <View style={styles.headerRow}>
+          <Text style={styles.headerTitle}>日々の整えを静かに支える</Text>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{settingsSummary}</Text>
+          </View>
+        </View>
+        <Text style={styles.headerBody}>
+          通知や開始日の調整はここから。必要なときだけ、シンプルに。
+        </Text>
+      </Animated.View>
 
       {!!notice && (
-        <View style={{ padding: 12, borderRadius: 12, backgroundColor: '#fff2f2' }}>
-          <Text style={{ color: '#b00020' }}>{notice}</Text>
-        </View>
+        <Animated.View style={[styles.noticeCard, entranceStyle(notifyAnim)]}>
+          <Text style={styles.noticeText}>{notice}</Text>
+        </Animated.View>
       )}
 
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>通知</Text>
-        <Text style={{ opacity: 0.7 }}>状態：{settingsSummary}</Text>
+      <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+        <Text style={styles.sectionTitle}>通知</Text>
+        <Text style={styles.sectionSubtitle}>状態：{settingsSummary}</Text>
 
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text style={{ fontWeight: '600' }}>朝/夜リマインダー</Text>
-          <Switch value={reminderEnabled} onValueChange={toggleReminders} />
+        <View style={styles.switchRow}>
+          <Text style={styles.switchLabel}>朝/夜リマインダー</Text>
+          <Switch
+            value={reminderEnabled}
+            onValueChange={toggleReminders}
+            trackColor={{
+              false: theme.colors.border,
+              true: theme.colors.accentSoft,
+            }}
+            thumbColor={reminderEnabled ? theme.colors.accent : theme.colors.surface}
+          />
         </View>
 
         {permissionStatus === 'denied' && (
-          <View style={{ gap: 8 }}>
-            <Text style={{ opacity: 0.7 }}>
+          <View style={styles.inlineNotice}>
+            <Text style={styles.inlineNoticeText}>
               通知が拒否されています。設定アプリで許可してください。
             </Text>
             <Pressable
               onPress={openSystemSettings}
-              style={{
-                minHeight: 44,
-                paddingHorizontal: 12,
-                borderRadius: 12,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#eee',
-              }}
+              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={{ fontWeight: '700' }}>設定アプリを開く</Text>
+              <Text style={styles.ghostButtonText}>設定アプリを開く</Text>
             </Pressable>
           </View>
         )}
-      </View>
+      </Animated.View>
 
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>通知時刻</Text>
+      <Animated.View style={[styles.card, entranceStyle(timeAnim)]}>
+        <Text style={styles.sectionTitle}>通知時刻</Text>
 
-        <View style={{ gap: 8 }}>
-          <Text style={{ fontWeight: '600' }}>朝（HH:mm）</Text>
+        <View style={styles.timeBlock}>
+          <Text style={styles.timeLabel}>朝（HH:mm）</Text>
           <Pressable
             onPress={() => setShowMorningPicker(true)}
-            style={{
-              minHeight: 44,
-              borderWidth: 1,
-              borderColor: '#ddd',
-              borderRadius: 10,
-              paddingHorizontal: 12,
-              justifyContent: 'center',
-              backgroundColor: '#fff',
-            }}
+            style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
           >
-            <Text style={{ fontSize: 16 }}>{morningInput}</Text>
+            <Text style={styles.timeValue}>{morningInput}</Text>
           </Pressable>
           {showMorningPicker && (
             <DateTimePicker
@@ -289,35 +338,20 @@ export default function SettingsScreen() {
           {showMorningPicker && Platform.OS === 'ios' && (
             <Pressable
               onPress={() => setShowMorningPicker(false)}
-              style={{
-                alignSelf: 'flex-start',
-                minHeight: 36,
-                paddingHorizontal: 12,
-                borderRadius: 8,
-                justifyContent: 'center',
-                backgroundColor: '#eee',
-              }}
+              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={{ fontWeight: '600' }}>完了</Text>
+              <Text style={styles.ghostButtonText}>完了</Text>
             </Pressable>
           )}
         </View>
 
-        <View style={{ gap: 8 }}>
-          <Text style={{ fontWeight: '600' }}>夜（HH:mm）</Text>
+        <View style={styles.timeBlock}>
+          <Text style={styles.timeLabel}>夜（HH:mm）</Text>
           <Pressable
             onPress={() => setShowNightPicker(true)}
-            style={{
-              minHeight: 44,
-              borderWidth: 1,
-              borderColor: '#ddd',
-              borderRadius: 10,
-              paddingHorizontal: 12,
-              justifyContent: 'center',
-              backgroundColor: '#fff',
-            }}
+            style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
           >
-            <Text style={{ fontSize: 16 }}>{nightInput}</Text>
+            <Text style={styles.timeValue}>{nightInput}</Text>
           </Pressable>
           {showNightPicker && (
             <DateTimePicker
@@ -330,48 +364,205 @@ export default function SettingsScreen() {
           {showNightPicker && Platform.OS === 'ios' && (
             <Pressable
               onPress={() => setShowNightPicker(false)}
-              style={{
-                alignSelf: 'flex-start',
-                minHeight: 36,
-                paddingHorizontal: 12,
-                borderRadius: 8,
-                justifyContent: 'center',
-                backgroundColor: '#eee',
-              }}
+              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={{ fontWeight: '600' }}>完了</Text>
+              <Text style={styles.ghostButtonText}>完了</Text>
             </Pressable>
           )}
         </View>
-      </View>
+      </Animated.View>
 
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>リセット</Text>
-        <Text style={{ opacity: 0.7 }}>
-          開始日と当日の記録を削除します。戻せません。
-        </Text>
+      <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+        <Text style={styles.sectionTitle}>リセット</Text>
+        <Text style={styles.sectionSubtitle}>開始日と当日の記録を削除します。戻せません。</Text>
         <Pressable
           onPress={handleReset}
-          style={{
-            minHeight: 44,
-            paddingHorizontal: 12,
-            borderRadius: 12,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#fff',
-            borderWidth: 1,
-            borderColor: '#f3bcbc',
-          }}
+          style={({ pressed }) => [styles.dangerButton, pressed && styles.dangerButtonPressed]}
         >
-          <Text style={{ fontWeight: '700', color: '#b00020' }}>開始日をリセット</Text>
+          <Text style={styles.dangerButtonText}>開始日をリセット</Text>
         </Pressable>
-      </View>
+      </Animated.View>
 
-      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>お問い合わせ</Text>
-        <Text style={{ opacity: 0.7 }}>お問い合わせ先は後で設定します。</Text>
+      <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+        <Text style={styles.sectionTitle}>お問い合わせ</Text>
+        <Text style={styles.sectionSubtitle}>お問い合わせ先は後で設定します。</Text>
         {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
-      </View>
-    </ScrollView>
+      </Animated.View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  content: {
+    padding: theme.spacing.lg,
+    paddingBottom: 40,
+    gap: theme.spacing.md,
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  loadingText: {
+    color: theme.colors.inkMuted,
+    fontFamily: theme.font.body,
+  },
+  headerCard: {
+    padding: theme.spacing.lg,
+    borderRadius: theme.radius.xl,
+    backgroundColor: theme.colors.surface,
+    gap: theme.spacing.sm,
+    ...cardShadow,
+  },
+  kicker: {
+    fontSize: 11,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    color: theme.colors.inkMuted,
+    fontFamily: theme.font.body,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  headerTitle: {
+    flex: 1,
+    fontSize: 18,
+    fontFamily: theme.font.display,
+    color: theme.colors.ink,
+    lineHeight: 24,
+  },
+  headerBody: {
+    color: theme.colors.inkMuted,
+    lineHeight: 20,
+    fontFamily: theme.font.body,
+  },
+  badge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 999,
+    backgroundColor: theme.colors.accentSoft,
+  },
+  badgeText: {
+    fontWeight: '700',
+    color: theme.colors.accentDark,
+    fontFamily: theme.font.body,
+  },
+  noticeCard: {
+    padding: theme.spacing.sm,
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.dangerSoft,
+  },
+  noticeText: {
+    color: theme.colors.danger,
+    fontFamily: theme.font.body,
+  },
+  card: {
+    padding: theme.spacing.lg,
+    borderRadius: theme.radius.lg,
+    backgroundColor: theme.colors.surface,
+    gap: theme.spacing.sm,
+    ...cardShadow,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: theme.colors.ink,
+    fontFamily: theme.font.display,
+  },
+  sectionSubtitle: {
+    color: theme.colors.inkMuted,
+    lineHeight: 20,
+    fontFamily: theme.font.body,
+  },
+  switchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  switchLabel: {
+    fontWeight: '600',
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+  },
+  inlineNotice: {
+    gap: theme.spacing.sm,
+    paddingTop: theme.spacing.sm,
+  },
+  inlineNoticeText: {
+    color: theme.colors.inkMuted,
+    fontFamily: theme.font.body,
+  },
+  ghostButton: {
+    alignSelf: 'flex-start',
+    minHeight: 38,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.surfaceMuted,
+  },
+  ghostButtonPressed: {
+    opacity: 0.85,
+  },
+  ghostButtonText: {
+    fontWeight: '700',
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+  },
+  timeBlock: {
+    gap: theme.spacing.xs,
+  },
+  timeLabel: {
+    fontWeight: '600',
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+  },
+  timeInput: {
+    minHeight: 44,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    backgroundColor: theme.colors.surface,
+  },
+  timeInputPressed: {
+    opacity: 0.85,
+  },
+  timeValue: {
+    fontSize: 16,
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+  },
+  dangerButton: {
+    minHeight: 46,
+    paddingHorizontal: 14,
+    borderRadius: theme.radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.danger,
+    backgroundColor: theme.colors.surface,
+  },
+  dangerButtonPressed: {
+    opacity: 0.85,
+  },
+  dangerButtonText: {
+    fontWeight: '700',
+    color: theme.colors.danger,
+    fontFamily: theme.font.body,
+  },
+});

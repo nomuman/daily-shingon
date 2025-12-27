@@ -3,13 +3,7 @@ import renderer from 'react-test-renderer';
 import LearnCard from '../src/components/LearnCard';
 import { getDayCard } from '../src/content/curriculum30.ja';
 
-type JsonNode =
-  | string
-  | number
-  | boolean
-  | null
-  | { children?: JsonNode[] }
-  | JsonNode[];
+type JsonNode = string | number | boolean | null | { children?: JsonNode[] } | JsonNode[];
 
 function collectText(node: JsonNode): string[] {
   if (node == null) return [];

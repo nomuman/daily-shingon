@@ -1,4 +1,9 @@
-import type { Curriculum30, CurriculumActionOption, CurriculumDay, SanmitsuKey } from '../types/curriculum';
+import type {
+  Curriculum30,
+  CurriculumActionOption,
+  CurriculumDay,
+  SanmitsuKey,
+} from '../types/curriculum';
 
 // JSONはプロジェクトルートの content/ に置いている想定
 import raw from '../../content/curriculum/30days.ja.json';
@@ -28,7 +33,8 @@ function buildFallbackDay(day: number): CurriculumDay {
     id: `fallback-day-${day}`,
     day,
     title: '今日の学び',
-    learn: '学びデータの読み込みに失敗しました。アプリを再起動しても直らない場合は、データを更新してください。',
+    learn:
+      '学びデータの読み込みに失敗しました。アプリを再起動しても直らない場合は、データを更新してください。',
     recommendedActionKey: 'body',
     actionOptions: [
       { key: 'body', text: '深呼吸して整える' },
@@ -42,7 +48,7 @@ function buildFallbackDay(day: number): CurriculumDay {
 function normalizeActionOptions(
   value: unknown,
   errors: string[],
-  dayLabel: string
+  dayLabel: string,
 ): CurriculumActionOption[] | null {
   if (!Array.isArray(value)) {
     errors.push(`${dayLabel}: actionOptions が配列ではありません`);
@@ -67,11 +73,7 @@ function normalizeActionOptions(
   return options;
 }
 
-function normalizeDay(
-  value: unknown,
-  errors: string[],
-  index: number
-): CurriculumDay | null {
+function normalizeDay(value: unknown, errors: string[], index: number): CurriculumDay | null {
   if (!isRecord(value)) {
     errors.push(`days[${index}] がオブジェクトではありません`);
     return null;

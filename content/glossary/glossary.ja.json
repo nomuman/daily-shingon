@@ -1,0 +1,691 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "ja",
+    "title": "真言密教 用語集",
+    "description": "アプリ内で参照する用語集。各エントリは sources で根拠IDを持ち、bibliography に対応する。",
+    "generated_at": "2025-12-27",
+    "schema": {
+      "entry": {
+        "id": "string (stable key)",
+        "term": "string (表記)",
+        "reading": "string (よみ)",
+        "category": "one of taxonomy.categories",
+        "level": "beginner | intermediate | advanced",
+        "short": "string (1〜2行の要約)",
+        "definition": "string (少し詳しい説明)",
+        "notes": "string (任意: 注意/補足)",
+        "see_also": "string[] (関連するentry.id)",
+        "sources": "string[] (bibliography keys)"
+      }
+    }
+  },
+  "taxonomy": {
+    "categories": [
+      "人物・系譜",
+      "中心仏・世界観",
+      "教理・キーワード",
+      "実践・儀礼",
+      "曼荼羅・シンボル",
+      "経典・文献"
+    ]
+  },
+  "entries": [
+    {
+      "id": "core.shingon",
+      "term": "真言宗（Shingon）",
+      "reading": "しんごんしゅう",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "日本の主要仏教宗派の一つで、密教（真言密教）の伝統を受け継ぐ。",
+      "definition": "真言宗は、密教（真言密教）の儀礼・実践を中心に据える日本仏教の一派。英語圏の概説では、ヴァジラヤーナ（密教）系統の一枝として説明されることが多い。",
+      "notes": "アプリでは「真言宗」「真言密教」「東密」などの表記揺れが出るので、別名はタグとして扱うと便利。",
+      "see_also": ["core.esoteric_buddhism", "persons.kukai"],
+      "sources": ["S_BRITANNICA_SHINGON", "S_WIKI_SHINGON_BUDDHISM"]
+    },
+    {
+      "id": "core.esoteric_buddhism",
+      "term": "密教（真言密教）",
+      "reading": "みっきょう（しんごんみっきょう）",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "実践（修法）を通じて“秘密の意味”を体得する仏教の伝統として説明される。",
+      "definition": "高野山真言宗の解説では、密教と顕教の違いの一つとして、隠された秘密の意味を知るための修行のあり方（修法）を挙げ、三密加持（三密瑜伽）などの実践を説明している。",
+      "notes": "「秘密」は“隠すため”というより、体験・実践で理解される側面を指す説明として扱うと誤解が減る。",
+      "see_also": ["core.exoteric_buddhism", "doctrine.sanmitsu_kaji"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.exoteric_buddhism",
+      "term": "顕教",
+      "reading": "けんぎょう",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "密教に対して、公開の教え（経典の教説）を中心に学ぶ伝統として対比される用語。",
+      "definition": "高野山真言宗の解説では、密教と顕教の違いをいくつか指摘し、密教の修法（三密加持など）を“根本的な違い”の一つとして述べている。",
+      "notes": "宗派間の優劣断定ではなく、比較の語彙として扱う。",
+      "see_also": ["core.esoteric_buddhism"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+
+    {
+      "id": "persons.kukai",
+      "term": "空海",
+      "reading": "くうかい",
+      "category": "人物・系譜",
+      "level": "beginner",
+      "short": "真言密教を日本で体系化・展開した僧として広く知られる。",
+      "definition": "哲学・思想史の概説では、空海の著作が、真言や陀羅尼など既存の実践に理論的な基礎付けを与え、儀礼実践と教理の橋渡しをした点が述べられる。",
+      "notes": "アプリでは「空海」「弘法大師（追号）」「お大師さま」などの表記を統一ルールで扱うのがおすすめ。",
+      "see_also": ["persons.kobo_daishi"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "persons.kobo_daishi",
+      "term": "弘法大師",
+      "reading": "こうぼうだいし",
+      "category": "人物・系譜",
+      "level": "beginner",
+      "short": "空海の追号（おくりな）。",
+      "definition": "高野山真言宗（公式）の人物紹介ページは、弘法大師を「お大師さま」として紹介し、即身成仏の教えに触れている。",
+      "notes": "アプリ文面では敬称・呼び方がUXに直結する。固定の“呼称ポリシー”を別ドキュメント化すると安全。",
+      "see_also": ["persons.kukai", "doctrine.sokushin_jobutsu"],
+      "sources": ["S_KOYASAN_KOBODAISHI"]
+    },
+
+    {
+      "id": "cosmos.dainichi",
+      "term": "大日如来（毘盧遮那仏）",
+      "reading": "だいにちにょらい（びるしゃなぶつ）",
+      "category": "中心仏・世界観",
+      "level": "beginner",
+      "short": "真言宗で中心に据えられる仏として説明される。",
+      "definition": "東寺真言宗（公式）の解説では、真言宗が根本経典（大日経・金剛頂経）を拠り所とし、大日如来を中心の本尊として述べる。また大日如来を“宇宙全体”として説明する記述がある。",
+      "notes": "「中心仏」という説明は宗派・文脈によって表現が変わるので、出典付きで固定する。",
+      "see_also": ["cosmos.hosshinbutsu", "texts.dainichikyo", "texts.kongochokyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT", "S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "cosmos.hosshinbutsu",
+      "term": "法身仏",
+      "reading": "ほっしんぶつ",
+      "category": "中心仏・世界観",
+      "level": "intermediate",
+      "short": "宇宙（法界）の真理そのものを仏格化した存在として説明される。",
+      "definition": "高野山真言宗の解説では、密教の仏や菩薩を“宇宙（法界）の真理そのもの（法）”として捉え、身体的イメージとして表された存在を法身仏と呼ぶ旨が述べられる。",
+      "notes": "アプリでは“抽象概念→行い”へ落とす導線が大事（例：今日の言動を三密として整える）。",
+      "see_also": ["cosmos.dainichi", "doctrine.sanmitsu"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+
+    {
+      "id": "doctrine.shingon_mantra",
+      "term": "真言（マントラ）",
+      "reading": "しんごん",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "真言宗の「真言」はマントラを指す、と公式に説明される。",
+      "definition": "東寺真言宗（公式）は、真言宗の「真言」を“古代インドの言葉でマントラ”として説明し、「仏様の言葉／真実の言葉」という意味合いを述べる。",
+      "notes": "アプリ内で具体の真言テキストを載せる場合は、典拠（読誦形）と宗派差・作法差の注意書きが必須。",
+      "see_also": ["practice.sanmitsu_speech", "practice.kongyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "doctrine.sanmitsu",
+      "term": "三密",
+      "reading": "さんみつ",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "身（動作）・口（言葉）・意（心）をまとめた枠組みとして説明される。",
+      "definition": "総本山金剛峯寺の解説では、動作による身密、言葉による口密、心による意密の三つを合わせて三密とし、これを顕す修行を加持と説明している。高野山真言宗の解説でも、仏（本尊）の身口意と行者の身口意の働きの感応（三密加持）が述べられる。",
+      "notes": "アプリの“毎日の実践”を三密に割り当てる設計にすると、宗教用語が生活導線になる。",
+      "see_also": [
+        "doctrine.sanmitsu_kaji",
+        "practice.sanmitsu_body",
+        "practice.sanmitsu_speech",
+        "practice.sanmitsu_mind"
+      ],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU", "S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "doctrine.sanmitsu_kaji",
+      "term": "三密加持",
+      "reading": "さんみつかじ",
+      "category": "教理・キーワード",
+      "level": "intermediate",
+      "short": "仏（本尊）の三密と行者の三密が感応し一体となる実践として説明される。",
+      "definition": "高野山真言宗の解説では、真言密教の修法を三密加持（三密瑜伽）などと言い、仏（本尊）の身口意の働きと行者の身口意の働きが互いに感応して区別が消え一体となる境地に安住する瞑想として述べる。",
+      "notes": "アプリで扱う場合、儀礼の“再現”ではなく、日常の整え（身口意）として翻訳するのが安全。",
+      "see_also": ["doctrine.nyuga_ganyu", "doctrine.sanmitsu"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "doctrine.nyuga_ganyu",
+      "term": "入我我入",
+      "reading": "にゅうががにゅう",
+      "category": "教理・キーワード",
+      "level": "intermediate",
+      "short": "仏が我に入り、我が仏に入る、という意味で説明される。",
+      "definition": "高野山真言宗の解説は、三密加持のあり方を「入我我入」と呼ぶことに触れている。寺院の解説でも、仏と一体となる境地の呼称として説明される。",
+      "notes": "アプリでは“体験の言語化”が難しいので、まずは行動の記録（勤行・所作）と振り返り（意密）で足場を作る。",
+      "see_also": ["doctrine.sanmitsu_kaji"],
+      "sources": ["S_KOYASAN_SHINGONSHU", "S_MATSUOJI_SANMITSU_KAJI"]
+    },
+    {
+      "id": "doctrine.sokushin_jobutsu",
+      "term": "即身成仏",
+      "reading": "そくしんじょうぶつ",
+      "category": "教理・キーワード",
+      "level": "beginner",
+      "short": "この身のままで仏になる、という真言宗の教えとして公式に説明される。",
+      "definition": "総本山金剛峯寺の解説は、真言宗の教えの特徴として即身成仏を挙げ、弘法大師の『即身成仏義』に触れつつ、六大・四曼・三密と関連づけて述べている。高野山真言宗（公式）の人物紹介も、即身成仏の教えに言及する。",
+      "notes": "アプリでは“結果（悟り）”より“日々の実践の型”に落とすと誤解が減る。",
+      "see_also": ["doctrine.rokudai", "mandala.shiman", "doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SOKUSHIN", "S_KOYASAN_KOBODAISHI"]
+    },
+
+    {
+      "id": "doctrine.rokudai",
+      "term": "六大",
+      "reading": "ろくだい",
+      "category": "教理・キーワード",
+      "level": "intermediate",
+      "short": "地・水・火・風・空・識の六つを宇宙構成の要素として述べる説明がある。",
+      "definition": "総本山金剛峯寺の解説では、六大を地・水・火・風・空（物質）と識（精神）の六つとして述べ、宇宙を構成する要素・すべてのものの本質として説明している。",
+      "notes": "アプリでは“世界観の理解”カードとして、日常の観察（地水火風空＋識）に紐づけると実践になりやすい。",
+      "see_also": ["mandala.shiman", "doctrine.sokushin_jobutsu"],
+      "sources": ["S_MUSUBIDAISHI_SOKUSHIN"]
+    },
+
+    {
+      "id": "mandala.shiman",
+      "term": "四曼（四種曼荼羅）",
+      "reading": "しまん（ししゅまんだら）",
+      "category": "曼荼羅・シンボル",
+      "level": "intermediate",
+      "short": "四種曼荼羅（大・三昧耶・法・羯磨）として学術的に説明される。",
+      "definition": "高野山大学の研究紀要（PDF）では、四種曼荼羅が大・三昧耶・法・羯磨の四種類から構成される旨が述べられる。金剛峯寺の解説も、即身成仏の文脈で“四つの曼荼羅（四曼）”に触れる。",
+      "notes": "アプリ設計では、同じ内容を「図（大）」「象徴（三昧耶）」「文字（法）」「動き（羯磨）」の4表現で出すと理解が深まる。",
+      "see_also": [
+        "mandala.mahamandala",
+        "mandala.samaya_mandala",
+        "mandala.dharma_mandala",
+        "mandala.karma_mandala"
+      ],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF", "S_MUSUBIDAISHI_SOKUSHIN"]
+    },
+    {
+      "id": "mandala.mahamandala",
+      "term": "大曼荼羅",
+      "reading": "だいまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "intermediate",
+      "short": "諸尊の形像（姿・形）で示す曼荼羅として説明される。",
+      "definition": "四種曼荼羅の一つとして、大曼荼羅（大マンダラ）が挙げられることが、高野山大学の研究紀要（PDF）で述べられる。",
+      "notes": "UIでは“絵として見せる”領域（画像・配置）に対応。",
+      "see_also": ["mandala.shiman"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.samaya_mandala",
+      "term": "三昧耶曼荼羅",
+      "reading": "さんまやまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "advanced",
+      "short": "四種曼荼羅の一つとして“三昧耶”の曼荼羅が挙げられる。",
+      "definition": "高野山大学の研究紀要（PDF）で、四種曼荼羅の構成要素として三昧耶曼荼羅が挙げられている。",
+      "notes": "アプリでは“象徴（サイン）で理解する”カードに割り当てるのが相性良い。",
+      "see_also": ["mandala.shiman", "doctrine.samaya"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.dharma_mandala",
+      "term": "法曼荼羅",
+      "reading": "ほうまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "advanced",
+      "short": "四種曼荼羅の一つとして“法”の曼荼羅が挙げられる。",
+      "definition": "高野山大学の研究紀要（PDF）で、四種曼荼羅の構成要素として法曼荼羅が挙げられている。",
+      "notes": "UIでは“文字（種子・真言）”の領域に対応。",
+      "see_also": ["mandala.shiman", "doctrine.shingon_mantra"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.karma_mandala",
+      "term": "羯磨曼荼羅",
+      "reading": "かつままんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "advanced",
+      "short": "四種曼荼羅の一つとして“羯磨”の曼荼羅が挙げられる。",
+      "definition": "高野山大学の研究紀要（PDF）で、四種曼荼羅の構成要素として羯磨曼荼羅が挙げられている。東寺（公式）は、空海が曼荼羅を立体化して伝える構想として羯磨曼荼羅（立体曼荼羅）に触れている。",
+      "notes": "“動き（所作）”が中心。アプリの習慣トラッカー（勤行完了→色が付く）とも相性がいい。",
+      "see_also": ["practice.kongyo", "mandala.ryobu_mandala"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF", "S_TOJI_MANDALA"]
+    },
+
+    {
+      "id": "mandala.mandala",
+      "term": "曼荼羅",
+      "reading": "まんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "beginner",
+      "short": "密教の教えを表現するものとして公式に説明される。",
+      "definition": "東寺（公式）は、密教の教えをわかりやすく表現したものが曼荼羅であり、胎蔵界曼荼羅と金剛界曼荼羅があると説明している。",
+      "notes": "画像を扱うときは、所蔵元・解説元の権利とクレジットに注意。",
+      "see_also": ["mandala.taizokai", "mandala.kongokai"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.ryobu_mandala",
+      "term": "両界曼荼羅",
+      "reading": "りょうかいまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "intermediate",
+      "short": "胎蔵界と金剛界の二つの曼荼羅を対として扱う枠組み。",
+      "definition": "東寺（公式）は、曼荼羅に胎蔵界と金剛界があり、それぞれが教え（理と智慧）を伝えると説明している。",
+      "notes": "アプリでは“胎蔵（育む）／金剛（貫く）”の二面で今日の実践を振り返る導線が作れる。",
+      "see_also": ["mandala.taizokai", "mandala.kongokai", "doctrine.kontai_funi"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.taizokai",
+      "term": "胎蔵界曼荼羅",
+      "reading": "たいぞうかいまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "intermediate",
+      "short": "両界曼荼羅の一つ。胎蔵界の曼荼羅。",
+      "definition": "東寺（公式）は、曼荼羅には胎蔵界曼荼羅と金剛界曼荼羅があることを述べる。",
+      "notes": "用語だけを定義し、細部の図像解説は将来の“学びカード”に分離するのが安全。",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.kongokai",
+      "term": "金剛界曼荼羅",
+      "reading": "こんごうかいまんだら",
+      "category": "曼荼羅・シンボル",
+      "level": "intermediate",
+      "short": "両界曼荼羅の一つ。金剛界の曼荼羅。",
+      "definition": "東寺（公式）は、曼荼羅には胎蔵界曼荼羅と金剛界曼荼羅があることを述べる。",
+      "notes": "“金剛界＝智慧”などの説明は出典つきで段階的に追加すると安全。",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "doctrine.kontai_funi",
+      "term": "金胎不二",
+      "reading": "こんたいふに",
+      "category": "教理・キーワード",
+      "level": "advanced",
+      "short": "金剛界と胎蔵界が二つではなく一体である、という趣旨の説明がある。",
+      "definition": "総本山金剛峯寺の年中行事ページは、金剛・胎蔵両曼荼羅供養や結縁潅頂の話題の中で金剛界・胎蔵界に触れる。",
+      "notes": "将来、学びコンテンツとして扱うなら、寺院・博物館などの公的解説を追加で紐付けるとより堅い。",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_KONGOBUJI_EVENT"]
+    },
+
+    {
+      "id": "practice.kongyo",
+      "term": "勤行",
+      "reading": "ごんぎょう",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "仏前で時を定めて読経・礼拝などを行う儀式（おつとめ）。",
+      "definition": "辞書（Kotobank）は、勤行を仏前で時を定めて読経・礼拝・焼香などをする儀式（おつとめ）として説明している。",
+      "notes": "アプリの習慣トラッカーの“1日1マス”は、この勤行完了の可視化として素直に設計できる。",
+      "see_also": ["practice.sanmitsu_body", "practice.sanmitsu_speech", "practice.sanmitsu_mind"],
+      "sources": ["S_KOTOBANK_KONGYO"]
+    },
+    {
+      "id": "practice.sanmitsu_body",
+      "term": "身密",
+      "reading": "しんみつ",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "三密のうち“動作（身体）”に関わる側面。",
+      "definition": "金剛峯寺の解説は、三密を動作による身密・言葉による口密・心による意密として説明している。",
+      "notes": "アプリUIでは、所作（合掌/礼/姿勢）など“できた/やった”を記録しやすい。",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "practice.sanmitsu_speech",
+      "term": "口密",
+      "reading": "くみつ",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "三密のうち“言葉（唱える）”に関わる側面。",
+      "definition": "金剛峯寺の解説は、三密を動作による身密・言葉による口密・心による意密として説明している。",
+      "notes": "真言本文の掲載は作法差が出るので、初期は“唱えたか”の記録だけでも成立する。",
+      "see_also": ["doctrine.shingon_mantra", "doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "practice.sanmitsu_mind",
+      "term": "意密",
+      "reading": "いみつ",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "三密のうち“心（観想・意識）”に関わる側面。",
+      "definition": "金剛峯寺の解説は、三密を動作による身密・言葉による口密・心による意密として説明している。",
+      "notes": "夜のひと言（内省）を意密として位置づけると、アプリ機能が教理と直結する。",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+
+    {
+      "id": "practice.zange",
+      "term": "懺悔",
+      "reading": "ざんげ（さんげ）",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "過去の罪悪を告白し、ゆるしを請うこと。",
+      "definition": "辞書（Kotobank）は、仏語としての懺悔を、過去に犯した罪悪を告白してゆるしを請うこと等として説明している。",
+      "notes": "“自己否定”に寄せず、振り返り（気づき）→修正（明日の行い）へ繋ぐ設計が安全。",
+      "see_also": ["practice.hotsugan", "practice.ekou"],
+      "sources": ["S_KOTOBANK_ZANGE"]
+    },
+    {
+      "id": "practice.hotsugan",
+      "term": "発願",
+      "reading": "ほつがん",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "願いを起こすこと（悟りを得たい・衆生を救う誓いを立てる等）。",
+      "definition": "辞書（Kotobank）は、仏語としての発願を“願をおこすこと（悟りを得たい願い／衆生を救う誓い等）”として説明している。",
+      "notes": "アプリでは「明日の行い（1つ）」を発願として置くと、毎日のループが自然になる。",
+      "see_also": ["practice.zange", "practice.ekou"],
+      "sources": ["S_KOTOBANK_HOTSUGAN"]
+    },
+    {
+      "id": "practice.ekou",
+      "term": "回向",
+      "reading": "えこう",
+      "category": "実践・儀礼",
+      "level": "beginner",
+      "short": "修めた功徳を他に差し向け、自他ともに悟りの助けとすること等。",
+      "definition": "辞書（Kotobank）は、回向を“功徳を他にも差し向け、自他ともに悟りを得るための助けとすること”などとして説明している。",
+      "notes": "アプリでは「今日の実践を誰かのために回す（祈り/善行）」として表現できる。",
+      "see_also": ["practice.hotsugan", "practice.zange"],
+      "sources": ["S_KOTOBANK_EKOU"]
+    },
+
+    {
+      "id": "practice.goma",
+      "term": "護摩",
+      "reading": "ごま",
+      "category": "実践・儀礼",
+      "level": "intermediate",
+      "short": "火を用いる修法として寺院側の解説がある（homa の音訳、火で浄める等）。",
+      "definition": "高野山真言宗系の寺院案内では、護摩を“homa（ホーマ）”に由来し、火をもって煩悩や厄災を焼き浄める修法として説明している。",
+      "notes": "アプリ内で“護摩”を扱うなら、参拝案内・用語解説に留め、作法の断定は避けるのが安全。",
+      "see_also": ["practice.kongyo"],
+      "sources": ["S_HATTASAN_GOMA"]
+    },
+
+    {
+      "id": "ritual.kanjo",
+      "term": "灌頂",
+      "reading": "かんじょう",
+      "category": "実践・儀礼",
+      "level": "intermediate",
+      "short": "頭に水をそそぐ等によって段階を示す儀式として寺院が説明する。",
+      "definition": "寺院の説明では、灌頂を“頭に水をそそいで、仏道がある段階にまで進んだことを示す儀式”として説明している。",
+      "notes": "アプリでは“儀式の代替”ではなく、用語理解と参拝体験の補助に留めるのが安全。",
+      "see_also": ["ritual.kechien_kanjo", "ritual.denpo_kanjo"],
+      "sources": ["S_FUKUSHOJI_KANJO"]
+    },
+    {
+      "id": "ritual.kechien_kanjo",
+      "term": "結縁灌頂",
+      "reading": "けちえんかんじょう",
+      "category": "実践・儀礼",
+      "level": "intermediate",
+      "short": "高野山（公式）が開壇案内を出している灌頂行事。",
+      "definition": "高野山真言宗（公式）は、結縁灌頂（例：金剛界結縁灌頂）の開壇案内を告知している。",
+      "notes": "アプリでは“行事カレンダー”や“用語＋参拝導線”で価値が出る。",
+      "see_also": ["ritual.kanjo", "mandala.kongokai"],
+      "sources": ["S_KOYASAN_NEWS_KECHIEN"]
+    },
+    {
+      "id": "ritual.denpo_kanjo",
+      "term": "伝法灌頂",
+      "reading": "でんぼうかんじょう",
+      "category": "実践・儀礼",
+      "level": "advanced",
+      "short": "真言密教で、密法を修行した行者に阿闍梨位を継ぐことを許す灌頂（辞書）。",
+      "definition": "辞書（Kotobank）は、伝法灌頂を“真言密教で、密法を修行したすぐれた行者に対して、阿闍梨の位をつぐことを許すための灌頂”として説明している。",
+      "notes": "内部向け（僧侶修行）要素が強いので、一般向けアプリでは“言葉の理解”に留めるのが安全。",
+      "see_also": ["ritual.ajari"],
+      "sources": ["S_KOTOBANK_DENPO_KANJO"]
+    },
+    {
+      "id": "ritual.ajari",
+      "term": "阿闍梨",
+      "reading": "あじゃり",
+      "category": "人物・系譜",
+      "level": "advanced",
+      "short": "密教で指導的役割を担う僧の呼称として説明される（伝法灌頂と関連）。",
+      "definition": "一般向け解説では、真言宗などで伝法灌頂を受けることと阿闍梨の称号を関連づけて説明するものがある。",
+      "notes": "アプリの語彙としては“先生/導師”の一般語に直しつつ、用語として残すのが現実的。",
+      "see_also": ["ritual.denpo_kanjo"],
+      "sources": ["S_KOTOBANK_DENPO_KANJO", "S_YORISO_AJARI"]
+    },
+
+    {
+      "id": "doctrine.samaya",
+      "term": "三昧耶（samaya）",
+      "reading": "さんまや",
+      "category": "教理・キーワード",
+      "level": "advanced",
+      "short": "真言密教で重視される語として寺院が解説し、“誓い”の文脈で触れる。",
+      "definition": "寺院コラムは、三昧耶戒が真言密教独自の誓い（戒）である旨を述べ、三昧耶の意味を説明している。",
+      "notes": "厳密な解釈は学僧・注釈書の領域に入るので、アプリでは“誓い/約束”レベルの説明に留める。",
+      "see_also": ["mandala.samaya_mandala"],
+      "sources": ["S_KICHIJYOIN_SAMAYA"]
+    },
+
+    {
+      "id": "symbols.inzo",
+      "term": "印相（印契・密印）",
+      "reading": "いんぞう（いんげい・みついん）",
+      "category": "曼荼羅・シンボル",
+      "level": "beginner",
+      "short": "両手の手指を結ぶ形。密印・印契・略して印ともいう（辞書）。",
+      "definition": "辞書（Kotobank）は、印相を“両手の手指を結んで組み合わせた形”として説明し、密印・印契等の同義語にも触れる。",
+      "notes": "アプリで“印”の図解を載せるなら、出典画像と権利（所蔵/撮影/配布許可）を必ず整理する。",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_KOTOBANK_INZO"]
+    },
+
+    {
+      "id": "texts.ryobu_daikyo",
+      "term": "両部の大経",
+      "reading": "りょうぶのだいきょう",
+      "category": "経典・文献",
+      "level": "intermediate",
+      "short": "大日経と金剛頂経を根本経典として扱う説明がある。",
+      "definition": "東寺真言宗（公式）は、真言宗が『大日経』と『金剛頂経』を根本経典とする旨を述べている。",
+      "notes": "アプリの「参考文献・出典一覧」に固定で載せると、コンテンツ追加が楽になる。",
+      "see_also": ["texts.dainichikyo", "texts.kongochokyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.dainichikyo",
+      "term": "『大日経』",
+      "reading": "だいにちきょう",
+      "category": "経典・文献",
+      "level": "intermediate",
+      "short": "真言宗が根本経典の一つとして挙げる経典。",
+      "definition": "東寺真言宗（公式）は、『大日経』を真言宗の根本経典として挙げる。",
+      "notes": "引用・要約は版や翻訳で差が出るので、アプリでは“出典の版情報”を別ファイルで管理するのがおすすめ。",
+      "see_also": ["texts.ryobu_daikyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.kongochokyo",
+      "term": "『金剛頂経』",
+      "reading": "こんごうちょうきょう",
+      "category": "経典・文献",
+      "level": "intermediate",
+      "short": "真言宗が根本経典の一つとして挙げる経典。",
+      "definition": "東寺真言宗（公式）は、『金剛頂経』を真言宗の根本経典として挙げる。",
+      "notes": "“両部”の理解と曼荼羅（両界）を結ぶ導線として扱いやすい。",
+      "see_also": ["texts.ryobu_daikyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+
+    {
+      "id": "doctrine.aji_hon_fusho",
+      "term": "阿字本不生",
+      "reading": "あじほんぷしょう",
+      "category": "教理・キーワード",
+      "level": "advanced",
+      "short": "東寺真言宗（公式）が説明する真言密教の表現（阿字に関する説明）。",
+      "definition": "東寺真言宗（公式）は、大日如来と阿字の説明に触れ、“阿字本不生”という表現を述べている。",
+      "notes": "アプリでは深掘りコンテンツ（上級）として扱うのが安全。",
+      "see_also": ["cosmos.dainichi"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    }
+  ],
+  "bibliography": {
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "高野山真言宗とは",
+      "publisher": "高野山真言宗（公式）",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_KOBODAISHI": {
+      "title": "弘法大師の誕生と歴史",
+      "publisher": "高野山真言宗 総本山金剛峯寺（公式）",
+      "url": "https://www.koyasan.or.jp/shingonshu/kobodaishi.html",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "お寺からのメッセージ（「三密加持すれば速疾に顕る」）",
+      "publisher": "高野山真言宗総本山金剛峯寺 高野山（公式）",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SOKUSHIN": {
+      "title": "お寺からのメッセージ（「即身成仏」）",
+      "publisher": "高野山真言宗総本山金剛峯寺 高野山（公式）",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=37",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_MANDALA": {
+      "title": "立体曼荼羅",
+      "publisher": "東寺 – 世界遺産 真言宗総本山 教王護国寺（公式）",
+      "url": "https://toji.or.jp/smp/mandala/",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_SHINGON_ABOUT": {
+      "title": "真言宗の教え",
+      "publisher": "東寺真言宗（公式）",
+      "url": "https://www.tojishingonshu.org/about.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KONGOBUJI_EVENT": {
+      "title": "年中行事",
+      "publisher": "高野山真言宗 総本山金剛峯寺（公式）",
+      "url": "https://www.koyasan.or.jp/kongobuji/event.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_NEWS_KECHIEN": {
+      "title": "高野山秋季金剛界結縁灌頂開壇のお知らせ",
+      "publisher": "高野山真言宗（公式）",
+      "url": "https://www.koyasan.or.jp/sp/news/2025/07/06/6965/",
+      "accessed": "2025-12-27"
+    },
+    "S_BRITANNICA_SHINGON": {
+      "title": "Shingon | Definition & Facts",
+      "publisher": "Encyclopaedia Britannica",
+      "url": "https://www.britannica.com/topic/Shingon",
+      "accessed": "2025-12-27"
+    },
+    "S_SEP_KUKAI": {
+      "title": "Kūkai",
+      "publisher": "Stanford Encyclopedia of Philosophy",
+      "url": "https://plato.stanford.edu/entries/kukai/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_U_MANDALA_PDF": {
+      "title": "空海の思想と曼荼羅（研究紀要 PDF）",
+      "publisher": "高野山大学",
+      "url": "https://www.koyasan-u.ac.jp/laboratory/pdf/kiyo10/10_murakami.pdf",
+      "accessed": "2025-12-27"
+    },
+    "S_MATSUOJI_SANMITSU_KAJI": {
+      "title": "三密加持（解説）",
+      "publisher": "松尾寺（寺院サイト）",
+      "url": "https://matsuoji.jp/archives/559",
+      "accessed": "2025-12-27"
+    },
+    "S_HATTASAN_GOMA": {
+      "title": "御祈祷のご案内（護摩の説明）",
+      "publisher": "法多山（寺院サイト）",
+      "url": "https://www.hattasan.or.jp/gokito/",
+      "accessed": "2025-12-27"
+    },
+    "S_FUKUSHOJI_KANJO": {
+      "title": "伝法灌頂（でんぽうかんじょう）とは？（灌頂の説明）",
+      "publisher": "福昌寺（寺院サイト）",
+      "url": "https://fukushoji-horifune.net/blog/archives/4398",
+      "accessed": "2025-12-27"
+    },
+    "S_YORISO_AJARI": {
+      "title": "阿闍梨とは？阿闍梨の種類・五明・阿闍梨戒について",
+      "publisher": "よりそう（解説記事）",
+      "url": "https://www.yoriso.com/sogi/article/sogi/sogi-shurui/ajari/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_INZO": {
+      "title": "印相（いんぞう）",
+      "publisher": "Kotobank（デジタル大辞泉ほか）",
+      "url": "https://kotobank.jp/word/%E5%8D%B0%E7%9B%B8-32953",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_KONGYO": {
+      "title": "勤行（ごんぎょう）",
+      "publisher": "Kotobank（精選版 日本国語大辞典ほか）",
+      "url": "https://kotobank.jp/word/%E5%8B%A4%E8%A1%8C-67140",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_ZANGE": {
+      "title": "懺悔（ざんげ）",
+      "publisher": "Kotobank（精選版 日本国語大辞典ほか）",
+      "url": "https://kotobank.jp/word/%E6%87%BA%E6%82%94-70615",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_HOTSUGAN": {
+      "title": "発願（ほつがん）",
+      "publisher": "Kotobank（精選版 日本国語大辞典）",
+      "url": "https://kotobank.jp/word/%E7%99%BA%E9%A1%98-630506",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU": {
+      "title": "回向（えこう）",
+      "publisher": "Kotobank（デジタル大辞泉）",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91-36336",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_DENPO_KANJO": {
+      "title": "伝法灌頂（でんぼうかんじょう）",
+      "publisher": "Kotobank（精選版 日本国語大辞典／ブリタニカ国際大百科事典 小項目事典）",
+      "url": "https://kotobank.jp/word/%E4%BC%9D%E6%B3%95%E7%81%8C%E9%A0%82-102768",
+      "accessed": "2025-12-27"
+    },
+    "S_KICHIJYOIN_SAMAYA": {
+      "title": "仏のことばを読む：発菩提心 三昧耶戒の真言（解説）",
+      "publisher": "吉祥院（寺院コラム）",
+      "url": "https://www.kichijyoin.jp/column/kotoba/detail.php?id=27PYGE4",
+      "accessed": "2025-12-27"
+    },
+    "S_WIKI_SHINGON_BUDDHISM": {
+      "title": "Shingon Buddhism",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Shingon_Buddhism",
+      "accessed": "2025-12-27"
+    }
+  }
+}

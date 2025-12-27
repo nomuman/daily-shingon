@@ -16,13 +16,15 @@ function keyFor(date = new Date()): string {
   return `${KEY_PREFIX}${toISODateLocal(date)}`;
 }
 
-export async function getTodayActionSelection(date = new Date()): Promise<TodayActionSelection | null> {
+export async function getTodayActionSelection(
+  date = new Date(),
+): Promise<TodayActionSelection | null> {
   return getJSON<TodayActionSelection>(keyFor(date));
 }
 
 export async function setTodayActionSelection(
   selection: Omit<TodayActionSelection, 'savedAtISO'>,
-  date = new Date()
+  date = new Date(),
 ): Promise<void> {
   const k = keyFor(date);
   const payload: TodayActionSelection = {

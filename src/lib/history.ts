@@ -20,7 +20,7 @@ function addDays(base: Date, deltaDays: number): Date {
  */
 export async function getLastNDaysStatus(
   days: number,
-  baseDate = new Date()
+  baseDate = new Date(),
 ): Promise<DailyStatus[]> {
   const n = Math.max(1, Math.min(days, 31));
   const items: DailyStatus[] = [];

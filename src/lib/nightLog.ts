@@ -27,7 +27,7 @@ export async function getNightLog(date = new Date()): Promise<NightLog | null> {
 }
 
 export async function setNightLog(
-  input: Omit<NightLog, 'savedAtISO' | 'dateISO'> & { date?: Date }
+  input: Omit<NightLog, 'savedAtISO' | 'dateISO'> & { date?: Date },
 ): Promise<void> {
   const date = input.date ?? new Date();
   const payload: NightLog = {

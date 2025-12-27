@@ -26,7 +26,7 @@ export async function getMorningLog(date = new Date()): Promise<MorningLog | nul
 }
 
 export async function setMorningLog(
-  input: Omit<MorningLog, 'savedAtISO' | 'dateISO'> & { date?: Date }
+  input: Omit<MorningLog, 'savedAtISO' | 'dateISO'> & { date?: Date },
 ): Promise<void> {
   const date = input.date ?? new Date();
   const payload: MorningLog = {

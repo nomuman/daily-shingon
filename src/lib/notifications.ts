@@ -36,7 +36,7 @@ export function parseTimeToTrigger(time: string): { hour: number; minute: number
 
 export async function scheduleDailyReminders(
   morningTime: string,
-  nightTime: string
+  nightTime: string,
 ): Promise<NotificationIds> {
   await configureNotificationChannel();
 
