@@ -8,10 +8,10 @@ import { getDayCard } from '../../content/curriculum30.ja';
 import { getReturnStatus } from '../../lib/engagement';
 import { getProgramDayInfo } from '../../lib/programDay';
 
+import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
 import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
 import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
-import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -144,6 +144,44 @@ export default function HomeScreen() {
         <Text style={{ opacity: 0.7 }}>今日</Text>
         <Text style={{ fontSize: 18, fontWeight: '700' }}>Day {dayNumber}</Text>
         <Text style={{ lineHeight: 20 }}>{title}</Text>
+      </View>
+
+      {/* 365日へ導線 */}
+      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
+        <Text style={{ fontSize: 16, fontWeight: '700' }}>365日（積み上げ）</Text>
+        <Text style={{ opacity: 0.75, lineHeight: 18 }}>
+          勤行が終わった日は、静かに色が増えていく。空白があっても、戻れば続きになる。
+        </Text>
+
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 4 }}>
+          <Pressable
+            onPress={() => router.push('/history')}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#000',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ color: '#fff', fontWeight: '700' }}>365日を見る</Text>
+          </Pressable>
+
+          <Pressable
+            onPress={() => router.push('/history')}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#ddd',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontWeight: '700' }}>詳細</Text>
+          </Pressable>
+        </View>
       </View>
 
       {/* 朝の整え */}
@@ -301,7 +339,23 @@ export default function HomeScreen() {
 
       {/* 直近7日 */}
       <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: '700' }}>直近7日（朝 / 夜）</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, fontWeight: '700' }}>直近7日（朝 / 夜）</Text>
+          <Pressable
+            onPress={() => router.push('/history')}
+            style={{
+              minHeight: 36,
+              paddingVertical: 8,
+              paddingHorizontal: 10,
+              borderRadius: 10,
+              backgroundColor: '#ddd',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontWeight: '700' }}>365日へ</Text>
+          </Pressable>
+        </View>
 
         <View
           style={{
