@@ -87,6 +87,7 @@ export default function NightScreen() {
       accessibilityState={{ selected: checked }}
       style={[
         {
+          minHeight: 44,
           paddingVertical: 12,
           paddingHorizontal: 12,
           borderRadius: 12,
@@ -192,7 +193,14 @@ export default function NightScreen() {
             );
           }
         }}
-        style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#000' }}
+        style={{
+          minHeight: 44,
+          padding: 14,
+          borderRadius: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#000',
+        }}
       >
         <Text style={{ color: '#fff', fontWeight: '700' }}>夜のしめを保存して戻る</Text>
       </Pressable>
@@ -211,7 +219,16 @@ export default function NightScreen() {
             );
           }
         }}
-        style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#ddd' }}
+        style={{
+          minHeight: 44,
+          padding: 14,
+          borderRadius: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+          borderWidth: 1,
+          borderColor: '#ddd',
+        }}
       >
         <Text style={{ fontWeight: '700' }}>今日の夜チェックをリセット</Text>
       </Pressable>

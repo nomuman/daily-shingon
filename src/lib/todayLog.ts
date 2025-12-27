@@ -1,5 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { SanmitsuKey } from '../types/curriculum';
+import { markActive } from './engagement';
+import { toISODateLocal } from './date';
+import { getJSON, removeItem, setJSON } from './storage';
 
 export type TodayActionSelection = {
   selectedKey: SanmitsuKey;
@@ -10,28 +12,12 @@ export type TodayActionSelection = {
 
 const KEY_PREFIX = 'todayLog:action:'; // + YYYY-MM-DD
 
-function toISODateLocal(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
 function keyFor(date = new Date()): string {
   return `${KEY_PREFIX}${toISODateLocal(date)}`;
 }
 
 export async function getTodayActionSelection(date = new Date()): Promise<TodayActionSelection | null> {
-  const k = keyFor(date);
-  const raw = await AsyncStorage.getItem(k);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw) as TodayActionSelection;
-  } catch {
-    // 破損してたら消しておく（クラッシュ回避）
-    await AsyncStorage.removeItem(k);
-    return null;
-  }
+  return getJSON<TodayActionSelection>(keyFor(date));
 }
 
 export async function setTodayActionSelection(
@@ -44,9 +30,10 @@ export async function setTodayActionSelection(
     savedAtISO: new Date().toISOString(),
   };
   // AsyncStorage は value が string なので JSON.stringify で保存
-  await AsyncStorage.setItem(k, JSON.stringify(payload));
+  await setJSON(k, payload);
+  await markActive(date);
 }
 
 export async function clearTodayActionSelection(date = new Date()): Promise<void> {
-  await AsyncStorage.removeItem(keyFor(date));
+  await removeItem(keyFor(date));
 }

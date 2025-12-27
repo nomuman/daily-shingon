@@ -1,4 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { markActive } from './engagement';
+import { toISODateLocal } from './date';
+import { getJSON, removeItem, setJSON } from './storage';
 
 export type NightLog = {
   dateISO: string; // YYYY-MM-DD（ローカル日付）
@@ -11,13 +13,6 @@ export type NightLog = {
 
 const KEY_PREFIX = 'nightLog:'; // + YYYY-MM-DD
 
-function toISODateLocal(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
 function keyFor(date = new Date()): string {
   return `${KEY_PREFIX}${toISODateLocal(date)}`;
 }
@@ -28,15 +23,7 @@ export function isNightComplete(log: NightLog | null): boolean {
 }
 
 export async function getNightLog(date = new Date()): Promise<NightLog | null> {
-  const raw = await AsyncStorage.getItem(keyFor(date));
-  if (!raw) return null;
-
-  try {
-    return JSON.parse(raw) as NightLog;
-  } catch {
-    await AsyncStorage.removeItem(keyFor(date));
-    return null;
-  }
+  return getJSON<NightLog>(keyFor(date));
 }
 
 export async function setNightLog(
@@ -52,9 +39,10 @@ export async function setNightLog(
     savedAtISO: new Date().toISOString(),
   };
 
-  await AsyncStorage.setItem(keyFor(date), JSON.stringify(payload));
+  await setJSON(keyFor(date), payload);
+  await markActive(date);
 }
 
 export async function clearNightLog(date = new Date()): Promise<void> {
-  await AsyncStorage.removeItem(keyFor(date));
+  await removeItem(keyFor(date));
 }

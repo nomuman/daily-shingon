@@ -87,11 +87,11 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## C. アーキテクチャ（迷子を作らない）
 
 ### C1. ディレクトリ規約（固定）
-- [ ] `app/`：画面（ルーティング）
-- [ ] `src/content/`：コンテンツ読み込み（JSON→型）
-- [ ] `src/lib/`：ロジック（Day計算/保存/通知）
-- [ ] `src/components/`：UI部品（LearnCard/Button等）
-- [ ] `src/types/`：TypeScript型
+- [x] `app/`：画面（ルーティング）
+- [x] `src/content/`：コンテンツ読み込み（JSON→型）
+- [x] `src/lib/`：ロジック（Day計算/保存/通知）
+- [x] `src/components/`：UI部品（LearnCard/Button等）
+- [x] `src/types/`：TypeScript型
 
 **DoD**
 - “どこに何を書くか”が README/CONTRIBUTING で説明されている
@@ -99,9 +99,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### C2. 型安全（落ちないアプリ）
-- [ ] `Curriculum30` / `CurriculumDay` の型を固定
-- [ ] JSONの必須項目欠けを検知（起動時にvalidateしてログ→フォールバック）
-- [ ] `SanmitsuKey = body|speech|mind` を全体で統一
+- [x] `Curriculum30` / `CurriculumDay` の型を固定
+- [x] JSONの必須項目欠けを検知（起動時にvalidateしてログ→フォールバック）
+- [x] `SanmitsuKey = body|speech|mind` を全体で統一
 
 **DoD**
 - `content/curriculum/30days.ja.json` の破損があっても即クラッシュしない
@@ -111,9 +111,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## D. コンテンツ（30日カリキュラム）の実装
 
 ### D1. JSON取り込み
-- [ ] `content/curriculum/30days.ja.json` をリポジトリに配置
-- [ ] `resolveJsonModule` の有効化（TSでimport）※必要なら
-- [ ] `getDayCard(day)` を実装し 1..30 のクランプ保証
+- [x] `content/curriculum/30days.ja.json` をリポジトリに配置
+- [x] `resolveJsonModule` の有効化（TSでimport）※必要なら
+- [x] `getDayCard(day)` を実装し 1..30 のクランプ保証
 
 **DoD**
 - Day1/Day30/Day999 を渡しても常にカードが返る
@@ -121,8 +121,8 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### D2. 出典（sources）の扱い
-- [ ] JSONにある `sources` はIDで保持し、画面ではID表示（まずは）
-- [ ] 将来URLを表示する場合は「アプリ内でURL直書きしない」方針を守る（別画面で表示）
+- [x] JSONにある `sources` はIDで保持し、画面ではID表示（まずは）
+- [x] 将来URLを表示する場合は「アプリ内でURL直書きしない」方針を守る（別画面で表示）
 
 **DoD**
 - Learn画面に「参考：SRC_...」が表示される
@@ -132,11 +132,11 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## E. コアUX（朝・学び・夜）※このプロダクトの命
 
 ### E1. 画面の最小セット
-- [ ] Home（今日の状況が1秒でわかる）
-- [ ] Learn（今日のカード）
-- [ ] Morning（身/口/意の“短い整え”）
-- [ ] Night（懺悔→発願→回向）
-- [ ] Settings（通知・開始日リセット・問い合わせ等）
+- [x] Home（今日の状況が1秒でわかる）
+- [x] Learn（今日のカード）
+- [x] Morning（身/口/意の“短い整え”）
+- [x] Night（懺悔→発願→回向）
+- [x] Settings（通知・開始日リセット・問い合わせ等）
 
 **DoD**
 - どの画面も「次に何をすればいいか」が1つだけ目立つ
@@ -144,9 +144,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### E2. “復帰を称える”の実装（重要）
-- [ ] 連続日数より「戻れた」をメッセージ優先
-- [ ] 途切れた翌日は「また始めた」を出す（スコアで煽らない）
-- [ ] Day31以降は“完走後モード”（固定メッセージ + 任意でリセット）
+- [x] 連続日数より「戻れた」をメッセージ優先
+- [x] 途切れた翌日は「また始めた」を出す（スコアで煽らない）
+- [x] Day31以降は“完走後モード”（固定メッセージ + 任意でリセット）
 
 **DoD**
 - 3日空けてもアプリが責めない（UX文言レビュー済）
@@ -154,9 +154,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### E3. タップ領域・可用性
-- [ ] 主要ボタンは最低 44x44pt を満たす :contentReference[oaicite:18]{index=18}
-- [ ] 1画面のPrimary CTAは原則1つ（迷わせない）
-- [ ] 長文は避け、スクロールが必要なら見出しで区切る
+- [x] 主要ボタンは最低 44x44pt を満たす :contentReference[oaicite:18]{index=18}
+- [x] 1画面のPrimary CTAは原則1つ（迷わせない）
+- [x] 長文は避け、スクロールが必要なら見出しで区切る
 
 **DoD**
 - 片手操作で誤タップしにくい
@@ -166,16 +166,16 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## F. データ永続化（ローカル保存）
 
 ### F1. 保存するデータ定義（最小）
-- [ ] curriculum startDate（YYYY-MM-DD）
-- [ ] 今日選んだ「行い」(body/speech/mind + text)
-- [ ] 朝チェック（身/口/意：done/時刻）
-- [ ] 夜ログ（懺悔/発願/回向：選択 + メモ任意）
+- [x] curriculum startDate（YYYY-MM-DD）
+- [x] 今日選んだ「行い」(body/speech/mind + text)
+- [x] 朝チェック（身/口/意：done/時刻）
+- [x] 夜ログ（懺悔/発願/回向：選択 + メモ任意）
 
 ### F2. AsyncStorage 実装
-- [ ] Expo推奨手順で AsyncStorage を導入 :contentReference[oaicite:19]{index=19}
-- [ ] Key命名を固定（例：`curriculum30:startDateISO`）
-- [ ] すべての read/write を `src/lib/storage.ts` に集約
-- [ ] マイグレーション方針（将来SQLiteに移行も視野）  
+- [x] Expo推奨手順で AsyncStorage を導入 :contentReference[oaicite:19]{index=19}
+- [x] Key命名を固定（例：`curriculum30:startDateISO`）
+- [x] すべての read/write を `src/lib/storage.ts` に集約
+- [x] マイグレーション方針（将来SQLiteに移行も視野）  
   - ExpoはStore data guideで用途別選択を案内 :contentReference[oaicite:20]{index=20}
 
 **DoD**
@@ -186,10 +186,10 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## G. 通知（継続の背骨）
 
 ### G1. expo-notifications 導入
-- [ ] `expo-notifications` の導入・権限リクエスト :contentReference[oaicite:21]{index=21}
-- [ ] 朝通知（例：7:30）/ 夜通知（例：21:30）をスケジュール
-- [ ] スケジュール内容を Settings で ON/OFF 可能にする
-- [ ] 権限拒否時のフォールバック（設定アプリへ誘導文言）
+- [x] `expo-notifications` の導入・権限リクエスト :contentReference[oaicite:21]{index=21}
+- [x] 朝通知（例：7:30）/ 夜通知（例：21:30）をスケジュール
+- [x] スケジュール内容を Settings で ON/OFF 可能にする
+- [x] 権限拒否時のフォールバック（設定アプリへ誘導文言）
 
 **DoD**
 - 実機で「指定時刻」にローカル通知が届く（iOS/Android） :contentReference[oaicite:22]{index=22}
@@ -199,9 +199,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## H. ルーティング（Expo Router）
 
 ### H1. ルーティング規約
-- [ ] `app/(tabs)/_layout.tsx` でTabsを定義 :contentReference[oaicite:23]{index=23}
-- [ ] Root `app/_layout.tsx` の責務を理解 :contentReference[oaicite:24]{index=24}
-- [ ] NotFound（`+not-found.tsx`） :contentReference[oaicite:25]{index=25}
+- [x] `app/(tabs)/_layout.tsx` でTabsを定義 :contentReference[oaicite:23]{index=23}
+- [x] Root `app/_layout.tsx` の責務を理解 :contentReference[oaicite:24]{index=24}
+- [x] NotFound（`+not-found.tsx`） :contentReference[oaicite:25]{index=25}
 
 **DoD**
 - 画面追加で迷わない（“ファイルを作ればルートになる”を体得）
@@ -233,9 +233,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## J. 仕上げ品質（最高のアプリにする）
 
 ### J1. アクセシビリティ（最低限）
-- [ ] フォントサイズを固定しすぎない（拡大で破綻しない）
-- [ ] 重要ボタンに明確なラベル
-- [ ] コントラスト不足のテキストを作らない
+- [x] フォントサイズを固定しすぎない（拡大で破綻しない）
+- [x] 重要ボタンに明確なラベル
+- [x] コントラスト不足のテキストを作らない
 
 **DoD**
 - 文字サイズを大きくしても主要導線が壊れない
@@ -243,9 +243,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### J2. パフォーマンス（最初から守る）
-- [ ] 1画面で過剰な再レンダリングをしない（状態は局所化）
-- [ ] JSONは1回ロードして使い回す
-- [ ] ログ一覧は必要になったら仮想化（FlatList）
+- [x] 1画面で過剰な再レンダリングをしない（状態は局所化）
+- [x] JSONは1回ロードして使い回す
+- [x] ログ一覧は必要になったら仮想化（FlatList）
 
 **DoD**
 - スクロールが引っかからない
@@ -253,9 +253,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ---
 
 ### J3. セキュリティ/プライバシー（まずは“やらない”を決める）
-- [ ] 個人情報を収集しない（MVPではログは端末内のみ）
-- [ ] 課金やアカウント導入は次フェーズ（先にUX完成）
-- [ ] 保存データに機密が出るなら SecureStore 検討（必要になったら） :contentReference[oaicite:30]{index=30}
+- [x] 個人情報を収集しない（MVPではログは端末内のみ）
+- [x] 課金やアカウント導入は次フェーズ（先にUX完成）
+- [x] 保存データに機密が出るなら SecureStore 検討（必要になったら） :contentReference[oaicite:30]{index=30}
 
 **DoD**
 - “収集しない設計”が docs に明記されている
@@ -265,9 +265,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## K. PR運用（ジュニアでも崩れない）
 
 ### K1. ブランチ・PRテンプレ
-- [ ] 1PRは小さく（画面1つ or ロジック1つ）
-- [ ] PRテンプレ：目的 / 変更点 / 動作確認 / スクショ
-- [ ] Reviewerが見る観点：UX / 例外 / 永続化 / 文言
+- [x] 1PRは小さく（画面1つ or ロジック1つ）
+- [x] PRテンプレ：目的 / 変更点 / 動作確認 / スクショ
+- [x] Reviewerが見る観点：UX / 例外 / 永続化 / 文言
 
 **DoD**
 - PRが「何をしたか」3分で理解できる
@@ -277,25 +277,25 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ## L. 具体タスク分割（実装順・MECE）
 
 ### L1. フェーズ1（表示だけ）
-- [ ] Learn画面：今日のDayカード表示（JSON import）
-- [ ] Day計算：startDate保存＋day算出（AsyncStorage）
-- [ ] NotFound導入
-- [ ] UI部品：Card / Button 最小
+- [x] Learn画面：今日のDayカード表示（JSON import）
+- [x] Day計算：startDate保存＋day算出（AsyncStorage）
+- [x] NotFound導入
+- [x] UI部品：Card / Button 最小
 
 ### L2. フェーズ2（行動の保存）
-- [ ] “今日の行い”選択→保存
-- [ ] Homeに今日の行い表示
-- [ ] 朝チェック（身/口/意 3つ）保存
-- [ ] 夜（懺悔/発願/回向）保存
+- [x] “今日の行い”選択→保存
+- [x] Homeに今日の行い表示
+- [x] 朝チェック（身/口/意 3つ）保存
+- [x] 夜（懺悔/発願/回向）保存
 
 ### L3. フェーズ3（継続装置）
-- [ ] ローカル通知（朝/夜）設定
-- [ ] Settingsで通知ON/OFF
-- [ ] 途切れ→復帰メッセージ
+- [x] ローカル通知（朝/夜）設定
+- [x] Settingsで通知ON/OFF
+- [x] 途切れ→復帰メッセージ
 
 ### L4. フェーズ4（リリース品質）
-- [ ] Jest（day計算 / storage）テスト
-- [ ] ESLint/Prettier強制
+- [x] Jest（day計算 / storage）テスト
+- [x] ESLint/Prettier強制
 - [ ] EAS preview build配布
 - [ ] EAS Update導入（運用設計）
 

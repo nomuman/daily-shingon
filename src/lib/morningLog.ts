@@ -1,4 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { markActive } from './engagement';
+import { toISODateLocal } from './date';
+import { getJSON, removeItem, setJSON } from './storage';
 
 export type MorningLog = {
   dateISO: string; // YYYY-MM-DD（ローカル日付）
@@ -10,13 +12,6 @@ export type MorningLog = {
 
 const KEY_PREFIX = 'morningLog:'; // + YYYY-MM-DD
 
-function toISODateLocal(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
 function keyFor(date = new Date()): string {
   return `${KEY_PREFIX}${toISODateLocal(date)}`;
 }
@@ -27,16 +22,7 @@ export function isMorningComplete(log: MorningLog | null): boolean {
 }
 
 export async function getMorningLog(date = new Date()): Promise<MorningLog | null> {
-  const raw = await AsyncStorage.getItem(keyFor(date));
-  if (!raw) return null;
-
-  try {
-    return JSON.parse(raw) as MorningLog;
-  } catch {
-    // 破損してたら削除（クラッシュ回避）
-    await AsyncStorage.removeItem(keyFor(date));
-    return null;
-  }
+  return getJSON<MorningLog>(keyFor(date));
 }
 
 export async function setMorningLog(
@@ -51,9 +37,10 @@ export async function setMorningLog(
     savedAtISO: new Date().toISOString(),
   };
 
-  await AsyncStorage.setItem(keyFor(date), JSON.stringify(payload));
+  await setJSON(keyFor(date), payload);
+  await markActive(date);
 }
 
 export async function clearMorningLog(date = new Date()): Promise<void> {
-  await AsyncStorage.removeItem(keyFor(date));
+  await removeItem(keyFor(date));
 }

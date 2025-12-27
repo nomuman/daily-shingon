@@ -54,3 +54,8 @@
 ## 5. 互換性（将来）
 - コンテンツは `content/curriculum/30days.ja.json` を基本とし、EAS Update で更新できる前提
 - スキーマ変更は `contentVersion` とマイグレーション関数で吸収
+
+## 6. マイグレーション方針（AsyncStorage → SQLite）
+- まずは `src/lib/storage.ts` に read/write を集約し、呼び出し側を薄く保つ
+- 移行時は新ストア（SQLite）を優先し、旧キーは読み込み後に段階削除
+- 破壊的変更は `contentVersion` / `settingsVersion` を追加して段階的に変換する

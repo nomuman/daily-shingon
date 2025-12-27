@@ -115,6 +115,7 @@ export default function LearnScreen() {
               accessibilityState={{ selected: isSelected }}
               style={[
                 {
+                  minHeight: 44,
                   paddingVertical: 12,
                   paddingHorizontal: 12,
                   borderRadius: 12,
@@ -180,7 +181,14 @@ export default function LearnScreen() {
             );
           }
         }}
-        style={{ padding: 14, borderRadius: 12, alignItems: 'center', backgroundColor: '#000' }}
+        style={{
+          minHeight: 44,
+          padding: 14,
+          borderRadius: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#000',
+        }}
       >
         <Text style={{ color: '#fff', fontWeight: '700' }}>今日はこれでいく</Text>
       </Pressable>

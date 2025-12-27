@@ -1,10 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30.ja';
+import { getReturnStatus } from '../../lib/engagement';
 import { getProgramDayInfo } from '../../lib/programDay';
 
 import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
@@ -15,12 +16,14 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const [dayNumber, setDayNumber] = useState<number>(1);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
 
   const [todayAction, setTodayAction] = useState<{ key: string; text: string } | null>(null);
 
   const [morningDone, setMorningDone] = useState<boolean>(false);
   const [nightDone, setNightDone] = useState<boolean>(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
@@ -28,6 +31,7 @@ export default function HomeScreen() {
     try {
       const info = await getProgramDayInfo();
       setDayNumber(info.dayNumber);
+      setIsComplete(info.isComplete);
 
       const card = getDayCard(info.dayNumber);
       setTitle(card.title);
@@ -40,6 +44,15 @@ export default function HomeScreen() {
 
       const n = await getNightLog();
       setNightDone(isNightComplete(n));
+
+      const returnStatus = await getReturnStatus();
+      if (info.isComplete) {
+        setStatusMessage('完走後モードです。必要なら設定からリセットできます。');
+      } else if (returnStatus.isReturn) {
+        setStatusMessage('おかえり。戻れたら十分。今日は短くでもOK。');
+      } else {
+        setStatusMessage(null);
+      }
     } catch {
       setError('保存データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。');
     }
@@ -52,6 +65,14 @@ export default function HomeScreen() {
   );
   // useFocusEffectは「画面がフォーカスされた時に処理を走らせる」ためのフック（公式）。:contentReference[oaicite:5]{index=5}
 
+  type NextRoute = '/morning' | '/learn' | '/night';
+  const nextAction = useMemo<{ label: string; route: NextRoute | null }>(() => {
+    if (!morningDone) return { label: '朝を整える', route: '/morning' };
+    if (!todayAction) return { label: '学びを見る', route: '/learn' };
+    if (!nightDone) return { label: '夜を閉じる', route: '/night' };
+    return { label: '今日はここまで', route: null };
+  }, [morningDone, nightDone, todayAction]);
+
   if (error) {
     return <ErrorState message={error} onRetry={refresh} />;
   }
@@ -59,6 +80,56 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1, padding: 16, gap: 12 }}>
       <Text style={{ fontSize: 20, fontWeight: '700' }}>Home</Text>
+
+      {!!statusMessage && (
+        <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
+          <Text style={{ fontSize: 16, fontWeight: '700' }}>メッセージ</Text>
+          <Text style={{ lineHeight: 20 }}>{statusMessage}</Text>
+          {isComplete && (
+            <Pressable
+              onPress={() => router.push('/settings')}
+              style={{
+                minHeight: 44,
+                paddingHorizontal: 12,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#eee',
+              }}
+            >
+              <Text style={{ fontWeight: '700' }}>設定でリセット</Text>
+            </Pressable>
+          )}
+        </View>
+      )}
+
+      <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
+        <Text style={{ opacity: 0.7 }}>次にやること</Text>
+        <Text style={{ fontSize: 16, fontWeight: '700' }}>{nextAction.label}</Text>
+        <Pressable
+          disabled={!nextAction.route}
+          onPress={() => {
+            if (nextAction.route) router.push(nextAction.route);
+          }}
+          style={[
+            {
+              minHeight: 44,
+              paddingHorizontal: 12,
+              borderRadius: 12,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#000',
+            },
+            !nextAction.route && {
+              backgroundColor: '#ddd',
+            },
+          ]}
+        >
+          <Text style={{ color: nextAction.route ? '#fff' : '#555', fontWeight: '700' }}>
+            {nextAction.route ? nextAction.label : '今日は十分できています'}
+          </Text>
+        </Pressable>
+      </View>
 
       <View style={{ padding: 16, borderRadius: 12, backgroundColor: '#fff', gap: 8 }}>
         <Text style={{ opacity: 0.7 }}>今日</Text>
@@ -74,7 +145,14 @@ export default function HomeScreen() {
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
           <Pressable
             onPress={() => router.push('/morning')}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#000' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#000',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ color: '#fff', fontWeight: '700' }}>
               {morningDone ? '見直す' : 'やる'}
@@ -92,7 +170,16 @@ export default function HomeScreen() {
                 );
               }
             }}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#fff',
+              borderWidth: 1,
+              borderColor: '#ddd',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ fontWeight: '700' }}>リセット</Text>
           </Pressable>
@@ -115,7 +202,14 @@ export default function HomeScreen() {
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
           <Pressable
             onPress={() => router.push('/learn')}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#000' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#000',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ color: '#fff', fontWeight: '700' }}>Learnへ</Text>
           </Pressable>
@@ -131,7 +225,16 @@ export default function HomeScreen() {
                 );
               }
             }}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#fff',
+              borderWidth: 1,
+              borderColor: '#ddd',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ fontWeight: '700' }}>選択を解除</Text>
           </Pressable>
@@ -146,7 +249,14 @@ export default function HomeScreen() {
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 8 }}>
           <Pressable
             onPress={() => router.push('/night')}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#000' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#000',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ color: '#fff', fontWeight: '700' }}>
               {nightDone ? '見直す' : 'やる'}
@@ -164,7 +274,16 @@ export default function HomeScreen() {
                 );
               }
             }}
-            style={{ padding: 12, borderRadius: 12, backgroundColor: '#ddd' }}
+            style={{
+              minHeight: 44,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: '#fff',
+              borderWidth: 1,
+              borderColor: '#ddd',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             <Text style={{ fontWeight: '700' }}>リセット</Text>
           </Pressable>
