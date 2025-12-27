@@ -26,23 +26,36 @@ function collectText(node: JsonNode): string[] {
 }
 
 describe('LearnCard', () => {
-  it('renders key content for the day card', () => {
+  it('renders key content for the day card', async () => {
     const card = getDayCard(1);
-    const tree = renderer.create(
-      <LearnCard
-        dayNumber={1}
-        card={card}
-        isComplete={false}
-        sourceLinks={[{ id: 'SRC_TEST' }]}
-      />,
-    );
+    let tree: renderer.ReactTestRenderer | undefined;
 
-    const text = collectText(tree.toJSON());
-    const joined = text.join(' ');
+    await renderer.act(async () => {
+      tree = renderer.create(
+        <LearnCard
+          dayNumber={1}
+          card={card}
+          isComplete={false}
+          sourceLinks={[{ id: 'SRC_TEST' }]}
+        />,
+      );
+    });
+
+    if (!tree) {
+      throw new Error('LearnCard renderer was not created');
+    }
+
+    const mounted = tree;
+    const text = collectText(mounted.toJSON() as JsonNode);
+    const joined = text.join(' ').replace(/\s+/g, ' ').trim();
 
     expect(joined).toContain('Day 1 / 30');
     expect(joined).toContain(card.title);
     expect(joined).toContain(card.nightQuestion);
     expect(joined).toContain('SRC_TEST');
+
+    await renderer.act(async () => {
+      mounted.unmount();
+    });
   });
 });
