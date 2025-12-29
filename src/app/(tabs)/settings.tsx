@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../../components/ErrorState';
+import type { LanguagePreference } from '../../lib/i18n/storage';
+import { getLanguagePreference, setLanguagePreference } from '../../lib/i18n';
 import {
   cancelDailyReminders,
   ensureNotificationPermission,
@@ -39,6 +42,7 @@ const entranceStyle = (anim: Animated.Value) => ({
 });
 
 export default function SettingsScreen() {
+  const { t } = useTranslation('common');
   const [loading, setLoading] = useState(true);
   const [settings, setLocalSettings] = useState(DEFAULT_SETTINGS);
   const [morningInput, setMorningInput] = useState(DEFAULT_SETTINGS.notifications.morningTime);
@@ -47,6 +51,7 @@ export default function SettingsScreen() {
   const [showNightPicker, setShowNightPicker] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [languagePref, setLanguagePref] = useState<LanguagePreference>('system');
 
   const headerAnim = useRef(new Animated.Value(0)).current;
   const notifyAnim = useRef(new Animated.Value(0)).current;
@@ -63,17 +68,19 @@ export default function SettingsScreen() {
       setMorningInput(saved.notifications.morningTime);
       setNightInput(saved.notifications.nightTime);
     } catch {
-      setFatalError(
-        '設定の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-      );
+      setFatalError(t('errors.settingsLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     void load();
   }, [load]);
+
+  useEffect(() => {
+    getLanguagePreference().then(setLanguagePref);
+  }, []);
 
   useEffect(() => {
     Animated.stagger(140, [
@@ -112,7 +119,7 @@ export default function SettingsScreen() {
 
   const applyTime = async (field: TimeField, value: string) => {
     if (!validateTime(value)) {
-      setNotice('時刻は24時間表記の HH:mm で入力してください。');
+      setNotice(t('settings.time.invalid'));
       return;
     }
 
@@ -143,7 +150,7 @@ export default function SettingsScreen() {
           notifications: { ...next.notifications, ...ids },
         });
       } catch {
-        setNotice('通知の再設定に失敗しました。再試行してください。');
+        setNotice(t('settings.notifications.rescheduleFail'));
       }
     } else {
       await persistSettings(next);
@@ -179,7 +186,7 @@ export default function SettingsScreen() {
           },
         });
       } catch {
-        setNotice('通知の停止に失敗しました。');
+        setNotice(t('settings.notifications.stopFail'));
       }
       return;
     }
@@ -194,7 +201,7 @@ export default function SettingsScreen() {
           permissionStatus: status,
         },
       });
-      setNotice('通知の許可が必要です。設定アプリから許可してください。');
+      setNotice(t('settings.notifications.permissionRequired'));
       return;
     }
 
@@ -213,7 +220,7 @@ export default function SettingsScreen() {
         },
       });
     } catch {
-      setNotice('通知の設定に失敗しました。');
+      setNotice(t('settings.notifications.scheduleFail'));
     }
   };
 
@@ -221,24 +228,24 @@ export default function SettingsScreen() {
     try {
       await Linking.openSettings();
     } catch {
-      setNotice('設定アプリを開けませんでした。');
+      setNotice(t('settings.systemSettingsFail'));
     }
   };
 
   const handleReset = () => {
     Alert.alert(
-      '開始日をリセット',
-      '開始日・今日の行い・朝/夜ログ・復帰判定を削除します。よろしいですか？',
+      t('settings.reset.title'),
+      t('settings.reset.body'),
       [
-        { text: 'キャンセル', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'リセットする',
+          text: t('settings.reset.confirm'),
           style: 'destructive',
           onPress: async () => {
             try {
               await resetAllProgress();
             } catch {
-              setNotice('リセットに失敗しました。');
+              setNotice(t('settings.reset.fail'));
             }
           },
         },
@@ -247,13 +254,27 @@ export default function SettingsScreen() {
   };
 
   const settingsSummary = useMemo(() => {
-    return reminderEnabled ? '通知ON' : '通知OFF';
-  }, [reminderEnabled]);
+    return reminderEnabled ? t('settings.notifications.on') : t('settings.notifications.off');
+  }, [reminderEnabled, t]);
+
+  const languageOptions = useMemo(
+    () => [
+      { value: 'system' as const, label: t('settings.language.system') },
+      { value: 'ja' as const, label: t('settings.language.japanese') },
+      { value: 'en' as const, label: t('settings.language.english') },
+    ],
+    [t],
+  );
+
+  const handleLanguageSelect = async (value: LanguagePreference) => {
+    setLanguagePref(value);
+    await setLanguagePreference(value);
+  };
 
   if (loading) {
     return (
       <View style={styles.loading}>
-        <Text style={styles.loadingText}>Loading...</Text>
+        <Text style={styles.loadingText}>{t('common.loadingSimple')}</Text>
       </View>
     );
   }
@@ -266,16 +287,14 @@ export default function SettingsScreen() {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
-        <Text style={styles.kicker}>設定</Text>
+        <Text style={styles.kicker}>{t('settings.kicker')}</Text>
         <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>日々の整えを静かに支える</Text>
+          <Text style={styles.headerTitle}>{t('settings.headerTitle')}</Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{settingsSummary}</Text>
           </View>
         </View>
-        <Text style={styles.headerBody}>
-          通知や開始日の調整はここから。必要なときだけ、シンプルに。
-        </Text>
+        <Text style={styles.headerBody}>{t('settings.headerBody')}</Text>
       </Animated.View>
 
       {!!notice && (
@@ -285,11 +304,39 @@ export default function SettingsScreen() {
       )}
 
       <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
-        <Text style={styles.sectionTitle}>通知</Text>
-        <Text style={styles.sectionSubtitle}>状態：{settingsSummary}</Text>
+        <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
+        <Text style={styles.sectionSubtitle}>{t('settings.language.description')}</Text>
+
+        <View style={styles.optionList}>
+          {languageOptions.map((option, index) => (
+            <Pressable
+              key={option.value}
+              onPress={() => handleLanguageSelect(option.value)}
+              style={({ pressed }) => [
+                styles.optionRow,
+                index > 0 && styles.optionRowDivider,
+                pressed && styles.optionRowPressed,
+              ]}
+            >
+              <View style={styles.radioOuter}>
+                {languagePref === option.value && <View style={styles.radioInner} />}
+              </View>
+              <Text style={styles.optionText}>{option.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <Text style={styles.sectionHint}>{t('settings.language.note')}</Text>
+      </Animated.View>
+
+      <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+        <Text style={styles.sectionTitle}>{t('settings.notifications.title')}</Text>
+        <Text style={styles.sectionSubtitle}>
+          {t('common.statusWithValue', { value: settingsSummary })}
+        </Text>
 
         <View style={styles.switchRow}>
-          <Text style={styles.switchLabel}>朝/夜リマインダー</Text>
+          <Text style={styles.switchLabel}>{t('settings.notifications.toggle')}</Text>
           <Switch
             value={reminderEnabled}
             onValueChange={toggleReminders}
@@ -304,23 +351,23 @@ export default function SettingsScreen() {
         {permissionStatus === 'denied' && (
           <View style={styles.inlineNotice}>
             <Text style={styles.inlineNoticeText}>
-              通知が拒否されています。設定アプリで許可してください。
+              {t('settings.notifications.permissionDenied')}
             </Text>
             <Pressable
               onPress={openSystemSettings}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>設定アプリを開く</Text>
+              <Text style={styles.ghostButtonText}>{t('settings.notifications.openSettings')}</Text>
             </Pressable>
           </View>
         )}
       </Animated.View>
 
       <Animated.View style={[styles.card, entranceStyle(timeAnim)]}>
-        <Text style={styles.sectionTitle}>通知時刻</Text>
+        <Text style={styles.sectionTitle}>{t('settings.time.title')}</Text>
 
         <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>朝（HH:mm）</Text>
+          <Text style={styles.timeLabel}>{t('settings.time.morning')}</Text>
           <Pressable
             onPress={() => setShowMorningPicker(true)}
             style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
@@ -340,13 +387,13 @@ export default function SettingsScreen() {
               onPress={() => setShowMorningPicker(false)}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>完了</Text>
+              <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
             </Pressable>
           )}
         </View>
 
         <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>夜（HH:mm）</Text>
+          <Text style={styles.timeLabel}>{t('settings.time.night')}</Text>
           <Pressable
             onPress={() => setShowNightPicker(true)}
             style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
@@ -366,26 +413,26 @@ export default function SettingsScreen() {
               onPress={() => setShowNightPicker(false)}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>完了</Text>
+              <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
             </Pressable>
           )}
         </View>
       </Animated.View>
 
       <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
-        <Text style={styles.sectionTitle}>リセット</Text>
-        <Text style={styles.sectionSubtitle}>開始日と当日の記録を削除します。戻せません。</Text>
+        <Text style={styles.sectionTitle}>{t('settings.reset.sectionTitle')}</Text>
+        <Text style={styles.sectionSubtitle}>{t('settings.reset.sectionBody')}</Text>
         <Pressable
           onPress={handleReset}
           style={({ pressed }) => [styles.dangerButton, pressed && styles.dangerButtonPressed]}
         >
-          <Text style={styles.dangerButtonText}>開始日をリセット</Text>
+          <Text style={styles.dangerButtonText}>{t('settings.reset.button')}</Text>
         </Pressable>
       </Animated.View>
 
       <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
-        <Text style={styles.sectionTitle}>お問い合わせ</Text>
-        <Text style={styles.sectionSubtitle}>お問い合わせ先は後で設定します。</Text>
+        <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
+        <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
         {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
       </Animated.View>
       </ScrollView>
@@ -487,6 +534,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: theme.font.body,
   },
+  sectionHint: {
+    color: theme.colors.inkMuted,
+    fontFamily: theme.font.body,
+    marginTop: theme.spacing.sm,
+  },
   switchRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -504,6 +556,48 @@ const styles = StyleSheet.create({
   inlineNoticeText: {
     color: theme.colors.inkMuted,
     fontFamily: theme.font.body,
+  },
+  optionList: {
+    marginTop: theme.spacing.sm,
+    borderRadius: theme.radius.md,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
+    overflow: 'hidden',
+  },
+  optionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+  },
+  optionRowDivider: {
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.border,
+  },
+  optionRowPressed: {
+    opacity: 0.85,
+  },
+  optionText: {
+    fontSize: 15,
+    color: theme.colors.ink,
+    fontFamily: theme.font.body,
+  },
+  radioOuter: {
+    width: 22,
+    height: 22,
+    borderRadius: 999,
+    borderWidth: 2,
+    borderColor: theme.colors.inkMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: theme.spacing.sm,
+  },
+  radioInner: {
+    width: 10,
+    height: 10,
+    borderRadius: 999,
+    backgroundColor: theme.colors.ink,
   },
   ghostButton: {
     alignSelf: 'flex-start',

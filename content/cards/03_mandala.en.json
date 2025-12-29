@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "mandala",
+    "title": "Mandala (Learning Through Symbols)",
+    "description": "Cards that follow official explanations and connect mandala study to practice rather than getting lost in iconography details.",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "mandala.what_is_mandala",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Mandala: a clear expression of esoteric teachings (official)",
+      "summary": "Toji (official) states that a mandala expresses esoteric teachings in an easy-to-understand form.",
+      "body_md": "Toji (official) explains that a mandala expresses esoteric teachings in a clear, accessible form.\n\nIn this app, it is not about memorizing images, but about asking what today's actions express.",
+      "micro_practice": {
+        "morning": "Read one learning point -> choose one action (see -> do).",
+        "day": "Align the invisible mind through words (speech) and posture (body).",
+        "night": "Write one line: what did today's actions express?"
+      },
+      "reflection_questions": ["What teaching did today's actions express?"],
+      "tags": ["mandala", "basics", "Toji"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.taizo_kongo",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Womb Realm and Diamond Realm: conveying principle and wisdom (official)",
+      "summary": "Toji (official) explains that the two mandalas convey the teachings of principle and wisdom.",
+      "body_md": "Toji (official) explains that the mandalas include the Womb Realm Mandala and the Diamond Realm Mandala, and that they convey the teachings of principle and wisdom, respectively.\n\nIn the app, translate Womb = nurture (keep going gently), Diamond = pierce through (do the chosen step).",
+      "micro_practice": {
+        "morning": "Womb: shape it so you can continue gently.",
+        "day": "Diamond: do the chosen step exactly once without fail.",
+        "night": "Choose and write which was lacking today: Womb or Diamond."
+      },
+      "reflection_questions": ["Which was stronger today: Womb (nurture) or Diamond (pierce through)?"],
+      "tags": ["mandala", "womb realm", "diamond realm"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.ryobu_mandala",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Ryobu Mandala: learn the two as a pair",
+      "summary": "Based on the official Toji explanation, design learning in pairs to avoid bias.",
+      "body_md": "Toji (official) explains the mandala as the Womb Realm and the Diamond Realm.\n\nIn app learning, we avoid digging into only one side by always pairing cards (to prevent bias).",
+      "micro_practice": {
+        "morning": "Decide whether to emphasize nurture or pierce-through today.",
+        "day": "Do the other side once as well (balance).",
+        "night": "Reflect on both in one line each."
+      },
+      "reflection_questions": ["Which side did you lean toward, and why?"],
+      "tags": ["mandala", "two realms", "balance"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.katsuma_mandala",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Karma Mandala (Three-dimensional Mandala): a plan to embody the teaching (official)",
+      "summary": "Toji (official) explains the Karma Mandala as a three-dimensional mandala.",
+      "body_md": "Toji (official) explains that the plan to embody the mandala more realistically is the Karma Mandala (commonly called a three-dimensional mandala).\n\nIn the app, the heatmap (coloring in) can be designed as a way to visualize and embody the teaching.",
+      "micro_practice": {
+        "morning": "Make today's practice visible (check it).",
+        "day": "Record one action (visualize it).",
+        "night": "Close the day with the experience of a color filling in."
+      },
+      "reflection_questions": ["Did visualization help you keep going?"],
+      "tags": ["mandala", "three-dimensional mandala", "visualization"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.dainichi_center",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Centering on Dainichi Nyorai (official explanation)",
+      "summary": "Toji (official) mentions placing Dainichi at the center in the three-dimensional mandala.",
+      "body_md": "Toji (official) explains that the lecture hall's platform presents 21 Buddhas with Dainichi Nyorai at the center (in the context of the three-dimensional mandala).\n\nIn the app, fix the center as the daily form (morning/night), and swap the surrounding pieces (learning/action) to keep continuity.",
+      "micro_practice": {
+        "morning": "Do not break the center (morning form).",
+        "day": "Swap only the surrounding action each day.",
+        "night": "Close with the center (night form)."
+      },
+      "reflection_questions": ["Where do you draw the line between the center (form) and the surroundings (variation)?"],
+      "tags": ["mandala", "Dainichi", "design"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.safe_handling",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Safety rules for handling mandala (app policy)",
+      "summary": "Avoid assertive iconography details and stay close to official explanations.",
+      "body_md": "This card is an app operation rule.\n\n- Keep iconography details within the scope of official pages\n- If you include images, clearly state the source, rights, and credit\n- Prefer source-based explanations over assertive tone\n\nNot a doctrinal claim, but a content production guide.",
+      "micro_practice": {
+        "morning": "Always check source links.",
+        "day": "Do not make cards from uncertain information.",
+        "night": "Review sources for any cards you added."
+      },
+      "reflection_questions": ["Where can you say this explanation is written?"],
+      "tags": ["operations", "sources", "safety"],
+      "sources": ["S_TOJI_MANDALA"]
+    }
+  ],
+  "bibliography": {
+    "S_TOJI_MANDALA": {
+      "title": "Three-dimensional Mandala",
+      "publisher": "Toji Temple (official)",
+      "url": "https://toji.or.jp/smp/mandala/",
+      "accessed": "2025-12-27"
+    }
+  }
+}

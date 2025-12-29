@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import { theme } from '../ui/theme';
 
 type ErrorStateProps = {
@@ -13,17 +14,21 @@ type ErrorStateProps = {
 };
 
 export default function ErrorState({
-  title = '読み込みに失敗しました',
+  title,
   message,
-  retryLabel = '再試行',
+  retryLabel,
   onRetry,
   secondaryLabel,
   onSecondaryPress,
 }: ErrorStateProps) {
+  const { t } = useTranslation('common');
+  const resolvedTitle = title ?? t('errors.defaultTitle');
+  const resolvedRetryLabel = retryLabel ?? t('common.retry');
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{resolvedTitle}</Text>
         <Text style={styles.message}>{message}</Text>
 
         {onRetry && (
@@ -31,7 +36,7 @@ export default function ErrorState({
             onPress={onRetry}
             style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
           >
-            <Text style={styles.primaryButtonText}>{retryLabel}</Text>
+            <Text style={styles.primaryButtonText}>{resolvedRetryLabel}</Text>
           </Pressable>
         )}
 

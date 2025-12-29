@@ -1,7 +1,10 @@
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { initI18n } from '../lib/i18n';
 import { theme } from '../ui/theme';
 
 Notifications.setNotificationHandler({
@@ -14,6 +17,28 @@ Notifications.setNotificationHandler({
 });
 
 export default function RootLayout() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    initI18n()
+      .then(() => mounted && setReady(true))
+      .catch(() => mounted && setReady(true));
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (!ready) {
+    return (
+      <SafeAreaProvider>
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator color={theme.colors.accent} />
+        </View>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <Stack
@@ -28,3 +53,16 @@ export default function RootLayout() {
     </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.background,
+  },
+});

@@ -2,16 +2,19 @@ import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import { theme } from '../ui/theme';
 
 export default function NotFoundScreen() {
+  const { t } = useTranslation('common');
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <View style={styles.container}>
-        <Text style={styles.title}>ページが見つかりません</Text>
-        <Text style={styles.body}>URLが間違っているか、ページが移動した可能性があります。</Text>
+        <Text style={styles.title}>{t('notFound.title')}</Text>
+        <Text style={styles.body}>{t('notFound.body')}</Text>
         <Link href="/" style={styles.link}>
-          ホームへ戻る
+          {t('notFound.backHome')}
         </Link>
       </View>
     </SafeAreaView>

@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
 import { theme } from '../ui/theme';
 
 type SearchInputProps = {
@@ -9,12 +10,15 @@ type SearchInputProps = {
 };
 
 export default function SearchInput({ value, onChangeText, placeholder }: SearchInputProps) {
+  const { t } = useTranslation('common');
+  const resolvedPlaceholder = placeholder ?? t('common.search');
+
   return (
     <View style={styles.wrap}>
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        placeholder={placeholder ?? '検索'}
+        placeholder={resolvedPlaceholder}
         placeholderTextColor={theme.colors.inkMuted}
         autoCapitalize="none"
         autoCorrect={false}

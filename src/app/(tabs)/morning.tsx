@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../../components/ErrorState';
 import {
   clearMorningLog,
@@ -16,6 +17,7 @@ type CheckKey = 'body' | 'speech' | 'mind';
 
 export default function MorningScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [loading, setLoading] = useState(true);
   const [bodyDone, setBodyDone] = useState(false);
@@ -34,13 +36,11 @@ export default function MorningScreen() {
         setMindDone(saved.mindDone);
       }
     } catch {
-      setError(
-        '朝の記録の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-      );
+      setError(t('errors.morningLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     void load();
@@ -110,34 +110,36 @@ export default function MorningScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Morning（朝の整え）</Text>
+        <Text style={styles.title}>{t('morning.title')}</Text>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>今日の方針</Text>
-          <Text style={styles.bodyText}>
-            まず「身・口・意」を整える。完璧じゃなくていい。できた分だけでOK。
+          <Text style={styles.sectionTitle}>{t('morning.policyTitle')}</Text>
+          <Text style={styles.bodyText}>{t('morning.policyBody')}</Text>
+          <Text style={styles.statusText}>
+            {t('common.statusWithValue', {
+              value: complete ? t('common.doneEmoji') : t('common.incomplete'),
+            })}
           </Text>
-          <Text style={styles.statusText}>状態：{complete ? '完了 ✅' : '未完了'}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>チェック（3つ）</Text>
+          <Text style={styles.sectionTitle}>{t('morning.checkTitle')}</Text>
 
           <Item
-            title="身（からだ）"
-            desc="姿勢を整える。深呼吸をひとつ。丁寧に動く。"
+            title={t('morning.check.body.title')}
+            desc={t('morning.check.body.desc')}
             checked={bodyDone}
             onPress={() => toggle('body')}
           />
           <Item
-            title="口（ことば）"
-            desc="ひとつだけ、やさしい言葉を選ぶ。短く、丁寧に。"
+            title={t('morning.check.speech.title')}
+            desc={t('morning.check.speech.desc')}
             checked={speechDone}
             onPress={() => toggle('speech')}
           />
           <Item
-            title="意（こころ）"
-            desc="焦りを一度おく。いまの一手に心を置く。"
+            title={t('morning.check.mind.title')}
+            desc={t('morning.check.mind.desc')}
             checked={mindDone}
             onPress={() => toggle('mind')}
           />
@@ -149,14 +151,12 @@ export default function MorningScreen() {
               await setMorningLog({ bodyDone, speechDone, mindDone });
               router.replace('/');
             } catch {
-              setError(
-                '保存に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-              );
+              setError(t('errors.saveFail'));
             }
           }}
           style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
         >
-          <Text style={styles.primaryButtonText}>朝の整えを保存して戻る</Text>
+          <Text style={styles.primaryButtonText}>{t('morning.saveButton')}</Text>
         </Pressable>
 
         <Pressable
@@ -167,14 +167,12 @@ export default function MorningScreen() {
               setSpeechDone(false);
               setMindDone(false);
             } catch {
-              setError(
-                '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-              );
+              setError(t('errors.updateFail'));
             }
           }}
           style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
         >
-          <Text style={styles.ghostButtonText}>今日の朝チェックをリセット</Text>
+          <Text style={styles.ghostButtonText}>{t('morning.resetButton')}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

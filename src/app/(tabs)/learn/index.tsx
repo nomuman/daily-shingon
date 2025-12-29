@@ -3,8 +3,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../../../components/ErrorState';
-import { curriculum30Ja, getDayCard } from '../../../content/curriculum30.ja';
+import { getCurriculum30, getDayCard } from '../../../content/curriculum30';
+import { useContentLang } from '../../../content/useContentLang';
 import { getProgramDayInfo } from '../../../lib/programDay';
 import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
 import type { CurriculumDay, SanmitsuKey } from '../../../types/curriculum';
@@ -17,6 +19,8 @@ type SelectedAction = {
 
 export default function LearnScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
+  const contentLang = useContentLang();
 
   const [loading, setLoading] = useState(true);
   const [dayInfo, setDayInfo] = useState<{ dayNumber: number; isComplete: boolean } | null>(null);
@@ -32,25 +36,30 @@ export default function LearnScreen() {
       const info = await getProgramDayInfo();
       setDayInfo({ dayNumber: info.dayNumber, isComplete: info.isComplete });
 
-      const c = getDayCard(info.dayNumber);
+      const c = getDayCard(contentLang, info.dayNumber);
       setCard(c);
 
       const saved = await getTodayActionSelection();
       if (saved) {
-        setSelected({ key: saved.selectedKey, text: saved.selectedText });
+        const matched = c.actionOptions.find((o) => o.key === saved.selectedKey);
+        if (matched) {
+          setSelected({ key: matched.key, text: matched.text });
+        } else {
+          const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
+          const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
+          setSelected({ key: c.recommendedActionKey, text: fallbackText });
+        }
       } else {
         const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
         const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
         setSelected({ key: c.recommendedActionKey, text: fallbackText });
       }
     } catch {
-      setError(
-        '学びデータの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-      );
+      setError(t('errors.learnLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [contentLang, t]);
 
   useEffect(() => {
     void load();
@@ -58,10 +67,11 @@ export default function LearnScreen() {
 
   const sourceLinks = useMemo(() => {
     if (!card?.sources?.length) return [];
+    const curriculum = getCurriculum30(contentLang);
     return card.sources
-      .map((id) => ({ id, url: curriculum30Ja.sourceIndex[id] }))
+      .map((id) => ({ id, url: curriculum.sourceIndex[id] }))
       .filter((x) => !!x.url);
-  }, [card]);
+  }, [card, contentLang]);
 
   if (loading) {
     return (
@@ -81,7 +91,7 @@ export default function LearnScreen() {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>今日のカードを読み込めなかった。</Text>
+          <Text style={styles.emptyText}>{t('learn.emptyCard')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -90,17 +100,19 @@ export default function LearnScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Day {dayInfo.dayNumber} / 30</Text>
+        <Text style={styles.title}>{t('learn.dayLabel', { day: dayInfo.dayNumber, total: 30 })}</Text>
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{card.title}</Text>
           <Text style={styles.bodyText}>{card.learn}</Text>
 
-          {!!card.example && <Text style={styles.mutedText}>例：{card.example}</Text>}
+          {!!card.example && (
+            <Text style={styles.mutedText}>{t('learn.example', { text: card.example })}</Text>
+          )}
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>今日の行い（1つ選ぶ）</Text>
+          <Text style={styles.sectionTitle}>{t('learn.actionTitle')}</Text>
 
           {card.actionOptions.map((opt, idx) => {
             const isSelected = selected.key === opt.key && selected.text === opt.text;
@@ -119,28 +131,28 @@ export default function LearnScreen() {
                 ]}
               >
                 <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
-                  ・[{opt.key}] {opt.text}
+                  {t('learn.actionOption', { key: opt.key, text: opt.text })}
                 </Text>
 
                 <View style={styles.optionMeta}>
-                  {isRecommended && <Text style={styles.optionTag}>おすすめ</Text>}
-                  {isSelected && <Text style={styles.optionTag}>選択中</Text>}
+                  {isRecommended && <Text style={styles.optionTag}>{t('common.recommended')}</Text>}
+                  {isSelected && <Text style={styles.optionTag}>{t('common.selected')}</Text>}
                 </View>
               </Pressable>
             );
           })}
 
-          <Text style={styles.footnote}>※おすすめは目安。今日はあなたの感覚で選んでOK。</Text>
+          <Text style={styles.footnote}>{t('learn.actionFootnote')}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>夜の問い</Text>
+          <Text style={styles.sectionTitle}>{t('learn.nightQuestion')}</Text>
           <Text style={styles.bodyText}>{card.nightQuestion}</Text>
         </View>
 
         {!!sourceLinks.length && (
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>参考</Text>
+            <Text style={styles.sectionTitle}>{t('learn.sources')}</Text>
             {sourceLinks.map((s) => (
               <Text key={s.id} style={styles.sourceItem}>
                 ・{s.id}
@@ -150,20 +162,20 @@ export default function LearnScreen() {
         )}
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>さらに学ぶ</Text>
-          <Text style={styles.mutedText}>カードや用語集を一覧で読む。</Text>
+          <Text style={styles.sectionTitle}>{t('learn.moreTitle')}</Text>
+          <Text style={styles.mutedText}>{t('learn.moreBody')}</Text>
           <View style={styles.linkRow}>
             <Pressable
               onPress={() => router.push('/learn/cards')}
               style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
             >
-              <Text style={styles.linkButtonText}>学びカード</Text>
+              <Text style={styles.linkButtonText}>{t('learn.moreCards')}</Text>
             </Pressable>
             <Pressable
               onPress={() => router.push('/learn/glossary')}
               style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
             >
-              <Text style={styles.linkButtonText}>用語集</Text>
+              <Text style={styles.linkButtonText}>{t('learn.moreGlossary')}</Text>
             </Pressable>
           </View>
         </View>
@@ -177,14 +189,12 @@ export default function LearnScreen() {
               });
               router.replace('/');
             } catch {
-              setError(
-                '保存に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-              );
+              setError(t('errors.saveFail'));
             }
           }}
           style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
         >
-          <Text style={styles.primaryButtonText}>今日はこれでいく</Text>
+          <Text style={styles.primaryButtonText}>{t('learn.confirmAction')}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

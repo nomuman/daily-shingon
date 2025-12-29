@@ -3,12 +3,16 @@ import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import { getCardPacks } from '../../../../content/cards';
+import { useContentLang } from '../../../../content/useContentLang';
 import { cardShadow, theme } from '../../../../ui/theme';
 
 export default function CardPackListScreen() {
   const router = useRouter();
-  const packs = useMemo(() => getCardPacks(), []);
+  const { t } = useTranslation('common');
+  const lang = useContentLang();
+  const packs = useMemo(() => getCardPacks(lang), [lang]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -17,8 +21,8 @@ export default function CardPackListScreen() {
         keyExtractor={(item) => item.packId}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.title}>学びカード</Text>
-            <Text style={styles.subtitle}>短い学び + 行い + 問い</Text>
+            <Text style={styles.title}>{t('learnCards.title')}</Text>
+            <Text style={styles.subtitle}>{t('learnCards.subtitle')}</Text>
           </View>
         }
         renderItem={({ item }) => (
@@ -28,7 +32,8 @@ export default function CardPackListScreen() {
           >
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.cardMeta}>
-              {item.count}枚{item.description ? ` ・ ${item.description}` : ''}
+              {t('learnCards.count', { count: item.count })}
+              {item.description ? ` ・ ${item.description}` : ''}
             </Text>
           </Pressable>
         )}

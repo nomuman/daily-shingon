@@ -5,6 +5,7 @@ import { Animated, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContributionGraph } from 'react-native-chart-kit';
 
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../components/ErrorState';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
@@ -32,27 +33,27 @@ const getContributionGraphWidth = (endDate: Date) => {
   return chartPaddingLeft + weekCount * squareSizeWithGutter - chartGutterSize;
 };
 
-const labelForCount = (count: number) => {
-  if (count >= 3) return '朝+夜+メモ';
-  if (count === 2) return '朝+夜';
-  if (count === 1) return '朝or夜';
-  return 'なし';
+const labelForCount = (t: (key: string, options?: Record<string, unknown>) => string, count: number) => {
+  if (count >= 3) return t('history.count3');
+  if (count === 2) return t('history.count2');
+  if (count === 1) return t('history.count1');
+  return t('common.none');
 };
 
-const formatDateLabel = (date: string | Date | null | undefined) => {
-  if (!date) return '日付不明';
+const formatDateLabel = (t: (key: string) => string, date: string | Date | null | undefined) => {
+  if (!date) return t('common.unknownDate');
   if (date instanceof Date) return toISODateLocal(date);
   if (typeof date === 'string') return date;
-  return '日付不明';
+  return t('common.unknownDate');
 };
 
-const buildTooltipLabel = (value: unknown) => {
-  if (!value || typeof value !== 'object') return '日付不明：なし';
+const buildTooltipLabel = (t: (key: string, options?: Record<string, unknown>) => string, value: unknown) => {
+  if (!value || typeof value !== 'object') return t('history.tooltipUnknown');
   const raw = value as { date?: string | Date; count?: number; value?: number };
   const count =
     typeof raw.count === 'number' ? raw.count : typeof raw.value === 'number' ? raw.value : 0;
-  const dateLabel = formatDateLabel(raw.date);
-  return `${dateLabel}：${labelForCount(count)}`;
+  const dateLabel = formatDateLabel(t, raw.date);
+  return t('history.tooltipLabel', { date: dateLabel, status: labelForCount(t, count) });
 };
 
 const entranceStyle = (anim: Animated.Value) => ({
@@ -69,6 +70,7 @@ const entranceStyle = (anim: Animated.Value) => ({
 
 export default function HistoryScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [values, setValues] = useState<HeatmapValue[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,13 +90,11 @@ export default function HistoryScreen() {
       const v = await getHeatmap365Values();
       setValues(v);
     } catch {
-      setError(
-        '履歴データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-      );
+      setError(t('errors.historyLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useFocusEffect(
     useCallback(() => {
@@ -119,22 +119,20 @@ export default function HistoryScreen() {
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
         <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>365日</Text>
+          <Text style={styles.headerTitle}>{t('history.title')}</Text>
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
           >
-            <Text style={styles.ghostButtonText}>戻る</Text>
+            <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
           </Pressable>
         </View>
-        <Text style={styles.headerBody}>
-          勤行が終わった日（朝/夜/両方/メモ）を、静かに積み上げる可視化。
-        </Text>
+        <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
       </Animated.View>
 
       <Animated.View style={[styles.graphCard, entranceStyle(graphAnim)]}>
         {loading ? (
-          <Text style={styles.loadingText}>読み込み中…</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         ) : (
           <ScrollView horizontal contentContainerStyle={{ paddingRight: 12 }}>
             <ContributionGraph
@@ -147,12 +145,12 @@ export default function HistoryScreen() {
               squareSize={chartSquareSize}
               showMonthLabels
               onDayPress={(item: { date?: string | Date; count?: number }) => {
-                setTooltipLabel(buildTooltipLabel(item));
+                setTooltipLabel(buildTooltipLabel(t, item));
                 if (!item?.date) return;
                 const dateLabel = item.date instanceof Date ? toISODateLocal(item.date) : item.date;
                 router.push(`/day/${dateLabel}`);
               }}
-              titleForValue={(value) => buildTooltipLabel(value)}
+              titleForValue={(value) => buildTooltipLabel(t, value)}
               chartConfig={{
                 backgroundGradientFrom: theme.colors.surface,
                 backgroundGradientTo: theme.colors.surface,
@@ -163,8 +161,8 @@ export default function HistoryScreen() {
                 labelColor: (opacity = 1) => `rgba(28, 26, 22, ${opacity})`,
               }}
               tooltipDataAttrs={(value) => ({
-                accessibilityLabel: buildTooltipLabel(value),
-                onLongPress: () => setTooltipLabel(buildTooltipLabel(value)),
+                accessibilityLabel: buildTooltipLabel(t, value),
+                onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
                 delayLongPress: 150,
               })}
             />
@@ -175,34 +173,32 @@ export default function HistoryScreen() {
       <Animated.View style={[styles.metaStack, entranceStyle(legendAnim)]}>
         {tooltipLabel ? (
           <View style={styles.tooltipCard}>
-            <Text style={styles.tooltipLabel}>ツールチップ</Text>
+            <Text style={styles.tooltipLabel}>{t('history.tooltipTitle')}</Text>
             <Text style={styles.tooltipValue}>{tooltipLabel}</Text>
           </View>
         ) : (
-          <Text style={styles.helperText}>長押しで日付ラベルを表示</Text>
+          <Text style={styles.helperText}>{t('history.tooltipHint')}</Text>
         )}
 
         <View style={styles.legendCard}>
-          <Text style={styles.legendTitle}>凡例</Text>
+          <Text style={styles.legendTitle}>{t('history.legendTitle')}</Text>
           <View style={styles.legendRow}>
             <View style={[styles.legendSwatch, styles.legendSwatch0]} />
-            <Text style={styles.legendText}>0: なし</Text>
+            <Text style={styles.legendText}>{t('history.legend0')}</Text>
           </View>
           <View style={styles.legendRow}>
             <View style={[styles.legendSwatch, styles.legendSwatch1]} />
-            <Text style={styles.legendText}>1: 朝or夜</Text>
+            <Text style={styles.legendText}>{t('history.legend1')}</Text>
           </View>
           <View style={styles.legendRow}>
             <View style={[styles.legendSwatch, styles.legendSwatch2]} />
-            <Text style={styles.legendText}>2: 朝+夜</Text>
+            <Text style={styles.legendText}>{t('history.legend2')}</Text>
           </View>
           <View style={styles.legendRow}>
             <View style={[styles.legendSwatch, styles.legendSwatch3]} />
-            <Text style={styles.legendText}>3: 朝+夜+メモ</Text>
+            <Text style={styles.legendText}>{t('history.legend3')}</Text>
           </View>
-          <Text style={styles.legendNote}>
-            ※連続日数（streak）は出さない。空白があっても戻れる設計。
-          </Text>
+          <Text style={styles.legendNote}>{t('history.legendNote')}</Text>
         </View>
       </Animated.View>
       </ScrollView>

@@ -3,6 +3,7 @@ import type { SFSymbol } from 'expo-symbols';
 import { SymbolView } from 'expo-symbols';
 import { Tabs } from 'expo-router';
 
+import { useTranslation } from 'react-i18next';
 import { theme } from '../../ui/theme';
 
 const TabIcon = ({
@@ -27,6 +28,8 @@ const TabIcon = ({
 );
 
 export default function TabLayout() {
+  const { t } = useTranslation('common');
+
   return (
     <Tabs
       screenOptions={{
@@ -49,7 +52,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: '今日',
+          title: t('nav.today'),
           tabBarIcon: ({ color, size }) => (
             <TabIcon symbol="house.fill" fallback="home" color={color} size={size ?? 24} />
           ),
@@ -58,7 +61,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="learn"
         options={{
-          title: '学び',
+          title: t('nav.learn'),
           tabBarIcon: ({ color, size }) => (
             <TabIcon symbol="book.fill" fallback="menu-book" color={color} size={size ?? 24} />
           ),
@@ -67,7 +70,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="morning"
         options={{
-          title: '朝',
+          title: t('nav.morning'),
           tabBarIcon: ({ color, size }) => (
             <TabIcon symbol="sun.max.fill" fallback="wb-sunny" color={color} size={size ?? 24} />
           ),
@@ -76,7 +79,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="night"
         options={{
-          title: '夜',
+          title: t('nav.night'),
           tabBarIcon: ({ color, size }) => (
             <TabIcon symbol="moon.stars.fill" fallback="nights-stay" color={color} size={size ?? 24} />
           ),
@@ -85,7 +88,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: '設定',
+          title: t('nav.settings'),
           tabBarIcon: ({ color, size }) => (
             <TabIcon symbol="gearshape.fill" fallback="settings" color={color} size={size ?? 24} />
           ),

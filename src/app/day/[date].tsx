@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import { parseISODateLocal } from '../../lib/date';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
@@ -11,6 +12,7 @@ import { cardShadow, theme } from '../../ui/theme';
 
 export default function DayDetailScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const { date } = useLocalSearchParams<{ date?: string }>();
 
   const [morningDone, setMorningDone] = useState(false);
@@ -46,22 +48,26 @@ export default function DayDetailScreen() {
             onPress={() => router.back()}
             style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
           >
-            <Text style={styles.ghostButtonText}>戻る</Text>
+            <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
           </Pressable>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>状態</Text>
-          <Text style={styles.bodyText}>朝：{morningDone ? '完了 ✅' : '—'}</Text>
-          <Text style={styles.bodyText}>夜：{nightDone ? '完了 ✅' : '—'}</Text>
+          <Text style={styles.sectionTitle}>{t('dayDetail.statusTitle')}</Text>
+          <Text style={styles.bodyText}>
+            {t('common.morning')}: {morningDone ? t('common.doneEmoji') : t('common.dash')}
+          </Text>
+          <Text style={styles.bodyText}>
+            {t('common.night')}: {nightDone ? t('common.doneEmoji') : t('common.dash')}
+          </Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>夜のひと言</Text>
+          <Text style={styles.sectionTitle}>{t('dayDetail.noteTitle')}</Text>
           {note.trim().length > 0 ? (
             <Text style={styles.bodyText}>{note}</Text>
           ) : (
-            <Text style={styles.mutedText}>（なし）</Text>
+            <Text style={styles.mutedText}>{t('dayDetail.noteEmpty')}</Text>
           )}
         </View>
 
@@ -70,13 +76,13 @@ export default function DayDetailScreen() {
             onPress={() => router.push('/morning')}
             style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
           >
-            <Text style={styles.primaryButtonText}>朝へ</Text>
+            <Text style={styles.primaryButtonText}>{t('dayDetail.goMorning')}</Text>
           </Pressable>
           <Pressable
             onPress={() => router.push('/night')}
             style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
           >
-            <Text style={styles.primaryButtonText}>夜へ</Text>
+            <Text style={styles.primaryButtonText}>{t('dayDetail.goNight')}</Text>
           </Pressable>
         </View>
       </ScrollView>

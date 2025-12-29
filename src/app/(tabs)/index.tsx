@@ -5,8 +5,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import ErrorState from '../../components/ErrorState';
-import { getDayCard } from '../../content/curriculum30.ja';
+import { getDayCard } from '../../content/curriculum30';
+import { useContentLang } from '../../content/useContentLang';
 import { getReturnStatus } from '../../lib/engagement';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
@@ -38,6 +40,8 @@ const ProgressChip = ({ label, done }: { label: string; done: boolean }) => (
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
+  const contentLang = useContentLang();
 
   const [dayNumber, setDayNumber] = useState<number>(1);
   const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -47,7 +51,7 @@ export default function HomeScreen() {
 
   const [morningDone, setMorningDone] = useState<boolean>(false);
   const [nightDone, setNightDone] = useState<boolean>(false);
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusState, setStatusState] = useState<'complete' | 'return' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<DailyStatus[]>([]);
 
@@ -62,11 +66,19 @@ export default function HomeScreen() {
       setDayNumber(info.dayNumber);
       setIsComplete(info.isComplete);
 
-      const card = getDayCard(info.dayNumber);
+      const card = getDayCard(contentLang, info.dayNumber);
       setTitle(card.title);
 
       const sel = await getTodayActionSelection();
-      setTodayAction(sel ? { key: sel.selectedKey, text: sel.selectedText } : null);
+      if (sel) {
+        const matched = card.actionOptions.find((o) => o.key === sel.selectedKey);
+        setTodayAction({
+          key: sel.selectedKey,
+          text: matched?.text ?? sel.selectedText,
+        });
+      } else {
+        setTodayAction(null);
+      }
 
       const m = await getMorningLog();
       setMorningDone(isMorningComplete(m));
@@ -79,18 +91,16 @@ export default function HomeScreen() {
 
       const returnStatus = await getReturnStatus();
       if (info.isComplete) {
-        setStatusMessage('完走後モードです。必要なら設定からリセットできます。');
+        setStatusState('complete');
       } else if (returnStatus.isReturn) {
-        setStatusMessage('おかえり。戻れたら十分。今日は短くでもOK。');
+        setStatusState('return');
       } else {
-        setStatusMessage(null);
+        setStatusState(null);
       }
     } catch {
-      setError(
-        '保存データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-      );
+      setError(t('errors.dataLoadFail'));
     }
-  }, []);
+  }, [contentLang, t]);
 
   useFocusEffect(
     useCallback(() => {
@@ -107,14 +117,20 @@ export default function HomeScreen() {
   }, [actionsAnim, heroAnim, historyAnim]);
 
   const nextAction = useMemo<{ label: string; route: NextRoute | null }>(() => {
-    if (!morningDone) return { label: '朝を整える', route: '/morning' };
-    if (!todayAction) return { label: '学びを見る', route: '/learn' };
-    if (!nightDone) return { label: '夜を閉じる', route: '/night' };
-    return { label: '今日はここまで', route: null };
-  }, [morningDone, nightDone, todayAction]);
+    if (!morningDone) return { label: t('home.nextAction.morning'), route: '/morning' };
+    if (!todayAction) return { label: t('home.nextAction.learn'), route: '/learn' };
+    if (!nightDone) return { label: t('home.nextAction.night'), route: '/night' };
+    return { label: t('home.nextAction.done'), route: null };
+  }, [morningDone, nightDone, t, todayAction]);
+
+  const statusMessage = useMemo(() => {
+    if (statusState === 'complete') return t('home.statusComplete');
+    if (statusState === 'return') return t('home.statusReturn');
+    return null;
+  }, [statusState, t]);
 
   const learnDone = !!todayAction;
-  const primaryButtonLabel = nextAction.route ? nextAction.label : '今日は十分できています';
+  const primaryButtonLabel = nextAction.route ? nextAction.label : t('home.primaryDone');
 
   if (error) {
     return <ErrorState message={error} onRetry={refresh} />;
@@ -126,12 +142,12 @@ export default function HomeScreen() {
       <Animated.View style={[styles.heroCard, entranceStyle(heroAnim)]}>
         <View style={styles.heroTop}>
           <View>
-            <Text style={styles.kicker}>今日</Text>
-            <Text style={styles.heroDay}>Day {dayNumber}</Text>
+            <Text style={styles.kicker}>{t('home.kicker')}</Text>
+            <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
           </View>
           <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
             <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
-              {isComplete ? '完走' : '継続中'}
+              {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
             </Text>
           </View>
         </View>
@@ -149,16 +165,16 @@ export default function HomeScreen() {
                   pressed && styles.noticeButtonPressed,
                 ]}
               >
-                <Text style={styles.noticeButtonText}>設定でリセット</Text>
+                <Text style={styles.noticeButtonText}>{t('home.resetFromSettings')}</Text>
               </Pressable>
             )}
           </View>
         )}
 
         <View style={styles.progressRow}>
-          <ProgressChip label="朝" done={morningDone} />
-          <ProgressChip label="学び" done={learnDone} />
-          <ProgressChip label="夜" done={nightDone} />
+          <ProgressChip label={t('nav.morning')} done={morningDone} />
+          <ProgressChip label={t('nav.learn')} done={learnDone} />
+          <ProgressChip label={t('nav.night')} done={nightDone} />
         </View>
 
         <Pressable
@@ -189,19 +205,17 @@ export default function HomeScreen() {
       </Animated.View>
 
       <Animated.View style={[styles.card, styles.cardAccent, entranceStyle(actionsAnim)]}>
-        <View style={styles.cardHeaderRow}>
-          <View>
-            <Text style={styles.sectionTitle}>365日（積み上げ）</Text>
-            <Text style={styles.sectionSubtitle}>勤行が終わった日は、静かに色が増えていく。</Text>
-          </View>
+          <View style={styles.cardHeaderRow}>
+            <View>
+            <Text style={styles.sectionTitle}>{t('home.yearTitle')}</Text>
+            <Text style={styles.sectionSubtitle}>{t('home.yearSubtitle')}</Text>
+            </View>
           <View style={styles.badgeSoft}>
-            <Text style={styles.badgeSoftText}>進捗</Text>
+            <Text style={styles.badgeSoftText}>{t('home.yearBadge')}</Text>
           </View>
         </View>
 
-        <Text style={styles.sectionBody}>
-          空白があっても、戻れば続きになる。今日の一歩を静かに足す。
-        </Text>
+        <Text style={styles.sectionBody}>{t('home.yearBody')}</Text>
 
         <View style={styles.rowButtons}>
           <Pressable
@@ -213,7 +227,7 @@ export default function HomeScreen() {
             ]}
           >
             <View style={styles.primaryButtonContent}>
-              <Text style={styles.primaryButtonText}>365日を見る</Text>
+              <Text style={styles.primaryButtonText}>{t('home.yearView')}</Text>
               <MaterialIcons name="north-east" size={18} color={theme.colors.surface} />
             </View>
           </Pressable>
@@ -222,13 +236,13 @@ export default function HomeScreen() {
             onPress={() => router.push('/history')}
             style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
           >
-            <Text style={styles.ghostButtonText}>詳細</Text>
+            <Text style={styles.ghostButtonText}>{t('home.yearDetail')}</Text>
           </Pressable>
         </View>
       </Animated.View>
 
       <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
-        <Text style={styles.sectionTitle}>今日の流れ</Text>
+        <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
 
         <View style={styles.actionCard}>
           <View style={styles.actionHeader}>
@@ -236,11 +250,13 @@ export default function HomeScreen() {
               <MaterialIcons name="wb-sunny" size={20} color={theme.colors.accentDark} />
             </View>
             <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>朝の整え（身・口・意）</Text>
-              <Text style={styles.actionStatus}>{morningDone ? '完了' : '未完了'}</Text>
+              <Text style={styles.actionTitle}>{t('home.flowMorningTitle')}</Text>
+              <Text style={styles.actionStatus}>
+                {morningDone ? t('common.done') : t('common.incomplete')}
+              </Text>
             </View>
           </View>
-          <Text style={styles.actionDescription}>3分で姿勢と呼吸を揃える。</Text>
+          <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
           <View style={styles.rowButtons}>
             <Pressable
               onPress={() => router.push('/morning')}
@@ -250,7 +266,9 @@ export default function HomeScreen() {
                 pressed && styles.primaryButtonPressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>{morningDone ? '見直す' : 'やる'}</Text>
+              <Text style={styles.primaryButtonText}>
+                {morningDone ? t('common.review') : t('common.do')}
+              </Text>
             </Pressable>
             <Pressable
               onPress={async () => {
@@ -258,14 +276,12 @@ export default function HomeScreen() {
                   await clearMorningLog();
                   await refresh();
                 } catch {
-                  setError(
-                    '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-                  );
+                  setError(t('errors.updateFail'));
                 }
               }}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>リセット</Text>
+              <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
             </Pressable>
           </View>
         </View>
@@ -276,14 +292,19 @@ export default function HomeScreen() {
               <MaterialIcons name="menu-book" size={20} color={theme.colors.accentDark} />
             </View>
             <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>今日の行い</Text>
-              <Text style={styles.actionStatus}>{learnDone ? '選択済み' : '未選択'}</Text>
+              <Text style={styles.actionTitle}>{t('home.flowLearnTitle')}</Text>
+              <Text style={styles.actionStatus}>
+                {learnDone ? t('home.selectionDone') : t('home.selectionNone')}
+              </Text>
             </View>
           </View>
           <Text style={styles.actionDescription}>
             {todayAction
-              ? `・[${todayAction.key}] ${todayAction.text}`
-              : 'まだ選んでない。Learnで「今日はこれでいく」を押してね。'}
+              ? t('home.selectionDetail', {
+                  key: todayAction.key,
+                  text: todayAction.text,
+                })
+              : t('home.selectionEmpty')}
           </Text>
           <View style={styles.rowButtons}>
             <Pressable
@@ -294,7 +315,7 @@ export default function HomeScreen() {
                 pressed && styles.primaryButtonPressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>Learnへ</Text>
+              <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
             </Pressable>
             <Pressable
               onPress={async () => {
@@ -302,14 +323,12 @@ export default function HomeScreen() {
                   await clearTodayActionSelection();
                   await refresh();
                 } catch {
-                  setError(
-                    '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-                  );
+                  setError(t('errors.updateFail'));
                 }
               }}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>選択を解除</Text>
+              <Text style={styles.ghostButtonText}>{t('home.selectionClear')}</Text>
             </Pressable>
           </View>
         </View>
@@ -320,11 +339,13 @@ export default function HomeScreen() {
               <MaterialIcons name="nights-stay" size={20} color={theme.colors.accentDark} />
             </View>
             <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>夜のしめ（懺悔→発願→回向）</Text>
-              <Text style={styles.actionStatus}>{nightDone ? '完了' : '未完了'}</Text>
+              <Text style={styles.actionTitle}>{t('home.flowNightTitle')}</Text>
+              <Text style={styles.actionStatus}>
+                {nightDone ? t('common.done') : t('common.incomplete')}
+              </Text>
             </View>
           </View>
-          <Text style={styles.actionDescription}>45秒で振り返りを閉じる。</Text>
+          <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
           <View style={styles.rowButtons}>
             <Pressable
               onPress={() => router.push('/night')}
@@ -334,7 +355,9 @@ export default function HomeScreen() {
                 pressed && styles.primaryButtonPressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>{nightDone ? '見直す' : 'やる'}</Text>
+              <Text style={styles.primaryButtonText}>
+                {nightDone ? t('common.review') : t('common.do')}
+              </Text>
             </Pressable>
             <Pressable
               onPress={async () => {
@@ -342,14 +365,12 @@ export default function HomeScreen() {
                   await clearNightLog();
                   await refresh();
                 } catch {
-                  setError(
-                    '保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。',
-                  );
+                  setError(t('errors.updateFail'));
                 }
               }}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>リセット</Text>
+              <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
             </Pressable>
           </View>
         </View>
@@ -357,20 +378,20 @@ export default function HomeScreen() {
 
       <Animated.View style={[styles.card, entranceStyle(historyAnim)]}>
         <View style={styles.cardHeaderRow}>
-          <Text style={styles.sectionTitle}>直近7日（朝 / 夜）</Text>
+          <Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text>
           <Pressable
             onPress={() => router.push('/history')}
             style={({ pressed }) => [styles.ghostButtonSmall, pressed && styles.ghostButtonPressed]}
           >
-            <Text style={styles.ghostButtonText}>365日へ</Text>
+            <Text style={styles.ghostButtonText}>{t('home.recentCta')}</Text>
           </Pressable>
         </View>
 
         <View style={styles.historyHeader}>
-          <Text style={[styles.historyLabel, styles.historyDate]}>日付</Text>
-          <Text style={styles.historyLabel}>朝</Text>
-          <Text style={styles.historyLabel}>夜</Text>
-          <Text style={styles.historyLabel}>メモ</Text>
+          <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
+          <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
+          <Text style={styles.historyLabel}>{t('nav.night')}</Text>
+          <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
         </View>
 
         {history.map((h) => (
@@ -383,19 +404,17 @@ export default function HomeScreen() {
               <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
             </View>
             <View style={styles.historyCell}>
-              <Text style={styles.historyValue}>{h.nightHasNote ? '📝' : '—'}</Text>
+              <Text style={styles.historyValue}>
+                {h.nightHasNote ? '📝' : t('common.dash')}
+              </Text>
             </View>
           </View>
         ))}
 
-        <Text style={styles.historyFootnote}>
-          ※これはスコアではなく「ふり返りの足場」。抜けても責めない。
-        </Text>
+        <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
       </Animated.View>
 
-      <Text style={styles.footerNote}>
-        ※ タブ移動・戻る操作で最新を反映するため、フォーカス時に再読み込みしています。
-      </Text>
+      <Text style={styles.footerNote}>{t('home.footerNote')}</Text>
       </ScrollView>
     </SafeAreaView>
   );

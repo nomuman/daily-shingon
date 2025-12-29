@@ -3,17 +3,21 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
+import { useContentLang } from '../../../../content/useContentLang';
 import type { Card } from '../../../../content/types';
 import { cardShadow, theme } from '../../../../ui/theme';
 
 export default function CardListScreen() {
   const router = useRouter();
+  const { t } = useTranslation('common');
+  const lang = useContentLang();
   const { packId } = useLocalSearchParams<{ packId?: string | string[] }>();
   const resolvedPackId = Array.isArray(packId) ? packId[0] : packId;
-  const pack = resolvedPackId ? getPackById(resolvedPackId) : undefined;
+  const pack = resolvedPackId ? getPackById(lang, resolvedPackId) : undefined;
 
   const [q, setQ] = useState('');
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -44,7 +48,9 @@ export default function CardListScreen() {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>packId が見つからない: {resolvedPackId ?? 'unknown'}</Text>
+          <Text style={styles.emptyText}>
+            {t('learnCards.packNotFound', { packId: resolvedPackId ?? t('common.unknown') })}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -52,8 +58,13 @@ export default function CardListScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <SearchInput value={q} onChangeText={setQ} placeholder="カード検索" />
-      <TagRow tags={allTags} activeTag={activeTag} onSelect={setActiveTag} />
+      <SearchInput value={q} onChangeText={setQ} placeholder={t('learnCards.search')} />
+      <TagRow
+        tags={allTags}
+        activeTag={activeTag}
+        onSelect={setActiveTag}
+        allLabel={t('common.all')}
+      />
 
       <FlatList
         data={filtered}
@@ -63,7 +74,7 @@ export default function CardListScreen() {
             <Text style={styles.title}>{pack.meta.title}</Text>
             {!!pack.meta.description && <Text style={styles.subtitle}>{pack.meta.description}</Text>}
             <Text style={styles.meta}>
-              {filtered.length} / {pack.cards.length} 枚
+              {t('learnCards.resultCount', { shown: filtered.length, total: pack.cards.length })}
             </Text>
           </View>
         }
@@ -71,6 +82,8 @@ export default function CardListScreen() {
           <CardRow
             card={item}
             onPress={() => router.push(`/learn/cards/${pack.meta.pack_id}/${item.id}`)}
+            typeLabel={t(item.type === 'learn' ? 'learnCards.typeLearn' : 'learnCards.typePractice')}
+            levelLabel={levelLabel(t, item.level)}
           />
         )}
         contentContainerStyle={styles.listContent}
@@ -79,12 +92,22 @@ export default function CardListScreen() {
   );
 }
 
-function CardRow({ card, onPress }: { card: Card; onPress: () => void }) {
+function CardRow({
+  card,
+  onPress,
+  typeLabel,
+  levelLabel,
+}: {
+  card: Card;
+  onPress: () => void;
+  typeLabel: string;
+  levelLabel: string;
+}) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}>
       <Text style={styles.rowTitle}>{card.title}</Text>
       <Text style={styles.rowMeta}>
-        {card.type === 'learn' ? '学び' : '実践'} ・ {levelLabel(card.level)}
+        {typeLabel} ・ {levelLabel}
       </Text>
       <Text style={styles.rowSummary} numberOfLines={2}>
         {card.summary}
@@ -93,14 +116,14 @@ function CardRow({ card, onPress }: { card: Card; onPress: () => void }) {
   );
 }
 
-function levelLabel(level: Card['level']) {
+function levelLabel(t: (key: string) => string, level: Card['level']) {
   switch (level) {
     case 'beginner':
-      return '初級';
+      return t('learnCards.level.beginner');
     case 'intermediate':
-      return '中級';
+      return t('learnCards.level.intermediate');
     case 'advanced':
-      return '上級';
+      return t('learnCards.level.advanced');
   }
 }
 

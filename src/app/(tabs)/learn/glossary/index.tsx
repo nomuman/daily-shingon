@@ -3,14 +3,18 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getGlossary } from '../../../../content/glossary';
+import { useContentLang } from '../../../../content/useContentLang';
 import { cardShadow, theme } from '../../../../ui/theme';
 
 export default function GlossaryListScreen() {
   const router = useRouter();
-  const glossary = useMemo(() => getGlossary(), []);
+  const { t } = useTranslation('common');
+  const lang = useContentLang();
+  const glossary = useMemo(() => getGlossary(lang), [lang]);
   const [q, setQ] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
@@ -40,12 +44,12 @@ export default function GlossaryListScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <SearchInput value={q} onChangeText={setQ} placeholder="用語検索（例：三密）" />
+      <SearchInput value={q} onChangeText={setQ} placeholder={t('glossary.search')} />
       <TagRow
         tags={categories}
         activeTag={activeCategory}
         onSelect={setActiveCategory}
-        allLabel="全部"
+        allLabel={t('common.all')}
       />
 
       <FlatList
@@ -53,9 +57,9 @@ export default function GlossaryListScreen() {
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.title}>用語集</Text>
-            <Text style={styles.subtitle}>わからない言葉をすぐ引ける</Text>
-            <Text style={styles.meta}>{filtered.length} 件</Text>
+            <Text style={styles.title}>{t('glossary.title')}</Text>
+            <Text style={styles.subtitle}>{t('glossary.subtitle')}</Text>
+            <Text style={styles.meta}>{t('glossary.count', { count: filtered.length })}</Text>
           </View>
         }
         renderItem={({ item }) => (

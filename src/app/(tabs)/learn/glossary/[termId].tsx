@@ -2,20 +2,26 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
 import { getGlossary, getGlossaryEntry } from '../../../../content/glossary';
+import { useContentLang } from '../../../../content/useContentLang';
 import { cardShadow, theme } from '../../../../ui/theme';
 
 export default function GlossaryDetailScreen() {
+  const { t } = useTranslation('common');
+  const lang = useContentLang();
   const { termId } = useLocalSearchParams<{ termId?: string | string[] }>();
   const resolvedTermId = Array.isArray(termId) ? termId[0] : termId;
-  const glossary = getGlossary();
-  const entry = resolvedTermId ? getGlossaryEntry(resolvedTermId) : undefined;
+  const glossary = getGlossary(lang);
+  const entry = resolvedTermId ? getGlossaryEntry(lang, resolvedTermId) : undefined;
 
   if (!entry) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>用語が見つからない: {resolvedTermId ?? 'unknown'}</Text>
+          <Text style={styles.emptyText}>
+            {t('glossary.termNotFound', { termId: resolvedTermId ?? t('common.unknown') })}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -29,30 +35,30 @@ export default function GlossaryDetailScreen() {
           <Text style={styles.meta}>
             {entry.reading ? `${entry.reading} ・ ` : ''}
             {entry.category ?? ''}
-            {entry.level ? ` ・ ${levelLabel(entry.level)}` : ''}
+            {entry.level ? ` ・ ${levelLabel(t, entry.level)}` : ''}
           </Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>短い説明</Text>
+          <Text style={styles.sectionTitle}>{t('glossary.short')}</Text>
           <Text style={styles.bodyText}>{entry.short}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>定義</Text>
+          <Text style={styles.sectionTitle}>{t('glossary.definition')}</Text>
           <Text style={styles.bodyText}>{entry.definition}</Text>
         </View>
 
         {!!entry.notes && (
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>補足</Text>
+            <Text style={styles.sectionTitle}>{t('glossary.notes')}</Text>
             <Text style={styles.bodyText}>{entry.notes}</Text>
           </View>
         )}
 
         {!!entry.see_also?.length && (
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>関連</Text>
+            <Text style={styles.sectionTitle}>{t('glossary.related')}</Text>
             {entry.see_also.map((id) => (
               <Text key={id} style={styles.bodyText}>
                 ・{id}
@@ -62,7 +68,7 @@ export default function GlossaryDetailScreen() {
         )}
 
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>出典</Text>
+          <Text style={styles.sectionTitle}>{t('glossary.sources')}</Text>
           {entry.sources.map((key) => {
             const ref = glossary.bibliography?.[key];
             return (
@@ -79,14 +85,14 @@ export default function GlossaryDetailScreen() {
   );
 }
 
-function levelLabel(level: 'beginner' | 'intermediate' | 'advanced') {
+function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediate' | 'advanced') {
   switch (level) {
     case 'beginner':
-      return '初級';
+      return t('glossary.level.beginner');
     case 'intermediate':
-      return '中級';
+      return t('glossary.level.intermediate');
     case 'advanced':
-      return '上級';
+      return t('glossary.level.advanced');
   }
 }
 

@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
 import { theme } from '../ui/theme';
 
 type TagRowProps = {
@@ -10,6 +11,7 @@ type TagRowProps = {
 };
 
 export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowProps) {
+  const { t } = useTranslation('common');
   if (!tags.length) return null;
 
   const unique = Array.from(new Set(tags));
@@ -25,7 +27,7 @@ export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowPr
         ]}
       >
         <Text style={[styles.chipText, !activeTag && styles.chipTextActive]}>
-          {allLabel ?? '全部'}
+          {allLabel ?? t('common.all')}
         </Text>
       </Pressable>
 

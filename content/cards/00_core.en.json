@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "core",
+    "title": "Foundations (Gateway to Doctrine)",
+    "description": "Cards that translate core Shingon esoteric vocabulary into the app's practice flow (Body/Speech/Mind).",
+    "generated_at": "2025-12-27",
+    "card_schema": {
+      "id": "string",
+      "type": "learn | practice",
+      "level": "beginner | intermediate | advanced",
+      "title": "string",
+      "summary": "string",
+      "body_md": "string",
+      "micro_practice": { "morning": "string", "day": "string", "night": "string" },
+      "reflection_questions": ["string"],
+      "tags": ["string"],
+      "sources": ["bibliography key"]
+    }
+  },
+  "cards": [
+    {
+      "id": "core.esoteric_vs_exoteric",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Esoteric and Exoteric: the difference includes how you practice",
+      "summary": "Official explanations note that esoteric and exoteric are not opposites; they differ in how one enters understanding.",
+      "body_md": "Official explanations from the Koyasan Shingon tradition cite one difference between esoteric and exoteric teachings as the training that learns the hidden meaning (shuhou). Shingon practices are explained as Three Mysteries empowerment (Sanmitsu Yoga), among others.\n\nIn this app, we don't stop at knowledge alone. We translate it into a small, daily practice: align body, speech, and mind today.",
+      "micro_practice": {
+        "morning": "First align posture (Body). Next, speak one short phrase carefully (Speech). Finally, decide one focus for today (Mind).",
+        "day": "When your words are about to turn harsh, take one breath and rephrase (practice of speech).",
+        "night": "Recall and write one moment you were aligned today (check the mind)."
+      },
+      "reflection_questions": [
+        "Today, what did you move into action instead of leaving as knowledge?",
+        "If training happened in daily life rather than in a special time, what would you change?"
+      ],
+      "tags": ["doctrine", "gateway", "exoteric", "esoteric"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.sanmitsu",
+      "type": "learn",
+      "level": "beginner",
+      "title": "The Three Mysteries: align body, speech, and mind",
+      "summary": "Kongobuji (official) explains that body, speech, and mind mysteries together are the Three Mysteries.",
+      "body_md": "Kongobuji (official) explains that the Three Mysteries are the three together: the mystery of the body through actions, the mystery of speech through words, and the mystery of mind through thought.\n\nIf you map the app's \"morning = align\" and \"night = reflect\" to body, speech, and mind, it becomes easier to follow.",
+      "micro_practice": {
+        "morning": "Body: posture / Speech: one careful phrase / Mind: decide one focus for today.",
+        "day": "Speech: choose brief but sincere words. Mind: imagine the other person's position once.",
+        "night": "Mind: admit one disturbance today and decide one small correction for tomorrow."
+      },
+      "reflection_questions": [
+        "Which of body, speech, or mind was most disturbed today?",
+        "If you could return it just one millimeter, what will you do tomorrow?"
+      ],
+      "tags": ["doctrine", "three mysteries", "body-speech-mind"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "core.sanmitsu_kaji",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Sanmitsu Kaji: the Three Mysteries appear as action",
+      "summary": "Official writings describe kaji as the practice that makes the Three Mysteries manifest.",
+      "body_md": "Official writings at Kongobuji explain that the Three Mysteries are the union of body, speech, and mind, and that the practice that makes them manifest for us is called kaji (empowerment).\n\nIn this app, we treat it not as ritual reenactment, but as support for aligning body, speech, and mind in daily life.",
+      "micro_practice": {
+        "morning": "Body: careful movements / Speech: one careful word / Mind: choose one axis for today.",
+        "day": "During conflict, avoid attacking words and speak in the order of facts, then requests.",
+        "night": "Write one line about today's difficulty as observation rather than blame."
+      },
+      "reflection_questions": [
+        "What became visible (manifested) today?",
+        "If you were to realign, where would you start: body, speech, or mind?"
+      ],
+      "tags": ["doctrine", "sanmitsu kaji"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "core.nyuga_ganyu",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Nyuga Ganyu: a word for a thinning boundary",
+      "summary": "The official Koyasan Shingon site mentions the term \"nyuga ganyu.\"",
+      "body_md": "In the official Koyasan Shingon explanation of Sanmitsu Kaji, it is said that Kobo Daishi called this state \"nyuga ganyu,\" meaning \"the Buddha enters me and I enter the Buddha.\"\n\nThis app does not force experiences. We first accumulate actions in body, speech, and mind, and leave the experience to each person.",
+      "micro_practice": {
+        "morning": "Start only after your breath settles (do not rush).",
+        "day": "Try rephrasing once from the other person's point of view.",
+        "night": "Write one line describing today's events without evaluation."
+      },
+      "reflection_questions": [
+        "Was there a moment you stepped a little outside of self-centeredness today?",
+        "What do you see when you describe without judging?"
+      ],
+      "tags": ["doctrine", "nyuga ganyu", "sanmitsu kaji"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.hosshinbutsu",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Dharma Body Buddha: grasp truth as a lived image",
+      "summary": "Official explanations describe why esoteric Buddhas and bodhisattvas are called Dharma Body Buddhas.",
+      "body_md": "The official Koyasan Shingon explanation states that esoteric Buddhas and bodhisattvas are understood as the truth of the universe itself (dharma), and that this dharma is grasped as a bodily image. For that reason, esoteric Buddhas and bodhisattvas are called Dharma Body Buddhas.\n\nIn this app, we convert abstract terms into today's gestures, words, and mind.",
+      "micro_practice": {
+        "morning": "Release tension in one place in the body (shoulders, jaw, etc.).",
+        "day": "Choose one honest phrase.",
+        "night": "Turn one action today into the next step (write one correction)."
+      },
+      "reflection_questions": [
+        "If you translate an abstract teaching into today's action, what becomes it?"
+      ],
+      "tags": ["doctrine", "dharma body buddha", "worldview"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.sokushin_jobutsu",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Sokushin Jobutsu: a way to move away from suffering in this very body",
+      "summary": "Official Kongobuji writings refer to sokushin jobutsu.",
+      "body_md": "An official Kongobuji text states that through the Three Mysteries, \"leaving suffering in this very body\" is sokushin jobutsu (becoming a Buddha in this body), in its contextual explanation.\n\nIn this app, we treat it as a direction rather than a destination: align body, speech, and mind today and connect it to tomorrow.",
+      "micro_practice": {
+        "morning": "Predict one \"seed of suffering\" today and take one step in advance (e.g., make 5 minutes of margin).",
+        "day": "When suffering appears, first return the body (posture) -> align speech (words) -> align mind (attention).",
+        "night": "Write today's suffering in one line, then write one way to make it 1 mm lighter tomorrow."
+      },
+      "reflection_questions": [
+        "Where did the suffering begin? Which came first: body, speech, or mind?",
+        "If you make it 1 mm lighter tomorrow, what will you change?"
+      ],
+      "tags": ["doctrine", "sokushin jobutsu", "everyday"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "About the Koyasan Shingon School",
+      "publisher": "Koyasan Shingon School (official)",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "Message from the Temple (\"Sanmitsu Kaji Appears Swiftly\")",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}

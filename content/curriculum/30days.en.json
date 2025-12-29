@@ -1,0 +1,497 @@
+{
+  "schemaVersion": "1.0",
+  "locale": "en-US",
+  "program": "30days",
+  "generatedAt": "2025-12-26",
+  "sourceIndex": {
+    "SRC_KOYASAN_PAMPHLET": "https://www.koyasan.or.jp/wp-content/themes/koyasan-child/pdf/kokusaikyoku_english_panfu.pdf",
+    "SRC_CHISAN_AJIKAN": "https://chisan.or.jp/en/learn%E3%83%BBexperience/ajikan-meditation/",
+    "SRC_KOYASAN_EXPERIENCE": "https://www.koyasan.or.jp/en/experience/",
+    "SRC_NINNAJI_GO_SHIN": "https://ninnaji.jp/news/sermonsep/"
+  },
+  "days": [
+    {
+      "id": "day001",
+      "day": 1,
+      "title": "Entrance: build a daily form for these 30 days",
+      "learn": "This app is for building a daily loop before collecting more knowledge. In the morning, align body, speech, and mind briefly. At night, align and close. If you break, returning is enough.",
+      "example": "Today, do not aim for perfect. Create just one aligned moment.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "In the morning, straighten your back and bow once (10 seconds)" },
+        { "key": "speech", "text": "In the morning, say a short vow once (silently is OK)" },
+        { "key": "mind", "text": "In the morning, return to your breath for 1 minute" }
+      ],
+      "nightQuestion": "Which was most disturbed today: body, speech, or mind?",
+      "tags": ["week1", "start", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day002",
+      "day": 2,
+      "title": "Body: posture is the shortest alignment",
+      "learn": "The entry to aligning the body is posture and movement. Simply straightening your back calms a hurried mind. First, increase the times you notice and return.",
+      "example": "If your posture collapses the moment you see a notification, that is your practice spot.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Before replying, straighten your back once" },
+        { "key": "speech", "text": "Before speaking, close your mouth and take one breath" },
+        { "key": "mind", "text": "When you notice haste, lower your gaze and take one breath" }
+      ],
+      "nightQuestion": "When your posture collapsed, was your mind also rushing?",
+      "tags": ["week1", "body", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day003",
+      "day": 3,
+      "title": "Speech: words are easily thrown off by momentum",
+      "learn": "Speech is easiest to disturb when momentum builds. Keep it short and careful. Rather than fixing words after, align by taking one breath before you speak.",
+      "example": "Strong words often come with speed.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "Take one breath before speaking" },
+        { "key": "body", "text": "If you speak too fast, relax your shoulders once" },
+        { "key": "mind", "text": "If you get irritated, label it in your mind: hot" }
+      ],
+      "nightQuestion": "Was there a moment you almost said an extra word today?",
+      "tags": ["week1", "speech", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day004",
+      "day": 4,
+      "title": "Mind: scattering is natural, returning is practice",
+      "learn": "The mind naturally scatters. What matters is not never scattering, but how many times you notice and return. Alignment begins the moment you return.",
+      "example": "Even if you scatter 10 times in one minute, returning 10 times is a successful practice.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Return to the breath for 1 minute (scattering is OK)" },
+        { "key": "body", "text": "Lower your gaze and tuck your chin (10 seconds)" },
+        { "key": "speech", "text": "Say calm down once in your mind" }
+      ],
+      "nightQuestion": "Could you count the times you returned rather than the times you scattered?",
+      "tags": ["week1", "mind", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day005",
+      "day": 5,
+      "title": "Three Mysteries: it is enough to align briefly",
+      "learn": "The Three Mysteries are explained as doing body, speech, and mind together. At first, prioritize alignment over length. Even 10 seconds each creates an axis for the day.",
+      "example": "On difficult days, body alone is OK. Align again tomorrow.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Body -> Speech -> Mind, 10 seconds each (30 seconds total)" },
+        { "key": "speech", "text": "Say a short vow once, slowly" },
+        { "key": "mind", "text": "Return to the breath just 3 times" }
+      ],
+      "nightQuestion": "Which of body, speech, or mind helped you most today?",
+      "tags": ["week1", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day006",
+      "day": 6,
+      "title": "Alignment begins the moment you notice",
+      "learn": "Rather than making disturbance zero, notice sooner. When you notice, insert just one alignment (posture, one breath, or stopping words). That is enough.",
+      "example": "The moment you notice is the shortest entrance to practice.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Bow once at the moment of disturbance (silently if needed)" },
+        { "key": "speech", "text": "If strong words are about to come out, be silent once" },
+        { "key": "mind", "text": "Notice and take one breath: I am disturbed" }
+      ],
+      "nightQuestion": "Was there a moment you noticed disturbance early?",
+      "tags": ["week1", "reset"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day007",
+      "day": 7,
+      "title": "Week review: do not blame imbalance, cultivate it",
+      "learn": "Look at imbalance in body, speech, and mind over the week. Imbalance is not a flaw but a marker of what to cultivate. Next week, care for just one weak area.",
+      "example": "Do not fix everything. Be one step more careful.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Pick one weak area and set it as tomorrow's vow" },
+        { "key": "body", "text": "Decide: in the morning, I will align posture" },
+        { "key": "speech", "text": "Decide: today I will keep words shorter" }
+      ],
+      "nightQuestion": "Next week, which of body, speech, or mind will you treat one step more carefully?",
+      "tags": ["week1", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day008",
+      "day": 8,
+      "title": "Night form: align and close (entry)",
+      "learn": "At night, align and close. In this app, close briefly in the order repentance -> vow -> dedication. Today, repentance alone is enough.",
+      "example": "When night is aligned, the next morning feels lighter.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "At night, choose one repentance (body/speech/mind)" },
+        { "key": "speech", "text": "Say I am sorry once in your mind" },
+        { "key": "body", "text": "Release your shoulders before sleep (10 seconds)" }
+      ],
+      "nightQuestion": "Which was most disturbed today: body, speech, or mind?",
+      "tags": ["week2", "night"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day009",
+      "day": 9,
+      "title": "Repentance: not to blame, but to align",
+      "learn": "Repentance is not to blame yourself, but an entrance to notice disturbance and align. I am sorry is sometimes introduced as a heart of reflection.",
+      "example": "If you enter a blame loop, return to something small.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Say I am sorry in your mind once, then take one breath" },
+        { "key": "speech", "text": "If you went too far, rephrase briefly once" },
+        { "key": "body", "text": "Tuck your chin and lower your gaze (10 seconds)" }
+      ],
+      "nightQuestion": "Did blame appear? If so, could you return briefly?",
+      "tags": ["week2", "sange"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day010",
+      "day": 10,
+      "title": "Vow: decide just one thing for tomorrow",
+      "learn": "A vow is deciding just one alignment for tomorrow. Do not make it big. Keep it short and concrete. The smaller it is, the longer it lasts.",
+      "example": "One minute every day beats thirty minutes every day.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Tomorrow, straighten your back once before replying" },
+        { "key": "speech", "text": "Tomorrow, take one breath before speaking" },
+        { "key": "mind", "text": "Tomorrow, return to the breath for 1 minute" }
+      ],
+      "nightQuestion": "Is tomorrow's vow too heavy? Is it just one thing?",
+      "tags": ["week2", "hatsugan"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day011",
+      "day": 11,
+      "title": "Dedication: do not close only for yourself",
+      "learn": "Dedication is a form of closing that does not end inside yourself, but remembers someone. It does not need to be big. One person is enough.",
+      "example": "Simply thinking of someone can soften your words.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "Dedicate: think of family and say may you sleep well once" },
+        { "key": "mind", "text": "Dedicate: think of your team and take one breath" },
+        { "key": "body", "text": "Dedicate: bow once and close (10 seconds)" }
+      ],
+      "nightQuestion": "Who do you want to dedicate to today? (self, family, team, everyone)",
+      "tags": ["week2", "eko"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day012",
+      "day": 12,
+      "title": "Speech: cultivate the power to stop",
+      "learn": "Speech is easily disturbed by speed. Stopping is a strong practice. The more times you can stop, the more your words align.",
+      "example": "Stopping is not losing. It is winning alignment.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "If you notice fast speech, stop once" },
+        { "key": "mind", "text": "After stopping, take one breath" },
+        { "key": "body", "text": "After stopping, drop your shoulders (10 seconds)" }
+      ],
+      "nightQuestion": "How many times did you stop? Even zero is OK if you noticed.",
+      "tags": ["week2", "speech"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day013",
+      "day": 13,
+      "title": "Mind: know the signs of haste",
+      "learn": "Disturbance of mind increases with haste. If you can notice the signs (fast speech, raised gaze, lifted shoulders), you can insert alignment.",
+      "example": "Noticing the signs means you have a signal to return.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "When you notice haste, take one breath" },
+        { "key": "body", "text": "Lower your shoulders (10 seconds)" },
+        { "key": "speech", "text": "Say it is OK once in your mind" }
+      ],
+      "nightQuestion": "What was your sign of haste? (body, words, mind)",
+      "tags": ["week2", "mind"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day014",
+      "day": 14,
+      "title": "Week review: a day you returned matters most",
+      "learn": "Continuity is about returning, not streaks. Even if you miss days, returning is practice. Even doing only the night form is enough.",
+      "example": "Starting again is the most precious act.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        {
+          "key": "mind",
+          "text": "Do the night form (repentance -> vow -> dedication) in 45 seconds"
+        },
+        { "key": "body", "text": "On hard days, just bow once" },
+        { "key": "speech", "text": "On hard days, say see you tomorrow once" }
+      ],
+      "nightQuestion": "What one phrase helped you return?",
+      "tags": ["week2", "review", "reset"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day015",
+      "day": 15,
+      "title": "Learning to action: do not end with knowledge",
+      "learn": "Translate learning into today's action. When it lands in action, understanding stays in the body.",
+      "example": "If more learning makes you scatter, make the action smaller.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Choose one action for today and do it" },
+        { "key": "speech", "text": "Say today only this and keep it short" },
+        { "key": "mind", "text": "If you hesitate, take one breath before choosing" }
+      ],
+      "nightQuestion": "Did it land in action? What changed when it did?",
+      "tags": ["week3", "learn"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day016",
+      "day": 16,
+      "title": "Body: environment is part of the body",
+      "learn": "Body is not only posture but also your workspace. Tidying your desk for one minute makes the mind scatter less.",
+      "example": "A cluttered desk often equals a cluttered mind.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Before work, tidy your desk for 1 minute" },
+        { "key": "mind", "text": "Count three breaths while tidying" },
+        { "key": "speech", "text": "Say I will align now once" }
+      ],
+      "nightQuestion": "How did your focus change before and after tidying?",
+      "tags": ["week3", "body"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day017",
+      "day": 17,
+      "title": "Speech: short, clean, only what is needed",
+      "learn": "Speech practice can be done by reducing words. Short words reduce disturbance.",
+      "example": "When you want to add one more line in a meeting, that is the practice spot.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "Reduce one word in conversation" },
+        { "key": "mind", "text": "Take one breath before reducing" },
+        { "key": "body", "text": "Before speaking, straighten your back (10 seconds)" }
+      ],
+      "nightQuestion": "What happened when you reduced words?",
+      "tags": ["week3", "speech"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day018",
+      "day": 18,
+      "title": "Mind: do not push away, watch",
+      "learn": "When aligning mind, do not push away thoughts. Notice and return. Simply labeling it as thought creates distance.",
+      "example": "If pushing away makes it stronger, watching is shorter.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "When a thought appears, label it in your mind: thought" },
+        { "key": "body", "text": "After labeling, drop your shoulders (10 seconds)" },
+        { "key": "speech", "text": "After labeling, say ok once" }
+      ],
+      "nightQuestion": "Did labeling create a little distance?",
+      "tags": ["week3", "mind"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day019",
+      "day": 19,
+      "title": "Three Mysteries: if simultaneous is hard, use order",
+      "learn": "The Three Mysteries are explained as done together, but beginners can use order. If you cycle body -> speech -> mind briefly, the sense of alignment grows.",
+      "example": "If you freeze trying to do all at once, order wins.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Body -> Speech -> Mind, 30 seconds each (90 seconds total)" },
+        { "key": "speech", "text": "Do only the speech part carefully (10 seconds)" },
+        { "key": "mind", "text": "Do only the mind part for 1 minute" }
+      ],
+      "nightQuestion": "Did choosing an order reduce hesitation?",
+      "tags": ["week3", "sanmitsu"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day020",
+      "day": 20,
+      "title": "Daily Five Hearts: say thank you carefully",
+      "learn": "The Daily Five Hearts are introduced as daily attitudes and sometimes linked to the Three Mysteries and Three Actions. Today, say thank you carefully.",
+      "example": "A careful single phrase is the shortest practice for aligning speech.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "Say thank you carefully once" },
+        { "key": "mind", "text": "Before speaking, take one breath to think of the other person" },
+        { "key": "body", "text": "When speaking, give a small bow once" }
+      ],
+      "nightQuestion": "When you said it carefully, how did your mind move?",
+      "tags": ["week3", "goshin", "speech"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day021",
+      "day": 21,
+      "title": "Week review: reproduce the aligned moment",
+      "learn": "Remember one aligned moment this week. Next time you are disturbed, reproduce that posture and breath. That becomes practice.",
+      "example": "If you can reproduce it, alignment is no longer luck.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Reproduce the posture of an aligned moment for 10 seconds" },
+        { "key": "mind", "text": "Recall the speed of the breath from that moment" },
+        { "key": "speech", "text": "Say the short phrase from that moment once" }
+      ],
+      "nightQuestion": "Could you recall one aligned moment?",
+      "tags": ["week3", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day022",
+      "day": 22,
+      "title": "Ajikan: 3 minutes is enough",
+      "learn": "Ajikan is introduced as an important Shingon meditation. Do not aim for special experiences. Just posture -> breath -> quiet gaze for 3 minutes.",
+      "example": "The courage to end at 3 minutes protects continuity.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "3 minutes: posture -> breath (scattering is OK)" },
+        { "key": "body", "text": "Straighten your back and tuck your chin (10 seconds)" },
+        { "key": "speech", "text": "Before starting, say quiet once" }
+      ],
+      "nightQuestion": "Was 3 minutes enough? Did you want more?",
+      "tags": ["week4", "ajikan", "mind"],
+      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE"]
+    },
+    {
+      "id": "day023",
+      "day": 23,
+      "title": "Ajikan: count return moments",
+      "learn": "Scattering is natural. Returning is practice. Today, quietly count the times you returned. If you can count, that is enough.",
+      "example": "Counting is not evaluation; it supports awareness.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Count the times you returned in 3 minutes" },
+        { "key": "body", "text": "Each time you scatter, release your shoulders" },
+        { "key": "speech", "text": "After finishing, say good once" }
+      ],
+      "nightQuestion": "Could you count without blaming yourself?",
+      "tags": ["week4", "ajikan", "mind"],
+      "sources": ["SRC_CHISAN_AJIKAN"]
+    },
+    {
+      "id": "day024",
+      "day": 24,
+      "title": "Ajikan: steady form over specialness",
+      "learn": "Ajikan is about continuing a steady form rather than chasing special experiences. Try doing it at the same time (fixed time is strongest).",
+      "example": "When time is fixed, you rely less on motivation.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Do 3 minutes at the same time each day (morning or night)" },
+        { "key": "body", "text": "Fix the place you sit" },
+        { "key": "speech", "text": "Fix a short start cue phrase" }
+      ],
+      "nightQuestion": "Did fixing the time reduce hesitation?",
+      "tags": ["week4", "ajikan", "habit"],
+      "sources": ["SRC_CHISAN_AJIKAN"]
+    },
+    {
+      "id": "day025",
+      "day": 25,
+      "title": "Speech to mind: a short vow aligns the heart",
+      "learn": "When speech aligns, mind aligns more easily. Today, choose one short vow. Keep it short and light.",
+      "example": "Short vows like be careful last longer.",
+      "recommendedActionKey": "speech",
+      "actionOptions": [
+        { "key": "speech", "text": "Say one short vow once (e.g., be careful)" },
+        { "key": "mind", "text": "After the vow, take one breath" },
+        { "key": "body", "text": "After the vow, straighten your back (10 seconds)" }
+      ],
+      "nightQuestion": "Did your vow stay light and short?",
+      "tags": ["week4", "speech", "ajikan"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day026",
+      "day": 26,
+      "title": "Body to mind: when the body collapses, the mind scatters",
+      "learn": "When the body collapses, the mind scatters. Today, increase the number of times you reset. Each reset deepens alignment.",
+      "example": "Being able to return is stronger than never collapsing.",
+      "recommendedActionKey": "body",
+      "actionOptions": [
+        { "key": "body", "text": "Straighten your spine three times in a day" },
+        { "key": "mind", "text": "Each time you reset, take one breath" },
+        { "key": "speech", "text": "Each time you reset, say right here in your mind once" }
+      ],
+      "nightQuestion": "How did your mood change when you reset?",
+      "tags": ["week4", "body"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day027",
+      "day": 27,
+      "title": "Night form: close in 45 seconds (complete)",
+      "learn": "Night is a three-part set: repentance, vow, dedication. Do all three in 45 seconds today. If you can close briefly, it is a success.",
+      "example": "Closing the night changes how you enter the next morning.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Choose repentance (body/speech/mind)" },
+        { "key": "mind", "text": "Choose vow (body/speech/mind)" },
+        { "key": "mind", "text": "Choose dedication (self/family/team/everyone)" }
+      ],
+      "nightQuestion": "Did having a form reduce hesitation?",
+      "tags": ["week4", "night", "eko"],
+      "sources": ["SRC_NINNAJI_GO_SHIN"]
+    },
+    {
+      "id": "day028",
+      "day": 28,
+      "title": "Less learning lasts longer",
+      "learn": "The more learning you add, the more you scatter. For continuity, less learning is enough. Read just one card today. That is a win.",
+      "example": "Not enough means room to grow. Add more in the next 30 days.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Read only one learning card (do not dive deep)" },
+        { "key": "body", "text": "After reading, bow once (10 seconds)" },
+        { "key": "speech", "text": "Say today is enough once" }
+      ],
+      "nightQuestion": "Did you want to add more? (that is a good sign)",
+      "tags": ["week4", "learn"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day029",
+      "day": 29,
+      "title": "Next month: cultivate one weak area",
+      "learn": "Choose one weak area among body, speech, and mind and cultivate it. It is not a flaw, it is next month's theme. Set it as tomorrow's vow today.",
+      "example": "Being careful with just one thing is how you win long term.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Choose one weak area (body/speech/mind)" },
+        { "key": "speech", "text": "Declare it with a short phrase once" },
+        { "key": "body", "text": "After declaring, bow once (10 seconds)" }
+      ],
+      "nightQuestion": "Could you choose one weak area without blaming yourself?",
+      "tags": ["week4", "review"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    },
+    {
+      "id": "day030",
+      "day": 30,
+      "title": "Closing: thin and long (your minimal routine)",
+      "learn": "Thirty days is the entrance. From here, keep it thin and long. Decide your minimal routine to continue (morning is body only, night is form only, both are OK).",
+      "example": "If you can reduce it to something you can keep, you win.",
+      "recommendedActionKey": "mind",
+      "actionOptions": [
+        { "key": "mind", "text": "Define your minimal routine in one line" },
+        { "key": "body", "text": "Allow yourself to do only a morning bow" },
+        { "key": "speech", "text": "Allow yourself to close with see you tomorrow only" }
+      ],
+      "nightQuestion": "What will you discard to keep going?",
+      "tags": ["week4", "finish"],
+      "sources": ["SRC_KOYASAN_PAMPHLET"]
+    }
+  ]
+}

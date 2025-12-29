@@ -1,6 +1,8 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
+import { getI18n } from './i18n';
+
 export type NotificationIds = {
   morningId?: string;
   nightId?: string;
@@ -10,10 +12,26 @@ export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
 const ANDROID_CHANNEL_ID = 'sanmitsu-reminders';
 
+const translate = (key: string, fallback: string) => {
+  const i18n = getI18n();
+  if (!i18n.isInitialized) return fallback;
+  const value = i18n.t(key);
+  return value === key ? fallback : value;
+};
+
+const getNotificationCopy = () => ({
+  channelName: translate('notifications.channelName', 'Daily reminders'),
+  morningTitle: translate('notifications.morning.title', 'Morning reset'),
+  morningBody: translate('notifications.morning.body', 'Take 3 minutes to align body, speech, and mind.'),
+  nightTitle: translate('notifications.night.title', 'Night close'),
+  nightBody: translate('notifications.night.body', 'Close the day in 45 seconds.'),
+});
+
 export async function configureNotificationChannel(): Promise<void> {
   if (Platform.OS !== 'android') return;
+  const copy = getNotificationCopy();
   await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
-    name: 'Daily reminders',
+    name: copy.channelName,
     importance: Notifications.AndroidImportance.DEFAULT,
   });
 }
@@ -39,6 +57,7 @@ export async function scheduleDailyReminders(
   nightTime: string,
 ): Promise<NotificationIds> {
   await configureNotificationChannel();
+  const copy = getNotificationCopy();
 
   const morningTrigger = parseTimeToTrigger(morningTime);
   const nightTrigger = parseTimeToTrigger(nightTime);
@@ -48,8 +67,8 @@ export async function scheduleDailyReminders(
 
   const morningId = await Notifications.scheduleNotificationAsync({
     content: {
-      title: '朝の整え',
-      body: '3分だけ整えよう（身・口・意）',
+      title: copy.morningTitle,
+      body: copy.morningBody,
       sound: false,
     },
     trigger: {
@@ -61,8 +80,8 @@ export async function scheduleDailyReminders(
 
   const nightId = await Notifications.scheduleNotificationAsync({
     content: {
-      title: '夜のしめ',
-      body: '45秒で閉じよう（懺悔→発願→回向）',
+      title: copy.nightTitle,
+      body: copy.nightBody,
       sound: false,
     },
     trigger: {

@@ -1,0 +1,277 @@
+{
+  "app": {
+    "name": "まいにち真言"
+  },
+  "nav": {
+    "today": "今日",
+    "learn": "学び",
+    "morning": "朝",
+    "night": "夜",
+    "settings": "設定"
+  },
+  "common": {
+    "search": "検索",
+    "all": "全部",
+    "retry": "再試行",
+    "back": "戻る",
+    "done": "完了",
+    "doneEmoji": "完了 ✅",
+    "incomplete": "未完了",
+    "status": "状態",
+    "statusWithValue": "状態：{{value}}",
+    "selected": "選択中",
+    "recommended": "おすすめ",
+    "reset": "リセット",
+    "review": "見直す",
+    "do": "やる",
+    "cancel": "キャンセル",
+    "loading": "読み込み中…",
+    "loadingSimple": "読み込み中...",
+    "unknown": "不明",
+    "unknownDate": "日付不明",
+    "none": "なし",
+    "dash": "—",
+    "morning": "朝",
+    "night": "夜",
+    "daytime": "昼"
+  },
+  "errors": {
+    "defaultTitle": "読み込みに失敗しました",
+    "learnLoadFail": "学びデータの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "saveFail": "保存に失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "dataLoadFail": "保存データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "updateFail": "保存データの更新に失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "morningLoadFail": "朝の記録の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "nightLoadFail": "夜の記録の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "settingsLoadFail": "設定の読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。",
+    "historyLoadFail": "履歴データの読み込みに失敗しました。再試行しても直らない場合は、アプリを再起動してください。"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "body": "URLが間違っているか、ページが移動した可能性があります。",
+    "backHome": "ホームへ戻る"
+  },
+  "home": {
+    "kicker": "今日",
+    "dayLabel": "Day {{day}}",
+    "badgeComplete": "完走",
+    "badgeOngoing": "継続中",
+    "statusComplete": "完走後モードです。必要なら設定からリセットできます。",
+    "statusReturn": "おかえり。戻れたら十分。今日は短くでもOK。",
+    "resetFromSettings": "設定でリセット",
+    "nextAction": {
+      "morning": "朝を整える",
+      "learn": "学びを見る",
+      "night": "夜を閉じる",
+      "done": "今日はここまで"
+    },
+    "primaryDone": "今日は十分できています",
+    "yearTitle": "365日（積み上げ）",
+    "yearSubtitle": "勤行が終わった日は、静かに色が増えていく。",
+    "yearBadge": "進捗",
+    "yearBody": "空白があっても、戻れば続きになる。今日の一歩を静かに足す。",
+    "yearView": "365日を見る",
+    "yearDetail": "詳細",
+    "flowTitle": "今日の流れ",
+    "flowMorningTitle": "朝の整え（身・口・意）",
+    "flowMorningBody": "3分で姿勢と呼吸を揃える。",
+    "flowLearnTitle": "今日の行い",
+    "selectionDone": "選択済み",
+    "selectionNone": "未選択",
+    "selectionDetail": "・[{{key}}] {{text}}",
+    "selectionEmpty": "まだ選んでない。Learnで「今日はこれでいく」を押してね。",
+    "learnCta": "Learnへ",
+    "selectionClear": "選択を解除",
+    "flowNightTitle": "夜のしめ（懺悔→発願→回向）",
+    "flowNightBody": "45秒で振り返りを閉じる。",
+    "recentTitle": "直近7日（朝 / 夜）",
+    "recentCta": "365日へ",
+    "historyDate": "日付",
+    "historyMemo": "メモ",
+    "historyFootnote": "※これはスコアではなく「ふり返りの足場」。抜けても責めない。",
+    "footerNote": "※ タブ移動・戻る操作で最新を反映するため、フォーカス時に再読み込みしています。"
+  },
+  "learn": {
+    "dayLabel": "Day {{day}} / {{total}}",
+    "completeNotice": "30日を完走した。ここからは薄く長く。必要なら開始日をリセットしてもう一周もできる。",
+    "example": "例：{{text}}",
+    "actionTitle": "今日の行い（1つ選ぶ）",
+    "actionOption": "・[{{key}}] {{text}}",
+    "actionFootnote": "※おすすめは目安。今日はあなたの感覚で選んでOK。",
+    "nightQuestion": "夜の問い",
+    "sources": "参考",
+    "moreTitle": "さらに学ぶ",
+    "moreBody": "カードや用語集を一覧で読む。",
+    "moreCards": "学びカード",
+    "moreGlossary": "用語集",
+    "confirmAction": "今日はこれでいく",
+    "emptyCard": "今日のカードを読み込めなかった。"
+  },
+  "learnCards": {
+    "title": "学びカード",
+    "subtitle": "短い学び + 行い + 問い",
+    "count": "{{count}}枚",
+    "search": "カード検索",
+    "packNotFound": "packId が見つからない: {{packId}}",
+    "resultCount": "{{shown}} / {{total}} 枚",
+    "typeLearn": "学び",
+    "typePractice": "実践",
+    "level": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    },
+    "cardNotFound": "カードが見つからない: {{packId}}/{{cardId}}",
+    "summary": "要約",
+    "body": "本文",
+    "tags": "タグ",
+    "microPractice": "ミクロ実践",
+    "questions": "問い",
+    "sources": "出典"
+  },
+  "glossary": {
+    "search": "用語検索（例：三密）",
+    "title": "用語集",
+    "subtitle": "わからない言葉をすぐ引ける",
+    "count": "{{count}} 件",
+    "termNotFound": "用語が見つからない: {{termId}}",
+    "short": "短い説明",
+    "definition": "定義",
+    "notes": "補足",
+    "related": "関連",
+    "sources": "出典",
+    "level": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    }
+  },
+  "morning": {
+    "title": "Morning（朝の整え）",
+    "policyTitle": "今日の方針",
+    "policyBody": "まず「身・口・意」を整える。完璧じゃなくていい。できた分だけでOK。",
+    "checkTitle": "チェック（3つ）",
+    "check": {
+      "body": {
+        "title": "身（からだ）",
+        "desc": "姿勢を整える。深呼吸をひとつ。丁寧に動く。"
+      },
+      "speech": {
+        "title": "口（ことば）",
+        "desc": "ひとつだけ、やさしい言葉を選ぶ。短く、丁寧に。"
+      },
+      "mind": {
+        "title": "意（こころ）",
+        "desc": "焦りを一度おく。いまの一手に心を置く。"
+      }
+    },
+    "saveButton": "朝の整えを保存して戻る",
+    "resetButton": "今日の朝チェックをリセット"
+  },
+  "night": {
+    "title": "Night（夜のしめ）",
+    "todayLearn": "今日の学び",
+    "nightQuestion": "夜の問い",
+    "stepsTitle": "3ステップ（短くでOK）",
+    "steps": {
+      "sange": {
+        "title": "懺悔（ざんげ）",
+        "desc": "今日のズレを一つだけ認める。言い訳しない。責めない。"
+      },
+      "hotsugan": {
+        "title": "発願（ほつがん）",
+        "desc": "明日の一手を一つ決める。小さく・具体的に。"
+      },
+      "ekou": {
+        "title": "回向（えこう）",
+        "desc": "今日の善いことを、自分だけに閉じずに回す（誰かの安寧を願う）。"
+      }
+    },
+    "noteTitle": "ひとこと（任意）",
+    "noteHint": "※長文不要。1行でもOK。空でもOK。",
+    "notePlaceholder": "例：言い方がきつかった。明日は一呼吸おく。",
+    "saveButton": "夜のしめを保存して戻る",
+    "resetButton": "今日の夜チェックをリセット",
+    "footerNote": "※ アクセシビリティ対応として選択状態を読み上げできるようにしています。"
+  },
+  "settings": {
+    "kicker": "設定",
+    "headerTitle": "日々の整えを静かに支える",
+    "headerBody": "通知や開始日の調整はここから。必要なときだけ、シンプルに。",
+    "language": {
+      "title": "言語",
+      "description": "アプリで表示する言語を選びます。",
+      "system": "端末の設定に従う",
+      "japanese": "日本語",
+      "english": "英語",
+      "note": "一部の表示は画面を開き直すと反映されます。"
+    },
+    "notifications": {
+      "title": "通知",
+      "toggle": "朝/夜リマインダー",
+      "on": "通知ON",
+      "off": "通知OFF",
+      "permissionDenied": "通知が拒否されています。設定アプリで許可してください。",
+      "openSettings": "設定アプリを開く",
+      "rescheduleFail": "通知の再設定に失敗しました。再試行してください。",
+      "stopFail": "通知の停止に失敗しました。",
+      "permissionRequired": "通知の許可が必要です。設定アプリから許可してください。",
+      "scheduleFail": "通知の設定に失敗しました。"
+    },
+    "time": {
+      "title": "通知時刻",
+      "morning": "朝（HH:mm）",
+      "night": "夜（HH:mm）",
+      "invalid": "時刻は24時間表記の HH:mm で入力してください。"
+    },
+    "systemSettingsFail": "設定アプリを開けませんでした。",
+    "reset": {
+      "title": "開始日をリセット",
+      "body": "開始日・今日の行い・朝/夜ログ・復帰判定を削除します。よろしいですか？",
+      "confirm": "リセットする",
+      "fail": "リセットに失敗しました。",
+      "sectionTitle": "リセット",
+      "sectionBody": "開始日と当日の記録を削除します。戻せません。",
+      "button": "開始日をリセット"
+    },
+    "contact": {
+      "title": "お問い合わせ",
+      "body": "お問い合わせ先は後で設定します。"
+    }
+  },
+  "history": {
+    "title": "365日",
+    "headerBody": "勤行が終わった日（朝/夜/両方/メモ）を、静かに積み上げる可視化。",
+    "count1": "朝or夜",
+    "count2": "朝+夜",
+    "count3": "朝+夜+メモ",
+    "tooltipUnknown": "日付不明：なし",
+    "tooltipLabel": "{{date}}：{{status}}",
+    "tooltipTitle": "ツールチップ",
+    "tooltipHint": "長押しで日付ラベルを表示",
+    "legendTitle": "凡例",
+    "legend0": "0: なし",
+    "legend1": "1: 朝or夜",
+    "legend2": "2: 朝+夜",
+    "legend3": "3: 朝+夜+メモ",
+    "legendNote": "※連続日数（streak）は出さない。空白があっても戻れる設計。"
+  },
+  "dayDetail": {
+    "statusTitle": "状態",
+    "noteTitle": "夜のひと言",
+    "noteEmpty": "（なし）",
+    "goMorning": "朝へ",
+    "goNight": "夜へ"
+  },
+  "notifications": {
+    "channelName": "毎日のリマインダー",
+    "morning": {
+      "title": "朝の整え",
+      "body": "3分だけ整えよう（身・口・意）"
+    },
+    "night": {
+      "title": "夜のしめ",
+      "body": "45秒で閉じよう（懺悔→発願→回向）"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
 import type { CurriculumDay } from '../types/curriculum';
 import { cardShadow, theme } from '../ui/theme';
 
@@ -15,42 +16,48 @@ type LearnCardProps = {
 };
 
 export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: LearnCardProps) {
+  const { t } = useTranslation('common');
+
   return (
     <View style={styles.stack}>
-      <Text style={styles.title}>Day {dayNumber} / 30</Text>
+      <Text style={styles.title}>{t('learn.dayLabel', { day: dayNumber, total: 30 })}</Text>
 
       {isComplete && (
-        <Text style={styles.notice}>
-          30日を完走した。ここからは薄く長く。必要なら開始日をリセットしてもう一周もできる。
-        </Text>
+        <Text style={styles.notice}>{t('learn.completeNotice')}</Text>
       )}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>{card.title}</Text>
         <Text style={styles.bodyText}>{card.learn}</Text>
 
-        {!!card.example && <Text style={styles.mutedText}>例：{card.example}</Text>}
+        {!!card.example && (
+          <Text style={styles.mutedText}>{t('learn.example', { text: card.example })}</Text>
+        )}
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>今日の行い（1つ選ぶ）</Text>
+        <Text style={styles.sectionTitle}>{t('learn.actionTitle')}</Text>
         {card.actionOptions.map((opt, idx) => (
           <View key={`${opt.key}-${idx}`} style={styles.optionRow}>
-            <Text style={opt.key === card.recommendedActionKey ? styles.optionTextStrong : styles.optionText}>
-              ・[{opt.key}] {opt.text}
+            <Text
+              style={
+                opt.key === card.recommendedActionKey ? styles.optionTextStrong : styles.optionText
+              }
+            >
+              {t('learn.actionOption', { key: opt.key, text: opt.text })}
             </Text>
           </View>
         ))}
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.sectionTitle}>夜の問い</Text>
+        <Text style={styles.sectionTitle}>{t('learn.nightQuestion')}</Text>
         <Text style={styles.bodyText}>{card.nightQuestion}</Text>
       </View>
 
       {!!sourceLinks?.length && (
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>参考</Text>
+          <Text style={styles.sectionTitle}>{t('learn.sources')}</Text>
           {sourceLinks.map((s) => (
             <Text key={s.id} style={styles.sourceItem}>
               ・{s.id}
