@@ -10,10 +10,10 @@ import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
 import { getReturnStatus } from '../../lib/engagement';
-import { getProgramDayInfo } from '../../lib/programDay';
 import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
 import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
+import { getProgramDayInfo } from '../../lib/programDay';
 import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
 import { cardShadow, theme } from '../../ui/theme';
 
@@ -139,282 +139,283 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <Animated.View style={[styles.heroCard, entranceStyle(heroAnim)]}>
-        <View style={styles.heroTop}>
-          <View>
-            <Text style={styles.kicker}>{t('home.kicker')}</Text>
-            <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
-          </View>
-          <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
-            <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
-              {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
-            </Text>
-          </View>
-        </View>
-
-        <Text style={styles.heroTitle}>{title}</Text>
-
-        {statusMessage && (
-          <View style={styles.heroNotice}>
-            <Text style={styles.heroNoticeText}>{statusMessage}</Text>
-            {isComplete && (
-              <Pressable
-                onPress={() => router.push('/settings')}
-                style={({ pressed }) => [
-                  styles.noticeButton,
-                  pressed && styles.noticeButtonPressed,
-                ]}
-              >
-                <Text style={styles.noticeButtonText}>{t('home.resetFromSettings')}</Text>
-              </Pressable>
-            )}
-          </View>
-        )}
-
-        <View style={styles.progressRow}>
-          <ProgressChip label={t('nav.morning')} done={morningDone} />
-          <ProgressChip label={t('nav.learn')} done={learnDone} />
-          <ProgressChip label={t('nav.night')} done={nightDone} />
-        </View>
-
-        <Pressable
-          disabled={!nextAction.route}
-          onPress={() => {
-            if (nextAction.route) router.push(nextAction.route);
-          }}
-          style={({ pressed }) => [
-            styles.primaryButton,
-            !nextAction.route && styles.primaryButtonDisabled,
-            pressed && nextAction.route && styles.primaryButtonPressed,
-          ]}
-        >
-          <View style={styles.primaryButtonContent}>
-            <Text
-              style={[
-                styles.primaryButtonText,
-                !nextAction.route && styles.primaryButtonTextDisabled,
-              ]}
-            >
-              {primaryButtonLabel}
-            </Text>
-            {nextAction.route && (
-              <MaterialIcons name="arrow-forward" size={20} color={theme.colors.surface} />
-            )}
-          </View>
-        </Pressable>
-      </Animated.View>
-
-      <Animated.View style={[styles.card, styles.cardAccent, entranceStyle(actionsAnim)]}>
-          <View style={styles.cardHeaderRow}>
+        <Animated.View style={[styles.heroCard, entranceStyle(heroAnim)]}>
+          <View style={styles.heroTop}>
             <View>
-            <Text style={styles.sectionTitle}>{t('home.yearTitle')}</Text>
-            <Text style={styles.sectionSubtitle}>{t('home.yearSubtitle')}</Text>
+              <Text style={styles.kicker}>{t('home.kicker')}</Text>
+              <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
             </View>
-          <View style={styles.badgeSoft}>
-            <Text style={styles.badgeSoftText}>{t('home.yearBadge')}</Text>
+            <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
+              <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
+                {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <Text style={styles.sectionBody}>{t('home.yearBody')}</Text>
+          <Text style={styles.heroTitle}>{title}</Text>
 
-        <View style={styles.rowButtons}>
+          {statusMessage && (
+            <View style={styles.heroNotice}>
+              <Text style={styles.heroNoticeText}>{statusMessage}</Text>
+              {isComplete && (
+                <Pressable
+                  onPress={() => router.push('/settings')}
+                  style={({ pressed }) => [
+                    styles.noticeButton,
+                    pressed && styles.noticeButtonPressed,
+                  ]}
+                >
+                  <Text style={styles.noticeButtonText}>{t('home.resetFromSettings')}</Text>
+                </Pressable>
+              )}
+            </View>
+          )}
+
+          <View style={styles.progressRow}>
+            <ProgressChip label={t('nav.morning')} done={morningDone} />
+            <ProgressChip label={t('nav.learn')} done={learnDone} />
+            <ProgressChip label={t('nav.night')} done={nightDone} />
+          </View>
+
           <Pressable
-            onPress={() => router.push('/history')}
+            disabled={!nextAction.route}
+            onPress={() => {
+              if (nextAction.route) router.push(nextAction.route);
+            }}
             style={({ pressed }) => [
               styles.primaryButton,
-              styles.primaryButtonCompact,
-              pressed && styles.primaryButtonPressed,
+              !nextAction.route && styles.primaryButtonDisabled,
+              pressed && nextAction.route && styles.primaryButtonPressed,
             ]}
           >
             <View style={styles.primaryButtonContent}>
-              <Text style={styles.primaryButtonText}>{t('home.yearView')}</Text>
-              <MaterialIcons name="north-east" size={18} color={theme.colors.surface} />
-            </View>
-          </Pressable>
-
-          <Pressable
-            onPress={() => router.push('/history')}
-            style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-          >
-            <Text style={styles.ghostButtonText}>{t('home.yearDetail')}</Text>
-          </Pressable>
-        </View>
-      </Animated.View>
-
-      <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
-        <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
-
-        <View style={styles.actionCard}>
-          <View style={styles.actionHeader}>
-            <View style={[styles.iconBadge, styles.iconBadgeMorning]}>
-              <MaterialIcons name="wb-sunny" size={20} color={theme.colors.accentDark} />
-            </View>
-            <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>{t('home.flowMorningTitle')}</Text>
-              <Text style={styles.actionStatus}>
-                {morningDone ? t('common.done') : t('common.incomplete')}
+              <Text
+                style={[
+                  styles.primaryButtonText,
+                  !nextAction.route && styles.primaryButtonTextDisabled,
+                ]}
+              >
+                {primaryButtonLabel}
               </Text>
+              {nextAction.route && (
+                <MaterialIcons name="arrow-forward" size={20} color={theme.colors.surface} />
+              )}
+            </View>
+          </Pressable>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, styles.cardAccent, entranceStyle(actionsAnim)]}>
+          <View style={styles.cardHeaderRow}>
+            <View>
+              <Text style={styles.sectionTitle}>{t('home.yearTitle')}</Text>
+              <Text style={styles.sectionSubtitle}>{t('home.yearSubtitle')}</Text>
+            </View>
+            <View style={styles.badgeSoft}>
+              <Text style={styles.badgeSoftText}>{t('home.yearBadge')}</Text>
             </View>
           </View>
-          <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
+
+          <Text style={styles.sectionBody}>{t('home.yearBody')}</Text>
+
           <View style={styles.rowButtons}>
             <Pressable
-              onPress={() => router.push('/morning')}
+              onPress={() => router.push('/history')}
               style={({ pressed }) => [
                 styles.primaryButton,
                 styles.primaryButtonCompact,
                 pressed && styles.primaryButtonPressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>
-                {morningDone ? t('common.review') : t('common.do')}
-              </Text>
+              <View style={styles.primaryButtonContent}>
+                <Text style={styles.primaryButtonText}>{t('home.yearView')}</Text>
+                <MaterialIcons name="north-east" size={18} color={theme.colors.surface} />
+              </View>
             </Pressable>
+
             <Pressable
-              onPress={async () => {
-                try {
-                  await clearMorningLog();
-                  await refresh();
-                } catch {
-                  setError(t('errors.updateFail'));
-                }
-              }}
+              onPress={() => router.push('/history')}
               style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
             >
-              <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
+              <Text style={styles.ghostButtonText}>{t('home.yearDetail')}</Text>
             </Pressable>
           </View>
-        </View>
+        </Animated.View>
 
-        <View style={styles.actionCard}>
-          <View style={styles.actionHeader}>
-            <View style={[styles.iconBadge, styles.iconBadgeLearn]}>
-              <MaterialIcons name="menu-book" size={20} color={theme.colors.accentDark} />
+        <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
+          <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
+
+          <View style={styles.actionCard}>
+            <View style={styles.actionHeader}>
+              <View style={[styles.iconBadge, styles.iconBadgeMorning]}>
+                <MaterialIcons name="wb-sunny" size={20} color={theme.colors.accentDark} />
+              </View>
+              <View style={styles.actionHeaderText}>
+                <Text style={styles.actionTitle}>{t('home.flowMorningTitle')}</Text>
+                <Text style={styles.actionStatus}>
+                  {morningDone ? t('common.done') : t('common.incomplete')}
+                </Text>
+              </View>
             </View>
-            <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>{t('home.flowLearnTitle')}</Text>
-              <Text style={styles.actionStatus}>
-                {learnDone ? t('home.selectionDone') : t('home.selectionNone')}
-              </Text>
+            <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
+            <View style={styles.rowButtons}>
+              <Pressable
+                onPress={() => router.push('/morning')}
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  styles.primaryButtonCompact,
+                  pressed && styles.primaryButtonPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {morningDone ? t('common.review') : t('common.do')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={async () => {
+                  try {
+                    await clearMorningLog();
+                    await refresh();
+                  } catch {
+                    setError(t('errors.updateFail'));
+                  }
+                }}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
+              </Pressable>
             </View>
           </View>
-          <Text style={styles.actionDescription}>
-            {todayAction
-              ? t('home.selectionDetail', {
-                  key: todayAction.key,
-                  text: todayAction.text,
-                })
-              : t('home.selectionEmpty')}
-          </Text>
-          <View style={styles.rowButtons}>
+
+          <View style={styles.actionCard}>
+            <View style={styles.actionHeader}>
+              <View style={[styles.iconBadge, styles.iconBadgeLearn]}>
+                <MaterialIcons name="menu-book" size={20} color={theme.colors.accentDark} />
+              </View>
+              <View style={styles.actionHeaderText}>
+                <Text style={styles.actionTitle}>{t('home.flowLearnTitle')}</Text>
+                <Text style={styles.actionStatus}>
+                  {learnDone ? t('home.selectionDone') : t('home.selectionNone')}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.actionDescription}>
+              {todayAction
+                ? t('home.selectionDetail', {
+                    key: todayAction.key,
+                    text: todayAction.text,
+                  })
+                : t('home.selectionEmpty')}
+            </Text>
+            <View style={styles.rowButtons}>
+              <Pressable
+                onPress={() => router.push('/learn')}
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  styles.primaryButtonCompact,
+                  pressed && styles.primaryButtonPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
+              </Pressable>
+              <Pressable
+                onPress={async () => {
+                  try {
+                    await clearTodayActionSelection();
+                    await refresh();
+                  } catch {
+                    setError(t('errors.updateFail'));
+                  }
+                }}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>{t('home.selectionClear')}</Text>
+              </Pressable>
+            </View>
+          </View>
+
+          <View style={styles.actionCard}>
+            <View style={styles.actionHeader}>
+              <View style={[styles.iconBadge, styles.iconBadgeNight]}>
+                <MaterialIcons name="nights-stay" size={20} color={theme.colors.accentDark} />
+              </View>
+              <View style={styles.actionHeaderText}>
+                <Text style={styles.actionTitle}>{t('home.flowNightTitle')}</Text>
+                <Text style={styles.actionStatus}>
+                  {nightDone ? t('common.done') : t('common.incomplete')}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
+            <View style={styles.rowButtons}>
+              <Pressable
+                onPress={() => router.push('/night')}
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  styles.primaryButtonCompact,
+                  pressed && styles.primaryButtonPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {nightDone ? t('common.review') : t('common.do')}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={async () => {
+                  try {
+                    await clearNightLog();
+                    await refresh();
+                  } catch {
+                    setError(t('errors.updateFail'));
+                  }
+                }}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(historyAnim)]}>
+          <View style={styles.cardHeaderRow}>
+            <Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text>
             <Pressable
-              onPress={() => router.push('/learn')}
+              onPress={() => router.push('/history')}
               style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
+                styles.ghostButtonSmall,
+                pressed && styles.ghostButtonPressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
-            </Pressable>
-            <Pressable
-              onPress={async () => {
-                try {
-                  await clearTodayActionSelection();
-                  await refresh();
-                } catch {
-                  setError(t('errors.updateFail'));
-                }
-              }}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('home.selectionClear')}</Text>
+              <Text style={styles.ghostButtonText}>{t('home.recentCta')}</Text>
             </Pressable>
           </View>
-        </View>
 
-        <View style={styles.actionCard}>
-          <View style={styles.actionHeader}>
-            <View style={[styles.iconBadge, styles.iconBadgeNight]}>
-              <MaterialIcons name="nights-stay" size={20} color={theme.colors.accentDark} />
-            </View>
-            <View style={styles.actionHeaderText}>
-              <Text style={styles.actionTitle}>{t('home.flowNightTitle')}</Text>
-              <Text style={styles.actionStatus}>
-                {nightDone ? t('common.done') : t('common.incomplete')}
-              </Text>
-            </View>
+          <View style={styles.historyHeader}>
+            <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
+            <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
+            <Text style={styles.historyLabel}>{t('nav.night')}</Text>
+            <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
           </View>
-          <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
-          <View style={styles.rowButtons}>
-            <Pressable
-              onPress={() => router.push('/night')}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
-              ]}
-            >
-              <Text style={styles.primaryButtonText}>
-                {nightDone ? t('common.review') : t('common.do')}
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={async () => {
-                try {
-                  await clearNightLog();
-                  await refresh();
-                } catch {
-                  setError(t('errors.updateFail'));
-                }
-              }}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Animated.View>
 
-      <Animated.View style={[styles.card, entranceStyle(historyAnim)]}>
-        <View style={styles.cardHeaderRow}>
-          <Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text>
-          <Pressable
-            onPress={() => router.push('/history')}
-            style={({ pressed }) => [styles.ghostButtonSmall, pressed && styles.ghostButtonPressed]}
-          >
-            <Text style={styles.ghostButtonText}>{t('home.recentCta')}</Text>
-          </Pressable>
-        </View>
-
-        <View style={styles.historyHeader}>
-          <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
-          <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
-          <Text style={styles.historyLabel}>{t('nav.night')}</Text>
-          <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
-        </View>
-
-        {history.map((h) => (
-          <View key={h.dateISO} style={styles.historyRow}>
-            <Text style={[styles.historyValue, styles.historyDate]}>{h.dateISO}</Text>
-            <View style={styles.historyCell}>
-              <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
+          {history.map((h) => (
+            <View key={h.dateISO} style={styles.historyRow}>
+              <Text style={[styles.historyValue, styles.historyDate]}>{h.dateISO}</Text>
+              <View style={styles.historyCell}>
+                <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
+              </View>
+              <View style={styles.historyCell}>
+                <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
+              </View>
+              <View style={styles.historyCell}>
+                <Text style={styles.historyValue}>{h.nightHasNote ? '📝' : t('common.dash')}</Text>
+              </View>
             </View>
-            <View style={styles.historyCell}>
-              <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
-            </View>
-            <View style={styles.historyCell}>
-              <Text style={styles.historyValue}>
-                {h.nightHasNote ? '📝' : t('common.dash')}
-              </Text>
-            </View>
-          </View>
-        ))}
+          ))}
 
-        <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
-      </Animated.View>
+          <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
+        </Animated.View>
 
-      <Text style={styles.footerNote}>{t('home.footerNote')}</Text>
+        <Text style={styles.footerNote}>{t('home.footerNote')}</Text>
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,6 +1,6 @@
+import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
@@ -21,9 +21,7 @@ export default function GlossaryListScreen() {
   const categories = useMemo(() => {
     const fromTaxonomy = glossary.taxonomy?.categories ?? [];
     if (fromTaxonomy.length) return fromTaxonomy;
-    return Array.from(
-      new Set(glossary.entries.map((e) => e.category).filter(Boolean)),
-    ) as string[];
+    return Array.from(new Set(glossary.entries.map((e) => e.category).filter(Boolean))) as string[];
   }, [glossary]);
 
   const filtered = useMemo(() => {

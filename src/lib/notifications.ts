@@ -22,7 +22,10 @@ const translate = (key: string, fallback: string) => {
 const getNotificationCopy = () => ({
   channelName: translate('notifications.channelName', 'Daily reminders'),
   morningTitle: translate('notifications.morning.title', 'Morning reset'),
-  morningBody: translate('notifications.morning.body', 'Take 3 minutes to align body, speech, and mind.'),
+  morningBody: translate(
+    'notifications.morning.body',
+    'Take 3 minutes to align body, speech, and mind.',
+  ),
   nightTitle: translate('notifications.night.title', 'Night close'),
   nightBody: translate('notifications.night.body', 'Close the day in 45 seconds.'),
 });

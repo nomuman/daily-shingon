@@ -100,7 +100,9 @@
         "day": "Do not assume you understand; return to action.",
         "night": "Check one difficult term in the glossary."
       },
-      "reflection_questions": ["When you encountered a difficult term, did practice stop or continue?"],
+      "reflection_questions": [
+        "When you encountered a difficult term, did practice stop or continue?"
+      ],
       "tags": ["UX", "beginners", "glossary"],
       "sources": ["S_KOYASAN_SHINGONSHU"]
     }

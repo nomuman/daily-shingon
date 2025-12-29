@@ -2,8 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContributionGraph } from 'react-native-chart-kit';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import ErrorState from '../components/ErrorState';
@@ -33,7 +33,10 @@ const getContributionGraphWidth = (endDate: Date) => {
   return chartPaddingLeft + weekCount * squareSizeWithGutter - chartGutterSize;
 };
 
-const labelForCount = (t: (key: string, options?: Record<string, unknown>) => string, count: number) => {
+const labelForCount = (
+  t: (key: string, options?: Record<string, unknown>) => string,
+  count: number,
+) => {
   if (count >= 3) return t('history.count3');
   if (count === 2) return t('history.count2');
   if (count === 1) return t('history.count1');
@@ -47,7 +50,10 @@ const formatDateLabel = (t: (key: string) => string, date: string | Date | null 
   return t('common.unknownDate');
 };
 
-const buildTooltipLabel = (t: (key: string, options?: Record<string, unknown>) => string, value: unknown) => {
+const buildTooltipLabel = (
+  t: (key: string, options?: Record<string, unknown>) => string,
+  value: unknown,
+) => {
   if (!value || typeof value !== 'object') return t('history.tooltipUnknown');
   const raw = value as { date?: string | Date; count?: number; value?: number };
   const count =
@@ -117,90 +123,91 @@ export default function HistoryScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
-        <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>{t('history.title')}</Text>
-          <Pressable
-            onPress={() => router.back()}
-            style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-          >
-            <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
-          </Pressable>
-        </View>
-        <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
-      </Animated.View>
+        <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
+          <View style={styles.headerRow}>
+            <Text style={styles.headerTitle}>{t('history.title')}</Text>
+            <Pressable
+              onPress={() => router.back()}
+              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+            >
+              <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
+            </Pressable>
+          </View>
+          <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
+        </Animated.View>
 
-      <Animated.View style={[styles.graphCard, entranceStyle(graphAnim)]}>
-        {loading ? (
-          <Text style={styles.loadingText}>{t('common.loading')}</Text>
-        ) : (
-          <ScrollView horizontal contentContainerStyle={{ paddingRight: 12 }}>
-            <ContributionGraph
-              values={values}
-              endDate={endDate}
-              numDays={chartDays}
-              width={graphWidth}
-              height={chartHeight}
-              gutterSize={chartGutterSize}
-              squareSize={chartSquareSize}
-              showMonthLabels
-              onDayPress={(item: { date?: string | Date; count?: number }) => {
-                setTooltipLabel(buildTooltipLabel(t, item));
-                if (!item?.date) return;
-                const dateLabel = item.date instanceof Date ? toISODateLocal(item.date) : item.date;
-                router.push(`/day/${dateLabel}`);
-              }}
-              titleForValue={(value) => buildTooltipLabel(t, value)}
-              chartConfig={{
-                backgroundGradientFrom: theme.colors.surface,
-                backgroundGradientTo: theme.colors.surface,
-                backgroundGradientFromOpacity: 0,
-                backgroundGradientToOpacity: 0,
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(195, 139, 47, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(28, 26, 22, ${opacity})`,
-              }}
-              tooltipDataAttrs={(value) => ({
-                accessibilityLabel: buildTooltipLabel(t, value),
-                onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
-                delayLongPress: 150,
-              })}
-            />
-          </ScrollView>
-        )}
-      </Animated.View>
+        <Animated.View style={[styles.graphCard, entranceStyle(graphAnim)]}>
+          {loading ? (
+            <Text style={styles.loadingText}>{t('common.loading')}</Text>
+          ) : (
+            <ScrollView horizontal contentContainerStyle={{ paddingRight: 12 }}>
+              <ContributionGraph
+                values={values}
+                endDate={endDate}
+                numDays={chartDays}
+                width={graphWidth}
+                height={chartHeight}
+                gutterSize={chartGutterSize}
+                squareSize={chartSquareSize}
+                showMonthLabels
+                onDayPress={(item: { date?: string | Date; count?: number }) => {
+                  setTooltipLabel(buildTooltipLabel(t, item));
+                  if (!item?.date) return;
+                  const dateLabel =
+                    item.date instanceof Date ? toISODateLocal(item.date) : item.date;
+                  router.push(`/day/${dateLabel}`);
+                }}
+                titleForValue={(value) => buildTooltipLabel(t, value)}
+                chartConfig={{
+                  backgroundGradientFrom: theme.colors.surface,
+                  backgroundGradientTo: theme.colors.surface,
+                  backgroundGradientFromOpacity: 0,
+                  backgroundGradientToOpacity: 0,
+                  decimalPlaces: 0,
+                  color: (opacity = 1) => `rgba(195, 139, 47, ${opacity})`,
+                  labelColor: (opacity = 1) => `rgba(28, 26, 22, ${opacity})`,
+                }}
+                tooltipDataAttrs={(value) => ({
+                  accessibilityLabel: buildTooltipLabel(t, value),
+                  onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
+                  delayLongPress: 150,
+                })}
+              />
+            </ScrollView>
+          )}
+        </Animated.View>
 
-      <Animated.View style={[styles.metaStack, entranceStyle(legendAnim)]}>
-        {tooltipLabel ? (
-          <View style={styles.tooltipCard}>
-            <Text style={styles.tooltipLabel}>{t('history.tooltipTitle')}</Text>
-            <Text style={styles.tooltipValue}>{tooltipLabel}</Text>
-          </View>
-        ) : (
-          <Text style={styles.helperText}>{t('history.tooltipHint')}</Text>
-        )}
+        <Animated.View style={[styles.metaStack, entranceStyle(legendAnim)]}>
+          {tooltipLabel ? (
+            <View style={styles.tooltipCard}>
+              <Text style={styles.tooltipLabel}>{t('history.tooltipTitle')}</Text>
+              <Text style={styles.tooltipValue}>{tooltipLabel}</Text>
+            </View>
+          ) : (
+            <Text style={styles.helperText}>{t('history.tooltipHint')}</Text>
+          )}
 
-        <View style={styles.legendCard}>
-          <Text style={styles.legendTitle}>{t('history.legendTitle')}</Text>
-          <View style={styles.legendRow}>
-            <View style={[styles.legendSwatch, styles.legendSwatch0]} />
-            <Text style={styles.legendText}>{t('history.legend0')}</Text>
+          <View style={styles.legendCard}>
+            <Text style={styles.legendTitle}>{t('history.legendTitle')}</Text>
+            <View style={styles.legendRow}>
+              <View style={[styles.legendSwatch, styles.legendSwatch0]} />
+              <Text style={styles.legendText}>{t('history.legend0')}</Text>
+            </View>
+            <View style={styles.legendRow}>
+              <View style={[styles.legendSwatch, styles.legendSwatch1]} />
+              <Text style={styles.legendText}>{t('history.legend1')}</Text>
+            </View>
+            <View style={styles.legendRow}>
+              <View style={[styles.legendSwatch, styles.legendSwatch2]} />
+              <Text style={styles.legendText}>{t('history.legend2')}</Text>
+            </View>
+            <View style={styles.legendRow}>
+              <View style={[styles.legendSwatch, styles.legendSwatch3]} />
+              <Text style={styles.legendText}>{t('history.legend3')}</Text>
+            </View>
+            <Text style={styles.legendNote}>{t('history.legendNote')}</Text>
           </View>
-          <View style={styles.legendRow}>
-            <View style={[styles.legendSwatch, styles.legendSwatch1]} />
-            <Text style={styles.legendText}>{t('history.legend1')}</Text>
-          </View>
-          <View style={styles.legendRow}>
-            <View style={[styles.legendSwatch, styles.legendSwatch2]} />
-            <Text style={styles.legendText}>{t('history.legend2')}</Text>
-          </View>
-          <View style={styles.legendRow}>
-            <View style={[styles.legendSwatch, styles.legendSwatch3]} />
-            <Text style={styles.legendText}>{t('history.legend3')}</Text>
-          </View>
-          <Text style={styles.legendNote}>{t('history.legendNote')}</Text>
-        </View>
-      </Animated.View>
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );

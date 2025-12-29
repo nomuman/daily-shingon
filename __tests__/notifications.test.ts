@@ -1,7 +1,15 @@
+import {
+  cancelDailyReminders,
+  ensureNotificationPermission,
+  parseTimeToTrigger,
+  scheduleDailyReminders,
+} from '../src/lib/notifications';
+
 jest.mock('react-native', () => ({
   Platform: {
     OS: 'android',
-    select: (spec) => (spec && spec.android ? spec.android : spec?.default),
+    select: (spec: { android: any; default: any }) =>
+      spec && spec.android ? spec.android : spec?.default,
   },
 }));
 
@@ -21,13 +29,6 @@ jest.mock('expo-notifications', () => ({
   AndroidImportance: { DEFAULT: 'default' },
   SchedulableTriggerInputTypes: { DAILY: 'daily' },
 }));
-
-import {
-  cancelDailyReminders,
-  ensureNotificationPermission,
-  parseTimeToTrigger,
-  scheduleDailyReminders,
-} from '../src/lib/notifications';
 
 describe('notifications', () => {
   beforeEach(() => {
@@ -67,7 +68,9 @@ describe('notifications', () => {
   });
 
   it('throws when times are invalid', async () => {
-    await expect(scheduleDailyReminders('25:00', '09:00')).rejects.toThrow('Invalid notification time');
+    await expect(scheduleDailyReminders('25:00', '09:00')).rejects.toThrow(
+      'Invalid notification time',
+    );
   });
 
   it('cancels scheduled reminders by id', async () => {

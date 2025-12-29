@@ -20,7 +20,9 @@
         "day": "Rephrase one sentence more carefully (speech).",
         "night": "Record today's practice in one line."
       },
-      "reflection_questions": ["If you translate a great person's life into today's actions, what would that be?"],
+      "reflection_questions": [
+        "If you translate a great person's life into today's actions, what would that be?"
+      ],
       "tags": ["people", "Kukai", "history"],
       "sources": ["S_SEP_KUKAI"]
     },
@@ -36,7 +38,9 @@
         "day": "Open the glossary when an unfamiliar term appears (don't leave it vague).",
         "night": "Write down one term you encountered today."
       },
-      "reflection_questions": ["What word confused you today? How would you rephrase it in one line?"],
+      "reflection_questions": [
+        "What word confused you today? How would you rephrase it in one line?"
+      ],
       "tags": ["people", "naming", "UX"],
       "sources": ["S_SEP_KUKAI"]
     },

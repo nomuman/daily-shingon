@@ -100,7 +100,9 @@ export default function LearnScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>{t('learn.dayLabel', { day: dayInfo.dayNumber, total: 30 })}</Text>
+        <Text style={styles.title}>
+          {t('learn.dayLabel', { day: dayInfo.dayNumber, total: 30 })}
+        </Text>
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{card.title}</Text>

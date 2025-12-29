@@ -1,5 +1,5 @@
-import renderer from 'react-test-renderer';
 import { Text } from 'react-native';
+import renderer from 'react-test-renderer';
 
 import TagRow from '../src/components/TagRow';
 
@@ -19,7 +19,9 @@ describe('TagRow', () => {
   it('renders unique tags and the all label', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
-      tree = renderer.create(<TagRow tags={['b', 'a', 'b']} activeTag={null} onSelect={() => {}} />);
+      tree = renderer.create(
+        <TagRow tags={['b', 'a', 'b']} activeTag={null} onSelect={() => {}} />,
+      );
     });
     if (!tree) throw new Error('renderer not created');
     const texts = tree.root.findAllByType(Text).map((node) => node.props.children);

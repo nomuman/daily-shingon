@@ -1,14 +1,14 @@
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
-import { useContentLang } from '../../../../content/useContentLang';
 import type { Card } from '../../../../content/types';
+import { useContentLang } from '../../../../content/useContentLang';
 import { cardShadow, theme } from '../../../../ui/theme';
 
 export default function CardListScreen() {
@@ -72,7 +72,9 @@ export default function CardListScreen() {
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.title}>{pack.meta.title}</Text>
-            {!!pack.meta.description && <Text style={styles.subtitle}>{pack.meta.description}</Text>}
+            {!!pack.meta.description && (
+              <Text style={styles.subtitle}>{pack.meta.description}</Text>
+            )}
             <Text style={styles.meta}>
               {t('learnCards.resultCount', { shown: filtered.length, total: pack.cards.length })}
             </Text>
@@ -82,7 +84,9 @@ export default function CardListScreen() {
           <CardRow
             card={item}
             onPress={() => router.push(`/learn/cards/${pack.meta.pack_id}/${item.id}`)}
-            typeLabel={t(item.type === 'learn' ? 'learnCards.typeLearn' : 'learnCards.typePractice')}
+            typeLabel={t(
+              item.type === 'learn' ? 'learnCards.typeLearn' : 'learnCards.typePractice',
+            )}
             levelLabel={levelLabel(t, item.level)}
           />
         )}
@@ -104,7 +108,10 @@ function CardRow({
   levelLabel: string;
 }) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+    >
       <Text style={styles.rowTitle}>{card.title}</Text>
       <Text style={styles.rowMeta}>
         {typeLabel} ・ {levelLabel}

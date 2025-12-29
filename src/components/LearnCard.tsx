@@ -22,9 +22,7 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
     <View style={styles.stack}>
       <Text style={styles.title}>{t('learn.dayLabel', { day: dayNumber, total: 30 })}</Text>
 
-      {isComplete && (
-        <Text style={styles.notice}>{t('learn.completeNotice')}</Text>
-      )}
+      {isComplete && <Text style={styles.notice}>{t('learn.completeNotice')}</Text>}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>{card.title}</Text>

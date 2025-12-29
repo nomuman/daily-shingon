@@ -36,7 +36,9 @@
         "day": "Diamond: do the chosen step exactly once without fail.",
         "night": "Choose and write which was lacking today: Womb or Diamond."
       },
-      "reflection_questions": ["Which was stronger today: Womb (nurture) or Diamond (pierce through)?"],
+      "reflection_questions": [
+        "Which was stronger today: Womb (nurture) or Diamond (pierce through)?"
+      ],
       "tags": ["mandala", "womb realm", "diamond realm"],
       "sources": ["S_TOJI_MANDALA"]
     },
@@ -84,7 +86,9 @@
         "day": "Swap only the surrounding action each day.",
         "night": "Close with the center (night form)."
       },
-      "reflection_questions": ["Where do you draw the line between the center (form) and the surroundings (variation)?"],
+      "reflection_questions": [
+        "Where do you draw the line between the center (form) and the surroundings (variation)?"
+      ],
       "tags": ["mandala", "Dainichi", "design"],
       "sources": ["S_TOJI_MANDALA"]
     },

@@ -16,8 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import ErrorState from '../../components/ErrorState';
-import type { LanguagePreference } from '../../lib/i18n/storage';
 import { getLanguagePreference, setLanguagePreference } from '../../lib/i18n';
+import type { LanguagePreference } from '../../lib/i18n/storage';
 import {
   cancelDailyReminders,
   ensureNotificationPermission,
@@ -233,24 +233,20 @@ export default function SettingsScreen() {
   };
 
   const handleReset = () => {
-    Alert.alert(
-      t('settings.reset.title'),
-      t('settings.reset.body'),
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('settings.reset.confirm'),
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await resetAllProgress();
-            } catch {
-              setNotice(t('settings.reset.fail'));
-            }
-          },
+    Alert.alert(t('settings.reset.title'), t('settings.reset.body'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('settings.reset.confirm'),
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await resetAllProgress();
+          } catch {
+            setNotice(t('settings.reset.fail'));
+          }
         },
-      ],
-    );
+      },
+    ]);
   };
 
   const settingsSummary = useMemo(() => {
@@ -286,155 +282,157 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
-        <Text style={styles.kicker}>{t('settings.kicker')}</Text>
-        <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>{t('settings.headerTitle')}</Text>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{settingsSummary}</Text>
+        <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
+          <Text style={styles.kicker}>{t('settings.kicker')}</Text>
+          <View style={styles.headerRow}>
+            <Text style={styles.headerTitle}>{t('settings.headerTitle')}</Text>
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{settingsSummary}</Text>
+            </View>
           </View>
-        </View>
-        <Text style={styles.headerBody}>{t('settings.headerBody')}</Text>
-      </Animated.View>
-
-      {!!notice && (
-        <Animated.View style={[styles.noticeCard, entranceStyle(notifyAnim)]}>
-          <Text style={styles.noticeText}>{notice}</Text>
+          <Text style={styles.headerBody}>{t('settings.headerBody')}</Text>
         </Animated.View>
-      )}
 
-      <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
-        <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
-        <Text style={styles.sectionSubtitle}>{t('settings.language.description')}</Text>
-
-        <View style={styles.optionList}>
-          {languageOptions.map((option, index) => (
-            <Pressable
-              key={option.value}
-              onPress={() => handleLanguageSelect(option.value)}
-              style={({ pressed }) => [
-                styles.optionRow,
-                index > 0 && styles.optionRowDivider,
-                pressed && styles.optionRowPressed,
-              ]}
-            >
-              <View style={styles.radioOuter}>
-                {languagePref === option.value && <View style={styles.radioInner} />}
-              </View>
-              <Text style={styles.optionText}>{option.label}</Text>
-            </Pressable>
-          ))}
-        </View>
-
-        <Text style={styles.sectionHint}>{t('settings.language.note')}</Text>
-      </Animated.View>
-
-      <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
-        <Text style={styles.sectionTitle}>{t('settings.notifications.title')}</Text>
-        <Text style={styles.sectionSubtitle}>
-          {t('common.statusWithValue', { value: settingsSummary })}
-        </Text>
-
-        <View style={styles.switchRow}>
-          <Text style={styles.switchLabel}>{t('settings.notifications.toggle')}</Text>
-          <Switch
-            value={reminderEnabled}
-            onValueChange={toggleReminders}
-            trackColor={{
-              false: theme.colors.border,
-              true: theme.colors.accentSoft,
-            }}
-            thumbColor={reminderEnabled ? theme.colors.accent : theme.colors.surface}
-          />
-        </View>
-
-        {permissionStatus === 'denied' && (
-          <View style={styles.inlineNotice}>
-            <Text style={styles.inlineNoticeText}>
-              {t('settings.notifications.permissionDenied')}
-            </Text>
-            <Pressable
-              onPress={openSystemSettings}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('settings.notifications.openSettings')}</Text>
-            </Pressable>
-          </View>
+        {!!notice && (
+          <Animated.View style={[styles.noticeCard, entranceStyle(notifyAnim)]}>
+            <Text style={styles.noticeText}>{notice}</Text>
+          </Animated.View>
         )}
-      </Animated.View>
 
-      <Animated.View style={[styles.card, entranceStyle(timeAnim)]}>
-        <Text style={styles.sectionTitle}>{t('settings.time.title')}</Text>
+        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.language.description')}</Text>
 
-        <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>{t('settings.time.morning')}</Text>
-          <Pressable
-            onPress={() => setShowMorningPicker(true)}
-            style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
-          >
-            <Text style={styles.timeValue}>{morningInput}</Text>
-          </Pressable>
-          {showMorningPicker && (
-            <DateTimePicker
-              mode="time"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              value={timeToDate(morningInput)}
-              onChange={handleTimeChange('morning')}
+          <View style={styles.optionList}>
+            {languageOptions.map((option, index) => (
+              <Pressable
+                key={option.value}
+                onPress={() => handleLanguageSelect(option.value)}
+                style={({ pressed }) => [
+                  styles.optionRow,
+                  index > 0 && styles.optionRowDivider,
+                  pressed && styles.optionRowPressed,
+                ]}
+              >
+                <View style={styles.radioOuter}>
+                  {languagePref === option.value && <View style={styles.radioInner} />}
+                </View>
+                <Text style={styles.optionText}>{option.label}</Text>
+              </Pressable>
+            ))}
+          </View>
+
+          <Text style={styles.sectionHint}>{t('settings.language.note')}</Text>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.notifications.title')}</Text>
+          <Text style={styles.sectionSubtitle}>
+            {t('common.statusWithValue', { value: settingsSummary })}
+          </Text>
+
+          <View style={styles.switchRow}>
+            <Text style={styles.switchLabel}>{t('settings.notifications.toggle')}</Text>
+            <Switch
+              value={reminderEnabled}
+              onValueChange={toggleReminders}
+              trackColor={{
+                false: theme.colors.border,
+                true: theme.colors.accentSoft,
+              }}
+              thumbColor={reminderEnabled ? theme.colors.accent : theme.colors.surface}
             />
-          )}
-          {showMorningPicker && Platform.OS === 'ios' && (
-            <Pressable
-              onPress={() => setShowMorningPicker(false)}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
-            </Pressable>
-          )}
-        </View>
+          </View>
 
-        <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>{t('settings.time.night')}</Text>
+          {permissionStatus === 'denied' && (
+            <View style={styles.inlineNotice}>
+              <Text style={styles.inlineNoticeText}>
+                {t('settings.notifications.permissionDenied')}
+              </Text>
+              <Pressable
+                onPress={openSystemSettings}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>
+                  {t('settings.notifications.openSettings')}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(timeAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.time.title')}</Text>
+
+          <View style={styles.timeBlock}>
+            <Text style={styles.timeLabel}>{t('settings.time.morning')}</Text>
+            <Pressable
+              onPress={() => setShowMorningPicker(true)}
+              style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
+            >
+              <Text style={styles.timeValue}>{morningInput}</Text>
+            </Pressable>
+            {showMorningPicker && (
+              <DateTimePicker
+                mode="time"
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                value={timeToDate(morningInput)}
+                onChange={handleTimeChange('morning')}
+              />
+            )}
+            {showMorningPicker && Platform.OS === 'ios' && (
+              <Pressable
+                onPress={() => setShowMorningPicker(false)}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
+              </Pressable>
+            )}
+          </View>
+
+          <View style={styles.timeBlock}>
+            <Text style={styles.timeLabel}>{t('settings.time.night')}</Text>
+            <Pressable
+              onPress={() => setShowNightPicker(true)}
+              style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
+            >
+              <Text style={styles.timeValue}>{nightInput}</Text>
+            </Pressable>
+            {showNightPicker && (
+              <DateTimePicker
+                mode="time"
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                value={timeToDate(nightInput)}
+                onChange={handleTimeChange('night')}
+              />
+            )}
+            {showNightPicker && Platform.OS === 'ios' && (
+              <Pressable
+                onPress={() => setShowNightPicker(false)}
+                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+              >
+                <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
+              </Pressable>
+            )}
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.reset.sectionTitle')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.reset.sectionBody')}</Text>
           <Pressable
-            onPress={() => setShowNightPicker(true)}
-            style={({ pressed }) => [styles.timeInput, pressed && styles.timeInputPressed]}
+            onPress={handleReset}
+            style={({ pressed }) => [styles.dangerButton, pressed && styles.dangerButtonPressed]}
           >
-            <Text style={styles.timeValue}>{nightInput}</Text>
+            <Text style={styles.dangerButtonText}>{t('settings.reset.button')}</Text>
           </Pressable>
-          {showNightPicker && (
-            <DateTimePicker
-              mode="time"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              value={timeToDate(nightInput)}
-              onChange={handleTimeChange('night')}
-            />
-          )}
-          {showNightPicker && Platform.OS === 'ios' && (
-            <Pressable
-              onPress={() => setShowNightPicker(false)}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
-            </Pressable>
-          )}
-        </View>
-      </Animated.View>
+        </Animated.View>
 
-      <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
-        <Text style={styles.sectionTitle}>{t('settings.reset.sectionTitle')}</Text>
-        <Text style={styles.sectionSubtitle}>{t('settings.reset.sectionBody')}</Text>
-        <Pressable
-          onPress={handleReset}
-          style={({ pressed }) => [styles.dangerButton, pressed && styles.dangerButtonPressed]}
-        >
-          <Text style={styles.dangerButtonText}>{t('settings.reset.button')}</Text>
-        </Pressable>
-      </Animated.View>
-
-      <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
-        <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
-        <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
-        {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
-      </Animated.View>
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
+          {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );

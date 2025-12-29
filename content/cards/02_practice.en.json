@@ -39,7 +39,9 @@
         "day": "If you fail, state the facts before excuses (speech).",
         "night": "Do not write blaming words. Use one line in the order: fact -> impact -> next step."
       },
-      "reflection_questions": ["If you turn today's repentance into a correction plan, what is it?"],
+      "reflection_questions": [
+        "If you turn today's repentance into a correction plan, what is it?"
+      ],
       "tags": ["practice", "repentance", "night"],
       "sources": ["S_KOTOBANK_ZANGE"]
     },
@@ -103,7 +105,9 @@
         "day": "If disturbed, first drop your shoulders (body) -> adjust your words (speech) -> observe your mind.",
         "night": "Write one line breaking down today's most disturbed moment into body, speech, and mind."
       },
-      "reflection_questions": ["Which was the first trigger of disturbance: body, speech, or mind?"],
+      "reflection_questions": [
+        "Which was the first trigger of disturbance: body, speech, or mind?"
+      ],
       "tags": ["practice", "three mysteries", "daily"],
       "sources": ["S_MUSUBIDAISHI_SANMITSU"]
     }

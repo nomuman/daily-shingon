@@ -1,6 +1,14 @@
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
@@ -202,9 +210,7 @@ export default function NightScreen() {
           <Text style={styles.ghostButtonText}>{t('night.resetButton')}</Text>
         </Pressable>
 
-        <Text style={styles.footerNote}>
-          {t('night.footerNote')}
-        </Text>
+        <Text style={styles.footerNote}>{t('night.footerNote')}</Text>
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
-import renderer from 'react-test-renderer';
 import { Text } from 'react-native';
+import renderer from 'react-test-renderer';
 
 import ErrorState from '../src/components/ErrorState';
 
@@ -10,7 +10,10 @@ describe('ErrorState', () => {
       tree = renderer.create(<ErrorState message="error" />);
     });
     if (!tree) throw new Error('renderer not created');
-    const texts = tree.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).not.toContain('再試行');
     renderer.act(() => {
       tree?.unmount();
@@ -30,7 +33,10 @@ describe('ErrorState', () => {
       );
     });
     if (!tree) throw new Error('renderer not created');
-    const texts = tree.root.findAllByType(Text).map((node) => node.props.children).flat();
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((node) => node.props.children)
+      .flat();
     expect(texts).toContain('再試行');
     expect(texts).toContain('別の操作');
     renderer.act(() => {

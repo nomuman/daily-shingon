@@ -1,7 +1,7 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Tabs } from 'expo-router';
 import type { SFSymbol } from 'expo-symbols';
 import { SymbolView } from 'expo-symbols';
-import { Tabs } from 'expo-router';
 
 import { useTranslation } from 'react-i18next';
 import { theme } from '../../ui/theme';
@@ -37,9 +37,6 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
-          height: 66,
-          paddingTop: 6,
-          paddingBottom: 8,
         },
         tabBarActiveTintColor: theme.colors.accentDark,
         tabBarInactiveTintColor: theme.colors.inkMuted,
@@ -81,7 +78,12 @@ export default function TabLayout() {
         options={{
           title: t('nav.night'),
           tabBarIcon: ({ color, size }) => (
-            <TabIcon symbol="moon.stars.fill" fallback="nights-stay" color={color} size={size ?? 24} />
+            <TabIcon
+              symbol="moon.stars.fill"
+              fallback="nights-stay"
+              color={color}
+              size={size ?? 24}
+            />
           ),
         }}
       />
