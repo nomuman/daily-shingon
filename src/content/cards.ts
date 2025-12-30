@@ -26,8 +26,9 @@ export type CardPackSummary = {
   count: number;
 };
 
-export function getCardPacks(lang: ContentLang): CardPackSummary[] {
-  return PACKS_BY_LANG[lang].map((p) => ({
+export function getCardPacks(lang: ContentLang = 'ja'): CardPackSummary[] {
+  const packs = PACKS_BY_LANG[lang] ?? PACKS_BY_LANG.ja;
+  return packs.map((p) => ({
     packId: p.meta.pack_id,
     title: p.meta.title,
     description: p.meta.description,
@@ -35,11 +36,34 @@ export function getCardPacks(lang: ContentLang): CardPackSummary[] {
   }));
 }
 
-export function getPackById(lang: ContentLang, packId: string): CardPackJson | undefined {
-  return PACKS_BY_LANG[lang].find((p) => p.meta.pack_id === packId);
+export function getPackById(packId: string): CardPackJson | undefined;
+export function getPackById(lang: ContentLang, packId: string): CardPackJson | undefined;
+export function getPackById(
+  langOrPackId: ContentLang | string,
+  maybePackId?: string,
+): CardPackJson | undefined {
+  const lang = maybePackId ? (langOrPackId as ContentLang) : 'ja';
+  const packId = maybePackId ?? (langOrPackId as string);
+  const packs = PACKS_BY_LANG[lang] ?? PACKS_BY_LANG.ja;
+  return packs.find((p) => p.meta.pack_id === packId);
 }
 
-export function getCardById(lang: ContentLang, packId: string, cardId: string) {
+export function getCardById(packId: string, cardId: string): {
+  pack?: CardPackJson;
+  card?: CardPackJson['cards'][number];
+};
+export function getCardById(lang: ContentLang, packId: string, cardId: string): {
+  pack?: CardPackJson;
+  card?: CardPackJson['cards'][number];
+};
+export function getCardById(
+  langOrPackId: ContentLang | string,
+  packIdOrCardId: string,
+  maybeCardId?: string,
+) {
+  const lang = maybeCardId ? (langOrPackId as ContentLang) : 'ja';
+  const packId = maybeCardId ? packIdOrCardId : (langOrPackId as string);
+  const cardId = maybeCardId ?? packIdOrCardId;
   const pack = getPackById(lang, packId);
   const card = pack?.cards.find((c) => c.id === cardId);
   return { pack, card };

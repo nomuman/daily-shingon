@@ -69,6 +69,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "moduleNameMapper": {
+      "^@formatjs/intl-pluralrules/polyfill-force\\.js$": "<rootDir>/__mocks__/intlPluralrulesPolyfill.js",
       "\\\\.svg$": "<rootDir>/__mocks__/svgMock.tsx"
     }
   },

@@ -54,5 +54,5 @@ If changes are significant, we will provide notice in the App and/or on the publ
 
 For privacy-related questions, contact:
 
-- Support: TODO (email or contact form URL)
-- Support page: TODO (URL)
+- Support: GitHub Issues (https://github.com/nomuman/sanmitsu-app/issues)
+- Support page: Contact page (https://nomuman.github.io/sanmitsu-app/contact/en/)

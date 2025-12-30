@@ -2,12 +2,13 @@ import { Text } from 'react-native';
 import renderer from 'react-test-renderer';
 
 import ErrorState from '../src/components/ErrorState';
+import { withProviders } from '../test-utils';
 
 describe('ErrorState', () => {
   it('hides retry button when onRetry is missing', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
-      tree = renderer.create(<ErrorState message="error" />);
+      tree = renderer.create(withProviders(<ErrorState message="error" />));
     });
     if (!tree) throw new Error('renderer not created');
     const texts = tree.root
@@ -24,12 +25,14 @@ describe('ErrorState', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
       tree = renderer.create(
-        <ErrorState
-          message="error"
-          onRetry={() => {}}
-          secondaryLabel="別の操作"
-          onSecondaryPress={() => {}}
-        />,
+        withProviders(
+          <ErrorState
+            message="error"
+            onRetry={() => {}}
+            secondaryLabel="別の操作"
+            onSecondaryPress={() => {}}
+          />,
+        ),
       );
     });
     if (!tree) throw new Error('renderer not created');

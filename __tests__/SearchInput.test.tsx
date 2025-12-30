@@ -2,12 +2,13 @@ import renderer from 'react-test-renderer';
 import { TextInput } from 'react-native';
 
 import SearchInput from '../src/components/SearchInput';
+import { withProviders } from '../test-utils';
 
 describe('SearchInput', () => {
   it('uses default placeholder when not provided', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
-      tree = renderer.create(<SearchInput value="" onChangeText={() => {}} />);
+      tree = renderer.create(withProviders(<SearchInput value="" onChangeText={() => {}} />));
     });
     if (!tree) throw new Error('renderer not created');
     const input = tree.root.findByType(TextInput);
@@ -21,7 +22,7 @@ describe('SearchInput', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
       tree = renderer.create(
-        <SearchInput value="" onChangeText={() => {}} placeholder="用語検索" />,
+        withProviders(<SearchInput value="" onChangeText={() => {}} placeholder="用語検索" />),
       );
     });
     if (!tree) throw new Error('renderer not created');

@@ -49,5 +49,5 @@
 
 本ポリシーに関するお問い合わせは、下記までご連絡ください。
 
-- サポート窓口: TODO（メールアドレス or お問い合わせフォームURL）
-- サポートページ: TODO（URL）
+- サポート窓口: GitHub Issues（https://github.com/nomuman/sanmitsu-app/issues）
+- サポートページ: お問い合わせページ（https://nomuman.github.io/sanmitsu-app/contact/）

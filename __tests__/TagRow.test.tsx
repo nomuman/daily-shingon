@@ -2,12 +2,13 @@ import { Text } from 'react-native';
 import renderer from 'react-test-renderer';
 
 import TagRow from '../src/components/TagRow';
+import { withProviders } from '../test-utils';
 
 describe('TagRow', () => {
   it('renders null when tags are empty', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
-      tree = renderer.create(<TagRow tags={[]} activeTag={null} onSelect={() => {}} />);
+      tree = renderer.create(withProviders(<TagRow tags={[]} activeTag={null} onSelect={() => {}} />));
     });
     if (!tree) throw new Error('renderer not created');
     expect(tree.toJSON()).toBeNull();
@@ -20,7 +21,7 @@ describe('TagRow', () => {
     let tree: renderer.ReactTestRenderer | undefined;
     renderer.act(() => {
       tree = renderer.create(
-        <TagRow tags={['b', 'a', 'b']} activeTag={null} onSelect={() => {}} />,
+        withProviders(<TagRow tags={['b', 'a', 'b']} activeTag={null} onSelect={() => {}} />),
       );
     });
     if (!tree) throw new Error('renderer not created');

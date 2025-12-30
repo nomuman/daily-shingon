@@ -2,6 +2,7 @@ import renderer from 'react-test-renderer';
 
 import LearnCard from '../src/components/LearnCard';
 import { getDayCard } from '../src/content/curriculum30.ja';
+import { withProviders } from '../test-utils';
 
 type JsonNode = string | number | boolean | null | { children?: JsonNode[] } | JsonNode[];
 
@@ -26,12 +27,14 @@ describe('LearnCard', () => {
 
     await renderer.act(async () => {
       tree = renderer.create(
-        <LearnCard
-          dayNumber={1}
-          card={card}
-          isComplete={false}
-          sourceLinks={[{ id: 'SRC_TEST' }]}
-        />,
+        withProviders(
+          <LearnCard
+            dayNumber={1}
+            card={card}
+            isComplete={false}
+            sourceLinks={[{ id: 'SRC_TEST' }]}
+          />,
+        ),
       );
     });
 
