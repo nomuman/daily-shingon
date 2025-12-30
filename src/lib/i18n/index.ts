@@ -22,27 +22,55 @@ const resources = {
 
 let currentPref: LanguagePreference = 'system';
 let attached = false;
+let appStateSubscription: ReturnType<typeof AppState.addEventListener> | null = null;
 
 export async function initI18n() {
-  currentPref = await loadLanguagePreference();
+  try {
+    currentPref = await loadLanguagePreference();
+  } catch (err) {
+    console.error('Failed to load language preference. Falling back to system.', err);
+    currentPref = 'system';
+  }
+
   const lang = currentPref === 'system' ? detectDeviceLanguage() : currentPref;
 
-  if (!i18n.isInitialized) {
-    await i18n.use(initReactI18next).init({
-      resources,
-      lng: lang,
-      fallbackLng: 'en',
-      ns: ['common'],
-      defaultNS: 'common',
-      react: {
-        useSuspense: false,
-      },
-      interpolation: {
-        escapeValue: false,
-      },
-    });
-  } else {
-    await i18n.changeLanguage(lang);
+  try {
+    if (!i18n.isInitialized) {
+      await i18n.use(initReactI18next).init({
+        resources,
+        lng: lang,
+        fallbackLng: 'en',
+        ns: ['common'],
+        defaultNS: 'common',
+        react: {
+          useSuspense: false,
+        },
+        interpolation: {
+          escapeValue: false,
+        },
+      });
+    } else {
+      await i18n.changeLanguage(lang);
+    }
+  } catch (err) {
+    console.error('Failed to initialize i18n. Falling back to English.', err);
+    if (!i18n.isInitialized) {
+      await i18n.use(initReactI18next).init({
+        resources,
+        lng: 'en',
+        fallbackLng: 'en',
+        ns: ['common'],
+        defaultNS: 'common',
+        react: {
+          useSuspense: false,
+        },
+        interpolation: {
+          escapeValue: false,
+        },
+      });
+    } else {
+      await i18n.changeLanguage('en');
+    }
   }
 
   attachForegroundLocaleSync();
@@ -53,11 +81,23 @@ export function getI18n() {
 }
 
 export async function setLanguagePreference(pref: LanguagePreference) {
+  const prev = currentPref;
   currentPref = pref;
-  await saveLanguagePreference(pref);
-
-  const lang = pref === 'system' ? detectDeviceLanguage() : pref;
-  await i18n.changeLanguage(lang);
+  try {
+    await saveLanguagePreference(pref);
+    const lang = pref === 'system' ? detectDeviceLanguage() : pref;
+    await i18n.changeLanguage(lang);
+  } catch (err) {
+    console.error('Failed to update language preference.', err);
+    currentPref = prev;
+    const prevLang = prev === 'system' ? detectDeviceLanguage() : prev;
+    try {
+      await i18n.changeLanguage(prevLang);
+    } catch (restoreErr) {
+      console.error('Failed to restore language after update error.', restoreErr);
+    }
+    throw err;
+  }
 }
 
 export async function getLanguagePreference(): Promise<LanguagePreference> {
@@ -77,9 +117,17 @@ function attachForegroundLocaleSync() {
   if (attached) return;
   attached = true;
 
-  AppState.addEventListener('change', (state) => {
+  appStateSubscription = AppState.addEventListener('change', (state) => {
     if (state === 'active') {
-      void syncWithDeviceIfNeeded();
+      syncWithDeviceIfNeeded().catch((err) => {
+        console.error('Failed to sync locale on app foreground.', err);
+      });
     }
   });
+}
+
+export function detachForegroundLocaleSync() {
+  appStateSubscription?.remove();
+  appStateSubscription = null;
+  attached = false;
 }

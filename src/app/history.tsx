@@ -153,7 +153,6 @@ export default function HistoryScreen() {
                 squareSize={chartSquareSize}
                 showMonthLabels
                 onDayPress={(item: { date?: string | Date; count?: number }) => {
-                  setTooltipLabel(buildTooltipLabel(t, item));
                   if (!item?.date) return;
                   const dateLabel =
                     item.date instanceof Date ? toISODateLocal(item.date) : item.date;

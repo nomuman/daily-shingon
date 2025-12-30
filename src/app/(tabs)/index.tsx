@@ -99,14 +99,17 @@ export default function HomeScreen() {
       } else {
         setStatusState(null);
       }
-    } catch {
+    } catch (err) {
+      console.error('Failed to refresh home screen data.', err);
       setError(t('errors.dataLoadFail'));
     }
   }, [contentLang, t]);
 
   useFocusEffect(
     useCallback(() => {
-      void refresh();
+      refresh().catch((err) => {
+        console.error('Failed to run focus refresh.', err);
+      });
     }, [refresh]),
   );
 
@@ -277,7 +280,8 @@ export default function HomeScreen() {
                   try {
                     await clearMorningLog();
                     await refresh();
-                  } catch {
+                  } catch (err) {
+                    console.error('Failed to reset morning log.', err);
                     setError(t('errors.updateFail'));
                   }
                 }}
@@ -324,7 +328,8 @@ export default function HomeScreen() {
                   try {
                     await clearTodayActionSelection();
                     await refresh();
-                  } catch {
+                  } catch (err) {
+                    console.error('Failed to clear today action selection.', err);
                     setError(t('errors.updateFail'));
                   }
                 }}
@@ -366,7 +371,8 @@ export default function HomeScreen() {
                   try {
                     await clearNightLog();
                     await refresh();
-                  } catch {
+                  } catch (err) {
+                    console.error('Failed to reset night log.', err);
                     setError(t('errors.updateFail'));
                   }
                 }}

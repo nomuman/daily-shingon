@@ -1,3 +1,5 @@
+import type { ContentLang } from './lang';
+
 export type CardLevel = 'beginner' | 'intermediate' | 'advanced';
 export type CardType = 'learn' | 'practice';
 
@@ -17,7 +19,7 @@ export type Card = {
 export type CardPackJson = {
   meta: {
     version: string;
-    language: 'ja';
+    language: ContentLang;
     pack_id: string;
     title: string;
     description?: string;
@@ -48,7 +50,7 @@ export type GlossaryEntry = {
 export type GlossaryJson = {
   meta: {
     version: string;
-    language: 'ja';
+    language: ContentLang;
     title: string;
     description?: string;
     generated_at?: string;

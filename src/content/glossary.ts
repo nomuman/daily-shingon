@@ -5,8 +5,8 @@ import glossaryJa from '../../content/glossary/glossary.ja.json';
 import glossaryEn from '../../content/glossary/glossary.en.json';
 
 const GLOSSARY_BY_LANG: Record<ContentLang, GlossaryJson> = {
-  ja: glossaryJa as GlossaryJson,
-  en: glossaryEn as GlossaryJson,
+  ja: glossaryJa,
+  en: glossaryEn,
 };
 
 export function getGlossary(): GlossaryJson;

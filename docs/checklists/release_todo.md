@@ -12,7 +12,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] コンテンツフリーズ日を決める（30日分の最終確定）
 - [ ] “直す対象/直さない対象” を宣言する（バグ範囲の線引き）
 
-**DoD**
+### DoD
 
 - フリーズ日と対応範囲がチームで合意されている
 
@@ -25,7 +25,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] EAS 署名フローの理解（証明書/キーストア）
 - [ ] `app.json` の `name`, `slug`, `scheme`, `extra.eas.projectId` を確認
 
-**DoD**
+### DoD
 
 - 本番用のBundle ID / Package Name が確定し、EASでビルド可能
 
@@ -38,7 +38,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] Android `versionCode` を更新
 - [ ] OTA運用する場合、`runtimeVersion` 方針を決める
 
-**DoD**
+### DoD
 
 - 本番ビルドが“正しいバージョン/ビルド番号”で出力される
 
@@ -51,7 +51,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] アプリ内の文言・トーンが `docs/06_copy_tone.md` と一致
 - [ ] 主要導線に不自然な英語/仮文言が残っていない
 
-**DoD**
+### DoD
 
 - “ストアに出せる見た目” と “アプリ内の文言統一” が完了
 
@@ -64,7 +64,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] プライバシーポリシーを用意（Web/Docs どちらでもOK）
 - [ ] 収集データの有無を整理（ストア申告に備える）
 
-**DoD**
+### DoD
 
 - 必要最小限の権限だけを要求し、説明文が整備されている
 
@@ -78,7 +78,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] Lint / Test が通る
 - [ ] iOS TestFlight / Android Internal Testing で最終確認
 
-**DoD**
+### DoD
 
 - 実機で“落ちない / 迷わない / 次が分かる”状態
 
@@ -90,7 +90,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] production build の作成手順を確定
 - [ ] OTA運用をするなら、branch / channel の運用ルールを決定
 
-**DoD**
+### DoD
 
 - チームが配布ビルドをインストールでき、本番ビルド手順が確立
 
@@ -104,7 +104,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] サポート連絡先（メール）を用意
 - [ ] ストアのプライバシー申告を記入
 
-**DoD**
+### DoD
 
 - ストア申請に必要な情報が揃っている
 
@@ -118,7 +118,7 @@ Scope: Expo + Expo Router / ローカル保存 / 通知 / EAS Build & Update
 - [ ] 重大バグ時のHotfix手順を確認（OTA or ストア再申請）
 - [ ] 初期レビューのモニタリング体制を決める
 
-**DoD**
+### DoD
 
 - 申請できる最終ビルドが完成し、公開後に“慌てない体制”ができている
 

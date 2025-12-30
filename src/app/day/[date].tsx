@@ -182,13 +182,13 @@ export default function DayDetailScreen() {
 
         <View style={styles.rowButtons}>
           <Pressable
-            onPress={() => router.push('/morning')}
+            onPress={() => router.push({ pathname: '/morning', params: { date } })}
             style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
           >
             <Text style={styles.primaryButtonText}>{t('dayDetail.goMorning')}</Text>
           </Pressable>
           <Pressable
-            onPress={() => router.push('/night')}
+            onPress={() => router.push({ pathname: '/night', params: { date } })}
             style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
           >
             <Text style={styles.primaryButtonText}>{t('dayDetail.goNight')}</Text>

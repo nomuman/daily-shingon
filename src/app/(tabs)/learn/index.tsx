@@ -8,6 +8,7 @@ import ErrorState from '../../../components/ErrorState';
 import { getCurriculum30, getDayCard } from '../../../content/curriculum30';
 import { useContentLang } from '../../../content/useContentLang';
 import { getProgramDayInfo } from '../../../lib/programDay';
+import type { TodayActionSelection } from '../../../lib/todayLog';
 import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
 import type { CurriculumDay, SanmitsuKey } from '../../../types/curriculum';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../../ui/theme';
@@ -15,6 +16,28 @@ import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../..
 type SelectedAction = {
   key: SanmitsuKey;
   text: string;
+};
+
+const resolveFallbackAction = (card: CurriculumDay): SelectedAction => {
+  const recommended = card.actionOptions.find((o) => o.key === card.recommendedActionKey);
+  const fallback = card.actionOptions[0];
+  return {
+    key: recommended?.key ?? fallback?.key ?? card.recommendedActionKey,
+    text: recommended?.text ?? fallback?.text ?? '',
+  };
+};
+
+const resolveSelectedAction = (
+  card: CurriculumDay,
+  saved: TodayActionSelection | null,
+): SelectedAction => {
+  if (saved) {
+    const matched = card.actionOptions.find((o) => o.key === saved.selectedKey);
+    if (matched) {
+      return { key: matched.key, text: matched.text };
+    }
+  }
+  return resolveFallbackAction(card);
 };
 
 export default function LearnScreen() {
@@ -25,6 +48,7 @@ export default function LearnScreen() {
   const contentLang = useContentLang();
 
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [dayInfo, setDayInfo] = useState<{ dayNumber: number; isComplete: boolean } | null>(null);
   const [card, setCard] = useState<CurriculumDay | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -42,21 +66,9 @@ export default function LearnScreen() {
       setCard(c);
 
       const saved = await getTodayActionSelection();
-      if (saved) {
-        const matched = c.actionOptions.find((o) => o.key === saved.selectedKey);
-        if (matched) {
-          setSelected({ key: matched.key, text: matched.text });
-        } else {
-          const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
-          const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
-          setSelected({ key: c.recommendedActionKey, text: fallbackText });
-        }
-      } else {
-        const recommended = c.actionOptions.find((o) => o.key === c.recommendedActionKey);
-        const fallbackText = recommended?.text ?? c.actionOptions[0]?.text ?? '';
-        setSelected({ key: c.recommendedActionKey, text: fallbackText });
-      }
-    } catch {
+      setSelected(resolveSelectedAction(c, saved));
+    } catch (err) {
+      console.error('Failed to load learn screen data.', err);
       setError(t('errors.learnLoadFail'));
     } finally {
       setLoading(false);
@@ -171,12 +183,16 @@ export default function LearnScreen() {
           <View style={styles.linkRow}>
             <Pressable
               onPress={() => router.push('/learn/cards')}
+              accessibilityRole="button"
+              accessibilityLabel={t('learn.moreCards')}
               style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
             >
               <Text style={styles.linkButtonText}>{t('learn.moreCards')}</Text>
             </Pressable>
             <Pressable
               onPress={() => router.push('/learn/glossary')}
+              accessibilityRole="button"
+              accessibilityLabel={t('learn.moreGlossary')}
               style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
             >
               <Text style={styles.linkButtonText}>{t('learn.moreGlossary')}</Text>
@@ -185,20 +201,37 @@ export default function LearnScreen() {
         </View>
 
         <Pressable
+          disabled={saving}
           onPress={async () => {
+            if (saving) return;
+            setSaving(true);
             try {
               await setTodayActionSelection({
                 selectedKey: selected.key,
                 selectedText: selected.text,
               });
               router.replace('/');
-            } catch {
+            } catch (err) {
+              console.error('Failed to save today action selection.', err);
               setError(t('errors.saveFail'));
+            } finally {
+              setSaving(false);
             }
           }}
-          style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
+          accessibilityRole="button"
+          accessibilityLabel={t('learn.confirmAction')}
+          accessibilityState={{ disabled: saving }}
+          style={({ pressed }) => [
+            styles.primaryButton,
+            saving && styles.primaryButtonDisabled,
+            pressed && styles.primaryButtonPressed,
+          ]}
         >
-          <Text style={styles.primaryButtonText}>{t('learn.confirmAction')}</Text>
+          {saving ? (
+            <ActivityIndicator color={theme.colors.surface} />
+          ) : (
+            <Text style={styles.primaryButtonText}>{t('learn.confirmAction')}</Text>
+          )}
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -323,6 +356,9 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     primaryButtonPressed: {
       opacity: 0.9,
+    },
+    primaryButtonDisabled: {
+      opacity: 0.6,
     },
     primaryButtonText: {
       color: theme.colors.surface,

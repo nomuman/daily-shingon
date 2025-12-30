@@ -1,10 +1,11 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../../components/AppIcon';
+import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import ErrorState from '../../components/ErrorState';
 import {
   clearMorningLog,
@@ -21,6 +22,10 @@ export default function MorningScreen() {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const { date } = useLocalSearchParams<{ date?: string }>();
+
+  const dateParam = useMemo(() => (date ? parseISODateLocal(date) : null), [date]);
+  const getTargetDate = useCallback(() => dateParam ?? new Date(), [dateParam]);
 
   const [loading, setLoading] = useState(true);
   const [bodyDone, setBodyDone] = useState(false);
@@ -32,18 +37,19 @@ export default function MorningScreen() {
     setLoading(true);
     setError(null);
     try {
-      const saved = await getMorningLog();
+      const saved = await getMorningLog(getTargetDate());
       if (saved) {
         setBodyDone(saved.bodyDone);
         setSpeechDone(saved.speechDone);
         setMindDone(saved.mindDone);
       }
-    } catch {
+    } catch (err) {
+      console.error('Failed to load morning log.', err);
       setError(t('errors.morningLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [getTargetDate, t]);
 
   useEffect(() => {
     void load();
@@ -51,13 +57,13 @@ export default function MorningScreen() {
 
   const complete = useMemo(() => {
     return isMorningComplete({
-      dateISO: 'today',
+      dateISO: dateParam ? toISODateLocal(dateParam) : 'today',
       bodyDone,
       speechDone,
       mindDone,
       savedAtISO: '',
     });
-  }, [bodyDone, speechDone, mindDone]);
+  }, [bodyDone, dateParam, mindDone, speechDone]);
 
   const toggle = (k: CheckKey) => {
     if (k === 'body') setBodyDone((v) => !v);
@@ -162,9 +168,10 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
-              await setMorningLog({ bodyDone, speechDone, mindDone });
+              await setMorningLog({ bodyDone, speechDone, mindDone, date: getTargetDate() });
               router.replace('/');
-            } catch {
+            } catch (err) {
+              console.error('Failed to save morning log.', err);
               setError(t('errors.saveFail'));
             }
           }}
@@ -176,11 +183,12 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
-              await clearMorningLog();
+              await clearMorningLog(getTargetDate());
               setBodyDone(false);
               setSpeechDone(false);
               setMindDone(false);
-            } catch {
+            } catch (err) {
+              console.error('Failed to reset morning log.', err);
               setError(t('errors.updateFail'));
             }
           }}

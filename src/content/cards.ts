@@ -15,8 +15,8 @@ import uxJa from '../../content/cards/05_app_integration.ja.json';
 import uxEn from '../../content/cards/05_app_integration.en.json';
 
 const PACKS_BY_LANG: Record<ContentLang, CardPackJson[]> = {
-  ja: [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa] as CardPackJson[],
-  en: [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn] as CardPackJson[],
+  ja: [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa],
+  en: [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn],
 };
 
 export type CardPackSummary = {

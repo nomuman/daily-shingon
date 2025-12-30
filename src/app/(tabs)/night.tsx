@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -16,11 +16,53 @@ import { AppIcon } from '../../components/AppIcon';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
+import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type CheckKey = 'sange' | 'hotsugan' | 'ekou';
+
+type NightStyles = ReturnType<typeof createStyles>;
+
+const CheckItem = ({
+  title,
+  desc,
+  checked,
+  onPress,
+  styles,
+  iconCheckedColor,
+  iconUncheckedColor,
+}: {
+  title: string;
+  desc: string;
+  checked: boolean;
+  onPress: () => void;
+  styles: NightStyles;
+  iconCheckedColor: string;
+  iconUncheckedColor: string;
+}) => (
+  <Pressable
+    onPress={onPress}
+    accessibilityRole="button"
+    accessibilityState={{ selected: checked }}
+    style={({ pressed }) => [
+      styles.checkItem,
+      checked && styles.checkItemSelected,
+      pressed && styles.checkItemPressed,
+    ]}
+  >
+    <View style={styles.checkTitleRow}>
+      <AppIcon
+        name={checked ? 'check' : 'uncheck'}
+        size={18}
+        color={checked ? iconCheckedColor : iconUncheckedColor}
+      />
+      <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
+    </View>
+    <Text style={styles.checkDesc}>{desc}</Text>
+  </Pressable>
+);
 
 export default function NightScreen() {
   const router = useRouter();
@@ -28,6 +70,10 @@ export default function NightScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
+  const { date } = useLocalSearchParams<{ date?: string }>();
+
+  const dateParam = useMemo(() => (date ? parseISODateLocal(date) : null), [date]);
+  const getTargetDate = useCallback(() => dateParam ?? new Date(), [dateParam]);
 
   const [loading, setLoading] = useState(true);
 
@@ -44,24 +90,25 @@ export default function NightScreen() {
     setLoading(true);
     setError(null);
     try {
-      const info = await getProgramDayInfo();
+      const info = await getProgramDayInfo(getTargetDate());
       const card = getDayCard(contentLang, info.dayNumber);
       setDayTitle(card.title);
       setNightQuestion(card.nightQuestion);
 
-      const saved = await getNightLog();
+      const saved = await getNightLog(getTargetDate());
       if (saved) {
         setSangeDone(saved.sangeDone);
         setHotsuganDone(saved.hotsuganDone);
         setEkouDone(saved.ekouDone);
         setNote(saved.note ?? '');
       }
-    } catch {
+    } catch (err) {
+      console.error('Failed to load night log.', err);
       setError(t('errors.nightLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, [contentLang, t]);
+  }, [contentLang, getTargetDate, t]);
 
   useEffect(() => {
     void load();
@@ -69,53 +116,20 @@ export default function NightScreen() {
 
   const complete = useMemo(() => {
     return isNightComplete({
-      dateISO: 'today',
+      dateISO: dateParam ? toISODateLocal(dateParam) : 'today',
       sangeDone,
       hotsuganDone,
       ekouDone,
       note,
       savedAtISO: '',
     });
-  }, [sangeDone, hotsuganDone, ekouDone, note]);
+  }, [dateParam, ekouDone, hotsuganDone, note, sangeDone]);
 
   const toggle = (k: CheckKey) => {
     if (k === 'sange') setSangeDone((v) => !v);
     if (k === 'hotsugan') setHotsuganDone((v) => !v);
     if (k === 'ekou') setEkouDone((v) => !v);
   };
-
-  const Item = ({
-    title,
-    desc,
-    checked,
-    onPress,
-  }: {
-    title: string;
-    desc: string;
-    checked: boolean;
-    onPress: () => void;
-  }) => (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected: checked }}
-      style={({ pressed }) => [
-        styles.checkItem,
-        checked && styles.checkItemSelected,
-        pressed && styles.checkItemPressed,
-      ]}
-    >
-      <View style={styles.checkTitleRow}>
-        <AppIcon
-          name={checked ? 'check' : 'uncheck'}
-          size={18}
-          color={checked ? theme.colors.accentDark : theme.colors.inkMuted}
-        />
-        <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
-      </View>
-      <Text style={styles.checkDesc}>{desc}</Text>
-    </Pressable>
-  );
 
   if (loading) {
     return (
@@ -160,23 +174,32 @@ export default function NightScreen() {
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>{t('night.stepsTitle')}</Text>
 
-          <Item
+          <CheckItem
             title={t('night.steps.sange.title')}
             desc={t('night.steps.sange.desc')}
             checked={sangeDone}
             onPress={() => toggle('sange')}
+            styles={styles}
+            iconCheckedColor={theme.colors.accentDark}
+            iconUncheckedColor={theme.colors.inkMuted}
           />
-          <Item
+          <CheckItem
             title={t('night.steps.hotsugan.title')}
             desc={t('night.steps.hotsugan.desc')}
             checked={hotsuganDone}
             onPress={() => toggle('hotsugan')}
+            styles={styles}
+            iconCheckedColor={theme.colors.accentDark}
+            iconUncheckedColor={theme.colors.inkMuted}
           />
-          <Item
+          <CheckItem
             title={t('night.steps.ekou.title')}
             desc={t('night.steps.ekou.desc')}
             checked={ekouDone}
             onPress={() => toggle('ekou')}
+            styles={styles}
+            iconCheckedColor={theme.colors.accentDark}
+            iconUncheckedColor={theme.colors.inkMuted}
           />
         </View>
 
@@ -196,9 +219,10 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
-              await setNightLog({ sangeDone, hotsuganDone, ekouDone, note });
+              await setNightLog({ sangeDone, hotsuganDone, ekouDone, note, date: getTargetDate() });
               router.replace('/');
-            } catch {
+            } catch (err) {
+              console.error('Failed to save night log.', err);
               setError(t('errors.saveFail'));
             }
           }}
@@ -210,12 +234,13 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
-              await clearNightLog();
+              await clearNightLog(getTargetDate());
               setSangeDone(false);
               setHotsuganDone(false);
               setEkouDone(false);
               setNote('');
-            } catch {
+            } catch (err) {
+              console.error('Failed to reset night log.', err);
               setError(t('errors.updateFail'));
             }
           }}

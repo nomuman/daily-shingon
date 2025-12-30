@@ -91,8 +91,8 @@ export default function CardDetailScreen() {
         {!!card.reflection_questions?.length && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>{t('learnCards.questions')}</Text>
-            {card.reflection_questions.map((q) => (
-              <Text key={q} style={styles.bodyText}>
+            {card.reflection_questions.map((q, idx) => (
+              <Text key={idx} style={styles.bodyText}>
                 ・{q}
               </Text>
             ))}

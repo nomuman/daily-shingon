@@ -355,7 +355,7 @@ export default function SettingsScreen() {
     '';
 
   const validateTime = (value: string) => {
-    return /^([01]\\d|2[0-3]):([0-5]\\d)$/.test(value);
+    return /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
   };
 
   const toTimeString = (date: Date) => {

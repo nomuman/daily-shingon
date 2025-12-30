@@ -41,5 +41,6 @@
 
 ## 連絡先
 
-- TODO: サポートメール/URL（`docs/store/support_ja.md` を参照）
-- TODO: プライバシーポリシーURL（公開URL）
+- サポート窓口: [GitHub Issues](https://github.com/nomuman/sanmitsu-app/issues)
+- サポートページ: [お問い合わせページ](https://nomuman.github.io/sanmitsu-app/contact/)
+- プライバシーポリシー: [プライバシーポリシー](https://nomuman.github.io/sanmitsu-app/privacy/)
