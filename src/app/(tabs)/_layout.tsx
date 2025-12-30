@@ -1,3 +1,12 @@
+/**
+ * Purpose: Bottom tab layout for primary app sections. / 目的: 主要セクション用のタブレイアウト。
+ * Responsibilities: define tab routes, labels, icons, and shared tab bar styling. / 役割: ルート/ラベル/アイコン/タブバーの共通設定。
+ * Inputs: i18n labels, theme tokens, AppIcon mapping. / 入力: i18nラベル、テーマトークン、AppIconマッピング。
+ * Outputs: configured Expo Router Tabs. / 出力: 設定済みのTabs。
+ * Dependencies: Expo Router, i18n, theme system, AppIcon. / 依存: Expo Router、i18n、テーマシステム、AppIcon。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: none (static config). / 例外: なし（静的設定）。
+ */
 import { Tabs } from 'expo-router';
 
 import { useTranslation } from 'react-i18next';

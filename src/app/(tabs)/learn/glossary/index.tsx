@@ -1,3 +1,12 @@
+/**
+ * Purpose: Glossary list screen with search and category filtering. / 目的: 用語集の検索・カテゴリ絞り込み画面。
+ * Responsibilities: load glossary by content language, filter by query/category, and navigate to detail pages. / 役割: 言語別用語集読込、検索/カテゴリで絞り込み、詳細へ遷移。
+ * Inputs: glossary data, search query, active category, translations. / 入力: 用語集データ、検索語、選択カテゴリ、翻訳文言。
+ * Outputs: filtered list UI + navigation on item press. / 出力: 絞り込み一覧UIと遷移。
+ * Dependencies: content loaders, Expo Router, themed styles, i18n. / 依存: コンテンツローダー、Expo Router、テーマスタイル、i18n。
+ * Side effects: none (pure UI + navigation intent). / 副作用: なし（UI/遷移のみ）。
+ * Edge cases: empty taxonomy, empty query, missing category values. / 例外: 分類なし、検索語空、カテゴリ欠落。
+ */
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -19,12 +28,14 @@ export default function GlossaryListScreen() {
   const [q, setQ] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
+  // Prefer taxonomy categories; fall back to unique categories from entries. / taxonomy優先、無ければエントリからカテゴリ抽出。
   const categories = useMemo(() => {
     const fromTaxonomy = glossary.taxonomy?.categories ?? [];
     if (fromTaxonomy.length) return fromTaxonomy;
     return Array.from(new Set(glossary.entries.map((e) => e.category).filter(Boolean))) as string[];
   }, [glossary]);
 
+  // Filter entries by query (term/reading/short/definition) and active category. / 用語/読み/短文/定義とカテゴリで絞り込み。
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
     return glossary.entries.filter((e) => {
@@ -41,6 +52,7 @@ export default function GlossaryListScreen() {
     });
   }, [glossary, q, activeCategory]);
 
+  // Render search, filter chips, and a virtualized list for performance. / 検索・タグ・仮想化リストを描画。
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <SearchInput value={q} onChangeText={setQ} placeholder={t('glossary.search')} />

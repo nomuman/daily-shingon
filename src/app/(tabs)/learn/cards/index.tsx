@@ -1,3 +1,12 @@
+/**
+ * Purpose: Card pack list screen for browsing learn card packs. / 目的: 学びカードパック一覧画面。
+ * Responsibilities: load packs for current content language and navigate to a pack detail list. / 役割: 現在言語のパック読込と詳細一覧への遷移。
+ * Inputs: content language, card pack data, translations. / 入力: コンテンツ言語、カードパックデータ、翻訳文言。
+ * Outputs: list UI with navigation on press. / 出力: 一覧UIとタップ時遷移。
+ * Dependencies: content loaders, Expo Router, themed styles, i18n. / 依存: コンテンツローダー、Expo Router、テーマスタイル、i18n。
+ * Side effects: none (navigation only). / 副作用: なし（遷移のみ）。
+ * Edge cases: empty packs list. / 例外: パックが空。
+ */
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -13,8 +22,10 @@ export default function CardPackListScreen() {
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
   const lang = useContentLang();
+  // Memoize content pack list per language. / 言語ごとのパック一覧をメモ化。
   const packs = useMemo(() => getCardPacks(lang), [lang]);
 
+  // Render a virtualized list of packs with header copy. / ヘッダー付きの仮想化リストを描画。
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <FlatList

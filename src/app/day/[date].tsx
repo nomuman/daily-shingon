@@ -1,3 +1,12 @@
+/**
+ * Purpose: Day detail screen for a specific date. / 目的: 特定日付の詳細画面。
+ * Responsibilities: load morning/night completion + note, and link to edit screens. / 役割: 朝夜の完了/メモ読込と編集画面への導線。
+ * Inputs: route param date, stored logs, translations. / 入力: ルート日付パラメータ、保存済みログ、翻訳文言。
+ * Outputs: status summary UI and navigation actions. / 出力: ステータス要約UIと遷移アクション。
+ * Dependencies: morning/night log loaders, date parser, Expo Router, i18n. / 依存: 朝夜ログローダー、日付パーサ、Expo Router、i18n。
+ * Side effects: data reads from storage; navigation to morning/night screens. / 副作用: ストレージ読込、朝/夜画面への遷移。
+ * Edge cases: missing date param, missing logs. / 例外: 日付未指定、ログ欠落。
+ */
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
@@ -114,6 +123,7 @@ export default function DayDetailScreen() {
   const [nightDone, setNightDone] = useState(false);
   const [note, setNote] = useState('');
 
+  // Load day-specific logs and compute completion status. / 日別ログを読み込み、完了状態を算出。
   const load = useCallback(async () => {
     if (!date) return;
     const day = parseISODateLocal(date);
@@ -126,12 +136,14 @@ export default function DayDetailScreen() {
     setNote(night?.note ?? '');
   }, [date]);
 
+  // Refresh when the screen regains focus. / フォーカス復帰時に更新。
   useFocusEffect(
     useCallback(() => {
       void load();
     }, [load]),
   );
 
+  // Guard against missing params. / パラメータ欠如の防止。
   if (!date) return null;
 
   return (

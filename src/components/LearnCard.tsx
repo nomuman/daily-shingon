@@ -1,3 +1,12 @@
+/**
+ * Purpose: Presentational component for a daily learn card. / 目的: 1日分の学びカード表示コンポーネント。
+ * Responsibilities: render learn text, action options, night question, and sources. / 役割: 学び本文・行い候補・夜の問い・出典を表示。
+ * Inputs: day number, completion flag, card data, optional source links. / 入力: 日数、完了フラグ、カードデータ、任意の出典リンク。
+ * Outputs: stacked card UI sections. / 出力: 積み重ねカードUI。
+ * Dependencies: i18n copy, theme tokens, curriculum types. / 依存: i18n文言、テーマトークン、カリキュラム型。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: missing optional example/sources. / 例外: 例/出典が未指定。
+ */
 import { StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';

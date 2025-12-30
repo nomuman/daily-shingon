@@ -1,3 +1,12 @@
+/**
+ * Purpose: Home (Today) screen summarizing progress and next actions. / 目的: 進捗と次の行動をまとめるホーム画面。
+ * Responsibilities: load daily status, show next action, allow resets, and link to history. / 役割: 日次状態の読込、次の行動表示、リセット、履歴導線。
+ * Inputs: program day info, logs, today selection, translations, theme tokens. / 入力: プログラム日情報、ログ、今日の選択、翻訳文言、テーマトークン。
+ * Outputs: status dashboard UI and navigation actions. / 出力: ダッシュボードUIと遷移アクション。
+ * Dependencies: log loaders/resetters, content cards, engagement status, Expo Router, i18n. / 依存: ログ入出力、カード内容、エンゲージメント状態、Expo Router、i18n。
+ * Side effects: data reads/writes (clears), navigation to other routes. / 副作用: 読込/削除、画面遷移。
+ * Edge cases: missing card, storage errors, first-day defaults. / 例外: カード欠落、ストレージエラー、初日デフォルト。
+ */
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -19,6 +28,7 @@ import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui
 
 type NextRoute = '/morning' | '/learn' | '/night';
 
+// Shared entrance animation for screen sections. / 画面セクション共通の登場アニメ。
 const entranceStyle = (anim: Animated.Value) => ({
   opacity: anim,
   transform: [
@@ -38,6 +48,7 @@ export default function HomeScreen() {
   const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
 
+  // Compact status chip for morning/learn/night completion. / 朝・学び・夜の進捗チップ。
   const ProgressChip = ({ label, done }: { label: string; done: boolean }) => (
     <View style={[styles.progressChip, done && styles.progressChipActive]}>
       <View style={[styles.progressDot, done && styles.progressDotActive]} />
@@ -61,6 +72,7 @@ export default function HomeScreen() {
   const actionsAnim = useRef(new Animated.Value(0)).current;
   const historyAnim = useRef(new Animated.Value(0)).current;
 
+  // Aggregate all data needed by the home dashboard. / ホーム表示に必要なデータを集約。
   const refresh = useCallback(async () => {
     setError(null);
     try {
@@ -105,6 +117,7 @@ export default function HomeScreen() {
     }
   }, [contentLang, t]);
 
+  // Refresh on focus to keep "today" data current. / フォーカス時に最新状態へ更新。
   useFocusEffect(
     useCallback(() => {
       refresh().catch((err) => {
@@ -113,6 +126,7 @@ export default function HomeScreen() {
     }, [refresh]),
   );
 
+  // Stagger in hero/actions/history cards. / ヒーロー/アクション/履歴カードを順次表示。
   useEffect(() => {
     Animated.stagger(120, [
       Animated.timing(heroAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
@@ -121,6 +135,7 @@ export default function HomeScreen() {
     ]).start();
   }, [actionsAnim, heroAnim, historyAnim]);
 
+  // Compute next action based on completion status. / 完了状況から次の行動を決定。
   const nextAction = useMemo<{ label: string; route: NextRoute | null }>(() => {
     if (!morningDone) return { label: t('home.nextAction.morning'), route: '/morning' };
     if (!todayAction) return { label: t('home.nextAction.learn'), route: '/learn' };
@@ -128,6 +143,7 @@ export default function HomeScreen() {
     return { label: t('home.nextAction.done'), route: null };
   }, [morningDone, nightDone, t, todayAction]);
 
+  // Return-state or completion-state banner. / 復帰・完走メッセージの表示判定。
   const statusMessage = useMemo(() => {
     if (statusState === 'complete') return t('home.statusComplete');
     if (statusState === 'return') return t('home.statusReturn');
@@ -137,6 +153,7 @@ export default function HomeScreen() {
   const learnDone = !!todayAction;
   const primaryButtonLabel = nextAction.route ? nextAction.label : t('home.primaryDone');
 
+  // Global error gate. / エラー時の共通ゲート。
   if (error) {
     return <ErrorState message={error} onRetry={refresh} />;
   }

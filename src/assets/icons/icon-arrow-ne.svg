@@ -1,3 +1,12 @@
+<!--
+  Purpose: SVG icon asset for "arrow-ne". / 目的: 「arrow-ne」用のSVGアイコン資産。
+  Responsibilities: provide vector paths with currentColor. / 役割: currentColorで塗るベクターパスを提供。
+  Inputs: currentColor from AppIcon. / 入力: AppIconからのcurrentColor。
+  Outputs: scalable vector graphic. / 出力: スケーラブルなSVG。
+  Dependencies: none (static asset). / 依存: なし（静的資産）。
+  Side effects: none. / 副作用: なし。
+  Edge cases: none. / 例外: なし。
+-->
 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
   <path d="M5 13L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
   <path d="M8.2 5H13V9.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>

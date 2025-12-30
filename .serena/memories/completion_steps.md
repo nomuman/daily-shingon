@@ -1,0 +1,1 @@
+When done: run npm run lint and npm test as appropriate; format with npm run format if needed. Verify app start via npx expo start if UX changes are significant.

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Night reflection screen (sange / hotsugan / ekou + note). / 目的: 夜のしめ画面（懺悔/発願/回向＋メモ）。
+ * Responsibilities: load day card context, track steps, save/reset night log. / 役割: 当日カード文脈の読込、手順管理、夜ログ保存/リセット。
+ * Inputs: optional date param, program day info, night log, translations. / 入力: 任意の日付パラメータ、プログラム日情報、夜ログ、翻訳文言。
+ * Outputs: checklist + note UI and persistence actions. / 出力: チェックリスト/メモUIと保存アクション。
+ * Dependencies: night log storage, curriculum content, Expo Router, i18n. / 依存: 夜ログストレージ、カリキュラム内容、Expo Router、i18n。
+ * Side effects: reads/writes storage; navigation back to home. / 副作用: ストレージ読書き、ホームへの遷移。
+ * Edge cases: missing date param, storage failures, missing card. / 例外: 日付未指定、ストレージ失敗、カード欠落。
+ */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -25,6 +34,7 @@ type CheckKey = 'sange' | 'hotsugan' | 'ekou';
 
 type NightStyles = ReturnType<typeof createStyles>;
 
+// Reusable checklist row with icon + description. / アイコン＋説明付きのチェック行。
 const CheckItem = ({
   title,
   desc,
@@ -72,6 +82,7 @@ export default function NightScreen() {
   const contentLang = useContentLang();
   const { date } = useLocalSearchParams<{ date?: string }>();
 
+  // Resolve the target date (explicit param or today). / 対象日を解決（指定日または今日）。
   const dateParam = useMemo(() => (date ? parseISODateLocal(date) : null), [date]);
   const getTargetDate = useCallback(() => dateParam ?? new Date(), [dateParam]);
 
@@ -86,6 +97,7 @@ export default function NightScreen() {
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  // Load program day context + saved night log. / 当日カード文脈と保存済み夜ログを読込。
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -110,10 +122,12 @@ export default function NightScreen() {
     }
   }, [contentLang, getTargetDate, t]);
 
+  // Initial load. / 初回ロード。
   useEffect(() => {
     void load();
   }, [load]);
 
+  // Derived completion status for status row. / ステータス表示用の完了状態。
   const complete = useMemo(() => {
     return isNightComplete({
       dateISO: dateParam ? toISODateLocal(dateParam) : 'today',
@@ -125,12 +139,14 @@ export default function NightScreen() {
     });
   }, [dateParam, ekouDone, hotsuganDone, note, sangeDone]);
 
+  // Toggle a single step. / 単一ステップのトグル。
   const toggle = (k: CheckKey) => {
     if (k === 'sange') setSangeDone((v) => !v);
     if (k === 'hotsugan') setHotsuganDone((v) => !v);
     if (k === 'ekou') setEkouDone((v) => !v);
   };
 
+  // Loading/error gates before main UI. / ロード・エラー時の分岐。
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -219,6 +235,7 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
+              // Persist night log and return to home. / 夜ログを保存してホームへ戻る。
               await setNightLog({ sangeDone, hotsuganDone, ekouDone, note, date: getTargetDate() });
               router.replace('/');
             } catch (err) {
@@ -234,6 +251,7 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
+              // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearNightLog(getTargetDate());
               setSangeDone(false);
               setHotsuganDone(false);

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Open-source licenses screen. / 目的: OSSライセンス一覧画面。
+ * Responsibilities: render OSS license list and allow back navigation. / 役割: ライセンス一覧表示と戻る操作。
+ * Inputs: OSS_LICENSES data and translations. / 入力: OSSライセンスデータ、翻訳文言。
+ * Outputs: license list UI. / 出力: ライセンス一覧UI。
+ * Dependencies: content list, Expo Router, theme system, i18n. / 依存: コンテンツリスト、Expo Router、テーマシステム、i18n。
+ * Side effects: none (navigation only). / 副作用: なし（遷移のみ）。
+ * Edge cases: empty license list. / 例外: ライセンスが空。
+ */
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';

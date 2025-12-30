@@ -1,3 +1,12 @@
+<!--
+  Purpose: SVG icon asset for "check". / 目的: 「check」用のSVGアイコン資産。
+  Responsibilities: provide vector paths with currentColor. / 役割: currentColorで塗るベクターパスを提供。
+  Inputs: currentColor from AppIcon. / 入力: AppIconからのcurrentColor。
+  Outputs: scalable vector graphic. / 出力: スケーラブルなSVG。
+  Dependencies: none (static asset). / 依存: なし（静的資産）。
+  Side effects: none. / 副作用: なし。
+  Edge cases: none. / 例外: なし。
+-->
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
   <path d="M6.2 12.6L10.3 16.6L18 8.8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

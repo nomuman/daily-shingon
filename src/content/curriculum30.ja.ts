@@ -1,3 +1,12 @@
+/**
+ * Purpose: Japanese 30-day curriculum loader + validator. / 目的: 日本語版30日カリキュラムのロード/検証。
+ * Responsibilities: normalize raw JSON into safe CurriculumDay objects and provide fallbacks. / 役割: JSONを安全なCurriculumDayに正規化し、フォールバックを提供。
+ * Inputs: raw JSON content for 30-day curriculum. / 入力: 30日カリキュラムの生JSON。
+ * Outputs: sanitized curriculum data and day card accessor. / 出力: サニタイズ済みデータと日別カード取得。
+ * Dependencies: curriculum types, JSON source data. / 依存: カリキュラム型、JSONソース。
+ * Side effects: console warnings on invalid data. / 副作用: 不正データ時のconsole警告。
+ * Edge cases: missing/invalid fields, duplicate/missing days. / 例外: 欠落/不正フィールド、重複/欠損日。
+ */
 import type {
   Curriculum30,
   CurriculumActionOption,
@@ -8,26 +17,32 @@ import type {
 // JSONはプロジェクトルートの content/ に置いている想定
 import raw from '../../content/curriculum/30days.ja.json';
 
+// Allowed action keys for validation. / 検証に使う許可キー。
 const SANMITSU_KEYS: SanmitsuKey[] = ['body', 'speech', 'mind'];
 
+// Simple object guard for runtime validation. / 実行時の簡易オブジェクト判定。
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+// Ensure the key belongs to the supported action keys. / キーが許可リストに含まれるか確認。
 function isSanmitsuKey(value: unknown): value is SanmitsuKey {
   return typeof value === 'string' && SANMITSU_KEYS.includes(value as SanmitsuKey);
 }
 
+// Convert to string or fall back to empty. / 文字列に変換し、不可なら空文字。
 function toStringOrEmpty(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
+// Convert unknown arrays to string arrays (or undefined). / 配列を文字列配列へ変換（不可ならundefined）。
 function toStringArray(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) return undefined;
   const items = value.filter((v) => typeof v === 'string') as string[];
   return items.length ? items : undefined;
 }
 
+// Build a safe fallback card when a day is missing/invalid. / 日付欠損/不正時のフォールバックカード。
 function buildFallbackDay(day: number): CurriculumDay {
   return {
     id: `fallback-day-${day}`,
@@ -45,6 +60,7 @@ function buildFallbackDay(day: number): CurriculumDay {
   };
 }
 
+// Validate and normalize action options. / 行い候補を検証・正規化。
 function normalizeActionOptions(
   value: unknown,
   errors: string[],
@@ -73,6 +89,7 @@ function normalizeActionOptions(
   return options;
 }
 
+// Validate and normalize a single day entry. / 単一日付エントリの検証・正規化。
 function normalizeDay(value: unknown, errors: string[], index: number): CurriculumDay | null {
   if (!isRecord(value)) {
     errors.push(`days[${index}] がオブジェクトではありません`);
@@ -126,6 +143,7 @@ function normalizeDay(value: unknown, errors: string[], index: number): Curricul
   };
 }
 
+// Validate source index map (string -> string). / 出典インデックスの検証（文字列→文字列）。
 function normalizeSourceIndex(value: unknown): Record<string, string> {
   if (!isRecord(value)) return {};
   const result: Record<string, string> = {};
@@ -137,6 +155,7 @@ function normalizeSourceIndex(value: unknown): Record<string, string> {
   return result;
 }
 
+// Build sanitized curriculum with full 1..30 coverage. / 1..30の全日を埋めたサニタイズ済みカリキュラムを生成。
 function buildCurriculum30(input: unknown): Curriculum30 {
   const errors: string[] = [];
   if (!isRecord(input)) {
@@ -211,6 +230,7 @@ function buildCurriculum30(input: unknown): Curriculum30 {
 
 export const curriculum30Ja = buildCurriculum30(raw);
 
+// Safe accessor for a single day card (clamped to 1..30). / 1..30に丸めた日別カード取得。
 export function getDayCard(day: number): CurriculumDay {
   const d = Math.max(1, Math.min(30, day));
   const card = curriculum30Ja.days.find((x) => x.day === d);

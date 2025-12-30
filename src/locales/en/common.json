@@ -1,4 +1,14 @@
 {
+  "_comment": {
+    "Purpose": "EN translation strings for the \"common\" namespace. / 目的: common名前空間の英語翻訳文字列。",
+    "Responsibilities": "Provide UI copy grouped by feature/area for i18n. / 役割: i18n用に機能/領域別の文言を提供。",
+    "Inputs": "String keys referenced by screens and components. / 入力: 画面/コンポーネントで参照されるキー。",
+    "Outputs": "Translation map consumed by i18next. / 出力: i18nextで利用される翻訳マップ。",
+    "Dependencies": "i18next initialization in lib/i18n. / 依存: lib/i18nの初期化。",
+    "SideEffects": "None. / 副作用: なし。",
+    "EdgeCases": "Missing keys fall back to the key string. / 例外: 欠けたキーはキー文字列にフォールバック。",
+    "TopLevelKeys": "app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, licenses, history, dayDetail, notifications"
+  },
   "app": {
     "name": "Daily Shingon"
   },

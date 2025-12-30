@@ -1,3 +1,12 @@
+/**
+ * Purpose: Build heatmap values for the 365-day contribution graph. / 目的: 365日ヒートマップ用の値を生成。
+ * Responsibilities: batch-load daily logs and map them to intensity counts. / 役割: 日次ログをバッチ読込し強度に変換。
+ * Inputs: number of days, optional batch size, base date. / 入力: 日数、バッチサイズ、基準日。
+ * Outputs: array of {date, count} for charting. / 出力: チャート用の{date, count}配列。
+ * Dependencies: date helpers and log storage. / 依存: 日付ヘルパー、ログストレージ。
+ * Side effects: reads from AsyncStorage. / 副作用: AsyncStorage読込。
+ * Edge cases: large day ranges are clamped for performance. / 例外: 大きい日数は性能のため制限。
+ */
 import { toISODateLocal } from './date';
 import { getMorningLog, isMorningComplete } from './morningLog';
 import { getNightLog, isNightComplete } from './nightLog';
@@ -11,6 +20,7 @@ type DailyStatus = {
   nightHasNote: boolean;
 };
 
+// Add (or subtract) days from a base date. / 基準日に日数を加減。
 function addDays(base: Date, deltaDays: number): Date {
   const d = new Date(base);
   d.setDate(d.getDate() + deltaDays);

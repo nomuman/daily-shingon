@@ -1,3 +1,12 @@
+/**
+ * Purpose: Card list screen for a selected pack. / 目的: 選択パックのカード一覧画面。
+ * Responsibilities: resolve packId, filter by search/tag, and navigate to card detail. / 役割: packId解決、検索/タグで絞り込み、詳細へ遷移。
+ * Inputs: route param packId, card pack data, query/tag state, translations. / 入力: packIdパラメータ、パックデータ、検索/タグ状態、翻訳文言。
+ * Outputs: filtered list UI + navigation. / 出力: 絞り込み済み一覧UIと遷移。
+ * Dependencies: content loaders, Expo Router, SearchInput/TagRow, i18n. / 依存: コンテンツローダー、Expo Router、SearchInput/TagRow、i18n。
+ * Side effects: none (navigation only). / 副作用: なし（遷移のみ）。
+ * Edge cases: missing/unknown packId, empty result set. / 例外: packId不明、結果なし。
+ */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -23,11 +32,13 @@ export default function CardListScreen() {
   const [q, setQ] = useState('');
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
+  // Collect all tags for the tag filter row. / タグフィルタ用の全タグを収集。
   const allTags = useMemo(() => {
     if (!pack) return [];
     return pack.cards.flatMap((c) => c.tags ?? []);
   }, [pack]);
 
+  // Filter cards by search query and active tag. / 検索語とアクティブタグで絞り込み。
   const filtered = useMemo(() => {
     if (!pack) return [];
     const query = q.trim().toLowerCase();
@@ -45,6 +56,7 @@ export default function CardListScreen() {
     });
   }, [pack, q, activeTag]);
 
+  // Guard against unknown pack IDs. / 不明なpackIdをガード。
   if (!pack) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -100,6 +112,7 @@ export default function CardListScreen() {
 
 type Styles = ReturnType<typeof createStyles>;
 
+// Row renderer for a single card summary. / カード要約行の描画。
 function CardRow({
   card,
   onPress,
@@ -129,6 +142,7 @@ function CardRow({
   );
 }
 
+// Map card difficulty level to i18n label. / 難易度をi18nラベルに変換。
 function levelLabel(t: (key: string) => string, level: Card['level']) {
   switch (level) {
     case 'beginner':

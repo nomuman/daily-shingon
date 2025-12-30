@@ -1,3 +1,12 @@
+<!--
+  Purpose: SVG icon asset for "memo". / 目的: 「memo」用のSVGアイコン資産。
+  Responsibilities: provide vector paths with currentColor. / 役割: currentColorで塗るベクターパスを提供。
+  Inputs: currentColor from AppIcon. / 入力: AppIconからのcurrentColor。
+  Outputs: scalable vector graphic. / 出力: スケーラブルなSVG。
+  Dependencies: none (static asset). / 依存: なし（静的資産）。
+  Side effects: none. / 副作用: なし。
+  Edge cases: none. / 例外: なし。
+-->
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
   <path d="M7.2 5.8H14.4L18 9.4V18.2C18 19.2 17.2 20 16.2 20H7.2C6.2 20 5.4 19.2 5.4 18.2V7.6C5.4 6.6 6.2 5.8 7.2 5.8Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M14.4 5.8V9.4H18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Static list of OSS licenses for display. / 目的: 画面表示用のOSSライセンス一覧。
+ * Responsibilities: define license entry shape and export license catalog. / 役割: エントリ型の定義と一覧のエクスポート。
+ * Inputs: none (static data). / 入力: なし（静的データ）。
+ * Outputs: OSS_LICENSES array used by the Licenses screen. / 出力: Licenses画面で使うOSS_LICENSES配列。
+ * Dependencies: none. / 依存: なし。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: duplicate package names/versions are allowed for transparency. / 例外: 透明性のため重複名/版も許容。
+ */
 export type OssLicenseEntry = {
   name: string;
   version?: string;
