@@ -110,7 +110,7 @@
   "learnCards": {
     "title": "学びカード",
     "subtitle": "短い学び + 行い + 問い",
-    "count": "{{count}}枚",
+    "count": "{{total}}枚",
     "search": "カード検索",
     "packNotFound": "packId が見つからない: {{packId}}",
     "resultCount": "{{shown}} / {{total}} 枚",
@@ -133,7 +133,7 @@
     "search": "用語検索（例：三密）",
     "title": "用語集",
     "subtitle": "わからない言葉をすぐ引ける",
-    "count": "{{count}} 件",
+    "count": "{{total}} 件",
     "termNotFound": "用語が見つからない: {{termId}}",
     "short": "短い説明",
     "definition": "定義",
@@ -251,7 +251,10 @@
     },
     "contact": {
       "title": "お問い合わせ",
-      "body": "お問い合わせ先は後で設定します。"
+      "body": "お問い合わせはGitHub Issuesで受け付けています。",
+      "open": "お問い合わせページを開く",
+      "missingUrl": "お問い合わせページのURLが設定されていません。",
+      "openFail": "お問い合わせページを開けませんでした。"
     }
   },
   "licenses": {

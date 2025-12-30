@@ -33,7 +33,7 @@ export default function CardPackListScreen() {
           >
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.cardMeta}>
-              {t('learnCards.count', { count: item.count })}
+              {t('learnCards.count', { total: item.count })}
               {item.description ? ` ・ ${item.description}` : ''}
             </Text>
           </Pressable>

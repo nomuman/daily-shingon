@@ -59,6 +59,8 @@
       "router": {
         "root": "src/app"
       },
+      "privacyPolicyUrl": "https://nomuman.github.io/sanmitsu-app/privacy/",
+      "contactUrl": "https://nomuman.github.io/sanmitsu-app/contact/",
       "eas": {
         "projectId": "68881611-d222-43df-852b-d8cb00796125"
       }

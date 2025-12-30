@@ -349,10 +349,12 @@ export default function SettingsScreen() {
 
   const reminderEnabled = settings.notifications.enabled;
   const permissionStatus = settings.notifications.permissionStatus;
-  const privacyPolicyUrl =
-    Constants.expoConfig?.extra?.privacyPolicyUrl ??
-    Constants.manifest?.extra?.privacyPolicyUrl ??
-    '';
+  const appExtra = (Constants.expoConfig?.extra ?? {}) as {
+    privacyPolicyUrl?: string;
+    contactUrl?: string;
+  };
+  const privacyPolicyUrl = appExtra.privacyPolicyUrl ?? '';
+  const contactUrl = appExtra.contactUrl ?? '';
 
   const validateTime = (value: string) => {
     return /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
@@ -501,6 +503,18 @@ export default function SettingsScreen() {
       await WebBrowser.openBrowserAsync(privacyPolicyUrl);
     } catch {
       setNotice(t('settings.legal.openFail'));
+    }
+  };
+
+  const openContactPage = async () => {
+    if (!contactUrl) {
+      setNotice(t('settings.contact.missingUrl'));
+      return;
+    }
+    try {
+      await WebBrowser.openBrowserAsync(contactUrl);
+    } catch {
+      setNotice(t('settings.contact.openFail'));
     }
   };
 
@@ -761,7 +775,15 @@ export default function SettingsScreen() {
         <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
-          {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
+          <View style={styles.linkList}>
+            <Pressable
+              onPress={openContactPage}
+              style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+            >
+              <Text style={styles.linkText}>{t('settings.contact.open')}</Text>
+              <AppIcon name="arrow-ne" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+          </View>
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

@@ -110,7 +110,7 @@
   "learnCards": {
     "title": "Learning Cards",
     "subtitle": "Short learning + action + question",
-    "count": "{{count}} cards",
+    "count": "{{total}} cards",
     "search": "Search cards",
     "packNotFound": "Pack not found: {{packId}}",
     "resultCount": "{{shown}} / {{total}} cards",
@@ -133,7 +133,7 @@
     "search": "Search terms (e.g., Sanmitsu)",
     "title": "Glossary",
     "subtitle": "Look up unfamiliar terms quickly",
-    "count": "{{count}} entries",
+    "count": "{{total}} entries",
     "termNotFound": "Term not found: {{termId}}",
     "short": "Short description",
     "definition": "Definition",
@@ -251,7 +251,10 @@
     },
     "contact": {
       "title": "Contact",
-      "body": "Contact details will be added later."
+      "body": "We accept inquiries via GitHub Issues.",
+      "open": "Open contact page",
+      "missingUrl": "Contact page URL is not set yet.",
+      "openFail": "Couldn't open the contact page."
     }
   },
   "licenses": {

@@ -58,7 +58,7 @@ export default function GlossaryListScreen() {
           <View style={styles.header}>
             <Text style={styles.title}>{t('glossary.title')}</Text>
             <Text style={styles.subtitle}>{t('glossary.subtitle')}</Text>
-            <Text style={styles.meta}>{t('glossary.count', { count: filtered.length })}</Text>
+            <Text style={styles.meta}>{t('glossary.count', { total: filtered.length })}</Text>
           </View>
         }
         renderItem={({ item }) => (
