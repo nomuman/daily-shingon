@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "language": "en",
     "pack_id": "app_integration",
-    "title": "Translation to App Implementation (UX Cards)",
+    "title": "Translation to App Implementation (Design Cards)",
     "description": "Design cards that translate teachings into daily app practice. Not doctrinal assertions, but implementation guidance.",
     "generated_at": "2025-12-27"
   },
@@ -12,7 +12,7 @@
       "id": "ux.loop_sanmitsu",
       "type": "practice",
       "level": "beginner",
-      "title": "Loop design: morning (align) -> day (action) -> night (reflect)",
+      "title": "Daily flow design: morning (align) -> day (action) -> night (reflect)",
       "summary": "Assign body, speech, and mind to the morning/day/night flow.",
       "body_md": "App design rule:\n- Morning: align the body (posture, movement)\n- Day: align speech (words) / choose an action\n- Night: reflect on mind\n\nFixing this structure keeps content clear even as it grows.",
       "micro_practice": {
@@ -21,23 +21,23 @@
         "night": "Keep only one question."
       },
       "reflection_questions": ["Where did today's loop break? What can you shorten next time?"],
-      "tags": ["UX", "loop", "habit"],
+      "tags": ["design", "flow", "habit"],
       "sources": ["S_MUSUBIDAISHI_SANMITSU"]
     },
     {
       "id": "ux.heatmap_as_visible_merit",
       "type": "practice",
       "level": "beginner",
-      "title": "365-day heatmap: use it as a scaffold, not a score",
+      "title": "365-day calendar: use it as a scaffold, not a score",
       "summary": "Color is not a score; it is a place to return to.",
-      "body_md": "Design policy:\n- Do not emphasize streaks\n- Do not blame gaps\n- Tap to return to that day's record\n\nStay focused on visualization that supports continuation.",
+      "body_md": "Design policy:\n- Do not emphasize consecutive-day counts\n- Do not blame gaps\n- Tap to return to that day's record\n\nStay focused on visualization that supports continuation.",
       "micro_practice": {
         "morning": "Prioritize returning over increasing color.",
         "day": "If you miss a day, simply return the next day.",
         "night": "When a color fills in, affirm today's one step and close."
       },
       "reflection_questions": ["What does a colored square signal to you?"],
-      "tags": ["UX", "heatmap", "continuity"],
+      "tags": ["design", "calendar", "continuity"],
       "sources": ["S_KOTOBANK_KONGYO"]
     },
     {
@@ -53,7 +53,7 @@
         "night": "Write one line about why it did or didn't happen without blame."
       },
       "reflection_questions": ["Did you narrow it to one action? If not, why?"],
-      "tags": ["UX", "action", "continuity"],
+      "tags": ["design", "action", "continuity"],
       "sources": ["S_KOTOBANK_HOTSUGAN"]
     },
     {
@@ -69,7 +69,7 @@
         "night": "Write one line each: repentance -> vow -> dedication."
       },
       "reflection_questions": ["Is repentance turning into self-denial? Is it grounded in facts?"],
-      "tags": ["UX", "night", "input design"],
+      "tags": ["design", "night", "input design"],
       "sources": ["S_KOTOBANK_ZANGE"]
     },
     {
@@ -77,7 +77,7 @@
       "type": "practice",
       "level": "beginner",
       "title": "Sources first: every card needs a basis",
-      "summary": "A minimum rule against hallucination.",
+      "summary": "A minimum quality rule for clear attribution.",
       "body_md": "Operational rule:\n- Always attach sources when creating new cards\n- Choose sources in order: official -> dictionary -> academic\n- Avoid strongly assertive wording\n\n(This is a content quality rule.)",
       "micro_practice": {
         "morning": "Find sources first for any cards you add today.",
@@ -92,9 +92,9 @@
       "id": "ux.respect_without_gatekeeping",
       "type": "practice",
       "level": "beginner",
-      "title": "No gatekeeping: protect the beginner's entry",
+      "title": "Keep the entry open: protect the beginner's entry",
       "summary": "Move difficult terms to the glossary so practice does not stop.",
-      "body_md": "Design policy:\n- When a difficult term appears, keep reading and supplement via the glossary\n- The glossary holds short definitions and sources\n- Prioritize practice (action)\n\n(Not a doctrinal claim, but a UX policy.)",
+      "body_md": "Design policy:\n- When a difficult term appears, keep reading and supplement via the glossary\n- The glossary holds short definitions and sources\n- Prioritize practice (action)\n\n(Not a doctrinal claim, but a design policy.)",
       "micro_practice": {
         "morning": "Do not stop when a difficult term appears (use the glossary).",
         "day": "Do not assume you understand; return to action.",
@@ -103,7 +103,7 @@
       "reflection_questions": [
         "When you encountered a difficult term, did practice stop or continue?"
       ],
-      "tags": ["UX", "beginners", "glossary"],
+      "tags": ["design", "beginners", "glossary"],
       "sources": ["S_KOYASAN_SHINGONSHU"]
     }
   ],

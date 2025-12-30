@@ -13,8 +13,8 @@
       "type": "learn",
       "level": "beginner",
       "title": "Kukai: known as the founder of Japanese Shingon esoteric Buddhism",
-      "summary": "The SEP describes Kukai as best known for founding Shingon esoteric Buddhism in Japan.",
-      "body_md": "The Stanford Encyclopedia of Philosophy (SEP) entry on Kukai notes that Kukai (774-835) is most famous as the founder of Shingon esoteric Buddhism in Japan.\n\nIn this app, we translate reverence into daily alignment: practice body, speech, and mind.",
+      "summary": "The SEP describes Kukai as widely known for founding Shingon esoteric Buddhism in Japan.",
+      "body_md": "The Stanford Encyclopedia of Philosophy (SEP) entry on Kukai notes that Kukai (774-835) is widely known as the founder of Shingon esoteric Buddhism in Japan.\n\nIn this app, we translate reverence into daily alignment: practice body, speech, and mind.",
       "micro_practice": {
         "morning": "Decide on just one learning for today (do not overreach).",
         "day": "Rephrase one sentence more carefully (speech).",
@@ -41,7 +41,7 @@
       "reflection_questions": [
         "What word confused you today? How would you rephrase it in one line?"
       ],
-      "tags": ["people", "naming", "UX"],
+      "tags": ["people", "naming", "design"],
       "sources": ["S_SEP_KUKAI"]
     },
     {
@@ -54,10 +54,10 @@
       "micro_practice": {
         "morning": "First body (posture) -> then speech (careful words) -> finally mind (today's focus).",
         "day": "When you are disturbed, return in order: body -> speech -> mind.",
-        "night": "Choose and record which of body, speech, or mind helped most today."
+        "night": "Choose and record which of body, speech, or mind felt most supportive today."
       },
       "reflection_questions": [
-        "Which helped most today: body, speech, or mind?",
+        "Which felt most supportive today: body, speech, or mind?",
         "If the same situation happens tomorrow, how will you order them?"
       ],
       "tags": ["people", "three mysteries", "practice"],
@@ -108,7 +108,7 @@
         "night": "Write one correction without blaming yourself."
       },
       "reflection_questions": ["When did respect become action today?"],
-      "tags": ["people", "practice", "UX"],
+      "tags": ["people", "practice", "design"],
       "sources": ["S_MUSUBIDAISHI_SANMITSU"]
     }
   ],

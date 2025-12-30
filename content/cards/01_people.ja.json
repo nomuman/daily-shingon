@@ -14,7 +14,7 @@
       "level": "beginner",
       "title": "空海（Kūkai）：日本の真言密教の創始者として知られる",
       "summary": "SEP は空海を、真言密教の創始者として著名と説明している。",
-      "body_md": "Stanford Encyclopedia of Philosophy（SEP）の「Kūkai」項目は、空海（774–835）を、日本の真言密教（Shingon esoteric Buddhism）の創始者として最も有名だと述べている。\n\nアプリでは、人物への尊崇を“生活の整え”へ翻訳する：身口意の実践を積むこと。",
+      "body_md": "Stanford Encyclopedia of Philosophy（SEP）の「Kūkai」項目は、空海（774–835）を、日本の真言密教（Shingon esoteric Buddhism）の創始者として特に著名だと述べている。\n\nアプリでは、人物への尊崇を“生活の整え”へ翻訳する：身口意の実践を積むこと。",
       "micro_practice": {
         "morning": "今日の“学び”を1つだけ決める（欲張らない）。",
         "day": "言葉を1回だけ丁寧に言い直す（口）。",
@@ -37,7 +37,7 @@
         "night": "今日出会った用語を1つメモする。"
       },
       "reflection_questions": ["今日、混乱した言葉は？それを一言で言い換えると？"],
-      "tags": ["人物", "呼称", "UX"],
+      "tags": ["人物", "呼称", "設計"],
       "sources": ["S_SEP_KUKAI"]
     },
     {
@@ -50,10 +50,10 @@
       "micro_practice": {
         "morning": "まず身（姿勢）→次に口（丁寧な言葉）→最後に意（今日の焦点）。",
         "day": "乱れたら順番通りに戻す：身→口→意。",
-        "night": "一番効いたのは身口意のどれか、1つ選んで記録する。"
+        "night": "一番しっくりきたのは身口意のどれか、1つ選んで記録する。"
       },
       "reflection_questions": [
-        "今日いちばん効いたのは身・口・意のどれ？",
+        "今日いちばんしっくりきたのは身・口・意のどれ？",
         "明日同じ状況なら、順番をどうする？"
       ],
       "tags": ["人物", "三密", "実践"],
@@ -104,7 +104,7 @@
         "night": "今日の自分を責めず、修正案を1つ書く。"
       },
       "reflection_questions": ["尊敬が“行い”に変換された瞬間は？"],
-      "tags": ["人物", "実践", "UX"],
+      "tags": ["人物", "実践", "設計"],
       "sources": ["S_MUSUBIDAISHI_SANMITSU"]
     }
   ],
