@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "texts",
+    "title": "Sutras and Words (Root Sutras and Mantra)",
+    "description": "Cards that handle root sutras and mantra within the scope of official explanations.",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "texts.root_sutras",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Root sutras: The Mahavairocana Sutra and the Vajrasekhara Sutra (official)",
+      "summary": "Toji Shingon (official) explains that Shingon regards these two as the root sutras.",
+      "body_md": "Toji Shingon (official) explains that Shingon Buddhism regards the Mahavairocana Sutra and the Vajrasekhara Sutra as its root sutras.\n\nIn the app, rather than quoting scripture verbatim, we prioritize terms, sources, and translation into action.",
+      "micro_practice": {
+        "morning": "Read with the root (source) in mind.",
+        "day": "Send difficult terms to the glossary.",
+        "night": "Open one source for today's learning."
+      },
+      "reflection_questions": ["Which root (source) supports today's learning?"],
+      "tags": ["sutras", "Mahavairocana", "Vajrasekhara"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.mantra_as_shingon",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Shingon equals mantra (official)",
+      "summary": "Toji Shingon (official) explains shingon as mantra.",
+      "body_md": "Toji Shingon (official) explains that the Shingon term shingon is called mantra in ancient India and means the Buddha's words or true words.\n\nIn the app, even without fixing a specific text, it can still count as having chanted by recording the act.",
+      "micro_practice": {
+        "morning": "Speech: choose one careful word (start there).",
+        "day": "Reduce one rough word.",
+        "night": "Reflect on your words today and write one improvement."
+      },
+      "reflection_questions": ["What was the most important word today?"],
+      "tags": ["mantra", "shingon", "speech mystery"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.sanmitsu_yoga",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Sanmitsu Yoga: mudra, mantra, samadhi (official source)",
+      "summary": "The official youth federation column explains Sanmitsu Yoga for body, speech, and mind.",
+      "body_md": "An official column from the All Japan Shingon Young Buddhist Federation explains that the body mystery forms mudra with the hands, the speech mystery chants mantra and dharani, and the mind mystery places the mind in samadhi. It describes unifying these three as Sanmitsu Yoga.\n\nIn the app, we prioritize aligning body, speech, and mind over diagram details or fixed scripture text.",
+      "micro_practice": {
+        "morning": "Body: posture / Speech: one careful phrase / Mind: choose one focus.",
+        "day": "Mind: narrow to one task (stop multitasking).",
+        "night": "Write one factor that disrupted your focus today."
+      },
+      "reflection_questions": ["What caused your focus (mind) to scatter today?"],
+      "tags": ["three mysteries", "yoga", "focus"],
+      "sources": ["S_KOBODAISHI_MIKKYO"]
+    },
+    {
+      "id": "texts.dainichi_as_center",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Dainichi Nyorai: explained as the central main image (official)",
+      "summary": "Toji Shingon (official) explains Dainichi Nyorai as the central main image.",
+      "body_md": "Toji Shingon (official) explains that Shingon relies on the two root sutras and that Dainichi Nyorai is the central main image.\n\nIn the app, this can be translated as a design: the center equals the daily form (morning/night).",
+      "micro_practice": {
+        "morning": "Fix the center (morning form).",
+        "day": "Change only one surrounding action.",
+        "night": "Close with the center (night form)."
+      },
+      "reflection_questions": ["Did you keep the center (form) today, or did it break?"],
+      "tags": ["Dainichi", "center", "form"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.aji_hon_fusho",
+      "type": "learn",
+      "level": "advanced",
+      "title": "Aji Hon Fushou: a phrase explained by Toji Shingon (official)",
+      "summary": "Toji Shingon (official) mentions the letter A and Aji Hon Fushou.",
+      "body_md": "Toji Shingon (official) states that Dainichi Nyorai is also the single letter A, and mentions the expression Aji Hon Fushou.\n\nIn the app, treat this as an advanced card and avoid deep definitive interpretations. Stay within the scope of official explanations.",
+      "micro_practice": {
+        "morning": "When you encounter a deep term, first read the source text.",
+        "day": "Do not assume you fully understand; return to action.",
+        "night": "Record one action from today and end."
+      },
+      "reflection_questions": ["When you met a difficult term, what attitude did you take?"],
+      "tags": ["Aji", "Aji Hon Fushou", "advanced"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.safe_quote_policy",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Safe policy for quoting texts (app policy)",
+      "summary": "Mantra and sutra texts vary by edition, sect, and practice, so handle with care.",
+      "body_md": "This card is an app production policy.\n\n- If you include a text (mantra or sutra), always specify the source (which book or which temple/shrine)\n- In areas with practice differences, prioritize references over assertive statements\n- Early versions can rely on logging chanted or practiced without fixed text\n\nNot a doctrinal claim, but a quality management rule.",
+      "micro_practice": {
+        "morning": "Set up source management before quoting texts.",
+        "day": "Do not include uncertain texts.",
+        "night": "Review your sources."
+      },
+      "reflection_questions": ["Which source does this text come from? Which edition?"],
+      "tags": ["operations", "sources", "policy"]
+    }
+  ],
+  "bibliography": {
+    "S_TOJI_SHINGON_ABOUT": {
+      "title": "Teachings of Shingon Buddhism",
+      "publisher": "Toji Shingon School (official)",
+      "url": "https://www.tojishingonshu.org/about.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KOBODAISHI_MIKKYO": {
+      "title": "Stories of Esoteric Buddhism",
+      "publisher": "All Japan Shingon Young Buddhist Federation",
+      "url": "https://www.kobodaishi.jp/column/mikkyou.html",
+      "accessed": "2025-12-27"
+    }
+  }
+}

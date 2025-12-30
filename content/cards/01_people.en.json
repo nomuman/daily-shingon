@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "people",
+    "title": "People (Kukai / Kobo Daishi)",
+    "description": "Cards that translate understanding of people into learning and action rather than veneration.",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "people.kukai_overview",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Kukai: known as the founder of Japanese Shingon esoteric Buddhism",
+      "summary": "The SEP describes Kukai as best known for founding Shingon esoteric Buddhism in Japan.",
+      "body_md": "The Stanford Encyclopedia of Philosophy (SEP) entry on Kukai notes that Kukai (774-835) is most famous as the founder of Shingon esoteric Buddhism in Japan.\n\nIn this app, we translate reverence into daily alignment: practice body, speech, and mind.",
+      "micro_practice": {
+        "morning": "Decide on just one learning for today (do not overreach).",
+        "day": "Rephrase one sentence more carefully (speech).",
+        "night": "Record today's practice in one line."
+      },
+      "reflection_questions": [
+        "If you translate a great person's life into today's actions, what would that be?"
+      ],
+      "tags": ["people", "Kukai", "history"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "people.kobo_daishi_title",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Kobo Daishi: an honorific title for Kukai",
+      "summary": "This app keeps naming consistent to reduce confusion.",
+      "body_md": "Academic overviews (SEP) often use the name Kukai.\n\nIn the app, we mention Kukai (Kobo Daishi) once, then treat them as the same person to avoid confusion.",
+      "micro_practice": {
+        "morning": "Hold the equivalence in mind: Kukai = Kobo Daishi.",
+        "day": "Open the glossary when an unfamiliar term appears (don't leave it vague).",
+        "night": "Write down one term you encountered today."
+      },
+      "reflection_questions": [
+        "What word confused you today? How would you rephrase it in one line?"
+      ],
+      "tags": ["people", "naming", "UX"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "people.kukai_and_practice_bridge",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Understanding Kukai: build a circuit of practice, not just knowledge",
+      "summary": "Make the Three Mysteries (body, speech, mind) a daily circuit.",
+      "body_md": "The official Koyasan Shingon explanation describes Sanmitsu Kaji (Sanmitsu Yoga), notes that body, speech, and mind mutually respond, and mentions nyuga ganyu.\n\nUnderstanding a person connects to running that circuit (body, speech, mind) in everyday life.",
+      "micro_practice": {
+        "morning": "First body (posture) -> then speech (careful words) -> finally mind (today's focus).",
+        "day": "When you are disturbed, return in order: body -> speech -> mind.",
+        "night": "Choose and record which of body, speech, or mind helped most today."
+      },
+      "reflection_questions": [
+        "Which helped most today: body, speech, or mind?",
+        "If the same situation happens tomorrow, how will you order them?"
+      ],
+      "tags": ["people", "three mysteries", "practice"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "people.toji_as_learning_place",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Toji: explains the idea of making the mandala three-dimensional",
+      "summary": "Toji (official) explains the mandala and the three-dimensional mandala (Karma Mandala).",
+      "body_md": "Toji (official) explains that mandalas are a clear expression of esoteric teachings, that there are the Womb Realm Mandala and the Diamond Realm Mandala, and that the Karma Mandala (commonly called a three-dimensional mandala) embodies that concept.\n\nIn this app, learn the idea of moving from seeing to doing.",
+      "micro_practice": {
+        "morning": "Create a see -> do order: read, then do one thing.",
+        "day": "When you notice, adjust posture once (movement).",
+        "night": "Write one moment you aligned through action today."
+      },
+      "reflection_questions": ["Did you stop at seeing today? Or did you move into doing?"],
+      "tags": ["place", "Toji", "mandala"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "people.koyasan_as_learning_place",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Koyasan: refer to official explanations as the baseline",
+      "summary": "Use official explanations as the baseline for this app.",
+      "body_md": "The official Koyasan Shingon explanations cover esoteric and exoteric teachings, Sanmitsu Kaji, nyuga ganyu, Dharma Body Buddha, and more. They are a baseline for the app's core vocabulary.\n\nWhen adding cards later, build sources in this order: official -> dictionary -> academic.",
+      "micro_practice": {
+        "morning": "Build the habit of checking sources for terms.",
+        "day": "Avoid vague phrasing; return to definitions.",
+        "night": "Open one source for a term you learned today."
+      },
+      "reflection_questions": ["Which source supports today's learning?"],
+      "tags": ["place", "Koyasan", "sources"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "people.respect_and_daily_life",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Translate respect into a daily step",
+      "summary": "Respect is good, but in this app we convert it to one action for today.",
+      "body_md": "This is a practice card for the app's design.\n\nTranslate respect into one action today:\n- Body: return to posture\n- Speech: choose one careful word\n- Mind: observe irritation\n\nNot a doctrinal claim, but a behavioral design for the app.",
+      "micro_practice": {
+        "morning": "Begin after aligning posture.",
+        "day": "Reduce one attacking word.",
+        "night": "Write one correction without blaming yourself."
+      },
+      "reflection_questions": ["When did respect become action today?"],
+      "tags": ["people", "practice", "UX"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_SEP_KUKAI": {
+      "title": "Kukai",
+      "publisher": "Stanford Encyclopedia of Philosophy",
+      "url": "https://plato.stanford.edu/entries/kukai/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "About the Koyasan Shingon School",
+      "publisher": "Koyasan Shingon School (official)",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_MANDALA": {
+      "title": "Three-dimensional Mandala",
+      "publisher": "Toji Temple (official)",
+      "url": "https://toji.or.jp/smp/mandala/",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "Message from the Temple (Sanmitsu Kaji Appears Swiftly)",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}

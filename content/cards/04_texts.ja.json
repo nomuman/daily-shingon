@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "ja",
+    "pack_id": "texts",
+    "title": "経典・言葉（根本経典と真言）",
+    "description": "根本経典・真言（マントラ）などを、公式説明の範囲で扱うカード群。",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "texts.root_sutras",
+      "type": "learn",
+      "level": "beginner",
+      "title": "根本経典：『大日経』と『金剛頂経』（公式）",
+      "summary": "東寺真言宗（公式）は、真言宗が両経典を根本経典とすると述べる。",
+      "body_md": "東寺真言宗（公式）は、真言宗が『大日経』と『金剛頂経』を根本経典とすると説明している。\n\nアプリでは、経典の本文を断定的に掲載するより「用語」「出典」「行いへの翻訳」を優先する。",
+      "micro_practice": {
+        "morning": "根っこ（出典）を意識して読む。",
+        "day": "難しい語は用語集へ逃がす。",
+        "night": "今日の学びの出典を1つだけ開く。"
+      },
+      "reflection_questions": ["今日の学びは、どの根っこ（出典）に支えられている？"],
+      "tags": ["経典", "大日経", "金剛頂経"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.mantra_as_shingon",
+      "type": "learn",
+      "level": "beginner",
+      "title": "真言＝マントラ（公式）",
+      "summary": "東寺真言宗（公式）は真言をマントラと説明している。",
+      "body_md": "東寺真言宗（公式）は、真言宗の「真言」を古代インドの言葉でマントラと言い、仏様の言葉／真実の言葉という意味だと説明している。\n\nアプリ実装としては、本文を固定しない段階でも「唱えた（口）」という記録だけで成立する。",
+      "micro_practice": {
+        "morning": "口：丁寧な言葉を選ぶ（まずはそこから）。",
+        "day": "荒い言葉を1つだけ減らす。",
+        "night": "今日の口（言葉）を振り返り、改善を1つ書く。"
+      },
+      "reflection_questions": ["今日いちばん大事だった言葉は何？"],
+      "tags": ["真言", "マントラ", "口密"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.sanmitsu_yoga",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "三密相応の瑜伽：印契・真言・三摩地（公式系）",
+      "summary": "全真言宗青年連盟（公式）コラムに、身口意の三密瑜伽の説明がある。",
+      "body_md": "全真言宗青年連盟（公式）コラムは、手に印契を結ぶ身密、口に真言・陀羅尼を唱える口密、心を三摩地に置く意密と述べ、三種の秘密を一体化させることを三密相応の瑜伽行と説明している。\n\nアプリでは、図解や本文の断定より「身口意をそろえる行動」を優先する。",
+      "micro_practice": {
+        "morning": "身：姿勢／口：丁寧な一言／意：集中の対象を1つ。",
+        "day": "意：やることを一つに絞る（マルチタスクをやめる）。",
+        "night": "今日の集中を邪魔した要因を1つ書く。"
+      },
+      "reflection_questions": ["今日、意（集中）が散った原因は何？"],
+      "tags": ["三密", "瑜伽", "集中"],
+      "sources": ["S_KOBODAISHI_MIKKYO"]
+    },
+    {
+      "id": "texts.dainichi_as_center",
+      "type": "learn",
+      "level": "beginner",
+      "title": "大日如来：中心の本尊として説明される（公式）",
+      "summary": "東寺真言宗（公式）は、大日如来が中心の本尊と述べる。",
+      "body_md": "東寺真言宗（公式）は、真言宗が両根本経典を拠り所とし、大日如来が中心の本尊だと説明している。\n\nアプリでは「中心＝毎日の型（朝/夜）」という設計へ翻訳できる。",
+      "micro_practice": {
+        "morning": "中心（朝の型）を固定する。",
+        "day": "周辺（行い）を1つだけ変える。",
+        "night": "中心（夜の型）で締める。"
+      },
+      "reflection_questions": ["中心（型）を守れた？崩れた？"],
+      "tags": ["大日如来", "中心", "型"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.aji_hon_fusho",
+      "type": "learn",
+      "level": "advanced",
+      "title": "阿字本不生：東寺真言宗（公式）で説明がある表現",
+      "summary": "東寺真言宗（公式）は阿字と阿字本不生に触れている。",
+      "body_md": "東寺真言宗（公式）は、大日如来を阿字という一文字でもあると述べ、阿字本不生という表現に触れている。\n\nアプリでは上級カードとして扱い、断定的な深解釈は避けて“公式説明の範囲”を守る。",
+      "micro_practice": {
+        "morning": "深い語に触れたら、まず出典の文面を読む。",
+        "day": "わかった気にならず、行いに戻る。",
+        "night": "今日の行いを1つ記録して終える。"
+      },
+      "reflection_questions": ["難しい語に出会ったとき、どんな態度で向き合えた？"],
+      "tags": ["阿字", "阿字本不生", "上級"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.safe_quote_policy",
+      "type": "practice",
+      "level": "beginner",
+      "title": "本文掲載の安全ポリシー（アプリ方針）",
+      "summary": "真言・経文本文は“版・宗派差・作法差”が出やすいので慎重に扱う。",
+      "body_md": "このカードはアプリ制作方針。\n\n- 本文（真言・経文）を載せる場合は、必ず典拠（どの本・どの寺社の記載か）を明記\n- 作法差がある領域は「断定」より「参照（リンク）」を優先\n- 初期は「唱えた/行った」の記録で成立させる\n\n※教義の断定ではなく、品質管理ルール。",
+      "micro_practice": {
+        "morning": "本文掲載より先に“出典管理”を整える。",
+        "day": "不確かな本文は載せない。",
+        "night": "出典の棚卸しをする。"
+      },
+      "reflection_questions": ["この本文は、どの出典に基づく？版は？"],
+      "tags": ["運用", "出典", "ポリシー"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    }
+  ],
+  "bibliography": {
+    "S_TOJI_SHINGON_ABOUT": {
+      "title": "真言宗の教え",
+      "publisher": "東寺真言宗（公式）",
+      "url": "https://www.tojishingonshu.org/about.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KOBODAISHI_MIKKYO": {
+      "title": "密教のおはなし",
+      "publisher": "全真言宗青年連盟（全青連）",
+      "url": "https://www.kobodaishi.jp/column/mikkyou.html",
+      "accessed": "2025-12-27"
+    }
+  }
+}

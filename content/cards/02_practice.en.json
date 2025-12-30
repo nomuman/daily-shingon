@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "practice",
+    "title": "Practice (Daily Form)",
+    "description": "Cards that align with the app's morning/night flow: gongyo, repentance, vows, dedication, and more.",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "practice.gongyo",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Gongyo: recite sutras before the Buddha at a set time (dictionary)",
+      "summary": "Kotobank explains gongyo as reciting sutras before the Buddha at a set time.",
+      "body_md": "Kotobank defines gongyo as reciting sutras before the Buddha at a set time (and notes it can also mean diligent effort).\n\nThe app's heatmap (one square per day) pairs well with this idea of practicing at a set time.",
+      "micro_practice": {
+        "morning": "Even one minute is fine. Anchor it to the same time each day.",
+        "day": "If you missed it, do not blame yourself. Just secure the next time.",
+        "night": "Write one line about why it did or didn't happen today (no blame)."
+      },
+      "reflection_questions": [
+        "What can you remove to keep going?",
+        "How can you get closer to the same time every day?"
+      ],
+      "tags": ["practice", "gongyo", "habit"],
+      "sources": ["S_KOTOBANK_KONGYO"]
+    },
+    {
+      "id": "practice.zange",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Zange (repentance): confess and amend past wrongs (dictionary)",
+      "summary": "Kotobank explains zange as confessing wrongdoing and asking forgiveness, among other meanings.",
+      "body_md": "Kotobank defines zange (zange/sange) as confessing past wrongdoing to ask forgiveness, and regretting and apologizing for wrongdoing.\n\nIn this app's night flow, we avoid self-denial and handle it as observation -> correction.",
+      "micro_practice": {
+        "morning": "Translate yesterday's reflection into one improvement today.",
+        "day": "If you fail, state the facts before excuses (speech).",
+        "night": "Do not write blaming words. Use one line in the order: fact -> impact -> next step."
+      },
+      "reflection_questions": [
+        "If you turn today's repentance into a correction plan, what is it?"
+      ],
+      "tags": ["practice", "repentance", "night"],
+      "sources": ["S_KOTOBANK_ZANGE"]
+    },
+    {
+      "id": "practice.hotsugan",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Hotsugan: raise a vow or aspiration (dictionary)",
+      "summary": "Kotobank explains hotsugan as raising a vow to attain awakening and save beings.",
+      "body_md": "Kotobank explains hotsugan as raising a vow, such as the wish to attain awakening or to save beings.\n\nIn the app, deciding one action for tomorrow at night becomes a form of hotsugan.",
+      "micro_practice": {
+        "morning": "Choose just one action for today (do not stack too many).",
+        "day": "Start with the smallest possible step toward that action.",
+        "night": "Write one action for tomorrow (your vow)."
+      },
+      "reflection_questions": ["What exactly will you do tomorrow? (use a verb)"],
+      "tags": ["practice", "vow", "action"],
+      "sources": ["S_KOTOBANK_HOTSUGAN"]
+    },
+    {
+      "id": "practice.ekou",
+      "type": "learn",
+      "level": "beginner",
+      "title": "Ekou: direct merit toward others (dictionary)",
+      "summary": "Kotobank explains ekou as dedicating merit to others and to their awakening.",
+      "body_md": "Kotobank defines ekou as dedicating merit to the deceased, and directing one's cultivated merit toward others to help both self and others attain awakening.\n\nIn the app, it is helpful to close the night with a single line that turns today's goodness toward someone.",
+      "micro_practice": {
+        "morning": "Decide one person you will direct today toward.",
+        "day": "Do one small, careful act for that person.",
+        "night": "Close with words that direct today's small goodness toward someone."
+      },
+      "reflection_questions": ["Who did you dedicate to today? Did it show up in action?"],
+      "tags": ["practice", "dedication", "night"],
+      "sources": ["S_KOTOBANK_EKOU"]
+    },
+    {
+      "id": "practice.ekoumon",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "Ekoumon: words recited at the end of practice or services (dictionary)",
+      "summary": "Kotobank explains ekoumon as a sutra expressing the wish to direct merit to awakening for self and others.",
+      "body_md": "Kotobank defines ekoumon as a sutra recited at the end of daily practice or services, expressing the wish to direct merit toward awakening for self and others.\n\nIn the app, we avoid asserting a fixed text and instead use the user's own free-form dedication line.",
+      "micro_practice": {
+        "morning": "Treat dedication as a wish, not a demand.",
+        "day": "If words are hard, a single line of gratitude is enough.",
+        "night": "Write one line of dedication (free text)."
+      },
+      "reflection_questions": ["To whom, and how, will you direct today's merit (goodness)?"],
+      "tags": ["practice", "dedication verse", "gongyo"],
+      "sources": ["S_KOTOBANK_EKOU_MON"]
+    },
+    {
+      "id": "practice.sanmitsu_daily",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Bring the Three Mysteries into daily life: return in the order body -> speech -> mind",
+      "summary": "Use the official three mysteries (body, speech, mind) as a daily reset sequence.",
+      "body_md": "Kongobuji (official) explains the Three Mysteries as action (body), words (speech), and mind (intention).\n\nAs a daily practice, adopt the rule: when disturbed, return in the order body -> speech -> mind.",
+      "micro_practice": {
+        "morning": "Body: align posture -> Speech: greet carefully -> Mind: choose one focus for today.",
+        "day": "If disturbed, first drop your shoulders (body) -> adjust your words (speech) -> observe your mind.",
+        "night": "Write one line breaking down today's most disturbed moment into body, speech, and mind."
+      },
+      "reflection_questions": [
+        "Which was the first trigger of disturbance: body, speech, or mind?"
+      ],
+      "tags": ["practice", "three mysteries", "daily"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_KOTOBANK_KONGYO": {
+      "title": "Gongyo",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%8B%A4%E8%A1%8C-67140",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_ZANGE": {
+      "title": "Zange (repentance)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E6%87%BA%E6%82%94-70615",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_HOTSUGAN": {
+      "title": "Hotsugan (vow)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E7%99%BA%E9%A1%98-630506",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU": {
+      "title": "Ekou (dedication)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91-36336",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU_MON": {
+      "title": "Ekoumon (dedication verse)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91%E6%96%87-36343",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "Message from the Temple (Sanmitsu Kaji Appears Swiftly)",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}

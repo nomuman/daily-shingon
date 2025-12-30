@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "ja",
+    "pack_id": "core",
+    "title": "基礎（教理の入口）",
+    "description": "真言密教の中核語彙を、アプリの実践導線（身口意）に落とすためのカード群。",
+    "generated_at": "2025-12-27",
+    "card_schema": {
+      "id": "string",
+      "type": "learn | practice",
+      "level": "beginner | intermediate | advanced",
+      "title": "string",
+      "summary": "string",
+      "body_md": "string",
+      "micro_practice": { "morning": "string", "day": "string", "night": "string" },
+      "reflection_questions": ["string"],
+      "tags": ["string"],
+      "sources": ["bibliography key"]
+    }
+  },
+  "cards": [
+    {
+      "id": "core.esoteric_vs_exoteric",
+      "type": "learn",
+      "level": "beginner",
+      "title": "密教と顕教：違いは“修行のしかた”にもある",
+      "summary": "密教と顕教は対立ではなく、理解の入口が違う、と公式解説にある。",
+      "body_md": "高野山真言宗の公式解説では、密教と顕教の違いの一つとして「秘密の意味を知る修行のあり方（修法）」を挙げ、真言密教の修法を三密加持（三密瑜伽）などと説明している。\n\nこのアプリでは、知識だけで完結させず「今日の身・口・意を整える」という小さな実践へ落とす。",
+      "micro_practice": {
+        "morning": "まず姿勢を整える（身）。次に短い言葉を一つ丁寧に発する（口）。最後に“今日は何を整える？”を一つ決める（意）。",
+        "day": "言葉が荒くなりそうな瞬間に、1回だけ呼吸して言い直す（口の修行）。",
+        "night": "今日の“整った瞬間”を1つ思い出して書く（意の確認）。"
+      },
+      "reflection_questions": [
+        "今日、知識だけで終わらせず“行い”に移せたことは何？",
+        "修行を“特別な時間”ではなく“日常”でやるとしたら、どこを変える？"
+      ],
+      "tags": ["教理", "入口", "顕教", "密教"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.sanmitsu",
+      "type": "learn",
+      "level": "beginner",
+      "title": "三密：身・口・意の3つをそろえる",
+      "summary": "身密・口密・意密を合わせて三密、と金剛峯寺（公式）が説明している。",
+      "body_md": "金剛峯寺（公式）の文章は、動作による身密、言葉による口密、心による意密の三つを合わせて三密と説明している。\n\nアプリの「朝＝整える」「夜＝ふり返る」を、身口意に対応させると迷いにくい。",
+      "micro_practice": {
+        "morning": "身：姿勢／口：丁寧な一言／意：今日の焦点（1つ）を決める。",
+        "day": "口：短くても誠実な言葉を選ぶ。意：相手の立場を一度想像する。",
+        "night": "意：今日の乱れを1つ認め、明日の小さな修正を決める。"
+      },
+      "reflection_questions": [
+        "今日いちばん乱れたのは、身・口・意のどれ？",
+        "乱れを“1ミリだけ”戻すなら、明日何をする？"
+      ],
+      "tags": ["教理", "三密", "身口意"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "core.sanmitsu_kaji",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "三密加持：三密が“はたらき”として現れる",
+      "summary": "三密を顕す修行を加持と説明する文章がある（公式）。",
+      "body_md": "金剛峯寺（公式）の文章は、身密・口密・意密の三つを合わせて三密とし、それらを私たちのために「顕す」修行のことを加持と説明している。\n\nアプリでは“儀式の再現”ではなく、日常の身口意をそろえる補助として扱う。",
+      "micro_practice": {
+        "morning": "身：朝の所作を丁寧に／口：一語を丁寧に／意：今日の軸を一つ。",
+        "day": "トラブル時に“攻撃の言葉”をやめ、事実→要望の順で話す。",
+        "night": "今日の苦しみを“責め”ではなく“観察”として1行で書く。"
+      },
+      "reflection_questions": [
+        "今日は何が“顕れた”（見える形になった）？",
+        "整え直すとしたら、身口意のどこから？"
+      ],
+      "tags": ["教理", "三密加持"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "core.nyuga_ganyu",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "入我我入：境界が薄くなる感覚の言葉",
+      "summary": "高野山真言宗（公式）で「入我我入」に言及がある。",
+      "body_md": "高野山真言宗（公式）では、三密加持の説明の中で、弘法大師がこのあり方を「仏が我に入り我が仏に入る」という意味で「入我我入」と呼んだ、と述べている。\n\nアプリでは“体験の強制”はしない。まずは身口意の行いを積み上げ、体験は各自に委ねる。",
+      "micro_practice": {
+        "morning": "呼吸を整えてから始める（急がない）。",
+        "day": "1回だけ“相手の視点”で言い換えてみる。",
+        "night": "今日の出来事を“評価”ではなく“描写”で1行書く。"
+      },
+      "reflection_questions": [
+        "今日、“自分中心”から少し外れた瞬間はあった？",
+        "評価せずに描写すると、何が見える？"
+      ],
+      "tags": ["教理", "入我我入", "三密加持"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.hosshinbutsu",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "法身仏：真理（法）を“身体的イメージ”で捉える",
+      "summary": "密教の仏菩薩を法身仏と呼ぶ理由が公式解説にある。",
+      "body_md": "高野山真言宗（公式）は、密教の仏や菩薩を「宇宙（法界）の真理そのもの（法）」として捉え、その「法」が身体的イメージとしてとらえられているのが仏や菩薩であり、密教の仏や菩薩たちを法身仏と呼ぶと述べている。\n\nアプリでは、抽象語を“今日の所作・言葉・心”に変換する。",
+      "micro_practice": {
+        "morning": "身体の緊張を一箇所ゆるめる（肩・顎など）。",
+        "day": "一言だけ“正直な言葉”を選ぶ。",
+        "night": "今日の行動を一つ、次の一歩に変える（修正案を1つ）。"
+      },
+      "reflection_questions": ["抽象的な教えを、今日の行動に置き換えるなら？"],
+      "tags": ["教理", "法身仏", "世界観"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.sokushin_jobutsu",
+      "type": "learn",
+      "level": "beginner",
+      "title": "即身成仏：この身のままで苦から離れる道",
+      "summary": "金剛峯寺（公式）の文章が即身成仏に触れている。",
+      "body_md": "金剛峯寺（公式）の文章は、三密を通して「この身そのままで、苦から離れることが即身成仏」と述べている（文脈上の説明）。\n\nアプリでは“到達”ではなく“方向”として扱う：今日の身口意を整え、明日につなげる。",
+      "micro_practice": {
+        "morning": "今日の“苦の芽”を一つ予測し、先に1手打つ（例：余裕を5分作る）。",
+        "day": "苦が出たら、まず身（姿勢）を戻す→口（言葉）を整える→意（心）を整える。",
+        "night": "今日の苦を1行で書き、明日1ミリ軽くする方法を1つ書く。"
+      },
+      "reflection_questions": [
+        "苦はどこから始まった？身・口・意のどこが先？",
+        "明日、1ミリ軽くするなら何を変える？"
+      ],
+      "tags": ["教理", "即身成仏", "日常"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "高野山真言宗とは",
+      "publisher": "高野山真言宗（公式）",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "お寺からのメッセージ（「三密加持すれば速疾に顕る」）",
+      "publisher": "高野山真言宗総本山金剛峯寺 高野山（公式）",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}

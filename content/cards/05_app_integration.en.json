@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "pack_id": "app_integration",
+    "title": "Translation to App Implementation (UX Cards)",
+    "description": "Design cards that translate teachings into daily app practice. Not doctrinal assertions, but implementation guidance.",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "ux.loop_sanmitsu",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Loop design: morning (align) -> day (action) -> night (reflect)",
+      "summary": "Assign body, speech, and mind to the morning/day/night flow.",
+      "body_md": "App design rule:\n- Morning: align the body (posture, movement)\n- Day: align speech (words) / choose an action\n- Night: reflect on mind\n\nFixing this structure keeps content clear even as it grows.",
+      "micro_practice": {
+        "morning": "Do only the aligning part (short is fine).",
+        "day": "Choose only one action.",
+        "night": "Keep only one question."
+      },
+      "reflection_questions": ["Where did today's loop break? What can you shorten next time?"],
+      "tags": ["UX", "loop", "habit"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "ux.heatmap_as_visible_merit",
+      "type": "practice",
+      "level": "beginner",
+      "title": "365-day heatmap: use it as a scaffold, not a score",
+      "summary": "Color is not a score; it is a place to return to.",
+      "body_md": "Design policy:\n- Do not emphasize streaks\n- Do not blame gaps\n- Tap to return to that day's record\n\nStay focused on visualization that supports continuation.",
+      "micro_practice": {
+        "morning": "Prioritize returning over increasing color.",
+        "day": "If you miss a day, simply return the next day.",
+        "night": "When a color fills in, affirm today's one step and close."
+      },
+      "reflection_questions": ["What does a colored square signal to you?"],
+      "tags": ["UX", "heatmap", "continuity"],
+      "sources": ["S_KOTOBANK_KONGYO"]
+    },
+    {
+      "id": "ux.one_action_rule",
+      "type": "practice",
+      "level": "beginner",
+      "title": "One action per day: restraint sustains",
+      "summary": "Choose one action to reduce decision fatigue.",
+      "body_md": "Design policy:\n- One action for today\n- Translate it into the smallest step\n- Record when done\n\n(Not a doctrinal claim, but a continuity design.)",
+      "micro_practice": {
+        "morning": "Decide on just one action for today.",
+        "day": "Do only the smallest step (even one minute is OK).",
+        "night": "Write one line about why it did or didn't happen without blame."
+      },
+      "reflection_questions": ["Did you narrow it to one action? If not, why?"],
+      "tags": ["UX", "action", "continuity"],
+      "sources": ["S_KOTOBANK_HOTSUGAN"]
+    },
+    {
+      "id": "ux.night_as_zange_hotsugan_ekou",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Night form: one line each for repentance -> vow -> dedication",
+      "summary": "Split night input into three parts to reduce confusion.",
+      "body_md": "Design policy:\n1) Repentance: facts (no blame)\n2) Vow: one step for tomorrow\n3) Dedication: direct toward someone\n\nBased on dictionary definitions, keep input minimal.",
+      "micro_practice": {
+        "morning": "Review yesterday's vow (tomorrow's step).",
+        "day": "Execute the step exactly once.",
+        "night": "Write one line each: repentance -> vow -> dedication."
+      },
+      "reflection_questions": ["Is repentance turning into self-denial? Is it grounded in facts?"],
+      "tags": ["UX", "night", "input design"],
+      "sources": ["S_KOTOBANK_ZANGE"]
+    },
+    {
+      "id": "ux.source_first",
+      "type": "practice",
+      "level": "beginner",
+      "title": "Sources first: every card needs a basis",
+      "summary": "A minimum rule against hallucination.",
+      "body_md": "Operational rule:\n- Always attach sources when creating new cards\n- Choose sources in order: official -> dictionary -> academic\n- Avoid strongly assertive wording\n\n(This is a content quality rule.)",
+      "micro_practice": {
+        "morning": "Find sources first for any cards you add today.",
+        "day": "Fill in sources before writing the body.",
+        "night": "Check that source links are still live."
+      },
+      "reflection_questions": ["Where can you point to for this explanation?"],
+      "tags": ["operations", "sources", "quality"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "ux.respect_without_gatekeeping",
+      "type": "practice",
+      "level": "beginner",
+      "title": "No gatekeeping: protect the beginner's entry",
+      "summary": "Move difficult terms to the glossary so practice does not stop.",
+      "body_md": "Design policy:\n- When a difficult term appears, keep reading and supplement via the glossary\n- The glossary holds short definitions and sources\n- Prioritize practice (action)\n\n(Not a doctrinal claim, but a UX policy.)",
+      "micro_practice": {
+        "morning": "Do not stop when a difficult term appears (use the glossary).",
+        "day": "Do not assume you understand; return to action.",
+        "night": "Check one difficult term in the glossary."
+      },
+      "reflection_questions": [
+        "When you encountered a difficult term, did practice stop or continue?"
+      ],
+      "tags": ["UX", "beginners", "glossary"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    }
+  ],
+  "bibliography": {
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "Message from the Temple (Sanmitsu Kaji Appears Swiftly)",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_KONGYO": {
+      "title": "Gongyo",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%8B%A4%E8%A1%8C-67140",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_HOTSUGAN": {
+      "title": "Hotsugan (vow)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E7%99%BA%E9%A1%98-630506",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_ZANGE": {
+      "title": "Zange (repentance)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E6%87%BA%E6%82%94-70615",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "About the Koyasan Shingon School",
+      "publisher": "Koyasan Shingon School (official)",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    }
+  }
+}

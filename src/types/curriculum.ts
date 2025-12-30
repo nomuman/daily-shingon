@@ -1,4 +1,4 @@
-export type SanmitsuKey = "body" | "speech" | "mind";
+export type SanmitsuKey = 'body' | 'speech' | 'mind';
 
 export type CurriculumActionOption = {
   key: SanmitsuKey;

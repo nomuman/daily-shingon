@@ -1,0 +1,677 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "en",
+    "title": "Shingon Esoteric Buddhism Glossary",
+    "description": "Glossary used in the app. Each entry carries sources that map to the bibliography.",
+    "generated_at": "2025-12-27",
+    "schema": {
+      "entry": {
+        "id": "string (stable key)",
+        "term": "string (label)",
+        "reading": "string (reading)",
+        "category": "one of taxonomy.categories",
+        "level": "beginner | intermediate | advanced",
+        "short": "string (1-2 line summary)",
+        "definition": "string (a bit more detail)",
+        "notes": "string (optional: cautions/notes)",
+        "see_also": "string[] (related entry.id)",
+        "sources": "string[] (bibliography keys)"
+      }
+    }
+  },
+  "taxonomy": {
+    "categories": [
+      "People and Lineage",
+      "Central Buddhas and Worldview",
+      "Doctrine and Keywords",
+      "Practice and Ritual",
+      "Mandala and Symbols",
+      "Sutras and Texts"
+    ]
+  },
+  "entries": [
+    {
+      "id": "core.shingon",
+      "term": "Shingon Buddhism (Shingon-shu)",
+      "reading": "shingon-shu",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "A major Japanese Buddhist school that carries the esoteric (Shingon) tradition.",
+      "definition": "Shingon Buddhism is a Japanese school centered on esoteric rites and practices. English overviews often describe it as a branch within Vajrayana (esoteric Buddhism).",
+      "notes": "In the app, variants like Shingon Buddhism, Shingon esoteric Buddhism, and To-mitsu can be treated as tags to reduce confusion.",
+      "see_also": ["core.esoteric_buddhism", "persons.kukai"],
+      "sources": ["S_BRITANNICA_SHINGON", "S_WIKI_SHINGON_BUDDHISM"]
+    },
+    {
+      "id": "core.esoteric_buddhism",
+      "term": "Esoteric Buddhism (Mikkyo / Shingon esoteric Buddhism)",
+      "reading": "mikkyou",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "Explained as a Buddhist tradition that realizes hidden meaning through practice.",
+      "definition": "Koyasan Shingon explanations list, among the differences between esoteric and exoteric teachings, a mode of training that learns hidden meaning (shuhou), and describe practices such as Sanmitsu Kaji (Sanmitsu Yoga).",
+      "notes": "In the app, treat hidden as something understood through experience and practice rather than something merely concealed.",
+      "see_also": ["core.exoteric_buddhism", "doctrine.sanmitsu_kaji"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "core.exoteric_buddhism",
+      "term": "Exoteric Buddhism (Kengyo)",
+      "reading": "kengyo",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "A term contrasted with esoteric Buddhism, centered on open teachings and sutras.",
+      "definition": "Koyasan Shingon explanations point out several differences between esoteric and exoteric teachings and note esoteric practice such as Sanmitsu Kaji as one fundamental difference.",
+      "notes": "Use this as comparative vocabulary rather than a statement of superiority between schools.",
+      "see_also": ["core.esoteric_buddhism"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "persons.kukai",
+      "term": "Kukai",
+      "reading": "kuukai",
+      "category": "People and Lineage",
+      "level": "beginner",
+      "short": "Widely known as the monk who systematized and developed Shingon esoteric Buddhism in Japan.",
+      "definition": "Philosophical and historical overviews note that Kukai's writings provided theoretical foundations for existing practices such as mantra and dharani, bridging ritual practice and doctrine.",
+      "notes": "In the app, it is helpful to standardize naming such as Kukai, Kobo Daishi, and O-Daishi-sama.",
+      "see_also": ["persons.kobo_daishi"],
+      "sources": ["S_SEP_KUKAI"]
+    },
+    {
+      "id": "persons.kobo_daishi",
+      "term": "Kobo Daishi",
+      "reading": "kobo-daishi",
+      "category": "People and Lineage",
+      "level": "beginner",
+      "short": "Posthumous honorific title for Kukai.",
+      "definition": "The official Koyasan Shingon profile introduces Kobo Daishi as O-Daishi-sama and mentions the teaching of sokushin jobutsu.",
+      "notes": "Honorifics and naming affect UX directly. A fixed naming policy document is safer for the app.",
+      "see_also": ["persons.kukai", "doctrine.sokushin_jobutsu"],
+      "sources": ["S_KOYASAN_KOBODAISHI"]
+    },
+    {
+      "id": "cosmos.dainichi",
+      "term": "Dainichi Nyorai (Vairocana Buddha)",
+      "reading": "dainichi nyorai (birushana butsu)",
+      "category": "Central Buddhas and Worldview",
+      "level": "beginner",
+      "short": "Explained as the central Buddha in Shingon Buddhism.",
+      "definition": "Toji Shingon (official) explains that Shingon relies on the root sutras (Mahavairocana and Vajrasekhara) and places Dainichi Nyorai as the central main image. There are also descriptions of Dainichi as the entire universe.",
+      "notes": "Descriptions of the central Buddha vary by context; fix them with sources.",
+      "see_also": ["cosmos.hosshinbutsu", "texts.dainichikyo", "texts.kongochokyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT", "S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "cosmos.hosshinbutsu",
+      "term": "Dharma Body Buddha (Hosshinbutsu)",
+      "reading": "hosshinbutsu",
+      "category": "Central Buddhas and Worldview",
+      "level": "intermediate",
+      "short": "Explained as the personification of the truth of the universe (dharma realm).",
+      "definition": "Koyasan Shingon explanations describe esoteric Buddhas and bodhisattvas as the truth of the universe (dharma) and call the embodied image of that truth the Dharma Body Buddha.",
+      "notes": "In the app, it is important to translate abstract concepts into action (e.g., align today's body, speech, and mind).",
+      "see_also": ["cosmos.dainichi", "doctrine.sanmitsu"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "doctrine.shingon_mantra",
+      "term": "Shingon (mantra)",
+      "reading": "shingon",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "Official explanations state that Shingon mantra refers to mantra.",
+      "definition": "Toji Shingon (official) explains that the Shingon term shingon is called mantra in ancient India and means the Buddha's words or true words.",
+      "notes": "If the app includes specific mantra text, it must include source and caution about sect and practice differences.",
+      "see_also": ["practice.sanmitsu_speech", "practice.kongyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "doctrine.sanmitsu",
+      "term": "Three Mysteries (Sanmitsu)",
+      "reading": "sanmitsu",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "Explained as the framework of body (action), speech (words), and mind (intention).",
+      "definition": "Kongobuji explains the Three Mysteries as body through action, speech through words, and mind through intention, and describes the practice that makes them manifest as kaji. Koyasan Shingon explanations also describe the responsive interaction between the Buddha's body/speech/mind and the practitioner's body/speech/mind (Sanmitsu Kaji).",
+      "notes": "Mapping daily practice to the Three Mysteries turns religious vocabulary into a daily flow.",
+      "see_also": [
+        "doctrine.sanmitsu_kaji",
+        "practice.sanmitsu_body",
+        "practice.sanmitsu_speech",
+        "practice.sanmitsu_mind"
+      ],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU", "S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "doctrine.sanmitsu_kaji",
+      "term": "Sanmitsu Kaji",
+      "reading": "sanmitsu kaji",
+      "category": "Doctrine and Keywords",
+      "level": "intermediate",
+      "short": "Explained as a practice where the Buddha's and practitioner's Three Mysteries resonate and become one.",
+      "definition": "Koyasan Shingon explanations describe Shingon esoteric practice as Sanmitsu Kaji (Sanmitsu Yoga), where the functions of the Buddha's body/speech/mind and the practitioner's body/speech/mind respond to each other and distinctions disappear, leading to a unified meditative state.",
+      "notes": "For the app, translate this into daily alignment of body, speech, and mind rather than ritual reenactment.",
+      "see_also": ["doctrine.nyuga_ganyu", "doctrine.sanmitsu"],
+      "sources": ["S_KOYASAN_SHINGONSHU"]
+    },
+    {
+      "id": "doctrine.nyuga_ganyu",
+      "term": "Nyuga Ganyu",
+      "reading": "nyuga ganyu",
+      "category": "Doctrine and Keywords",
+      "level": "intermediate",
+      "short": "Explained as the Buddha entering me and I entering the Buddha.",
+      "definition": "Koyasan Shingon explanations mention the term nyuga ganyu in describing Sanmitsu Kaji. Temple explanations also describe it as a name for the state of unity with the Buddha.",
+      "notes": "In the app, language about experience is difficult, so begin with action logs (gongyo, actions) and nightly reflection to build a scaffold.",
+      "see_also": ["doctrine.sanmitsu_kaji"],
+      "sources": ["S_KOYASAN_SHINGONSHU", "S_MATSUOJI_SANMITSU_KAJI"]
+    },
+    {
+      "id": "doctrine.sokushin_jobutsu",
+      "term": "Sokushin Jobutsu",
+      "reading": "sokushin jobutsu",
+      "category": "Doctrine and Keywords",
+      "level": "beginner",
+      "short": "Officially explained as the Shingon teaching of becoming a Buddha in this very body.",
+      "definition": "Kongobuji explanations list sokushin jobutsu as a characteristic teaching of Shingon Buddhism, referencing Kukai's Sokushin Jobutsugi and relating it to the six elements, four mandalas, and three mysteries. Koyasan Shingon profiles also mention the teaching.",
+      "notes": "In the app, reduce misunderstanding by focusing on daily practice form rather than the end result.",
+      "see_also": ["doctrine.rokudai", "mandala.shiman", "doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SOKUSHIN", "S_KOYASAN_KOBODAISHI"]
+    },
+    {
+      "id": "doctrine.rokudai",
+      "term": "Six Elements (Rokudai)",
+      "reading": "rokudai",
+      "category": "Doctrine and Keywords",
+      "level": "intermediate",
+      "short": "Explained as earth, water, fire, wind, space, and consciousness as elements of the cosmos.",
+      "definition": "Kongobuji explanations describe the six elements as earth, water, fire, wind, space (matter), and consciousness (mind), explaining them as the components of the universe and the essence of all things.",
+      "notes": "In the app, connect this as a worldview card to daily observation of earth, water, fire, wind, space, and consciousness.",
+      "see_also": ["mandala.shiman", "doctrine.sokushin_jobutsu"],
+      "sources": ["S_MUSUBIDAISHI_SOKUSHIN"]
+    },
+    {
+      "id": "mandala.shiman",
+      "term": "Four Mandalas (Shiman)",
+      "reading": "shiman (shishu mandara)",
+      "category": "Mandala and Symbols",
+      "level": "intermediate",
+      "short": "Explained as the four mandalas: Great, Samaya, Dharma, and Karma.",
+      "definition": "A Koyasan University research bulletin (PDF) states that the four mandalas are the Great, Samaya, Dharma, and Karma mandalas. Kongobuji explanations also mention the four mandalas in the context of sokushin jobutsu.",
+      "notes": "In app design, presenting the same content as image, symbol, text, and action deepens understanding.",
+      "see_also": [
+        "mandala.mahamandala",
+        "mandala.samaya_mandala",
+        "mandala.dharma_mandala",
+        "mandala.karma_mandala"
+      ],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF", "S_MUSUBIDAISHI_SOKUSHIN"]
+    },
+    {
+      "id": "mandala.mahamandala",
+      "term": "Great Mandala (Mahamandala)",
+      "reading": "daimandara",
+      "category": "Mandala and Symbols",
+      "level": "intermediate",
+      "short": "Explained as a mandala that shows the forms of the deities.",
+      "definition": "The Koyasan University research bulletin (PDF) lists the Great Mandala as one of the four mandalas.",
+      "notes": "In UI, this corresponds to the domain of showing images and layouts.",
+      "see_also": ["mandala.shiman"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.samaya_mandala",
+      "term": "Samaya Mandala",
+      "reading": "samaya mandara",
+      "category": "Mandala and Symbols",
+      "level": "advanced",
+      "short": "Listed as one of the four mandalas: the mandala of samaya.",
+      "definition": "The Koyasan University research bulletin (PDF) lists the Samaya Mandala as a component of the four mandalas.",
+      "notes": "In the app, this pairs well with cards that explain understanding through symbols or signs.",
+      "see_also": ["mandala.shiman", "doctrine.samaya"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.dharma_mandala",
+      "term": "Dharma Mandala",
+      "reading": "houmandara",
+      "category": "Mandala and Symbols",
+      "level": "advanced",
+      "short": "Listed as one of the four mandalas: the mandala of dharma.",
+      "definition": "The Koyasan University research bulletin (PDF) lists the Dharma Mandala as a component of the four mandalas.",
+      "notes": "In UI, this corresponds to text and seed syllables or mantra.",
+      "see_also": ["mandala.shiman", "doctrine.shingon_mantra"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF"]
+    },
+    {
+      "id": "mandala.karma_mandala",
+      "term": "Karma Mandala",
+      "reading": "katsuma mandara",
+      "category": "Mandala and Symbols",
+      "level": "advanced",
+      "short": "Listed as one of the four mandalas: the mandala of karma.",
+      "definition": "The Koyasan University research bulletin (PDF) lists the Karma Mandala as a component of the four mandalas. Toji (official) also mentions the Karma Mandala (three-dimensional mandala) as a plan to embody the mandala.",
+      "notes": "Centered on action and movement. It pairs well with the app's habit tracker (gongyo completion -> color).",
+      "see_also": ["practice.kongyo", "mandala.ryobu_mandala"],
+      "sources": ["S_KOYASAN_U_MANDALA_PDF", "S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.mandala",
+      "term": "Mandala",
+      "reading": "mandara",
+      "category": "Mandala and Symbols",
+      "level": "beginner",
+      "short": "Officially explained as an expression of esoteric teachings.",
+      "definition": "Toji (official) explains that mandala is an easy-to-understand expression of esoteric teachings and that there are the Womb Realm Mandala and the Diamond Realm Mandala.",
+      "notes": "When handling images, pay attention to ownership, rights, and credits for the source of the explanation.",
+      "see_also": ["mandala.taizokai", "mandala.kongokai"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.ryobu_mandala",
+      "term": "Ryobu Mandala (Two-Realm Mandala)",
+      "reading": "ryobu mandara",
+      "category": "Mandala and Symbols",
+      "level": "intermediate",
+      "short": "A framework that treats the Womb Realm and Diamond Realm mandalas as a pair.",
+      "definition": "Toji (official) explains that the mandalas include the Womb Realm and Diamond Realm, each conveying teachings of principle and wisdom.",
+      "notes": "In the app, you can reflect on practice through the two sides: nurture and pierce through.",
+      "see_also": ["mandala.taizokai", "mandala.kongokai", "doctrine.kontai_funi"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.taizokai",
+      "term": "Womb Realm Mandala (Taizokai)",
+      "reading": "taizokai mandara",
+      "category": "Mandala and Symbols",
+      "level": "intermediate",
+      "short": "One of the Two-Realm Mandalas: the Womb Realm mandala.",
+      "definition": "Toji (official) notes that the mandalas include the Womb Realm Mandala and the Diamond Realm Mandala.",
+      "notes": "Define the term only; separate detailed iconography into future learning cards.",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "mandala.kongokai",
+      "term": "Diamond Realm Mandala (Kongokai)",
+      "reading": "kongokai mandara",
+      "category": "Mandala and Symbols",
+      "level": "intermediate",
+      "short": "One of the Two-Realm Mandalas: the Diamond Realm mandala.",
+      "definition": "Toji (official) notes that the mandalas include the Womb Realm Mandala and the Diamond Realm Mandala.",
+      "notes": "Explanations like Diamond Realm equals wisdom should be added gradually with sources.",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_TOJI_MANDALA"]
+    },
+    {
+      "id": "doctrine.kontai_funi",
+      "term": "Kongotai Funi (Non-duality of Diamond and Womb)",
+      "reading": "kontai funi",
+      "category": "Doctrine and Keywords",
+      "level": "advanced",
+      "short": "Explained as the idea that the Diamond and Womb realms are not two but one.",
+      "definition": "The Kongobuji annual events page mentions offerings to both mandalas and Kecchien Kanjo, and refers to the Diamond and Womb realms in that context.",
+      "notes": "If adding learning content later, linking additional official explanations from temples or museums will make it stronger.",
+      "see_also": ["mandala.ryobu_mandala"],
+      "sources": ["S_KONGOBUJI_EVENT"]
+    },
+    {
+      "id": "practice.kongyo",
+      "term": "Gongyo",
+      "reading": "gongyo",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "A ritual of recitation and worship before the Buddha at a set time.",
+      "definition": "Kotobank explains gongyo as a ritual of recitation, worship, and incense offered before the Buddha at a set time.",
+      "notes": "The app's one-square-per-day tracker can naturally visualize completion of gongyo.",
+      "see_also": ["practice.sanmitsu_body", "practice.sanmitsu_speech", "practice.sanmitsu_mind"],
+      "sources": ["S_KOTOBANK_KONGYO"]
+    },
+    {
+      "id": "practice.sanmitsu_body",
+      "term": "Body Mystery (Shinmitsu)",
+      "reading": "shinmitsu",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "The aspect of the Three Mysteries related to action and the body.",
+      "definition": "Kongobuji explains the Three Mysteries as body through action, speech through words, and mind through intention.",
+      "notes": "In the app UI, it is easy to record actions such as posture, bowing, or gassho.",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "practice.sanmitsu_speech",
+      "term": "Speech Mystery (Kumitsu)",
+      "reading": "kumitsu",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "The aspect of the Three Mysteries related to words and chanting.",
+      "definition": "Kongobuji explains the Three Mysteries as body through action, speech through words, and mind through intention.",
+      "notes": "Because mantra text varies by practice, early versions can record only whether it was chanted.",
+      "see_also": ["doctrine.shingon_mantra", "doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "practice.sanmitsu_mind",
+      "term": "Mind Mystery (Imitsu)",
+      "reading": "imitsu",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "The aspect of the Three Mysteries related to mind, visualization, and awareness.",
+      "definition": "Kongobuji explains the Three Mysteries as body through action, speech through words, and mind through intention.",
+      "notes": "Positioning the nightly reflection as mind mystery connects app features to doctrine.",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    },
+    {
+      "id": "practice.zange",
+      "term": "Zange (repentance)",
+      "reading": "zange (sange)",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "Confessing past wrongdoing and asking forgiveness.",
+      "definition": "Kotobank explains zange as confessing past wrongdoing and asking forgiveness in Buddhist usage.",
+      "notes": "Avoid self-denial; connect reflection to correction for tomorrow.",
+      "see_also": ["practice.hotsugan", "practice.ekou"],
+      "sources": ["S_KOTOBANK_ZANGE"]
+    },
+    {
+      "id": "practice.hotsugan",
+      "term": "Hotsugan (vow)",
+      "reading": "hotsugan",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "Raising a vow or aspiration, such as seeking awakening or saving beings.",
+      "definition": "Kotobank explains hotsugan as raising a vow in Buddhist usage, such as seeking awakening or vowing to save beings.",
+      "notes": "In the app, setting one action for tomorrow as a vow makes the daily loop natural.",
+      "see_also": ["practice.zange", "practice.ekou"],
+      "sources": ["S_KOTOBANK_HOTSUGAN"]
+    },
+    {
+      "id": "practice.ekou",
+      "term": "Ekou (dedication of merit)",
+      "reading": "ekou",
+      "category": "Practice and Ritual",
+      "level": "beginner",
+      "short": "Directing cultivated merit to others to aid awakening for self and others.",
+      "definition": "Kotobank explains ekou as directing one's merit to others as a support for awakening for both self and others.",
+      "notes": "In the app, express this as directing today's practice toward someone (a prayer or good act).",
+      "see_also": ["practice.hotsugan", "practice.zange"],
+      "sources": ["S_KOTOBANK_EKOU"]
+    },
+    {
+      "id": "practice.goma",
+      "term": "Goma",
+      "reading": "goma",
+      "category": "Practice and Ritual",
+      "level": "intermediate",
+      "short": "Explained as a fire ritual (transliteration of homa, purifying through fire).",
+      "definition": "Temple guides in the Koyasan Shingon tradition explain goma as derived from homa, a practice that burns away delusions and misfortune through fire.",
+      "notes": "If handled in the app, keep it to visit guidance and glossary-level explanation, and avoid asserting ritual details.",
+      "see_also": ["practice.kongyo"],
+      "sources": ["S_HATTASAN_GOMA"]
+    },
+    {
+      "id": "ritual.kanjo",
+      "term": "Kanjo (initiation)",
+      "reading": "kanjo",
+      "category": "Practice and Ritual",
+      "level": "intermediate",
+      "short": "Explained as a ritual marking stages by pouring water on the head.",
+      "definition": "Temple explanations describe kanjo as a ritual in which water is poured on the head to mark advancement in the Buddhist path.",
+      "notes": "In the app, keep it to terminology and support for visit experience rather than a ritual substitute.",
+      "see_also": ["ritual.kechien_kanjo", "ritual.denpo_kanjo"],
+      "sources": ["S_FUKUSHOJI_KANJO"]
+    },
+    {
+      "id": "ritual.kechien_kanjo",
+      "term": "Kechien Kanjo",
+      "reading": "kechien kanjo",
+      "category": "Practice and Ritual",
+      "level": "intermediate",
+      "short": "An initiation event announced by Koyasan (official).",
+      "definition": "Koyasan Shingon (official) publishes announcements for Kechien Kanjo, such as the Diamond Realm Kechien Kanjo.",
+      "notes": "In the app, value can come from an events calendar or a glossary plus visit flow.",
+      "see_also": ["ritual.kanjo", "mandala.kongokai"],
+      "sources": ["S_KOYASAN_NEWS_KECHIEN"]
+    },
+    {
+      "id": "ritual.denpo_kanjo",
+      "term": "Denpo Kanjo",
+      "reading": "denpo kanjo",
+      "category": "Practice and Ritual",
+      "level": "advanced",
+      "short": "A kanjo that grants the ajari rank to a practitioner who trained in esoteric teachings (dictionary).",
+      "definition": "Kotobank explains denpo kanjo as an initiation that grants the ajari rank to a skilled practitioner who has trained in esoteric teachings in Shingon Buddhism.",
+      "notes": "Because it is strongly internal to priestly training, a general app should limit it to term understanding.",
+      "see_also": ["ritual.ajari"],
+      "sources": ["S_KOTOBANK_DENPO_KANJO"]
+    },
+    {
+      "id": "ritual.ajari",
+      "term": "Ajari (Acarya)",
+      "reading": "ajari",
+      "category": "People and Lineage",
+      "level": "advanced",
+      "short": "Explained as a priest with a guiding role in esoteric Buddhism (related to denpo kanjo).",
+      "definition": "General explanations relate receiving denpo kanjo in Shingon Buddhism to the ajari title.",
+      "notes": "In the app, it is realistic to translate it as teacher or master while keeping the term.",
+      "see_also": ["ritual.denpo_kanjo"],
+      "sources": ["S_KOTOBANK_DENPO_KANJO", "S_YORISO_AJARI"]
+    },
+    {
+      "id": "doctrine.samaya",
+      "term": "Samaya",
+      "reading": "samaya",
+      "category": "Doctrine and Keywords",
+      "level": "advanced",
+      "short": "Explained by temples as an important Shingon term in the context of vows.",
+      "definition": "A temple column explains that the Samaya precepts are unique vows in Shingon esoteric Buddhism and discusses the meaning of samaya.",
+      "notes": "Strict interpretation belongs to scholarly commentary, so the app should keep it at the level of vow or promise.",
+      "see_also": ["mandala.samaya_mandala"],
+      "sources": ["S_KICHIJYOIN_SAMAYA"]
+    },
+    {
+      "id": "symbols.inzo",
+      "term": "Inzo (mudra, hand seal)",
+      "reading": "inzo (ingei, mitsu-in)",
+      "category": "Mandala and Symbols",
+      "level": "beginner",
+      "short": "A hand gesture made by interlocking the fingers; also called mitsu-in or ingei (dictionary).",
+      "definition": "Kotobank explains inzo as a shape made by joining the fingers of both hands, and notes synonyms such as mitsu-in and ingei.",
+      "notes": "If the app shows mudra diagrams, it must organize source images and rights (ownership, photography, distribution permission).",
+      "see_also": ["doctrine.sanmitsu"],
+      "sources": ["S_KOTOBANK_INZO"]
+    },
+    {
+      "id": "texts.ryobu_daikyo",
+      "term": "Great Sutras of the Two Divisions",
+      "reading": "ryobu daikyo",
+      "category": "Sutras and Texts",
+      "level": "intermediate",
+      "short": "Explained as treating the Mahavairocana and Vajrasekhara sutras as root sutras.",
+      "definition": "Toji Shingon (official) states that Shingon Buddhism treats the Mahavairocana Sutra and the Vajrasekhara Sutra as its root sutras.",
+      "notes": "Listing these in a fixed references section makes adding content easier.",
+      "see_also": ["texts.dainichikyo", "texts.kongochokyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.dainichikyo",
+      "term": "Mahavairocana Sutra (Dainichikyo)",
+      "reading": "dainichikyo",
+      "category": "Sutras and Texts",
+      "level": "intermediate",
+      "short": "One of the root sutras of Shingon Buddhism.",
+      "definition": "Toji Shingon (official) lists the Mahavairocana Sutra as a root sutra of Shingon Buddhism.",
+      "notes": "Because editions and translations vary, store edition details separately if quoting or summarizing.",
+      "see_also": ["texts.ryobu_daikyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "texts.kongochokyo",
+      "term": "Vajrasekhara Sutra (Kongochokyo)",
+      "reading": "kongochokyo",
+      "category": "Sutras and Texts",
+      "level": "intermediate",
+      "short": "One of the root sutras of Shingon Buddhism.",
+      "definition": "Toji Shingon (official) lists the Vajrasekhara Sutra as a root sutra of Shingon Buddhism.",
+      "notes": "It works well as a bridge between the Two Divisions and the Two-Realm mandalas.",
+      "see_also": ["texts.ryobu_daikyo"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    },
+    {
+      "id": "doctrine.aji_hon_fusho",
+      "term": "Aji Hon Fushou",
+      "reading": "aji hon fusho",
+      "category": "Doctrine and Keywords",
+      "level": "advanced",
+      "short": "An esoteric expression explained by Toji Shingon (official) regarding the letter A.",
+      "definition": "Toji Shingon (official) discusses Dainichi Nyorai and the letter A, and mentions the expression Aji Hon Fushou.",
+      "notes": "In the app, it is safer to treat this as advanced deep-dive content.",
+      "see_also": ["cosmos.dainichi"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
+    }
+  ],
+  "bibliography": {
+    "S_KOYASAN_SHINGONSHU": {
+      "title": "About the Koyasan Shingon School",
+      "publisher": "Koyasan Shingon School (official)",
+      "url": "https://www.koyasan.or.jp/shingonshu/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_KOBODAISHI": {
+      "title": "Birth and History of Kobo Daishi",
+      "publisher": "Koyasan Shingon School, Kongobuji Temple (official)",
+      "url": "https://www.koyasan.or.jp/shingonshu/kobodaishi.html",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "Message from the Temple (Sanmitsu Kaji Appears Swiftly)",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SOKUSHIN": {
+      "title": "Message from the Temple (Sokushin Jobutsu)",
+      "publisher": "Koyasan, Kongobuji Temple (official)",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=37",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_MANDALA": {
+      "title": "Three-dimensional Mandala",
+      "publisher": "Toji Temple (official)",
+      "url": "https://toji.or.jp/smp/mandala/",
+      "accessed": "2025-12-27"
+    },
+    "S_TOJI_SHINGON_ABOUT": {
+      "title": "Teachings of Shingon Buddhism",
+      "publisher": "Toji Shingon School (official)",
+      "url": "https://www.tojishingonshu.org/about.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KONGOBUJI_EVENT": {
+      "title": "Annual Events",
+      "publisher": "Koyasan Shingon School, Kongobuji Temple (official)",
+      "url": "https://www.koyasan.or.jp/kongobuji/event.html",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_NEWS_KECHIEN": {
+      "title": "Notice: Koyasan Autumn Diamond Realm Kechien Kanjo",
+      "publisher": "Koyasan Shingon School (official)",
+      "url": "https://www.koyasan.or.jp/sp/news/2025/07/06/6965/",
+      "accessed": "2025-12-27"
+    },
+    "S_BRITANNICA_SHINGON": {
+      "title": "Shingon | Definition and Facts",
+      "publisher": "Encyclopaedia Britannica",
+      "url": "https://www.britannica.com/topic/Shingon",
+      "accessed": "2025-12-27"
+    },
+    "S_SEP_KUKAI": {
+      "title": "Kukai",
+      "publisher": "Stanford Encyclopedia of Philosophy",
+      "url": "https://plato.stanford.edu/entries/kukai/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOYASAN_U_MANDALA_PDF": {
+      "title": "Kukai's Thought and Mandala (Research Bulletin PDF)",
+      "publisher": "Koyasan University",
+      "url": "https://www.koyasan-u.ac.jp/laboratory/pdf/kiyo10/10_murakami.pdf",
+      "accessed": "2025-12-27"
+    },
+    "S_MATSUOJI_SANMITSU_KAJI": {
+      "title": "Sanmitsu Kaji (explanation)",
+      "publisher": "Matsuo-ji Temple (temple site)",
+      "url": "https://matsuoji.jp/archives/559",
+      "accessed": "2025-12-27"
+    },
+    "S_HATTASAN_GOMA": {
+      "title": "Prayer Information (Goma explanation)",
+      "publisher": "Hattasan Temple (temple site)",
+      "url": "https://www.hattasan.or.jp/gokito/",
+      "accessed": "2025-12-27"
+    },
+    "S_FUKUSHOJI_KANJO": {
+      "title": "What is Denpo Kanjo? (Kanjo explanation)",
+      "publisher": "Fukushoji Temple (temple site)",
+      "url": "https://fukushoji-horifune.net/blog/archives/4398",
+      "accessed": "2025-12-27"
+    },
+    "S_YORISO_AJARI": {
+      "title": "What is Ajari? Types of Ajari, Five Sciences, and Ajari Precepts",
+      "publisher": "Yoriso (guide article)",
+      "url": "https://www.yoriso.com/sogi/article/sogi/sogi-shurui/ajari/",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_INZO": {
+      "title": "Inzo (mudra)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%8D%B0%E7%9B%B8-32953",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_KONGYO": {
+      "title": "Gongyo",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%8B%A4%E8%A1%8C-67140",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_ZANGE": {
+      "title": "Zange (repentance)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E6%87%BA%E6%82%94-70615",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_HOTSUGAN": {
+      "title": "Hotsugan (vow)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E7%99%BA%E9%A1%98-630506",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU": {
+      "title": "Ekou (dedication)",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91-36336",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_DENPO_KANJO": {
+      "title": "Denpo Kanjo",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E4%BC%9D%E6%B3%95%E7%81%8C%E9%A0%82-102768",
+      "accessed": "2025-12-27"
+    },
+    "S_KICHIJYOIN_SAMAYA": {
+      "title": "Reading the Buddha's Words: Bodhicitta and Samaya Precepts (explanation)",
+      "publisher": "Kichijyoin Temple (temple column)",
+      "url": "https://www.kichijyoin.jp/column/kotoba/detail.php?id=27PYGE4",
+      "accessed": "2025-12-27"
+    },
+    "S_WIKI_SHINGON_BUDDHISM": {
+      "title": "Shingon Buddhism",
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Shingon_Buddhism",
+      "accessed": "2025-12-27"
+    }
+  }
+}

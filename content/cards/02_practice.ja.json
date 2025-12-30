@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "language": "ja",
+    "pack_id": "practice",
+    "title": "実践（毎日の型）",
+    "description": "勤行・懺悔・発願・回向など、アプリの朝/夜フローと噛み合うカード群。",
+    "generated_at": "2025-12-27"
+  },
+  "cards": [
+    {
+      "id": "practice.gongyo",
+      "type": "learn",
+      "level": "beginner",
+      "title": "勤行：時間を決めて仏前で読経する（辞書）",
+      "summary": "Kotobank は勤行を、時間を決めて仏前で読経すること、と説明している。",
+      "body_md": "Kotobank は「勤行」を、時間を決めて仏前で読経をすること、と説明している（用法として精進努力の意味もあるとされる）。\n\nアプリのヒートマップ（1日1マス）は、この“時間を決めて行う”の可視化と相性が良い。",
+      "micro_practice": {
+        "morning": "最短1分でもOK。毎日同じタイミングに寄せる。",
+        "day": "できなかった日は責めず、次のタイミングだけ確保する。",
+        "night": "今日できた/できないの理由を1行だけ書く（責めない）。"
+      },
+      "reflection_questions": [
+        "続けるために“削れる要素”は何？",
+        "毎日同じタイミングに近づける工夫は？"
+      ],
+      "tags": ["実践", "勤行", "習慣"],
+      "sources": ["S_KOTOBANK_KONGYO"]
+    },
+    {
+      "id": "practice.zange",
+      "type": "learn",
+      "level": "beginner",
+      "title": "懺悔：過去の罪悪を告白し、改める（辞書）",
+      "summary": "Kotobank は懺悔を、罪悪を告白して赦しを請うこと等と説明。",
+      "body_md": "Kotobank は「懺悔（ざんげ／さんげ）」を、過去に犯した罪悪を告白してゆるしを請うこと、また罪悪を悔いて告げわびること、と説明している。\n\nアプリの夜は、自己否定に落ちず「観察→修正」の順で扱う。",
+      "micro_practice": {
+        "morning": "昨日の反省を、今日の“1つの改善”に変換する。",
+        "day": "失敗したら、言い訳より先に“事実”を言う（口）。",
+        "night": "責め言葉は書かない。事実→影響→次の一手、の順で1行。"
+      },
+      "reflection_questions": ["今日の懺悔を“修正案”にすると何？"],
+      "tags": ["実践", "懺悔", "夜"],
+      "sources": ["S_KOTOBANK_ZANGE"]
+    },
+    {
+      "id": "practice.hotsugan",
+      "type": "learn",
+      "level": "beginner",
+      "title": "発願：願いを起こす（辞書）",
+      "summary": "Kotobank は発願を、悟りを得たい願いや誓いを起こすこと等と説明。",
+      "body_md": "Kotobank は「発願」を、願をおこすこと（仏のさとりを得たい願い、衆生を救う誓い等）として説明している。\n\nアプリでは、夜に「明日の行い（1つ）」を決めるのが発願の形になる。",
+      "micro_practice": {
+        "morning": "今日の行いを1つだけ選ぶ（多くしない）。",
+        "day": "選んだ行いに“最小の一歩”で着手する。",
+        "night": "明日の行いを1つ書く（発願）。"
+      },
+      "reflection_questions": ["明日、具体的に何をする？（動詞で）"],
+      "tags": ["実践", "発願", "行い"],
+      "sources": ["S_KOTOBANK_HOTSUGAN"]
+    },
+    {
+      "id": "practice.ekou",
+      "type": "learn",
+      "level": "beginner",
+      "title": "回向：功徳を差し向ける（辞書）",
+      "summary": "Kotobank は回向を、功徳を他に差し向けること等として説明。",
+      "body_md": "Kotobank は「回向」を、死者の成仏を願う供養、また自分の修めた功徳を他にも差し向け自他の悟りの助けとすること等として説明している。\n\nアプリでは、夜の最後に「今日のよさを誰かに向ける」一言を置くと良い。",
+      "micro_practice": {
+        "morning": "今日“誰に向ける日か”を1人だけ決める。",
+        "day": "その人に対して、1つだけ丁寧にする。",
+        "night": "今日の小さな善さを、誰かに回す言葉で締める。"
+      },
+      "reflection_questions": ["今日は誰に回向した？それは行動で表れた？"],
+      "tags": ["実践", "回向", "夜"],
+      "sources": ["S_KOTOBANK_EKOU"]
+    },
+    {
+      "id": "practice.ekoumon",
+      "type": "learn",
+      "level": "intermediate",
+      "title": "回向文：勤行や法要の最後に唱える言葉（辞書）",
+      "summary": "Kotobank は回向文を、功徳を自他の悟りに差し向ける願いを表す経文、と説明。",
+      "body_md": "Kotobank は「回向文」を、日常の勤行や法要など仏事の際に最後に唱える経文であり、功徳を自他の悟りに差し向けようという願いを表したもの、と説明している。\n\nアプリでは“固定文”の断定を避け、ユーザーの一言回向（自由文）を採用するのが安全。",
+      "micro_practice": {
+        "morning": "回向は“押し付け”でなく“願い”として扱う。",
+        "day": "言葉が難しければ、感謝を1行でOK。",
+        "night": "回向の一言を書く（自由文）。"
+      },
+      "reflection_questions": ["今日の功徳（よかった点）を、誰にどう差し向ける？"],
+      "tags": ["実践", "回向文", "勤行"],
+      "sources": ["S_KOTOBANK_EKOU_MON"]
+    },
+    {
+      "id": "practice.sanmitsu_daily",
+      "type": "practice",
+      "level": "beginner",
+      "title": "三密を日常に：身→口→意の順で戻す",
+      "summary": "公式解説の身密・口密・意密を、日常の立て直し手順にする。",
+      "body_md": "金剛峯寺（公式）は、動作（身密）・言葉（口密）・心（意密）を三密と説明している。\n\nアプリ実践としては、乱れたら “身→口→意” の順で戻すルールを採用する。",
+      "micro_practice": {
+        "morning": "身：姿勢を整える→口：丁寧に挨拶→意：今日の焦点を1つ。",
+        "day": "乱れたらまず肩を下ろす（身）→言い方を整える（口）→心を観察（意）。",
+        "night": "今日いちばん乱れた場面を、身口意で分解して1行。"
+      },
+      "reflection_questions": ["乱れの“最初の引き金”は身・口・意のどれだった？"],
+      "tags": ["実践", "三密", "日常"],
+      "sources": ["S_MUSUBIDAISHI_SANMITSU"]
+    }
+  ],
+  "bibliography": {
+    "S_KOTOBANK_KONGYO": {
+      "title": "勤行（ごんぎょう）",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%8B%A4%E8%A1%8C-67140",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_ZANGE": {
+      "title": "懺悔（ざんげ）",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E6%87%BA%E6%82%94-70615",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_HOTSUGAN": {
+      "title": "発願（ほつがん）",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E7%99%BA%E9%A1%98-630506",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU": {
+      "title": "回向（えこう）",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91-36336",
+      "accessed": "2025-12-27"
+    },
+    "S_KOTOBANK_EKOU_MON": {
+      "title": "回向文（えこうもん）",
+      "publisher": "Kotobank",
+      "url": "https://kotobank.jp/word/%E5%9B%9E%E5%90%91%E6%96%87-36343",
+      "accessed": "2025-12-27"
+    },
+    "S_MUSUBIDAISHI_SANMITSU": {
+      "title": "お寺からのメッセージ（「三密加持すれば速疾に顕る」）",
+      "publisher": "高野山真言宗総本山金剛峯寺 高野山（公式）",
+      "url": "https://www.musubidaishi.jp/message/detail.php?seq=64&years=2021",
+      "accessed": "2025-12-27"
+    }
+  }
+}
