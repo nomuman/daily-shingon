@@ -1,4 +1,7 @@
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import Constants from 'expo-constants';
+import { useRouter } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -15,6 +18,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '../../components/AppIcon';
 import ErrorState from '../../components/ErrorState';
 import { getLanguagePreference, setLanguagePreference } from '../../lib/i18n';
 import type { LanguagePreference } from '../../lib/i18n/storage';
@@ -25,7 +29,7 @@ import {
 } from '../../lib/notifications';
 import { resetAllProgress } from '../../lib/reset';
 import { DEFAULT_SETTINGS, getSettings, setSettings } from '../../lib/settings';
-import { cardShadow, theme } from '../../ui/theme';
+import { useTheme, useThemedStyles } from '../../ui/theme';
 
 type TimeField = 'morning' | 'night';
 
@@ -42,7 +46,259 @@ const entranceStyle = (anim: Animated.Value) => ({
 });
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme, preference, setPreference } = useTheme();
+  const styles = useThemedStyles((theme, cardShadow) =>
+    StyleSheet.create({
+      screen: {
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      },
+      safeArea: {
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      },
+      content: {
+        padding: theme.spacing.lg,
+        paddingBottom: 40,
+        gap: theme.spacing.md,
+      },
+      loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.background,
+      },
+      loadingText: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      headerCard: {
+        padding: theme.spacing.lg,
+        borderRadius: theme.radius.xl,
+        backgroundColor: theme.colors.surface,
+        gap: theme.spacing.sm,
+        ...cardShadow,
+      },
+      kicker: {
+        fontSize: 11,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: theme.spacing.sm,
+      },
+      headerTitle: {
+        flex: 1,
+        fontSize: 18,
+        fontFamily: theme.font.display,
+        color: theme.colors.ink,
+        lineHeight: 24,
+      },
+      headerBody: {
+        color: theme.colors.inkMuted,
+        lineHeight: 20,
+        fontFamily: theme.font.body,
+      },
+      badge: {
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 999,
+        backgroundColor: theme.colors.accentSoft,
+      },
+      badgeText: {
+        fontWeight: '700',
+        color: theme.colors.accentDark,
+        fontFamily: theme.font.body,
+      },
+      noticeCard: {
+        padding: theme.spacing.sm,
+        borderRadius: theme.radius.md,
+        backgroundColor: theme.colors.dangerSoft,
+      },
+      noticeText: {
+        color: theme.colors.danger,
+        fontFamily: theme.font.body,
+      },
+      card: {
+        padding: theme.spacing.lg,
+        borderRadius: theme.radius.lg,
+        backgroundColor: theme.colors.surface,
+        gap: theme.spacing.sm,
+        ...cardShadow,
+      },
+      sectionTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.display,
+      },
+      sectionSubtitle: {
+        color: theme.colors.inkMuted,
+        lineHeight: 20,
+        fontFamily: theme.font.body,
+      },
+      sectionHint: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+        marginTop: theme.spacing.sm,
+      },
+      switchRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+      switchLabel: {
+        fontWeight: '600',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      inlineNotice: {
+        gap: theme.spacing.sm,
+        paddingTop: theme.spacing.sm,
+      },
+      inlineNoticeText: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      optionList: {
+        marginTop: theme.spacing.sm,
+        borderRadius: theme.radius.md,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+        overflow: 'hidden',
+      },
+      optionRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: theme.spacing.md,
+        paddingVertical: theme.spacing.sm,
+      },
+      optionRowDivider: {
+        borderTopWidth: 1,
+        borderTopColor: theme.colors.border,
+      },
+      optionRowPressed: {
+        opacity: 0.85,
+      },
+      optionText: {
+        fontSize: 15,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      linkList: {
+        marginTop: theme.spacing.sm,
+        borderRadius: theme.radius.md,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+        overflow: 'hidden',
+      },
+      linkRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: theme.spacing.md,
+        paddingVertical: theme.spacing.sm,
+        gap: theme.spacing.sm,
+      },
+      linkRowDivider: {
+        borderTopWidth: 1,
+        borderTopColor: theme.colors.border,
+      },
+      linkRowPressed: {
+        opacity: 0.85,
+      },
+      linkText: {
+        fontSize: 15,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      radioOuter: {
+        width: 22,
+        height: 22,
+        borderRadius: 999,
+        borderWidth: 2,
+        borderColor: theme.colors.inkMuted,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: theme.spacing.sm,
+      },
+      radioInner: {
+        width: 10,
+        height: 10,
+        borderRadius: 999,
+        backgroundColor: theme.colors.ink,
+      },
+      ghostButton: {
+        alignSelf: 'flex-start',
+        minHeight: 38,
+        paddingHorizontal: 12,
+        borderRadius: 999,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.surfaceMuted,
+      },
+      ghostButtonPressed: {
+        opacity: 0.85,
+      },
+      ghostButtonText: {
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      timeBlock: {
+        gap: theme.spacing.xs,
+      },
+      timeLabel: {
+        fontWeight: '600',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      timeInput: {
+        minHeight: 44,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        borderRadius: theme.radius.md,
+        paddingHorizontal: 12,
+        justifyContent: 'center',
+        backgroundColor: theme.colors.surface,
+      },
+      timeInputPressed: {
+        opacity: 0.85,
+      },
+      timeValue: {
+        fontSize: 16,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      dangerButton: {
+        minHeight: 46,
+        paddingHorizontal: 14,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.danger,
+        backgroundColor: theme.colors.surface,
+      },
+      dangerButtonPressed: {
+        opacity: 0.85,
+      },
+      dangerButtonText: {
+        fontWeight: '700',
+        color: theme.colors.danger,
+        fontFamily: theme.font.body,
+      },
+    }),
+  );
   const [loading, setLoading] = useState(true);
   const [settings, setLocalSettings] = useState(DEFAULT_SETTINGS);
   const [morningInput, setMorningInput] = useState(DEFAULT_SETTINGS.notifications.morningTime);
@@ -93,6 +349,10 @@ export default function SettingsScreen() {
 
   const reminderEnabled = settings.notifications.enabled;
   const permissionStatus = settings.notifications.permissionStatus;
+  const privacyPolicyUrl =
+    Constants.expoConfig?.extra?.privacyPolicyUrl ??
+    Constants.manifest?.extra?.privacyPolicyUrl ??
+    '';
 
   const validateTime = (value: string) => {
     return /^([01]\\d|2[0-3]):([0-5]\\d)$/.test(value);
@@ -232,6 +492,18 @@ export default function SettingsScreen() {
     }
   };
 
+  const openPrivacyPolicy = async () => {
+    if (!privacyPolicyUrl) {
+      setNotice(t('settings.legal.missingUrl'));
+      return;
+    }
+    try {
+      await WebBrowser.openBrowserAsync(privacyPolicyUrl);
+    } catch {
+      setNotice(t('settings.legal.openFail'));
+    }
+  };
+
   const handleReset = () => {
     Alert.alert(t('settings.reset.title'), t('settings.reset.body'), [
       { text: t('common.cancel'), style: 'cancel' },
@@ -258,6 +530,15 @@ export default function SettingsScreen() {
       { value: 'system' as const, label: t('settings.language.system') },
       { value: 'ja' as const, label: t('settings.language.japanese') },
       { value: 'en' as const, label: t('settings.language.english') },
+    ],
+    [t],
+  );
+
+  const themeOptions = useMemo(
+    () => [
+      { value: 'system' as const, label: t('settings.theme.system') },
+      { value: 'light' as const, label: t('settings.theme.light') },
+      { value: 'dark' as const, label: t('settings.theme.dark') },
     ],
     [t],
   );
@@ -323,6 +604,30 @@ export default function SettingsScreen() {
           </View>
 
           <Text style={styles.sectionHint}>{t('settings.language.note')}</Text>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.theme.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.theme.description')}</Text>
+
+          <View style={styles.optionList}>
+            {themeOptions.map((option, index) => (
+              <Pressable
+                key={option.value}
+                onPress={() => setPreference(option.value)}
+                style={({ pressed }) => [
+                  styles.optionRow,
+                  index > 0 && styles.optionRowDivider,
+                  pressed && styles.optionRowPressed,
+                ]}
+              >
+                <View style={styles.radioOuter}>
+                  {preference === option.value && <View style={styles.radioInner} />}
+                </View>
+                <Text style={styles.optionText}>{option.label}</Text>
+              </Pressable>
+            ))}
+          </View>
         </Animated.View>
 
         <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
@@ -429,6 +734,31 @@ export default function SettingsScreen() {
         </Animated.View>
 
         <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.legal.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.legal.body')}</Text>
+          <View style={styles.linkList}>
+            <Pressable
+              onPress={openPrivacyPolicy}
+              style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+            >
+              <Text style={styles.linkText}>{t('settings.legal.privacy')}</Text>
+              <AppIcon name="arrow-ne" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/licenses')}
+              style={({ pressed }) => [
+                styles.linkRow,
+                styles.linkRowDivider,
+                pressed && styles.linkRowPressed,
+              ]}
+            >
+              <Text style={styles.linkText}>{t('settings.legal.licenses')}</Text>
+              <AppIcon name="arrow-forward" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
           {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
@@ -437,224 +767,3 @@ export default function SettingsScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  loading: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.background,
-  },
-  loadingText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  headerCard: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  kicker: {
-    fontSize: 11,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: theme.spacing.sm,
-  },
-  headerTitle: {
-    flex: 1,
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-    lineHeight: 24,
-  },
-  headerBody: {
-    color: theme.colors.inkMuted,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  badge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 999,
-    backgroundColor: theme.colors.accentSoft,
-  },
-  badgeText: {
-    fontWeight: '700',
-    color: theme.colors.accentDark,
-    fontFamily: theme.font.body,
-  },
-  noticeCard: {
-    padding: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.dangerSoft,
-  },
-  noticeText: {
-    color: theme.colors.danger,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.display,
-  },
-  sectionSubtitle: {
-    color: theme.colors.inkMuted,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  sectionHint: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    marginTop: theme.spacing.sm,
-  },
-  switchRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  switchLabel: {
-    fontWeight: '600',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  inlineNotice: {
-    gap: theme.spacing.sm,
-    paddingTop: theme.spacing.sm,
-  },
-  inlineNoticeText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  optionList: {
-    marginTop: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-    overflow: 'hidden',
-  },
-  optionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.sm,
-  },
-  optionRowDivider: {
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-  },
-  optionRowPressed: {
-    opacity: 0.85,
-  },
-  optionText: {
-    fontSize: 15,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  radioOuter: {
-    width: 22,
-    height: 22,
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: theme.colors.inkMuted,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: theme.spacing.sm,
-  },
-  radioInner: {
-    width: 10,
-    height: 10,
-    borderRadius: 999,
-    backgroundColor: theme.colors.ink,
-  },
-  ghostButton: {
-    alignSelf: 'flex-start',
-    minHeight: 38,
-    paddingHorizontal: 12,
-    borderRadius: 999,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  timeBlock: {
-    gap: theme.spacing.xs,
-  },
-  timeLabel: {
-    fontWeight: '600',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  timeInput: {
-    minHeight: 44,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    paddingHorizontal: 12,
-    justifyContent: 'center',
-    backgroundColor: theme.colors.surface,
-  },
-  timeInputPressed: {
-    opacity: 0.85,
-  },
-  timeValue: {
-    fontSize: 16,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  dangerButton: {
-    minHeight: 46,
-    paddingHorizontal: 14,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: theme.colors.danger,
-    backgroundColor: theme.colors.surface,
-  },
-  dangerButtonPressed: {
-    opacity: 0.85,
-  },
-  dangerButtonText: {
-    fontWeight: '700',
-    color: theme.colors.danger,
-    fontFamily: theme.font.body,
-  },
-});

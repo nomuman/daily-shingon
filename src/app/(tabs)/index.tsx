@@ -1,4 +1,3 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -6,6 +5,7 @@ import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '../../components/AppIcon';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
@@ -15,7 +15,7 @@ import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/mor
 import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
-import { cardShadow, theme } from '../../ui/theme';
+import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type NextRoute = '/morning' | '/learn' | '/night';
 
@@ -31,17 +31,19 @@ const entranceStyle = (anim: Animated.Value) => ({
   ],
 });
 
-const ProgressChip = ({ label, done }: { label: string; done: boolean }) => (
-  <View style={[styles.progressChip, done && styles.progressChipActive]}>
-    <View style={[styles.progressDot, done && styles.progressDotActive]} />
-    <Text style={[styles.progressText, done && styles.progressTextActive]}>{label}</Text>
-  </View>
-);
-
 export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
+
+  const ProgressChip = ({ label, done }: { label: string; done: boolean }) => (
+    <View style={[styles.progressChip, done && styles.progressChipActive]}>
+      <View style={[styles.progressDot, done && styles.progressDotActive]} />
+      <Text style={[styles.progressText, done && styles.progressTextActive]}>{label}</Text>
+    </View>
+  );
 
   const [dayNumber, setDayNumber] = useState<number>(1);
   const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -198,7 +200,7 @@ export default function HomeScreen() {
                 {primaryButtonLabel}
               </Text>
               {nextAction.route && (
-                <MaterialIcons name="arrow-forward" size={20} color={theme.colors.surface} />
+                <AppIcon name="arrow-forward" size={20} color={theme.colors.surface} />
               )}
             </View>
           </Pressable>
@@ -228,7 +230,7 @@ export default function HomeScreen() {
             >
               <View style={styles.primaryButtonContent}>
                 <Text style={styles.primaryButtonText}>{t('home.yearView')}</Text>
-                <MaterialIcons name="north-east" size={18} color={theme.colors.surface} />
+                <AppIcon name="arrow-ne" size={18} color={theme.colors.surface} />
               </View>
             </Pressable>
 
@@ -247,7 +249,7 @@ export default function HomeScreen() {
           <View style={styles.actionCard}>
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeMorning]}>
-                <MaterialIcons name="wb-sunny" size={20} color={theme.colors.accentDark} />
+                <AppIcon name="morning" size={20} color={theme.colors.accentDark} />
               </View>
               <View style={styles.actionHeaderText}>
                 <Text style={styles.actionTitle}>{t('home.flowMorningTitle')}</Text>
@@ -289,7 +291,7 @@ export default function HomeScreen() {
           <View style={styles.actionCard}>
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeLearn]}>
-                <MaterialIcons name="menu-book" size={20} color={theme.colors.accentDark} />
+                <AppIcon name="learn" size={20} color={theme.colors.accentDark} />
               </View>
               <View style={styles.actionHeaderText}>
                 <Text style={styles.actionTitle}>{t('home.flowLearnTitle')}</Text>
@@ -336,7 +338,7 @@ export default function HomeScreen() {
           <View style={styles.actionCard}>
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeNight]}>
-                <MaterialIcons name="nights-stay" size={20} color={theme.colors.accentDark} />
+                <AppIcon name="night" size={20} color={theme.colors.accentDark} />
               </View>
               <View style={styles.actionHeaderText}>
                 <Text style={styles.actionTitle}>{t('home.flowNightTitle')}</Text>
@@ -407,7 +409,11 @@ export default function HomeScreen() {
                 <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
               </View>
               <View style={styles.historyCell}>
-                <Text style={styles.historyValue}>{h.nightHasNote ? '📝' : t('common.dash')}</Text>
+                {h.nightHasNote ? (
+                  <AppIcon name="memo" size={16} color={theme.colors.ink} />
+                ) : (
+                  <Text style={styles.historyValue}>{t('common.dash')}</Text>
+                )}
               </View>
             </View>
           ))}
@@ -421,330 +427,331 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  heroCard: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.md,
-    ...cardShadow,
-  },
-  heroTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  kicker: {
-    fontSize: 11,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  heroDay: {
-    fontSize: 28,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  heroBadge: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 999,
-    backgroundColor: theme.colors.accentSoft,
-  },
-  heroBadgeComplete: {
-    backgroundColor: theme.colors.successSoft,
-  },
-  heroBadgeText: {
-    fontWeight: '700',
-    color: theme.colors.accentDark,
-    fontFamily: theme.font.body,
-  },
-  heroBadgeTextComplete: {
-    color: theme.colors.success,
-  },
-  heroTitle: {
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-    lineHeight: 24,
-  },
-  heroNotice: {
-    padding: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surfaceMuted,
-    gap: theme.spacing.xs,
-  },
-  heroNoticeText: {
-    color: theme.colors.ink,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  noticeButton: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-  },
-  noticeButtonPressed: {
-    opacity: 0.85,
-  },
-  noticeButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  progressRow: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-  },
-  progressChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
-    backgroundColor: theme.colors.surfaceMuted,
-    gap: 6,
-  },
-  progressChipActive: {
-    backgroundColor: theme.colors.successSoft,
-  },
-  progressDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: theme.colors.border,
-  },
-  progressDotActive: {
-    backgroundColor: theme.colors.success,
-  },
-  progressText: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  progressTextActive: {
-    color: theme.colors.success,
-    fontWeight: '700',
-  },
-  primaryButton: {
-    minHeight: 48,
-    paddingHorizontal: 16,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.ink,
-  },
-  primaryButtonCompact: {
-    minHeight: 42,
-  },
-  primaryButtonPressed: {
-    opacity: 0.9,
-  },
-  primaryButtonDisabled: {
-    backgroundColor: theme.colors.border,
-  },
-  primaryButtonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  primaryButtonText: {
-    color: theme.colors.surface,
-    fontWeight: '700',
-    fontFamily: theme.font.body,
-  },
-  primaryButtonTextDisabled: {
-    color: theme.colors.inkMuted,
-  },
-  ghostButton: {
-    minHeight: 42,
-    paddingHorizontal: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-  },
-  ghostButtonSmall: {
-    minHeight: 34,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    backgroundColor: theme.colors.surfaceMuted,
-    borderColor: theme.colors.surfaceMuted,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  cardAccent: {
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.accentSoft,
-  },
-  cardHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: theme.spacing.sm,
-  },
-  badgeSoft: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 999,
-    backgroundColor: theme.colors.accentSoft,
-  },
-  badgeSoftText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: theme.colors.accentDark,
-    fontFamily: theme.font.body,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.display,
-  },
-  sectionSubtitle: {
-    color: theme.colors.inkMuted,
-    fontSize: 12,
-    fontFamily: theme.font.body,
-  },
-  sectionBody: {
-    color: theme.colors.ink,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  sectionStack: {
-    gap: theme.spacing.md,
-  },
-  actionCard: {
-    padding: theme.spacing.md,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    gap: theme.spacing.sm,
-  },
-  actionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.spacing.sm,
-  },
-  actionHeaderText: {
-    flex: 1,
-  },
-  actionTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  actionStatus: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  actionDescription: {
-    color: theme.colors.ink,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  iconBadge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  iconBadgeMorning: {
-    backgroundColor: theme.colors.accentSoft,
-  },
-  iconBadgeLearn: {
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  iconBadgeNight: {
-    backgroundColor: theme.colors.successSoft,
-  },
-  rowButtons: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-    flexWrap: 'wrap',
-  },
-  historyHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
-  },
-  historyRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.surfaceMuted,
-  },
-  historyLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  historyValue: {
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  historyDate: {
-    width: 110,
-    fontVariant: ['tabular-nums'],
-  },
-  historyCell: {
-    width: 30,
-    alignItems: 'center',
-  },
-  historyFootnote: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    lineHeight: 18,
-    fontFamily: theme.font.body,
-  },
-  footerNote: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    lineHeight: 18,
-    fontFamily: theme.font.body,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    content: {
+      padding: theme.spacing.lg,
+      paddingBottom: 40,
+      gap: theme.spacing.md,
+    },
+    heroCard: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.xl,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.md,
+      ...cardShadow,
+    },
+    heroTop: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    kicker: {
+      fontSize: 11,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    heroDay: {
+      fontSize: 28,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    heroBadge: {
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      borderRadius: 999,
+      backgroundColor: theme.colors.accentSoft,
+    },
+    heroBadgeComplete: {
+      backgroundColor: theme.colors.successSoft,
+    },
+    heroBadgeText: {
+      fontWeight: '700',
+      color: theme.colors.accentDark,
+      fontFamily: theme.font.body,
+    },
+    heroBadgeTextComplete: {
+      color: theme.colors.success,
+    },
+    heroTitle: {
+      fontSize: 18,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+      lineHeight: 24,
+    },
+    heroNotice: {
+      padding: theme.spacing.sm,
+      borderRadius: theme.radius.md,
+      backgroundColor: theme.colors.surfaceMuted,
+      gap: theme.spacing.xs,
+    },
+    heroNoticeText: {
+      color: theme.colors.ink,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    noticeButton: {
+      alignSelf: 'flex-start',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 999,
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    noticeButtonPressed: {
+      opacity: 0.85,
+    },
+    noticeButtonText: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    progressRow: {
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+    },
+    progressChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+      borderRadius: 999,
+      backgroundColor: theme.colors.surfaceMuted,
+      gap: 6,
+    },
+    progressChipActive: {
+      backgroundColor: theme.colors.successSoft,
+    },
+    progressDot: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      backgroundColor: theme.colors.border,
+    },
+    progressDotActive: {
+      backgroundColor: theme.colors.success,
+    },
+    progressText: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    progressTextActive: {
+      color: theme.colors.success,
+      fontWeight: '700',
+    },
+    primaryButton: {
+      minHeight: 48,
+      paddingHorizontal: 16,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.ink,
+    },
+    primaryButtonCompact: {
+      minHeight: 42,
+    },
+    primaryButtonPressed: {
+      opacity: 0.9,
+    },
+    primaryButtonDisabled: {
+      backgroundColor: theme.colors.border,
+    },
+    primaryButtonContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    primaryButtonText: {
+      color: theme.colors.surface,
+      fontWeight: '700',
+      fontFamily: theme.font.body,
+    },
+    primaryButtonTextDisabled: {
+      color: theme.colors.inkMuted,
+    },
+    ghostButton: {
+      minHeight: 42,
+      paddingHorizontal: 14,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    ghostButtonSmall: {
+      minHeight: 34,
+      paddingHorizontal: 12,
+      borderRadius: 10,
+      backgroundColor: theme.colors.surfaceMuted,
+      borderColor: theme.colors.surfaceMuted,
+    },
+    ghostButtonPressed: {
+      opacity: 0.85,
+    },
+    ghostButtonText: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    card: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    cardAccent: {
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.accentSoft,
+    },
+    cardHeaderRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+    },
+    badgeSoft: {
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: 999,
+      backgroundColor: theme.colors.accentSoft,
+    },
+    badgeSoftText: {
+      fontSize: 11,
+      fontWeight: '700',
+      color: theme.colors.accentDark,
+      fontFamily: theme.font.body,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.display,
+    },
+    sectionSubtitle: {
+      color: theme.colors.inkMuted,
+      fontSize: 12,
+      fontFamily: theme.font.body,
+    },
+    sectionBody: {
+      color: theme.colors.ink,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    sectionStack: {
+      gap: theme.spacing.md,
+    },
+    actionCard: {
+      padding: theme.spacing.md,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      gap: theme.spacing.sm,
+    },
+    actionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.sm,
+    },
+    actionHeaderText: {
+      flex: 1,
+    },
+    actionTitle: {
+      fontSize: 15,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    actionStatus: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    actionDescription: {
+      color: theme.colors.ink,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    iconBadge: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    iconBadgeMorning: {
+      backgroundColor: theme.colors.accentSoft,
+    },
+    iconBadgeLearn: {
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    iconBadgeNight: {
+      backgroundColor: theme.colors.successSoft,
+    },
+    rowButtons: {
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+      flexWrap: 'wrap',
+    },
+    historyHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingBottom: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+    },
+    historyRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.surfaceMuted,
+    },
+    historyLabel: {
+      fontSize: 12,
+      fontWeight: '700',
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    historyValue: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    historyDate: {
+      width: 110,
+      fontVariant: ['tabular-nums'],
+    },
+    historyCell: {
+      width: 30,
+      alignItems: 'center',
+    },
+    historyFootnote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      lineHeight: 18,
+      fontFamily: theme.font.body,
+    },
+    footerNote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      lineHeight: 18,
+      fontFamily: theme.font.body,
+    },
+  });

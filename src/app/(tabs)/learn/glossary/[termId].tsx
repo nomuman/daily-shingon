@@ -5,10 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getGlossary, getGlossaryEntry } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
-import { cardShadow, theme } from '../../../../ui/theme';
+import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryDetailScreen() {
   const { t } = useTranslation('common');
+  const styles = useThemedStyles(createStyles);
   const lang = useContentLang();
   const { termId } = useLocalSearchParams<{ termId?: string | string[] }>();
   const resolvedTermId = Array.isArray(termId) ? termId[0] : termId;
@@ -96,57 +97,58 @@ function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediat
   }
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  header: {
-    gap: 6,
-  },
-  title: {
-    fontSize: 22,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  meta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  bodyText: {
-    lineHeight: 22,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  emptyState: {
-    flex: 1,
-    padding: theme.spacing.lg,
-    justifyContent: 'center',
-  },
-  emptyText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    screen: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    content: {
+      padding: theme.spacing.lg,
+      paddingBottom: 40,
+      gap: theme.spacing.md,
+    },
+    header: {
+      gap: 6,
+    },
+    title: {
+      fontSize: 22,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    meta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    card: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    bodyText: {
+      lineHeight: 22,
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    emptyState: {
+      flex: 1,
+      padding: theme.spacing.lg,
+      justifyContent: 'center',
+    },
+    emptyText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+  });

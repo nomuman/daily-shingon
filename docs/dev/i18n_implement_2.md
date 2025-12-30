@@ -5,7 +5,7 @@
 前提：
 
 - UI文言は i18next/react-i18next で日英対応済み
-- JSON import ができるよう `tsconfig.json` で `resolveJsonModule: true` 済み（未設定なら必須） :contentReference[oaicite:0]{index=0}
+- JSON import ができるよう `tsconfig.json` で `resolveJsonModule: true` 済み（未設定なら必須）
 
 ---
 
@@ -13,7 +13,7 @@
 
 Metro は **変数でパスを組み立てた dynamic require/import を基本的に解決できない**ので、
 `require(\`./${lang}/file.json\`)` みたいな実装は避ける。  
-→ **言語ごとに静的 import して、マップで切り替える**のが安全。 :contentReference[oaicite:1]{index=1}
+→ **言語ごとに静的 import して、マップで切り替える**のが安全。
 
 ---
 
@@ -87,7 +87,7 @@ import { normalizeContentLang, type ContentLang } from './lang';
 /**
  * useTranslation() は言語変更で再レンダーされるため、
  * ここで current language を購読してコンテンツも追従させる。
- * （react-i18next の hook 利用が基本） :contentReference[oaicite:2]{index=2}
+ * （react-i18next の hook 利用が基本）
  */
 export function useContentLang(): ContentLang {
   const { i18n } = useTranslation(); // これで language 変更に追従
@@ -119,7 +119,7 @@ import mandalaEn from '../../content/cards/03_mandala.en.json';
 import textsEn from '../../content/cards/04_texts.en.json';
 import uxEn from '../../content/cards/05_app_integration.en.json';
 
-// Metroの制約上、ここは “静的 import + マップ切替” が安全 :contentReference[oaicite:3]{index=3}
+// Metroの制約上、ここは “静的 import + マップ切替” が安全
 const PACKS_BY_LANG: Record<ContentLang, CardPackJson[]> = {
   ja: [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa] as unknown as CardPackJson[],
   en: [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn] as unknown as CardPackJson[],

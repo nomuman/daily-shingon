@@ -10,13 +10,13 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 - すべての項目は **チェックボックス**で管理する
 - 各タスクは **Definition of Done（DoD）** を満たしたら✅
 - 実装途中で迷ったら、まず公式ドキュメントを参照（リンクは各章）
-  - create-expo-app :contentReference[oaicite:0]{index=0}
-  - Expo Router（\_layout/tabs/not-found） :contentReference[oaicite:1]{index=1}
-  - Store Data / AsyncStorage :contentReference[oaicite:2]{index=2}
-  - Notifications :contentReference[oaicite:3]{index=3}
-  - ESLint/Prettier :contentReference[oaicite:4]{index=4}
-  - Jest :contentReference[oaicite:5]{index=5}
-  - EAS Build / Update :contentReference[oaicite:6]{index=6}
+  - create-expo-app
+  - Expo Router（\_layout/tabs/not-found）
+  - Store Data / AsyncStorage
+  - Notifications
+  - ESLint/Prettier
+  - Jest
+  - EAS Build / Update
 
 ---
 
@@ -26,7 +26,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 - [x] Node / npm（または pnpm/yarn）をインストール
 - [x] Expo CLIの基本操作を理解（start / run / install）
-- [x] 実機（iOS/Android）で動かす準備（通知は実機必要が多い） :contentReference[oaicite:7]{index=7}
+- [x] 実機（iOS/Android）で動かす準備（通知は実機必要が多い）
 
 **DoD**
 
@@ -36,10 +36,10 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### A2. 初期生成・構成
 
-- [x] `create-expo-app` でプロジェクト作成（テンプレはExpo Router前提） :contentReference[oaicite:8]{index=8}
-- [x] `app/` 配下がルーティングの中心だと理解（file-based routing） :contentReference[oaicite:9]{index=9}
-- [x] `app/_layout.tsx` と `app/(tabs)/_layout.tsx` の役割を理解 :contentReference[oaicite:10]{index=10}
-- [x] `+not-found.tsx` を用意して未定義ルートを安全に処理 :contentReference[oaicite:11]{index=11}
+- [x] `create-expo-app` でプロジェクト作成（テンプレはExpo Router前提）
+- [x] `app/` 配下がルーティングの中心だと理解（file-based routing）
+- [x] `app/_layout.tsx` と `app/(tabs)/_layout.tsx` の役割を理解
+- [x] `+not-found.tsx` を用意して未定義ルートを安全に処理
 
 **DoD**
 
@@ -49,9 +49,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### A3. 環境変数・設定
 
-- [x] `.env` を導入（公開OKなものは `EXPO_PUBLIC_` 接頭辞） :contentReference[oaicite:12]{index=12}
-- [x] `app.json` / `app.config.ts` の役割を理解（OTAやビルド設定の根本） :contentReference[oaicite:13]{index=13}
-- [x] `EXPO_PUBLIC_` を `process.env` で参照できることを確認 :contentReference[oaicite:14]{index=14}
+- [x] `.env` を導入（公開OKなものは `EXPO_PUBLIC_` 接頭辞）
+- [x] `app.json` / `app.config.ts` の役割を理解（OTAやビルド設定の根本）
+- [x] `EXPO_PUBLIC_` を `process.env` で参照できることを確認
 
 **DoD**
 
@@ -63,7 +63,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### B1. フォーマット・Lint
 
-- [x] Expo推奨の ESLint/Prettier セットアップ :contentReference[oaicite:15]{index=15}
+- [x] Expo推奨の ESLint/Prettier セットアップ
 - [x] `npm run lint`（or `npx expo lint`）をCIで実行できる状態にする
 - [x] import順・unused・any濫用を抑制（ルールを決めて統一）
 
@@ -75,7 +75,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### B2. テスト（最低ライン）
 
-- [x] Jestのセットアップ（`jest-expo`） :contentReference[oaicite:16]{index=16}
+- [x] Jestのセットアップ（`jest-expo`）
 - [x] 純粋関数（day計算 / JSONローダー）をユニットテスト
 - [x] 重要UI（LearnCard）が崩れないスナップショット or 画面レンダリングテスト
 
@@ -88,7 +88,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### B3. エラーハンドリング
 
-- [x] Routerのエラーハンドリング方針に従う（NotFound / Error UI） :contentReference[oaicite:17]{index=17}
+- [x] Routerのエラーハンドリング方針に従う（NotFound / Error UI）
 - [x] JSON読み込み失敗時のフォールバックUI
 - [x] AsyncStorage読み書き失敗時のリトライ or “再起動案内”導線
 
@@ -181,7 +181,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### E3. タップ領域・可用性
 
-- [x] 主要ボタンは最低 44x44pt を満たす :contentReference[oaicite:18]{index=18}
+- [x] 主要ボタンは最低 44x44pt を満たす
 - [x] 1画面のPrimary CTAは原則1つ（迷わせない）
 - [x] 長文は避け、スクロールが必要なら見出しで区切る
 
@@ -202,11 +202,11 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### F2. AsyncStorage 実装
 
-- [x] Expo推奨手順で AsyncStorage を導入 :contentReference[oaicite:19]{index=19}
+- [x] Expo推奨手順で AsyncStorage を導入
 - [x] Key命名を固定（例：`curriculum30:startDateISO`）
 - [x] すべての read/write を `src/lib/storage.ts` に集約
 - [x] マイグレーション方針（将来SQLiteに移行も視野）
-  - ExpoはStore data guideで用途別選択を案内 :contentReference[oaicite:20]{index=20}
+  - ExpoはStore data guideで用途別選択を案内
 
 **DoD**
 
@@ -218,14 +218,14 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### G1. expo-notifications 導入
 
-- [x] `expo-notifications` の導入・権限リクエスト :contentReference[oaicite:21]{index=21}
+- [x] `expo-notifications` の導入・権限リクエスト
 - [x] 朝通知（例：7:30）/ 夜通知（例：21:30）をスケジュール
 - [x] スケジュール内容を Settings で ON/OFF 可能にする
 - [x] 権限拒否時のフォールバック（設定アプリへ誘導文言）
 
 **DoD**
 
-- 実機で「指定時刻」にローカル通知が届く（iOS/Android） :contentReference[oaicite:22]{index=22}
+- 実機で「指定時刻」にローカル通知が届く（iOS/Android）
 
 ---
 
@@ -233,9 +233,9 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### H1. ルーティング規約
 
-- [x] `app/(tabs)/_layout.tsx` でTabsを定義 :contentReference[oaicite:23]{index=23}
-- [x] Root `app/_layout.tsx` の責務を理解 :contentReference[oaicite:24]{index=24}
-- [x] NotFound（`+not-found.tsx`） :contentReference[oaicite:25]{index=25}
+- [x] `app/(tabs)/_layout.tsx` でTabsを定義
+- [x] Root `app/_layout.tsx` の責務を理解
+- [x] NotFound（`+not-found.tsx`）
 
 **DoD**
 
@@ -248,8 +248,8 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 ### I1. EAS Build（まず動くバイナリを作る）
 
 - [ ] `eas` セットアップ
-- [ ] `eas build` で preview build を作る（配布して確認） :contentReference[oaicite:26]{index=26}
-- [ ] iOS/Androidの署名周りの扱いを理解（EASが支援） :contentReference[oaicite:27]{index=27}
+- [ ] `eas build` で preview build を作る（配布して確認）
+- [ ] iOS/Androidの署名周りの扱いを理解（EASが支援）
 
 **DoD**
 
@@ -259,8 +259,8 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 ### I2. EAS Update（運用を楽にする）
 
-- [ ] expo-updates と EAS Update の概念理解 :contentReference[oaicite:28]{index=28}
-- [ ] “JS/アセットはOTAで直せるが、ネイティブ変更はストア更新” を理解 :contentReference[oaicite:29]{index=29}
+- [ ] expo-updates と EAS Update の概念理解
+- [ ] “JS/アセットはOTAで直せるが、ネイティブ変更はストア更新” を理解
 - [ ] update channel/branch の運用方針を決める（dev/stg/prod）
 
 **DoD**
@@ -299,7 +299,7 @@ Scope: Expo + Expo Router / 30日カリキュラム（JSON） / 朝・学び・�
 
 - [x] 個人情報を収集しない（MVPではログは端末内のみ）
 - [x] 課金やアカウント導入は次フェーズ（先にUX完成）
-- [x] 保存データに機密が出るなら SecureStore 検討（必要になったら） :contentReference[oaicite:30]{index=30}
+- [x] 保存データに機密が出るなら SecureStore 検討（必要になったら）
 
 **DoD**
 

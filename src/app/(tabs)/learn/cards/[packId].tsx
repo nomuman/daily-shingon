@@ -9,11 +9,12 @@ import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
 import type { Card } from '../../../../content/types';
 import { useContentLang } from '../../../../content/useContentLang';
-import { cardShadow, theme } from '../../../../ui/theme';
+import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function CardListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const styles = useThemedStyles(createStyles);
   const lang = useContentLang();
   const { packId } = useLocalSearchParams<{ packId?: string | string[] }>();
   const resolvedPackId = Array.isArray(packId) ? packId[0] : packId;
@@ -88,6 +89,7 @@ export default function CardListScreen() {
               item.type === 'learn' ? 'learnCards.typeLearn' : 'learnCards.typePractice',
             )}
             levelLabel={levelLabel(t, item.level)}
+            styles={styles}
           />
         )}
         contentContainerStyle={styles.listContent}
@@ -96,16 +98,20 @@ export default function CardListScreen() {
   );
 }
 
+type Styles = ReturnType<typeof createStyles>;
+
 function CardRow({
   card,
   onPress,
   typeLabel,
   levelLabel,
+  styles,
 }: {
   card: Card;
   onPress: () => void;
   typeLabel: string;
   levelLabel: string;
+  styles: Styles;
 }) {
   return (
     <Pressable
@@ -134,67 +140,68 @@ function levelLabel(t: (key: string) => string, level: Card['level']) {
   }
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: theme.spacing.lg,
-  },
-  emptyText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  header: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: theme.spacing.sm,
-    gap: 6,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  subtitle: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  meta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    fontSize: 12,
-  },
-  listContent: {
-    paddingBottom: 32,
-    gap: theme.spacing.md,
-  },
-  row: {
-    padding: theme.spacing.lg,
-    marginHorizontal: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: 6,
-    ...cardShadow,
-  },
-  rowPressed: {
-    opacity: 0.9,
-  },
-  rowTitle: {
-    fontSize: 16,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  rowMeta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    fontSize: 12,
-  },
-  rowSummary: {
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-    lineHeight: 20,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    emptyState: {
+      flex: 1,
+      justifyContent: 'center',
+      padding: theme.spacing.lg,
+    },
+    emptyText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    header: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.sm,
+      gap: 6,
+    },
+    title: {
+      fontSize: 20,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    subtitle: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    meta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
+    },
+    listContent: {
+      paddingBottom: 32,
+      gap: theme.spacing.md,
+    },
+    row: {
+      padding: theme.spacing.lg,
+      marginHorizontal: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: 6,
+      ...cardShadow,
+    },
+    rowPressed: {
+      opacity: 0.9,
+    },
+    rowTitle: {
+      fontSize: 16,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    rowMeta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
+    },
+    rowSummary: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+      lineHeight: 20,
+    },
+  });

@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
-import { theme } from '../ui/theme';
+import { useThemedStyles } from '../ui/theme';
 
 type TagRowProps = {
   tags: string[];
@@ -12,6 +12,41 @@ type TagRowProps = {
 
 export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowProps) {
   const { t } = useTranslation('common');
+  const styles = useThemedStyles((theme) =>
+    StyleSheet.create({
+      wrap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: theme.spacing.xs,
+        paddingHorizontal: theme.spacing.lg,
+        paddingBottom: theme.spacing.sm,
+      },
+      chip: {
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 999,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+      },
+      chipActive: {
+        backgroundColor: theme.colors.ink,
+        borderColor: theme.colors.ink,
+      },
+      chipPressed: {
+        opacity: 0.85,
+      },
+      chipText: {
+        fontSize: 12,
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      chipTextActive: {
+        color: theme.colors.surface,
+        fontWeight: '600',
+      },
+    }),
+  );
   if (!tags.length) return null;
 
   const unique = Array.from(new Set(tags));
@@ -50,37 +85,3 @@ export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowPr
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: theme.spacing.xs,
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: theme.spacing.sm,
-  },
-  chip: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  chipActive: {
-    backgroundColor: theme.colors.ink,
-    borderColor: theme.colors.ink,
-  },
-  chipPressed: {
-    opacity: 0.85,
-  },
-  chipText: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  chipTextActive: {
-    color: theme.colors.surface,
-    fontWeight: '600',
-  },
-});

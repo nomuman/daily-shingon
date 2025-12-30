@@ -2,12 +2,12 @@
 
 ## 1) ExpoのJest（公式ガイド）
 
-- jest-expo を使って unit / snapshot を書ける :contentReference[oaicite:51]{index=51}
+- jest-expo を使って unit / snapshot を書ける
 
 ## 2) RNTL（React Native Testing Library）
 
-- “ユーザーの使い方に近いテストほど信頼できる” :contentReference[oaicite:52]{index=52}
-- RN公式のTesting Overviewも参照 :contentReference[oaicite:53]{index=53}
+- “ユーザーの使い方に近いテストほど信頼できる”
+- RN公式のTesting Overviewも参照
 
 ## 3) どこをテストする？
 

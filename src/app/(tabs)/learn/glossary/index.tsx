@@ -8,11 +8,12 @@ import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getGlossary } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
-import { cardShadow, theme } from '../../../../ui/theme';
+import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const styles = useThemedStyles(createStyles);
   const lang = useContentLang();
   const glossary = useMemo(() => getGlossary(lang), [lang]);
   const [q, setQ] = useState('');
@@ -81,58 +82,59 @@ export default function GlossaryListScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  header: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: theme.spacing.sm,
-    gap: 6,
-  },
-  title: {
-    fontSize: 22,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  subtitle: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  meta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    fontSize: 12,
-  },
-  listContent: {
-    paddingBottom: 32,
-    gap: theme.spacing.md,
-  },
-  row: {
-    padding: theme.spacing.lg,
-    marginHorizontal: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: 6,
-    ...cardShadow,
-  },
-  rowPressed: {
-    opacity: 0.9,
-  },
-  term: {
-    fontSize: 16,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  rowMeta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    fontSize: 12,
-  },
-  desc: {
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-    lineHeight: 20,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    header: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: theme.spacing.sm,
+      gap: 6,
+    },
+    title: {
+      fontSize: 22,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    subtitle: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    meta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
+    },
+    listContent: {
+      paddingBottom: 32,
+      gap: theme.spacing.md,
+    },
+    row: {
+      padding: theme.spacing.lg,
+      marginHorizontal: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: 6,
+      ...cardShadow,
+    },
+    rowPressed: {
+      opacity: 0.9,
+    },
+    term: {
+      fontSize: 16,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    rowMeta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
+    },
+    desc: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+      lineHeight: 20,
+    },
+  });

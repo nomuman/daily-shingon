@@ -15,7 +15,7 @@
     "retry": "再試行",
     "back": "戻る",
     "done": "完了",
-    "doneEmoji": "完了 ✅",
+    "doneEmoji": "完了",
     "incomplete": "未完了",
     "status": "状態",
     "statusWithValue": "状態：{{value}}",
@@ -206,6 +206,13 @@
       "english": "英語",
       "note": "一部の表示は画面を開き直すと反映されます。"
     },
+    "theme": {
+      "title": "テーマ",
+      "description": "表示テーマを選びます。",
+      "system": "端末の設定に従う",
+      "light": "ライト",
+      "dark": "ダーク"
+    },
     "notifications": {
       "title": "通知",
       "toggle": "朝/夜リマインダー",
@@ -234,10 +241,24 @@
       "sectionBody": "開始日と当日の記録を削除します。戻せません。",
       "button": "開始日をリセット"
     },
+    "legal": {
+      "title": "法的情報",
+      "body": "ポリシーとライセンスを確認します。",
+      "privacy": "プライバシーポリシー",
+      "licenses": "オープンソースライセンス",
+      "missingUrl": "プライバシーポリシーのURLが設定されていません。",
+      "openFail": "プライバシーポリシーを開けませんでした。"
+    },
     "contact": {
       "title": "お問い合わせ",
       "body": "お問い合わせ先は後で設定します。"
     }
+  },
+  "licenses": {
+    "title": "オープンソースライセンス",
+    "subtitle": "このアプリで使用している主なオープンソースソフトウェアです。",
+    "version": "v{{v}}",
+    "empty": "表示できるライセンスがまだありません。"
   },
   "history": {
     "title": "365日",

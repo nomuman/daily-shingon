@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import type { CurriculumDay } from '../types/curriculum';
-import { cardShadow, theme } from '../ui/theme';
+import { useThemedStyles } from '../ui/theme';
 
 type SourceLink = {
   id: string;
@@ -17,6 +17,69 @@ type LearnCardProps = {
 
 export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: LearnCardProps) {
   const { t } = useTranslation('common');
+  const styles = useThemedStyles((theme, cardShadow) =>
+    StyleSheet.create({
+      stack: {
+        gap: theme.spacing.md,
+      },
+      title: {
+        fontSize: 20,
+        fontFamily: theme.font.display,
+        color: theme.colors.ink,
+      },
+      notice: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      card: {
+        padding: theme.spacing.lg,
+        borderRadius: theme.radius.lg,
+        backgroundColor: theme.colors.surface,
+        gap: theme.spacing.sm,
+        ...cardShadow,
+      },
+      cardTitle: {
+        fontSize: 18,
+        fontFamily: theme.font.display,
+        color: theme.colors.ink,
+      },
+      sectionTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      bodyText: {
+        lineHeight: 20,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      mutedText: {
+        opacity: 0.75,
+        lineHeight: 20,
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      optionRow: {
+        paddingVertical: 8,
+      },
+      optionText: {
+        fontWeight: '400',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      optionTextStrong: {
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      sourceItem: {
+        opacity: 0.8,
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+    }),
+  );
 
   return (
     <View style={styles.stack}>
@@ -66,65 +129,3 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  stack: {
-    gap: theme.spacing.md,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  notice: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  bodyText: {
-    lineHeight: 20,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  mutedText: {
-    opacity: 0.75,
-    lineHeight: 20,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  optionRow: {
-    paddingVertical: 8,
-  },
-  optionText: {
-    fontWeight: '400',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  optionTextStrong: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  sourceItem: {
-    opacity: 0.8,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-});

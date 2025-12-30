@@ -1,34 +1,12 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
-import type { SFSymbol } from 'expo-symbols';
-import { SymbolView } from 'expo-symbols';
 
 import { useTranslation } from 'react-i18next';
-import { theme } from '../../ui/theme';
-
-const TabIcon = ({
-  symbol,
-  fallback,
-  color,
-  size,
-}: {
-  symbol: SFSymbol;
-  fallback: keyof typeof MaterialIcons.glyphMap;
-  color: string;
-  size?: number;
-}) => (
-  <SymbolView
-    name={symbol}
-    size={size ?? 24}
-    tintColor={color}
-    weight="semibold"
-    scale="medium"
-    fallback={<MaterialIcons name={fallback} size={size ?? 24} color={color} />}
-  />
-);
+import { AppIcon } from '../../components/AppIcon';
+import { useTheme } from '../../ui/theme';
 
 export default function TabLayout() {
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
 
   return (
     <Tabs
@@ -50,18 +28,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: t('nav.today'),
-          tabBarIcon: ({ color, size }) => (
-            <TabIcon symbol="house.fill" fallback="home" color={color} size={size ?? 24} />
-          ),
+          tabBarIcon: ({ color, size }) => <AppIcon name="home" color={color} size={size ?? 24} />,
         }}
       />
       <Tabs.Screen
         name="learn"
         options={{
           title: t('nav.learn'),
-          tabBarIcon: ({ color, size }) => (
-            <TabIcon symbol="book.fill" fallback="menu-book" color={color} size={size ?? 24} />
-          ),
+          tabBarIcon: ({ color, size }) => <AppIcon name="learn" color={color} size={size ?? 24} />,
         }}
       />
       <Tabs.Screen
@@ -69,7 +43,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.morning'),
           tabBarIcon: ({ color, size }) => (
-            <TabIcon symbol="sun.max.fill" fallback="wb-sunny" color={color} size={size ?? 24} />
+            <AppIcon name="morning" color={color} size={size ?? 24} />
           ),
         }}
       />
@@ -77,14 +51,7 @@ export default function TabLayout() {
         name="night"
         options={{
           title: t('nav.night'),
-          tabBarIcon: ({ color, size }) => (
-            <TabIcon
-              symbol="moon.stars.fill"
-              fallback="nights-stay"
-              color={color}
-              size={size ?? 24}
-            />
-          ),
+          tabBarIcon: ({ color, size }) => <AppIcon name="night" color={color} size={size ?? 24} />,
         }}
       />
       <Tabs.Screen
@@ -92,7 +59,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.settings'),
           tabBarIcon: ({ color, size }) => (
-            <TabIcon symbol="gearshape.fill" fallback="settings" color={color} size={size ?? 24} />
+            <AppIcon name="settings" color={color} size={size ?? 24} />
           ),
         }}
       />

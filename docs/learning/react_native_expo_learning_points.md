@@ -57,7 +57,7 @@
   - ❌「このテキストを変更しろ」
   - ✅「stateがこうなら、このUIを返す」
 
-ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oaicite:0]{index=0}
+ReactのHooks一覧と考え方は公式が一番速い。
 
 ### 1.1 props と state（最小の違い）
 
@@ -86,7 +86,7 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 ### 2.4 useCallback：関数のメモ化（依存で更新）
 
 - `useFocusEffect` と組み合わせるときに重要（毎renderで関数が変わるのを避ける）
-- `useCallback(fn, deps)` の意味は公式が明快。 :contentReference[oaicite:1]{index=1}
+- `useCallback(fn, deps)` の意味は公式が明快。
 
 ---
 
@@ -94,27 +94,27 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 3.1 Pressable：タップ可能UIの標準
 
-- 押下を扱うコアコンポーネント。選択UI・カードUIで多用。 :contentReference[oaicite:2]{index=2}
+- 押下を扱うコアコンポーネント。選択UI・カードUIで多用。
 - `style={[base, selected && selectedStyle]}` で状態に応じて見た目を変える
 
 ### 3.2 TextInput：入力の基本
 
-- `onChangeText` で文字列を state に流し込むのが基本。 :contentReference[oaicite:3]{index=3}
+- `onChangeText` で文字列を state に流し込むのが基本。
 - マルチライン等はOS差が出るので “最低限の見た目調整” を用意する（Androidの縦位置など）
 
 ### 3.3 FlatList：大量リストの標準
 
-- 大量データは `ScrollView` ではなく `FlatList`。 :contentReference[oaicite:4]{index=4}
+- 大量データは `ScrollView` ではなく `FlatList`。
 - `keyExtractor` は必須級（警告や不具合回避）
-- `FlatList` は PureComponent 的に最適化されるので、必要なら `extraData` を渡すことがある。 :contentReference[oaicite:5]{index=5}
+- `FlatList` は PureComponent 的に最適化されるので、必要なら `extraData` を渡すことがある。
 
 ### 3.4 StyleSheet：CSSじゃない
 
-- RNのスタイルは JSオブジェクト。命名はcamelCase。 :contentReference[oaicite:6]{index=6}
+- RNのスタイルは JSオブジェクト。命名はcamelCase。
 
 ### 3.5 アクセシビリティ：最低限でも価値が高い
 
-- RNはアクセシビリティ用のプロパティを提供している。 :contentReference[oaicite:7]{index=7}
+- RNはアクセシビリティ用のプロパティを提供している。
 - 選択状態があるUIは `accessibilityState` を付けると伝わりやすい（TalkBack/VoiceOver）
 
 ---
@@ -123,14 +123,14 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 4.1 file-based routing
 
-- `app/` 配下の構造がそのままルーティングになる。 :contentReference[oaicite:8]{index=8}
-- ディレクトリごとに `_layout.tsx` を定義できる。 :contentReference[oaicite:9]{index=9}
-- Tabsは `app/(tabs)/_layout.tsx` を中心に組む。 :contentReference[oaicite:10]{index=10}
+- `app/` 配下の構造がそのままルーティングになる。
+- ディレクトリごとに `_layout.tsx` を定義できる。
+- Tabsは `app/(tabs)/_layout.tsx` を中心に組む。
 
 ### 4.2 RootLayout と `<Slot />` は “絶対に最初から描画”
 
 - Rootで `<Slot/>` や navigator を描画しないと、
-  “Attempted to navigate before mounting the Root Layout component…” が起きる。 :contentReference[oaicite:11]{index=11}
+  “Attempted to navigate before mounting the Root Layout component…” が起きる。
 - 対策：Rootは常に `<Slot/>` を描き、ローディングは **上に重ねる**（Slotを消さない）
 
 ### 4.3 router.push / replace の使い分け
@@ -149,8 +149,8 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 5.2 解決：useFocusEffect
 
-- 画面がフォーカスを受けたタイミングで effect を走らせられる。 :contentReference[oaicite:12]{index=12}
-- 注意：コールバックは `useCallback` で安定化しないと、毎renderで走りやすい。 :contentReference[oaicite:13]{index=13}
+- 画面がフォーカスを受けたタイミングで effect を走らせられる。
+- 注意：コールバックは `useCallback` で安定化しないと、毎renderで走りやすい。
 
 ---
 
@@ -159,8 +159,8 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 ### 6.1 AsyncStorageの性質
 
 - 非同期・永続・key-value
-- **暗号化されない（機密情報向きではない）**。 :contentReference[oaicite:14]{index=14}
-- React Native本体からは削除され、コミュニティ版を使うのが前提。 :contentReference[oaicite:15]{index=15}
+- **暗号化されない（機密情報向きではない）**。
+- React Native本体からは削除され、コミュニティ版を使うのが前提。
 
 ### 6.2 設計パターン：日付キー（超重要）
 
@@ -174,7 +174,7 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 6.4 機密データは SecureStore
 
-- APIトークン等を保存したいなら `expo-secure-store`（暗号化）を検討。 :contentReference[oaicite:16]{index=16}
+- APIトークン等を保存したいなら `expo-secure-store`（暗号化）を検討。
 
 ---
 
@@ -182,17 +182,17 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 7.1 useTranslation（Hookで購読するのが基本）
 
-- `useTranslation` は `t` と `i18n` を取得できる。 :contentReference[oaicite:17]{index=17}
-- 言語切替は `i18n.changeLanguage`。 :contentReference[oaicite:18]{index=18}
-- “i18next直importのt” で描画すると再レンダリングされずハマることがある（Hookで購読するのが安全）。 :contentReference[oaicite:19]{index=19}
+- `useTranslation` は `t` と `i18n` を取得できる。
+- 言語切替は `i18n.changeLanguage`。
+- “i18next直importのt” で描画すると再レンダリングされずハマることがある（Hookで購読するのが安全）。
 
 ### 7.2 expo-localization：端末ロケール
 
-- 端末の言語/地域情報を取るためのExpo SDK。 :contentReference[oaicite:20]{index=20}
+- 端末の言語/地域情報を取るためのExpo SDK。
 
 ### 7.3 AppStateで “フォアグラウンド復帰” を拾う
 
-- OS設定で言語が変わった後、アプリ復帰で追従したい時に使う。 :contentReference[oaicite:21]{index=21}
+- OS設定で言語が変わった後、アプリ復帰で追従したい時に使う。
 
 ---
 
@@ -200,14 +200,14 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 8.1 Metroの制約：dynamic import/require は基本NG
 
-- 変数でパスを組み立てて import/require するのは難しい。 :contentReference[oaicite:22]{index=22}
+- 変数でパスを組み立てて import/require するのは難しい。
 - 今回の正攻法：
   - `*.ja.json` と `*.en.json` を **静的に import**
   - `{ ja: [...], en: [...] }` のマップで切り替える
 
 ### 8.2 JSON import と TypeScript
 
-- `.json` を import するには `tsconfig` の `resolveJsonModule` が必要。 :contentReference[oaicite:23]{index=23}
+- `.json` を import するには `tsconfig` の `resolveJsonModule` が必要。
 
 ### 8.3 IDは言語間で固定（超重要）
 
@@ -220,15 +220,15 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 9.1 Linking
 
-- URLを開く標準API。 :contentReference[oaicite:24]{index=24}
+- URLを開く標準API。
 
 ### 9.2 expo-web-browser
 
-- OSのブラウザ（SFSafariViewController/CustomTabs等）を使う。 :contentReference[oaicite:25]{index=25}
+- OSのブラウザ（SFSafariViewController/CustomTabs等）を使う。
 
 ### 9.3 Markdown表示のリンク処理
 
-- `react-native-markdown-display` は `onLinkPress` でリンク動作を差し替え可能（Linkingへ渡すなど）。 :contentReference[oaicite:26]{index=26}
+- `react-native-markdown-display` は `onLinkPress` でリンク動作を差し替え可能（Linkingへ渡すなど）。
 
 ---
 
@@ -237,12 +237,12 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 ### 10.1 FlatListの基本最適化
 
 - `keyExtractor`
-- 必要なら `extraData`（FlatListがPureComponent的なので、propsが変わらないと再描画しない点に注意）。 :contentReference[oaicite:27]{index=27}
+- 必要なら `extraData`（FlatListがPureComponent的なので、propsが変わらないと再描画しない点に注意）。
 
 ### 10.2 メモ化の判断基準
 
 - **重い計算 / 重い描画 / 関数参照が重要なHook**（useFocusEffect等）のときだけ
-- `useCallback` は依存配列を正確に（バグの温床になりがち）。 :contentReference[oaicite:28]{index=28}
+- `useCallback` は依存配列を正確に（バグの温床になりがち）。
 
 ---
 
@@ -267,12 +267,12 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### 12.1 ExpoのJest（jest-expo）
 
-- Expoは公式でJestのガイドを出している。 :contentReference[oaicite:29]{index=29}
+- Expoは公式でJestのガイドを出している。
 
 ### 12.2 React Native Testing Library（RNTL）
 
-- “ユーザーが使うようにテストする” という思想が基本。 :contentReference[oaicite:30]{index=30}
-- RN公式もテストの概観を提供。 :contentReference[oaicite:31]{index=31}
+- “ユーザーが使うようにテストする” という思想が基本。
+- RN公式もテストの概観を提供。
 
 ---
 
@@ -280,24 +280,24 @@ ReactのHooks一覧と考え方は公式が一番速い。 :contentReference[oai
 
 ### Level 0（用語・構造）
 
-- [ ] `app/` のファイル構造で、目的の画面がどこにあるか説明できる :contentReference[oaicite:32]{index=32}
-- [ ] `View/Text/Pressable/TextInput/FlatList` を用途で使い分けられる :contentReference[oaicite:33]{index=33}
+- [ ] `app/` のファイル構造で、目的の画面がどこにあるか説明できる
+- [ ] `View/Text/Pressable/TextInput/FlatList` を用途で使い分けられる
 
 ### Level 1（Hooks）
 
-- [ ] useState/useEffect を “何のために” 使うか説明できる :contentReference[oaicite:34]{index=34}
-- [ ] useMemo/useCallback を “必要な場面だけ” 使える :contentReference[oaicite:35]{index=35}
+- [ ] useState/useEffect を “何のために” 使うか説明できる
+- [ ] useMemo/useCallback を “必要な場面だけ” 使える
 
 ### Level 2（モバイルらしさ）
 
-- [ ] useFocusEffect でフォーカス時再読込できる :contentReference[oaicite:36]{index=36}
-- [ ] AsyncStorageで日付キー保存できる（暗号化されない点も理解） :contentReference[oaicite:37]{index=37}
+- [ ] useFocusEffect でフォーカス時再読込できる
+- [ ] AsyncStorageで日付キー保存できる（暗号化されない点も理解）
 
 ### Level 3（中級入口）
 
-- [ ] RootLayoutでSlotを消さずにローディングを重ねられる :contentReference[oaicite:38]{index=38}
-- [ ] UI文言とコンテンツのi18nを分けて設計できる（静的import + マップ） :contentReference[oaicite:39]{index=39}
-- [ ] Jest/RNTLで “保存ロジック” と “画面” を別々にテストする設計ができる :contentReference[oaicite:40]{index=40}
+- [ ] RootLayoutでSlotを消さずにローディングを重ねられる
+- [ ] UI文言とコンテンツのi18nを分けて設計できる（静的import + マップ）
+- [ ] Jest/RNTLで “保存ロジック” と “画面” を別々にテストする設計ができる
 
 ---
 

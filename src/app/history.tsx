@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorState from '../components/ErrorState';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
-import { cardShadow, theme } from '../ui/theme';
+import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 const screenWidth = Dimensions.get('window').width;
 const chartDays = 365;
@@ -77,6 +77,8 @@ const entranceStyle = (anim: Animated.Value) => ({
 export default function HistoryScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   const [values, setValues] = useState<HeatmapValue[]>([]);
   const [loading, setLoading] = useState(true);
@@ -164,8 +166,8 @@ export default function HistoryScreen() {
                   backgroundGradientFromOpacity: 0,
                   backgroundGradientToOpacity: 0,
                   decimalPlaces: 0,
-                  color: (opacity = 1) => `rgba(195, 139, 47, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(28, 26, 22, ${opacity})`,
+                  color: () => theme.colors.accent,
+                  labelColor: () => theme.colors.inkMuted,
                 }}
                 tooltipDataAttrs={(value) => ({
                   accessibilityLabel: buildTooltipLabel(t, value),
@@ -213,132 +215,133 @@ export default function HistoryScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  headerCard: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.xl,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  headerBody: {
-    color: theme.colors.inkMuted,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  graphCard: {
-    padding: theme.spacing.md,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    ...cardShadow,
-  },
-  loadingText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  ghostButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 999,
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  metaStack: {
-    gap: theme.spacing.sm,
-  },
-  tooltipCard: {
-    padding: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  tooltipLabel: {
-    fontSize: 11,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  tooltipValue: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  helperText: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  legendCard: {
-    padding: theme.spacing.md,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    gap: theme.spacing.xs,
-  },
-  legendTitle: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  legendRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  legendSwatch: {
-    width: 12,
-    height: 12,
-    borderRadius: 3,
-  },
-  legendSwatch0: {
-    backgroundColor: theme.colors.border,
-  },
-  legendSwatch1: {
-    backgroundColor: `${theme.colors.accent}55`,
-  },
-  legendSwatch2: {
-    backgroundColor: `${theme.colors.accent}99`,
-  },
-  legendSwatch3: {
-    backgroundColor: theme.colors.accent,
-  },
-  legendText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  legendNote: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    marginTop: 4,
-    fontFamily: theme.font.body,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    content: {
+      padding: theme.spacing.lg,
+      paddingBottom: 40,
+      gap: theme.spacing.md,
+    },
+    headerCard: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.xl,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    headerRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    headerTitle: {
+      fontSize: 22,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    headerBody: {
+      color: theme.colors.inkMuted,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    graphCard: {
+      padding: theme.spacing.md,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      ...cardShadow,
+    },
+    loadingText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    ghostButton: {
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      borderRadius: 999,
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    ghostButtonPressed: {
+      opacity: 0.85,
+    },
+    ghostButtonText: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    metaStack: {
+      gap: theme.spacing.sm,
+    },
+    tooltipCard: {
+      padding: theme.spacing.sm,
+      borderRadius: theme.radius.md,
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    tooltipLabel: {
+      fontSize: 11,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    tooltipValue: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    helperText: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    legendCard: {
+      padding: theme.spacing.md,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      gap: theme.spacing.xs,
+    },
+    legendTitle: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    legendRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    legendSwatch: {
+      width: 12,
+      height: 12,
+      borderRadius: 3,
+    },
+    legendSwatch0: {
+      backgroundColor: theme.colors.border,
+    },
+    legendSwatch1: {
+      backgroundColor: `${theme.colors.accent}55`,
+    },
+    legendSwatch2: {
+      backgroundColor: `${theme.colors.accent}99`,
+    },
+    legendSwatch3: {
+      backgroundColor: theme.colors.accent,
+    },
+    legendText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    legendNote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      marginTop: 4,
+      fontFamily: theme.font.body,
+    },
+  });

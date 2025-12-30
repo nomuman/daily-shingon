@@ -5,7 +5,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { initI18n } from '../lib/i18n';
-import { theme } from '../ui/theme';
+import { ThemeProvider, useTheme, useThemedStyles } from '../ui/theme';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,7 +17,32 @@ Notifications.setNotificationHandler({
 });
 
 export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <RootLayoutContent />
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}
+
+function RootLayoutContent() {
   const [ready, setReady] = useState(false);
+  const { theme } = useTheme();
+  const styles = useThemedStyles((theme) =>
+    StyleSheet.create({
+      loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.background,
+      },
+    }),
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -31,38 +56,21 @@ export default function RootLayout() {
 
   if (!ready) {
     return (
-      <SafeAreaProvider>
-        <View style={styles.loadingOverlay}>
-          <ActivityIndicator color={theme.colors.accent} />
-        </View>
-      </SafeAreaProvider>
+      <View style={styles.loadingOverlay}>
+        <ActivityIndicator color={theme.colors.accent} />
+      </View>
     );
   }
 
   return (
-    <SafeAreaProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: theme.colors.background },
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </SafeAreaProvider>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: theme.colors.background },
+      }}
+    >
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="+not-found" />
+    </Stack>
   );
 }
-
-const styles = StyleSheet.create({
-  loadingOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.background,
-  },
-});

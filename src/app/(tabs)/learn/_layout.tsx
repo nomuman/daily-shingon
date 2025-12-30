@@ -1,8 +1,10 @@
 import { Stack } from 'expo-router';
 
-import { theme } from '../../../ui/theme';
+import { useTheme } from '../../../ui/theme';
 
 export default function LearnLayout() {
+  const { theme } = useTheme();
+
   return (
     <Stack
       screenOptions={{

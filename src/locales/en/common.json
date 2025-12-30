@@ -15,7 +15,7 @@
     "retry": "Try again",
     "back": "Back",
     "done": "Done",
-    "doneEmoji": "Done ✅",
+    "doneEmoji": "Done",
     "incomplete": "Not complete",
     "status": "Status",
     "statusWithValue": "Status: {{value}}",
@@ -206,6 +206,13 @@
       "english": "English",
       "note": "Some screens update after reopening."
     },
+    "theme": {
+      "title": "Theme",
+      "description": "Choose the app appearance.",
+      "system": "Match system",
+      "light": "Light",
+      "dark": "Dark"
+    },
     "notifications": {
       "title": "Notifications",
       "toggle": "Morning/Night reminders",
@@ -234,10 +241,24 @@
       "sectionBody": "Deletes the start date and today's records. This cannot be undone.",
       "button": "Reset start date"
     },
+    "legal": {
+      "title": "Legal",
+      "body": "Review policies and open source licenses.",
+      "privacy": "Privacy Policy",
+      "licenses": "Open Source Licenses",
+      "missingUrl": "Privacy policy URL is not set yet.",
+      "openFail": "Couldn't open the privacy policy."
+    },
     "contact": {
       "title": "Contact",
       "body": "Contact details will be added later."
     }
+  },
+  "licenses": {
+    "title": "Open Source Licenses",
+    "subtitle": "Primary open source software used in this app.",
+    "version": "v{{v}}",
+    "empty": "No licenses are available yet."
   },
   "history": {
     "title": "365 Days",

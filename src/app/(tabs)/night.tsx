@@ -12,18 +12,21 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '../../components/AppIcon';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
-import { cardShadow, theme } from '../../ui/theme';
+import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type CheckKey = 'sange' | 'hotsugan' | 'ekou';
 
 export default function NightScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
 
   const [loading, setLoading] = useState(true);
@@ -102,10 +105,14 @@ export default function NightScreen() {
         pressed && styles.checkItemPressed,
       ]}
     >
-      <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>
-        {checked ? '✅ ' : '⬜️ '}
-        {title}
-      </Text>
+      <View style={styles.checkTitleRow}>
+        <AppIcon
+          name={checked ? 'check' : 'uncheck'}
+          size={18}
+          color={checked ? theme.colors.accentDark : theme.colors.inkMuted}
+        />
+        <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
+      </View>
       <Text style={styles.checkDesc}>{desc}</Text>
     </Pressable>
   );
@@ -136,11 +143,18 @@ export default function NightScreen() {
           <Text style={styles.sectionTitle}>{t('night.nightQuestion')}</Text>
           <Text style={styles.bodyText}>{nightQuestion}</Text>
 
-          <Text style={styles.statusText}>
-            {t('common.statusWithValue', {
-              value: complete ? t('common.doneEmoji') : t('common.incomplete'),
-            })}
-          </Text>
+          <View style={styles.statusRow}>
+            <Text style={styles.statusText}>
+              {t('common.statusWithValue', {
+                value: complete ? t('common.done') : t('common.incomplete'),
+              })}
+            </Text>
+            <AppIcon
+              name={complete ? 'check' : 'uncheck'}
+              size={16}
+              color={complete ? theme.colors.accentDark : theme.colors.inkMuted}
+            />
+          </View>
         </View>
 
         <View style={styles.card}>
@@ -216,147 +230,158 @@ export default function NightScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  loading: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  kicker: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  bodyText: {
-    lineHeight: 20,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  mutedText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  statusText: {
-    marginTop: 6,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  checkItem: {
-    minHeight: 44,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: theme.radius.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  checkItemSelected: {
-    borderColor: theme.colors.ink,
-    borderWidth: 2,
-  },
-  checkItemPressed: {
-    opacity: 0.85,
-  },
-  checkTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  checkTitleSelected: {
-    fontWeight: '700',
-  },
-  checkDesc: {
-    marginTop: 6,
-    color: theme.colors.inkMuted,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  noteInput: {
-    minHeight: 90,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    padding: 12,
-    textAlignVertical: 'top',
-    backgroundColor: theme.colors.surface,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  primaryButton: {
-    minHeight: 48,
-    paddingHorizontal: 16,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.ink,
-  },
-  primaryButtonPressed: {
-    opacity: 0.9,
-  },
-  primaryButtonText: {
-    color: theme.colors.surface,
-    fontWeight: '700',
-    fontFamily: theme.font.body,
-  },
-  ghostButton: {
-    minHeight: 46,
-    paddingHorizontal: 14,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  footerNote: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    screen: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    content: {
+      padding: theme.spacing.lg,
+      paddingBottom: 40,
+      gap: theme.spacing.md,
+    },
+    loading: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      fontSize: 20,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    kicker: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    card: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    cardTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    bodyText: {
+      lineHeight: 20,
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    mutedText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    statusText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    statusRow: {
+      marginTop: 6,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+    },
+    checkItem: {
+      minHeight: 44,
+      paddingVertical: 12,
+      paddingHorizontal: 12,
+      borderRadius: theme.radius.md,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.surface,
+    },
+    checkItemSelected: {
+      borderColor: theme.colors.ink,
+      borderWidth: 2,
+    },
+    checkItemPressed: {
+      opacity: 0.85,
+    },
+    checkTitle: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    checkTitleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    checkTitleSelected: {
+      fontWeight: '700',
+    },
+    checkDesc: {
+      marginTop: 6,
+      color: theme.colors.inkMuted,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    noteInput: {
+      minHeight: 90,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: theme.radius.md,
+      padding: 12,
+      textAlignVertical: 'top',
+      backgroundColor: theme.colors.surface,
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    primaryButton: {
+      minHeight: 48,
+      paddingHorizontal: 16,
+      borderRadius: theme.radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.ink,
+    },
+    primaryButtonPressed: {
+      opacity: 0.9,
+    },
+    primaryButtonText: {
+      color: theme.colors.surface,
+      fontWeight: '700',
+      fontFamily: theme.font.body,
+    },
+    ghostButton: {
+      minHeight: 46,
+      paddingHorizontal: 14,
+      borderRadius: theme.radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.surface,
+    },
+    ghostButtonPressed: {
+      opacity: 0.85,
+    },
+    ghostButtonText: {
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    footerNote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+  });

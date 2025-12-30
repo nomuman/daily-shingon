@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
-import { theme } from '../ui/theme';
+import { useThemedStyles } from '../ui/theme';
 
 type ErrorStateProps = {
   title?: string;
@@ -22,6 +22,64 @@ export default function ErrorState({
   onSecondaryPress,
 }: ErrorStateProps) {
   const { t } = useTranslation('common');
+  const styles = useThemedStyles((theme) =>
+    StyleSheet.create({
+      safeArea: {
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      },
+      container: {
+        flex: 1,
+        padding: theme.spacing.lg,
+        gap: theme.spacing.sm,
+        justifyContent: 'center',
+      },
+      title: {
+        fontSize: 18,
+        fontFamily: theme.font.display,
+        color: theme.colors.ink,
+      },
+      message: {
+        lineHeight: 20,
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      primaryButton: {
+        minHeight: 44,
+        paddingHorizontal: 14,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.ink,
+      },
+      primaryButtonPressed: {
+        opacity: 0.9,
+      },
+      primaryButtonText: {
+        color: theme.colors.surface,
+        fontWeight: '700',
+        fontFamily: theme.font.body,
+      },
+      ghostButton: {
+        minHeight: 44,
+        paddingHorizontal: 14,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+      },
+      ghostButtonPressed: {
+        opacity: 0.85,
+      },
+      ghostButtonText: {
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+    }),
+  );
   const resolvedTitle = title ?? t('errors.defaultTitle');
   const resolvedRetryLabel = retryLabel ?? t('common.retry');
 
@@ -52,60 +110,3 @@ export default function ErrorState({
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  container: {
-    flex: 1,
-    padding: theme.spacing.lg,
-    gap: theme.spacing.sm,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  message: {
-    lineHeight: 20,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  primaryButton: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.ink,
-  },
-  primaryButtonPressed: {
-    opacity: 0.9,
-  },
-  primaryButtonText: {
-    color: theme.colors.surface,
-    fontWeight: '700',
-    fontFamily: theme.font.body,
-  },
-  ghostButton: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-});

@@ -5,10 +5,10 @@
 
 推奨スタック：
 
-- ロケール取得：`expo-localization`（Expo公式。Androidは復帰時に再取得推奨）:contentReference[oaicite:0]{index=0}
-- 翻訳：`i18next` + `react-i18next`（React向けの定番）:contentReference[oaicite:1]{index=1}
-- 永続化：`@react-native-async-storage/async-storage`（Expo公式の導入手順あり）:contentReference[oaicite:2]{index=2}
-- Router：Expo Router（`_layout.tsx` が最上流。常に navigator/Slot を描画するのが重要）:contentReference[oaicite:3]{index=3}
+- ロケール取得：`expo-localization`（Expo公式。Androidは復帰時に再取得推奨）
+- 翻訳：`i18next` + `react-i18next`（React向けの定番）
+- 永続化：`@react-native-async-storage/async-storage`（Expo公式の導入手順あり）
+- Router：Expo Router（`_layout.tsx` が最上流。常に navigator/Slot を描画するのが重要）
 
 ---
 
@@ -126,7 +126,7 @@ import type { LanguageCode } from './storage';
 
 /**
  * 端末ロケールを見て、サポート対象（ja/en）に丸める。
- * Expo docs: Androidはアプリ復帰時に getLocales() を取り直す推奨 :contentReference[oaicite:5]{index=5}
+ * Expo docs: Androidはアプリ復帰時に getLocales() を取り直す推奨
  */
 export function detectDeviceLanguage(): LanguageCode {
   const locales = Localization.getLocales();
@@ -165,7 +165,7 @@ let currentPref: LanguagePreference = 'system';
 
 /**
  * i18n 初期化（Rootで1回だけ呼ぶ）
- * react-i18next の初期化は initReactI18next を use。:contentReference[oaicite:6]{index=6}
+ * react-i18next の初期化は initReactI18next を use。
  */
 export async function initI18n() {
   currentPref = await loadLanguagePreference();
@@ -187,7 +187,7 @@ export async function initI18n() {
   }
 
   // Androidでは端末言語がアプリ起動中に変わり得るので、
-  // 「system」選択時のみ、フォアグラウンド復帰で追従する。:contentReference[oaicite:7]{index=7}
+  // 「system」選択時のみ、フォアグラウンド復帰で追従する。
   attachForegroundLocaleSync();
 }
 
@@ -224,7 +224,7 @@ async function syncWithDeviceIfNeeded() {
 
 /**
  * フォアグラウンド復帰でロケール再取得
- * Expo docs: Androidは復帰のたびに getLocales() を再取得推奨 :contentReference[oaicite:8]{index=8}
+ * Expo docs: Androidは復帰のたびに getLocales() を再取得推奨
  */
 let attached = false;
 function attachForegroundLocaleSync() {

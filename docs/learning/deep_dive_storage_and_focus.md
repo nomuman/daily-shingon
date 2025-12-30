@@ -3,8 +3,8 @@
 ## 1) AsyncStorageの性質（まず暗記）
 
 - key-value / 永続 / 非同期
-- **暗号化されない**（機密情報には不向き） :contentReference[oaicite:47]{index=47}
-- RN本体からは削除（コミュニティ版を使う） :contentReference[oaicite:48]{index=48}
+- **暗号化されない**（機密情報には不向き）
+- RN本体からは削除（コミュニティ版を使う）
 
 ## 2) 設計：日付キーが最強
 
@@ -20,5 +20,5 @@
 
 ## 4) 画面復帰時に最新を反映する（useFocusEffect）
 
-- useFocusEffectは “画面がフォーカスされた時” に走る :contentReference[oaicite:49]{index=49}
-- callbackはuseCallbackで安定化（依存配列が壊れると地獄） :contentReference[oaicite:50]{index=50}
+- useFocusEffectは “画面がフォーカスされた時” に走る
+- callbackはuseCallbackで安定化（依存配列が壊れると地獄）

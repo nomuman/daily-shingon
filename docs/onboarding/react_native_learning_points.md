@@ -30,12 +30,12 @@
 ### useMemo：計算結果をキャッシュ（必要なときだけ）
 
 - 例：`complete` 判定（朝3つ全部trueか）を再計算しすぎない
-- 「重い計算」や「依存が明確な計算」の整理に向く :contentReference[oaicite:0]{index=0}
+- 「重い計算」や「依存が明確な計算」の整理に向く
 
 ### useCallback：関数をキャッシュ（依存が変わると更新）
 
 - 例：`refresh` を focus ごとに呼びたいとき
-- `useFocusEffect` と合わせるときは特に重要（毎renderで関数が変わるのを避ける） :contentReference[oaicite:1]{index=1}
+- `useFocusEffect` と合わせるときは特に重要（毎renderで関数が変わるのを避ける）
 
 ---
 
@@ -43,7 +43,7 @@
 
 - `app/` 配下のファイル構造がそのままルートになる（file-based routing）
 - `(tabs)/_layout.tsx` がTabs構成の中心
-- タブを増やす＝`app/(tabs)/xxx.tsx` を作って Tabs に追加 :contentReference[oaicite:2]{index=2}
+- タブを増やす＝`app/(tabs)/xxx.tsx` を作って Tabs に追加
 
 ### routerの使い分け
 
@@ -61,7 +61,7 @@
 
 解決：
 
-- Homeで `useFocusEffect(() => refresh())` を使って「フォーカスされたら再読み込み」する :contentReference[oaicite:3]{index=3}
+- Homeで `useFocusEffect(() => refresh())` を使って「フォーカスされたら再読み込み」する
 
 ---
 
@@ -70,8 +70,8 @@
 ### AsyncStorageの基本
 
 - **key-value**（文字列）で保存する
-- オブジェクトは `JSON.stringify` / `JSON.parse` が基本 :contentReference[oaicite:4]{index=4}
-- 機密データ向きではない（暗号化されない） :contentReference[oaicite:5]{index=5}
+- オブジェクトは `JSON.stringify` / `JSON.parse` が基本
+- 機密データ向きではない（暗号化されない）
 
 ### 今回の設計パターン（超重要）
 
@@ -89,7 +89,7 @@
 ### Pressable：タップできるUI
 
 - “選択カード”に最適
-- `style={[base, selected && selectedStyle]}` で状態に応じて見た目を変える :contentReference[oaicite:6]{index=6}
+- `style={[base, selected && selectedStyle]}` で状態に応じて見た目を変える
 
 ### 条件レンダリング
 
@@ -101,14 +101,14 @@
 ## 7) 入力（TextInput）でハマるポイント
 
 - `multiline` のTextInputは、Androidで縦中央に見えることがある  
-  → `textAlignVertical: 'top'` を付けると揃う :contentReference[oaicite:7]{index=7}
+  → `textAlignVertical: 'top'` を付けると揃う
 
 ---
 
 ## 8) アクセシビリティ（最低限でOK）
 
 - 選択状態のあるUI（3択など）は `accessibilityState={{ selected: true/false }}` を付ける  
-  → 読み上げで状態が伝わる :contentReference[oaicite:8]{index=8}
+  → 読み上げで状態が伝わる
 
 ---
 
@@ -130,12 +130,12 @@
 ## 10) 次に進む前の “確認チェック”（セルフテスト）
 
 - [ ] `useState / useEffect` の役割を説明できる
-- [ ] `useMemo / useCallback` を「必要な場面だけ」使える :contentReference[oaicite:9]{index=9}
-- [ ] `useFocusEffect` で再読み込みのタイミングを作れる :contentReference[oaicite:10]{index=10}
-- [ ] AsyncStorageで「日付キー」保存ができる :contentReference[oaicite:11]{index=11}
-- [ ] Expo RouterのTabs追加ができる :contentReference[oaicite:12]{index=12}
-- [ ] Pressableで選択UIを作れる :contentReference[oaicite:13]{index=13}
-- [ ] multiline TextInput の上揃えを直せる :contentReference[oaicite:14]{index=14}
+- [ ] `useMemo / useCallback` を「必要な場面だけ」使える
+- [ ] `useFocusEffect` で再読み込みのタイミングを作れる
+- [ ] AsyncStorageで「日付キー」保存ができる
+- [ ] Expo RouterのTabs追加ができる
+- [ ] Pressableで選択UIを作れる
+- [ ] multiline TextInput の上揃えを直せる
 
 ---
 

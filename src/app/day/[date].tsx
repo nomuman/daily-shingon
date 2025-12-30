@@ -5,14 +5,109 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '../../components/AppIcon';
 import { parseISODateLocal } from '../../lib/date';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
-import { cardShadow, theme } from '../../ui/theme';
+import { useTheme, useThemedStyles } from '../../ui/theme';
 
 export default function DayDetailScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles((theme, cardShadow) =>
+    StyleSheet.create({
+      safeArea: {
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      },
+      screen: {
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      },
+      content: {
+        padding: theme.spacing.lg,
+        paddingBottom: 40,
+        gap: theme.spacing.md,
+      },
+      headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: theme.spacing.sm,
+      },
+      title: {
+        fontSize: 18,
+        fontFamily: theme.font.display,
+        color: theme.colors.ink,
+      },
+      ghostButton: {
+        minHeight: 36,
+        paddingHorizontal: 12,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+      },
+      ghostButtonPressed: {
+        opacity: 0.85,
+      },
+      ghostButtonText: {
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+        fontWeight: '600',
+      },
+      card: {
+        padding: theme.spacing.lg,
+        borderRadius: theme.radius.lg,
+        backgroundColor: theme.colors.surface,
+        gap: theme.spacing.sm,
+        ...cardShadow,
+      },
+      sectionTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      bodyText: {
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      mutedText: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+      },
+      statusRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: theme.spacing.sm,
+      },
+      rowButtons: {
+        flexDirection: 'row',
+        gap: theme.spacing.sm,
+      },
+      primaryButton: {
+        flex: 1,
+        minHeight: 44,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.ink,
+      },
+      primaryButtonPressed: {
+        opacity: 0.85,
+      },
+      primaryButtonText: {
+        color: theme.colors.surface,
+        fontFamily: theme.font.body,
+        fontWeight: '700',
+      },
+    }),
+  );
   const { date } = useLocalSearchParams<{ date?: string }>();
 
   const [morningDone, setMorningDone] = useState(false);
@@ -54,12 +149,26 @@ export default function DayDetailScreen() {
 
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>{t('dayDetail.statusTitle')}</Text>
-          <Text style={styles.bodyText}>
-            {t('common.morning')}: {morningDone ? t('common.doneEmoji') : t('common.dash')}
-          </Text>
-          <Text style={styles.bodyText}>
-            {t('common.night')}: {nightDone ? t('common.doneEmoji') : t('common.dash')}
-          </Text>
+          <View style={styles.statusRow}>
+            <Text style={styles.bodyText}>
+              {t('common.morning')}: {morningDone ? t('common.done') : t('common.incomplete')}
+            </Text>
+            <AppIcon
+              name={morningDone ? 'check' : 'uncheck'}
+              size={16}
+              color={morningDone ? theme.colors.accentDark : theme.colors.inkMuted}
+            />
+          </View>
+          <View style={styles.statusRow}>
+            <Text style={styles.bodyText}>
+              {t('common.night')}: {nightDone ? t('common.done') : t('common.incomplete')}
+            </Text>
+            <AppIcon
+              name={nightDone ? 'check' : 'uncheck'}
+              size={16}
+              color={nightDone ? theme.colors.accentDark : theme.colors.inkMuted}
+            />
+          </View>
         </View>
 
         <View style={styles.card}>
@@ -89,85 +198,3 @@ export default function DayDetailScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  ghostButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 999,
-    backgroundColor: theme.colors.surfaceMuted,
-  },
-  ghostButtonPressed: {
-    opacity: 0.85,
-  },
-  ghostButtonText: {
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  bodyText: {
-    color: theme.colors.ink,
-    lineHeight: 20,
-    fontFamily: theme.font.body,
-  },
-  mutedText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  rowButtons: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-  },
-  primaryButton: {
-    minHeight: 44,
-    paddingHorizontal: 16,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.ink,
-  },
-  primaryButtonPressed: {
-    opacity: 0.9,
-  },
-  primaryButtonText: {
-    color: theme.colors.surface,
-    fontWeight: '700',
-    fontFamily: theme.font.body,
-  },
-});

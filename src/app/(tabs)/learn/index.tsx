@@ -10,7 +10,7 @@ import { useContentLang } from '../../../content/useContentLang';
 import { getProgramDayInfo } from '../../../lib/programDay';
 import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
 import type { CurriculumDay, SanmitsuKey } from '../../../types/curriculum';
-import { cardShadow, theme } from '../../../ui/theme';
+import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../../ui/theme';
 
 type SelectedAction = {
   key: SanmitsuKey;
@@ -20,6 +20,8 @@ type SelectedAction = {
 export default function LearnScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
 
   const [loading, setLoading] = useState(true);
@@ -203,150 +205,151 @@ export default function LearnScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  content: {
-    padding: theme.spacing.lg,
-    paddingBottom: 40,
-    gap: theme.spacing.md,
-  },
-  loading: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emptyState: {
-    flex: 1,
-    padding: theme.spacing.lg,
-    justifyContent: 'center',
-  },
-  emptyText: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  bodyText: {
-    lineHeight: 20,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  mutedText: {
-    opacity: 0.75,
-    lineHeight: 20,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  option: {
-    minHeight: 44,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: theme.radius.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  optionSelected: {
-    borderColor: theme.colors.ink,
-    borderWidth: 2,
-  },
-  optionPressed: {
-    opacity: 0.85,
-  },
-  optionText: {
-    fontWeight: '500',
-    lineHeight: 20,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-  optionTextSelected: {
-    fontWeight: '700',
-  },
-  optionMeta: {
-    flexDirection: 'row',
-    gap: 8,
-    marginTop: 6,
-  },
-  optionTag: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  footnote: {
-    fontSize: 12,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  sourceItem: {
-    opacity: 0.8,
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  primaryButton: {
-    minHeight: 48,
-    paddingHorizontal: 16,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.ink,
-  },
-  primaryButtonPressed: {
-    opacity: 0.9,
-  },
-  primaryButtonText: {
-    color: theme.colors.surface,
-    fontWeight: '700',
-    fontFamily: theme.font.body,
-  },
-  linkRow: {
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-    marginTop: theme.spacing.sm,
-  },
-  linkButton: {
-    flex: 1,
-    minHeight: 44,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-  },
-  linkButtonPressed: {
-    opacity: 0.85,
-  },
-  linkButtonText: {
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-    fontWeight: '600',
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    screen: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    content: {
+      padding: theme.spacing.lg,
+      paddingBottom: 40,
+      gap: theme.spacing.md,
+    },
+    loading: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    emptyState: {
+      flex: 1,
+      padding: theme.spacing.lg,
+      justifyContent: 'center',
+    },
+    emptyText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    title: {
+      fontSize: 20,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    card: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    cardTitle: {
+      fontSize: 18,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    bodyText: {
+      lineHeight: 20,
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    mutedText: {
+      opacity: 0.75,
+      lineHeight: 20,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    option: {
+      minHeight: 44,
+      paddingVertical: 12,
+      paddingHorizontal: 12,
+      borderRadius: theme.radius.md,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.surface,
+    },
+    optionSelected: {
+      borderColor: theme.colors.ink,
+      borderWidth: 2,
+    },
+    optionPressed: {
+      opacity: 0.85,
+    },
+    optionText: {
+      fontWeight: '500',
+      lineHeight: 20,
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    optionTextSelected: {
+      fontWeight: '700',
+    },
+    optionMeta: {
+      flexDirection: 'row',
+      gap: 8,
+      marginTop: 6,
+    },
+    optionTag: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    footnote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    sourceItem: {
+      opacity: 0.8,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    primaryButton: {
+      minHeight: 48,
+      paddingHorizontal: 16,
+      borderRadius: theme.radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.ink,
+    },
+    primaryButtonPressed: {
+      opacity: 0.9,
+    },
+    primaryButtonText: {
+      color: theme.colors.surface,
+      fontWeight: '700',
+      fontFamily: theme.font.body,
+    },
+    linkRow: {
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+      marginTop: theme.spacing.sm,
+    },
+    linkButton: {
+      flex: 1,
+      minHeight: 44,
+      borderRadius: theme.radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.surface,
+    },
+    linkButtonPressed: {
+      opacity: 0.85,
+    },
+    linkButtonText: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+      fontWeight: '600',
+    },
+  });

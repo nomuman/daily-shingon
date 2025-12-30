@@ -6,11 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getCardPacks } from '../../../../content/cards';
 import { useContentLang } from '../../../../content/useContentLang';
-import { cardShadow, theme } from '../../../../ui/theme';
+import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function CardPackListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const styles = useThemedStyles(createStyles);
   const lang = useContentLang();
   const packs = useMemo(() => getCardPacks(lang), [lang]);
 
@@ -43,47 +44,48 @@ export default function CardPackListScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  listContent: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingBottom: 24,
-    gap: theme.spacing.md,
-  },
-  header: {
-    paddingTop: theme.spacing.sm,
-    gap: 6,
-  },
-  title: {
-    fontSize: 22,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  subtitle: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-  },
-  card: {
-    padding: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.surface,
-    gap: theme.spacing.sm,
-    ...cardShadow,
-  },
-  cardPressed: {
-    opacity: 0.9,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontFamily: theme.font.display,
-    color: theme.colors.ink,
-  },
-  cardMeta: {
-    color: theme.colors.inkMuted,
-    fontFamily: theme.font.body,
-    lineHeight: 20,
-  },
-});
+const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    listContent: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingBottom: 24,
+      gap: theme.spacing.md,
+    },
+    header: {
+      paddingTop: theme.spacing.sm,
+      gap: 6,
+    },
+    title: {
+      fontSize: 22,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    subtitle: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    card: {
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.lg,
+      backgroundColor: theme.colors.surface,
+      gap: theme.spacing.sm,
+      ...cardShadow,
+    },
+    cardPressed: {
+      opacity: 0.9,
+    },
+    cardTitle: {
+      fontSize: 16,
+      fontFamily: theme.font.display,
+      color: theme.colors.ink,
+    },
+    cardMeta: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      lineHeight: 20,
+    },
+  });

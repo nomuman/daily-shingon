@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
-import { theme } from '../ui/theme';
+import { useTheme, useThemedStyles } from '../ui/theme';
 
 type SearchInputProps = {
   value: string;
@@ -11,6 +11,28 @@ type SearchInputProps = {
 
 export default function SearchInput({ value, onChangeText, placeholder }: SearchInputProps) {
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
+  const styles = useThemedStyles((theme) =>
+    StyleSheet.create({
+      wrap: {
+        paddingHorizontal: theme.spacing.lg,
+        paddingTop: theme.spacing.md,
+        paddingBottom: theme.spacing.sm,
+      },
+      input: {
+        minHeight: 44,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        borderRadius: theme.radius.md,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        fontSize: 16,
+        backgroundColor: theme.colors.surface,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+    }),
+  );
   const resolvedPlaceholder = placeholder ?? t('common.search');
 
   return (
@@ -28,23 +50,3 @@ export default function SearchInput({ value, onChangeText, placeholder }: Search
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrap: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.md,
-    paddingBottom: theme.spacing.sm,
-  },
-  input: {
-    minHeight: 44,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    backgroundColor: theme.colors.surface,
-    color: theme.colors.ink,
-    fontFamily: theme.font.body,
-  },
-});
