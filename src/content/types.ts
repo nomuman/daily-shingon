@@ -1,3 +1,12 @@
+/**
+ * Purpose: Shared type definitions for content loaders (cards/glossary). / 目的: コンテンツローダー共通の型定義。
+ * Responsibilities: define shapes for packs, cards, glossary entries, and metadata. / 役割: パック/カード/用語/メタデータの形を定義。
+ * Inputs: content JSON/TS modules. / 入力: コンテンツJSON/TSモジュール。
+ * Outputs: TypeScript types for validation and IDE safety. / 出力: 検証とIDE支援の型。
+ * Dependencies: ContentLang enum. / 依存: ContentLang列挙。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: optional metadata fields and optional content sub-sections. / 例外: 任意メタ情報や任意セクション。
+ */
 import type { ContentLang } from './lang';
 
 export type CardLevel = 'beginner' | 'intermediate' | 'advanced';

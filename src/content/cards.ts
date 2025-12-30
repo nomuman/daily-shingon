@@ -1,3 +1,12 @@
+/**
+ * Purpose: Card pack registry and lookup utilities. / 目的: カードパックの登録と検索ユーティリティ。
+ * Responsibilities: map language to packs, expose summaries, and fetch packs/cards by ID. / 役割: 言語→パックの対応、概要一覧、ID検索。
+ * Inputs: raw card pack JSON, language code, pack/card IDs. / 入力: 生JSON、言語コード、パック/カードID。
+ * Outputs: pack summaries and specific card data. / 出力: パック概要と個別カード。
+ * Dependencies: content JSON modules and types. / 依存: コンテンツJSONモジュールと型。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: unknown lang/pack/card IDs return undefined or fall back to ja. / 例外: 不明言語/IDはundefinedまたはjaにフォールバック。
+ */
 import type { CardPackJson } from './types';
 import type { ContentLang } from './lang';
 
@@ -14,6 +23,7 @@ import textsEn from '../../content/cards/04_texts.en.json';
 import uxJa from '../../content/cards/05_app_integration.ja.json';
 import uxEn from '../../content/cards/05_app_integration.en.json';
 
+// Static registry of packs per language. / 言語別パックの静的レジストリ。
 const PACKS_BY_LANG: Record<ContentLang, CardPackJson[]> = {
   ja: [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa],
   en: [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn],
@@ -26,6 +36,7 @@ export type CardPackSummary = {
   count: number;
 };
 
+// Return lightweight summaries for list screens. / 一覧表示用の軽量サマリー。
 export function getCardPacks(lang: ContentLang = 'ja'): CardPackSummary[] {
   const packs = PACKS_BY_LANG[lang] ?? PACKS_BY_LANG.ja;
   return packs.map((p) => ({
@@ -36,6 +47,7 @@ export function getCardPacks(lang: ContentLang = 'ja'): CardPackSummary[] {
   }));
 }
 
+// Overload: default language when only packId is provided. / packIdのみの場合は既定言語を使用。
 export function getPackById(packId: string): CardPackJson | undefined;
 export function getPackById(lang: ContentLang, packId: string): CardPackJson | undefined;
 export function getPackById(
@@ -48,6 +60,7 @@ export function getPackById(
   return packs.find((p) => p.meta.pack_id === packId);
 }
 
+// Overload: default language when only packId/cardId are provided. / packId/cardIdのみなら既定言語。
 export function getCardById(packId: string, cardId: string): {
   pack?: CardPackJson;
   card?: CardPackJson['cards'][number];

@@ -1,4 +1,14 @@
 {
+  "_comment": {
+    "Purpose": "JA translation strings for the \"common\" namespace. / 目的: common名前空間の日本語翻訳文字列。",
+    "Responsibilities": "Provide UI copy grouped by feature/area for i18n. / 役割: i18n用に機能/領域別の文言を提供。",
+    "Inputs": "String keys referenced by screens and components. / 入力: 画面/コンポーネントで参照されるキー。",
+    "Outputs": "Translation map consumed by i18next. / 出力: i18nextで利用される翻訳マップ。",
+    "Dependencies": "i18next initialization in lib/i18n. / 依存: lib/i18nの初期化。",
+    "SideEffects": "None. / 副作用: なし。",
+    "EdgeCases": "Missing keys fall back to the key string. / 例外: 欠けたキーはキー文字列にフォールバック。",
+    "TopLevelKeys": "app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
+  },
   "app": {
     "name": "まいにち真言"
   },
@@ -11,7 +21,7 @@
   },
   "common": {
     "search": "検索",
-    "all": "全部",
+    "all": "すべて",
     "retry": "再試行",
     "back": "戻る",
     "done": "完了",
@@ -22,11 +32,11 @@
     "selected": "選択中",
     "recommended": "おすすめ",
     "reset": "リセット",
-    "review": "見直す",
-    "do": "やる",
+    "review": "振り返る",
+    "do": "始める",
     "cancel": "キャンセル",
     "loading": "読み込み中…",
-    "loadingSimple": "読み込み中...",
+    "loadingSimple": "読み込み中…",
     "unknown": "不明",
     "unknownDate": "日付不明",
     "none": "なし",
@@ -53,11 +63,11 @@
   },
   "home": {
     "kicker": "今日",
-    "dayLabel": "Day {{day}}",
+    "dayLabel": "{{day}}日目",
     "badgeComplete": "完走",
     "badgeOngoing": "継続中",
-    "statusComplete": "完走後モードです。必要なら設定からリセットできます。",
-    "statusReturn": "おかえり。戻れたら十分。今日は短くでもOK。",
+    "statusComplete": "30日を完走しました。必要なら設定からリセットできます。",
+    "statusReturn": "おかえり。戻れたら十分。今日は短くでも大丈夫。",
     "resetFromSettings": "設定でリセット",
     "nextAction": {
       "morning": "朝を整える",
@@ -67,7 +77,7 @@
     },
     "primaryDone": "今日は十分できています",
     "yearTitle": "365日（積み上げ）",
-    "yearSubtitle": "勤行が終わった日は、静かに色が増えていく。",
+    "yearSubtitle": "実践が終わった日は、静かに色が増えていく。",
     "yearBadge": "進捗",
     "yearBody": "空白があっても、戻れば続きになる。今日の一歩を静かに足す。",
     "yearView": "365日を見る",
@@ -79,25 +89,25 @@
     "selectionDone": "選択済み",
     "selectionNone": "未選択",
     "selectionDetail": "・[{{key}}] {{text}}",
-    "selectionEmpty": "まだ選んでない。Learnで「今日はこれでいく」を押してね。",
-    "learnCta": "Learnへ",
+    "selectionEmpty": "まだ選んでいません。学びで「今日はこれでいく」を押してください。",
+    "learnCta": "学びへ",
     "selectionClear": "選択を解除",
     "flowNightTitle": "夜のしめ（懺悔→発願→回向）",
-    "flowNightBody": "45秒で振り返りを閉じる。",
+    "flowNightBody": "45秒で一日を閉じる。",
     "recentTitle": "直近7日（朝 / 夜）",
     "recentCta": "365日へ",
     "historyDate": "日付",
     "historyMemo": "メモ",
     "historyFootnote": "※これはスコアではなく「ふり返りの足場」。抜けても責めない。",
-    "footerNote": "※ タブ移動・戻る操作で最新を反映するため、フォーカス時に再読み込みしています。"
+    "footerNote": "※ タブ移動や戻る操作で最新を反映するため、画面に戻った時点で再読み込みします。"
   },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
-    "completeNotice": "30日を完走した。ここからは薄く長く。必要なら開始日をリセットしてもう一周もできる。",
+    "completeNotice": "30日を完走しました。ここからは薄く長く。必要なら開始日をリセットしてもう一周できます。",
     "example": "例：{{text}}",
     "actionTitle": "今日の行い（1つ選ぶ）",
     "actionOption": "・[{{key}}] {{text}}",
-    "actionFootnote": "※おすすめは目安。今日はあなたの感覚で選んでOK。",
+    "actionFootnote": "※おすすめは目安。今日はあなたの感覚で選んで大丈夫。",
     "nightQuestion": "夜の問い",
     "sources": "参考",
     "moreTitle": "さらに学ぶ",
@@ -105,14 +115,14 @@
     "moreCards": "学びカード",
     "moreGlossary": "用語集",
     "confirmAction": "今日はこれでいく",
-    "emptyCard": "今日のカードを読み込めなかった。"
+    "emptyCard": "今日のカードを読み込めませんでした。"
   },
   "learnCards": {
     "title": "学びカード",
-    "subtitle": "短い学び + 行い + 問い",
-    "count": "{{count}}枚",
-    "search": "カード検索",
-    "packNotFound": "packId が見つからない: {{packId}}",
+    "subtitle": "短い学び＋行い＋問い",
+    "count": "{{total}}枚",
+    "search": "カードを検索",
+    "packNotFound": "パックが見つかりません: {{packId}}",
     "resultCount": "{{shown}} / {{total}} 枚",
     "typeLearn": "学び",
     "typePractice": "実践",
@@ -125,15 +135,15 @@
     "summary": "要約",
     "body": "本文",
     "tags": "タグ",
-    "microPractice": "ミクロ実践",
+    "microPractice": "小さな実践",
     "questions": "問い",
     "sources": "出典"
   },
   "glossary": {
-    "search": "用語検索（例：三密）",
+    "search": "用語を検索（例：三密）",
     "title": "用語集",
     "subtitle": "わからない言葉をすぐ引ける",
-    "count": "{{count}} 件",
+    "count": "{{total}} 件",
     "termNotFound": "用語が見つからない: {{termId}}",
     "short": "短い説明",
     "definition": "定義",
@@ -147,9 +157,9 @@
     }
   },
   "morning": {
-    "title": "Morning（朝の整え）",
+    "title": "朝（整え）",
     "policyTitle": "今日の方針",
-    "policyBody": "まず「身・口・意」を整える。完璧じゃなくていい。できた分だけでOK。",
+    "policyBody": "まず「身・口・意」を整える。完璧でなくていい。できた分だけで大丈夫。",
     "checkTitle": "チェック（3つ）",
     "check": {
       "body": {
@@ -158,7 +168,7 @@
       },
       "speech": {
         "title": "口（ことば）",
-        "desc": "ひとつだけ、やさしい言葉を選ぶ。短く、丁寧に。"
+        "desc": "ひとつだけやさしい言葉を選ぶ。短く、丁寧に。"
       },
       "mind": {
         "title": "意（こころ）",
@@ -169,10 +179,10 @@
     "resetButton": "今日の朝チェックをリセット"
   },
   "night": {
-    "title": "Night（夜のしめ）",
+    "title": "夜（しめ）",
     "todayLearn": "今日の学び",
     "nightQuestion": "夜の問い",
-    "stepsTitle": "3ステップ（短くでOK）",
+    "stepsTitle": "3ステップ（短くてOK）",
     "steps": {
       "sange": {
         "title": "懺悔（ざんげ）",
@@ -188,11 +198,11 @@
       }
     },
     "noteTitle": "ひとこと（任意）",
-    "noteHint": "※長文不要。1行でもOK。空でもOK。",
+    "noteHint": "※長文不要。1行でもOK。空欄でもOK。",
     "notePlaceholder": "例：言い方がきつかった。明日は一呼吸おく。",
     "saveButton": "夜のしめを保存して戻る",
     "resetButton": "今日の夜チェックをリセット",
-    "footerNote": "※ アクセシビリティ対応として選択状態を読み上げできるようにしています。"
+    "footerNote": "※ アクセシビリティ対応として選択状態の読み上げに対応しています。"
   },
   "settings": {
     "kicker": "設定",
@@ -234,12 +244,17 @@
     "systemSettingsFail": "設定アプリを開けませんでした。",
     "reset": {
       "title": "開始日をリセット",
-      "body": "開始日・今日の行い・朝/夜ログ・復帰判定を削除します。よろしいですか？",
+      "body": "開始日、今日の行い、朝/夜ログ、復帰判定を削除します。よろしいですか？",
       "confirm": "リセットする",
       "fail": "リセットに失敗しました。",
       "sectionTitle": "リセット",
-      "sectionBody": "開始日と当日の記録を削除します。戻せません。",
+      "sectionBody": "開始日と当日の記録を削除します。元に戻せません。",
       "button": "開始日をリセット"
+    },
+    "updates": {
+      "title": "ロードマップ / 更新情報",
+      "body": "これからの予定と最近の改善点を確認します。",
+      "open": "ロードマップを見る"
     },
     "legal": {
       "title": "法的情報",
@@ -251,7 +266,32 @@
     },
     "contact": {
       "title": "お問い合わせ",
-      "body": "お問い合わせ先は後で設定します。"
+      "body": "お問い合わせはGitHub Issuesで受け付けています。",
+      "open": "お問い合わせページを開く",
+      "missingUrl": "お問い合わせページのURLが設定されていません。",
+      "openFail": "お問い合わせページを開けませんでした。"
+    }
+  },
+  "updates": {
+    "title": "ロードマップと更新情報",
+    "subtitle": "これからの予定と最近の改善点をまとめています。",
+    "roadmap": {
+      "title": "ロードマップ",
+      "body": "進行中/検討中の項目。進捗に合わせて更新します。",
+      "empty": "ロードマップは準備中です。",
+      "detailTitle": "設計メモ",
+      "detailHint": "項目をタップすると、考えている設計が表示されます。",
+      "status": {
+        "wip": "WIP",
+        "beta": "ベータ",
+        "idea": "案",
+        "done": "完了"
+      }
+    },
+    "changelog": {
+      "title": "更新情報",
+      "body": "最近の改善と修正。",
+      "empty": "まだ更新情報がありません。"
     }
   },
   "licenses": {
@@ -262,14 +302,14 @@
   },
   "history": {
     "title": "365日",
-    "headerBody": "勤行が終わった日（朝/夜/両方/メモ）を、静かに積み上げる可視化。",
-    "count1": "朝or夜",
-    "count2": "朝+夜",
-    "count3": "朝+夜+メモ",
+    "headerBody": "実践が終わった日（朝/夜/両方/メモ）を、静かに積み上げる可視化。",
+    "count1": "朝または夜",
+    "count2": "朝と夜",
+    "count3": "朝・夜・メモ",
     "tooltipUnknown": "日付不明：なし",
     "tooltipLabel": "{{date}}：{{status}}",
-    "tooltipTitle": "ツールチップ",
-    "tooltipHint": "長押しで日付ラベルを表示",
+    "tooltipTitle": "詳細",
+    "tooltipHint": "長押しで日付を表示",
     "legendTitle": "凡例",
     "legend0": "0: なし",
     "legend1": "1: 朝or夜",
@@ -279,7 +319,7 @@
   },
   "dayDetail": {
     "statusTitle": "状態",
-    "noteTitle": "夜のひと言",
+    "noteTitle": "夜のひとこと",
     "noteEmpty": "（なし）",
     "goMorning": "朝へ",
     "goNight": "夜へ"
@@ -288,11 +328,11 @@
     "channelName": "毎日のリマインダー",
     "morning": {
       "title": "朝の整え",
-      "body": "3分だけ整えよう（身・口・意）"
+      "body": "3分だけ整える（身・口・意）"
     },
     "night": {
       "title": "夜のしめ",
-      "body": "45秒で閉じよう（懺悔→発願→回向）"
+      "body": "45秒で閉じる（懺悔→発願→回向）"
     }
   }
 }

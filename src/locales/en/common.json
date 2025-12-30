@@ -1,4 +1,14 @@
 {
+  "_comment": {
+    "Purpose": "EN translation strings for the \"common\" namespace. / 目的: common名前空間の英語翻訳文字列。",
+    "Responsibilities": "Provide UI copy grouped by feature/area for i18n. / 役割: i18n用に機能/領域別の文言を提供。",
+    "Inputs": "String keys referenced by screens and components. / 入力: 画面/コンポーネントで参照されるキー。",
+    "Outputs": "Translation map consumed by i18next. / 出力: i18nextで利用される翻訳マップ。",
+    "Dependencies": "i18next initialization in lib/i18n. / 依存: lib/i18nの初期化。",
+    "SideEffects": "None. / 副作用: なし。",
+    "EdgeCases": "Missing keys fall back to the key string. / 例外: 欠けたキーはキー文字列にフォールバック。",
+    "TopLevelKeys": "app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
+  },
   "app": {
     "name": "Daily Shingon"
   },
@@ -16,18 +26,18 @@
     "back": "Back",
     "done": "Done",
     "doneEmoji": "Done",
-    "incomplete": "Not complete",
+    "incomplete": "Incomplete",
     "status": "Status",
     "statusWithValue": "Status: {{value}}",
     "selected": "Selected",
     "recommended": "Recommended",
     "reset": "Reset",
     "review": "Review",
-    "do": "Start",
+    "do": "Begin",
     "cancel": "Cancel",
     "loading": "Loading...",
     "loadingSimple": "Loading...",
-    "unknown": "unknown",
+    "unknown": "Unknown",
     "unknownDate": "Unknown date",
     "none": "None",
     "dash": "—",
@@ -56,8 +66,8 @@
     "dayLabel": "Day {{day}}",
     "badgeComplete": "Completed",
     "badgeOngoing": "In progress",
-    "statusComplete": "You've completed the 30 days. Reset from Settings if you want to start again.",
-    "statusReturn": "Welcome back. If you made it back, that's enough. Keep it short today.",
+    "statusComplete": "You've completed 30 days. Reset in Settings to start another round.",
+    "statusReturn": "Welcome back. Returning is enough. Keep it short today.",
     "resetFromSettings": "Reset in Settings",
     "nextAction": {
       "morning": "Align the morning",
@@ -66,30 +76,30 @@
       "done": "That's enough for today"
     },
     "primaryDone": "You've done enough today",
-    "yearTitle": "365 Days (accumulation)",
-    "yearSubtitle": "On days you finish practice, the colors quietly add up.",
+    "yearTitle": "365 Days (Quiet Accumulation)",
+    "yearSubtitle": "On days you finish, the colors quietly add up.",
     "yearBadge": "Progress",
     "yearBody": "Even with gaps, returning continues the line. Add one quiet step today.",
     "yearView": "View 365 days",
     "yearDetail": "Details",
     "flowTitle": "Today's flow",
     "flowMorningTitle": "Morning alignment (Body / Speech / Mind)",
-    "flowMorningBody": "Align posture and breath in 3 minutes.",
+    "flowMorningBody": "Align posture and breath in about 3 minutes.",
     "flowLearnTitle": "Today's action",
     "selectionDone": "Selected",
     "selectionNone": "Not selected",
     "selectionDetail": "• [{{key}}] {{text}}",
-    "selectionEmpty": "Not chosen yet. In Learn, tap \"I'm going with this today.\"",
+    "selectionEmpty": "Not chosen yet. In Learn, tap \"I'll go with this today.\"",
     "learnCta": "Go to Learn",
     "selectionClear": "Clear selection",
     "flowNightTitle": "Night close (Repent -> Vow -> Dedicate)",
-    "flowNightBody": "Close the review in 45 seconds.",
+    "flowNightBody": "Close the day in 45 seconds.",
     "recentTitle": "Last 7 days (Morning / Night)",
     "recentCta": "Go to 365",
     "historyDate": "Date",
     "historyMemo": "Memo",
-    "historyFootnote": "This isn't a score - it's a scaffold for reflection. No blame for gaps.",
-    "footerNote": "Data refreshes on focus so tab switches/back actions show the latest."
+    "historyFootnote": "This isn't a score - just a scaffold for reflection. Gaps are fine.",
+    "footerNote": "Data refreshes when this screen comes into focus, so tab switches/back actions show the latest."
   },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
@@ -97,20 +107,20 @@
     "example": "Example: {{text}}",
     "actionTitle": "Today's action (choose one)",
     "actionOption": "• [{{key}}] {{text}}",
-    "actionFootnote": "Recommended is just a guide. Choose by your own sense today.",
+    "actionFootnote": "Recommended is just a guide. Choose what feels right today.",
     "nightQuestion": "Night question",
     "sources": "Sources",
     "moreTitle": "Learn more",
     "moreBody": "Browse cards and the glossary.",
     "moreCards": "Learning cards",
     "moreGlossary": "Glossary",
-    "confirmAction": "I'm going with this today",
+    "confirmAction": "I'll go with this today",
     "emptyCard": "Couldn't load today's card."
   },
   "learnCards": {
     "title": "Learning Cards",
     "subtitle": "Short learning + action + question",
-    "count": "{{count}} cards",
+    "count": "{{total}} cards",
     "search": "Search cards",
     "packNotFound": "Pack not found: {{packId}}",
     "resultCount": "{{shown}} / {{total}} cards",
@@ -123,7 +133,7 @@
     },
     "cardNotFound": "Card not found: {{packId}}/{{cardId}}",
     "summary": "Summary",
-    "body": "Body",
+    "body": "Text",
     "tags": "Tags",
     "microPractice": "Micro practice",
     "questions": "Questions",
@@ -133,7 +143,7 @@
     "search": "Search terms (e.g., Sanmitsu)",
     "title": "Glossary",
     "subtitle": "Look up unfamiliar terms quickly",
-    "count": "{{count}} entries",
+    "count": "{{total}} entries",
     "termNotFound": "Term not found: {{termId}}",
     "short": "Short description",
     "definition": "Definition",
@@ -149,7 +159,7 @@
   "morning": {
     "title": "Morning (Align)",
     "policyTitle": "Today's intention",
-    "policyBody": "Align body, speech, and mind. It doesn't need to be perfect—only what you can do.",
+    "policyBody": "Align body, speech, and mind. It doesn't need to be perfect - only what you can do.",
     "checkTitle": "Checklist (3)",
     "check": {
       "body": {
@@ -176,15 +186,15 @@
     "steps": {
       "sange": {
         "title": "Repent",
-        "desc": "Acknowledge one misalignment today—no excuses, no blame."
+        "desc": "Acknowledge one misalignment today - no excuses, no blame."
       },
       "hotsugan": {
         "title": "Vow",
-        "desc": "Decide one concrete step for tomorrow—small and specific."
+        "desc": "Decide one concrete step for tomorrow - small and specific."
       },
       "ekou": {
         "title": "Dedicate",
-        "desc": "Pass today's good beyond yourself—wish someone well."
+        "desc": "Pass today's good beyond yourself - wish someone well."
       }
     },
     "noteTitle": "One line (optional)",
@@ -197,7 +207,7 @@
   "settings": {
     "kicker": "Settings",
     "headerTitle": "Quiet support for your daily alignment",
-    "headerBody": "Adjust notifications and the start date here—only when you need it.",
+    "headerBody": "Adjust notifications and the start date here - only when you need it.",
     "language": {
       "title": "Language",
       "description": "Choose the language used in the app.",
@@ -241,6 +251,11 @@
       "sectionBody": "Deletes the start date and today's records. This cannot be undone.",
       "button": "Reset start date"
     },
+    "updates": {
+      "title": "Roadmap & changelog",
+      "body": "Review what's planned and the latest improvements.",
+      "open": "View roadmap"
+    },
     "legal": {
       "title": "Legal",
       "body": "Review policies and open source licenses.",
@@ -251,7 +266,32 @@
     },
     "contact": {
       "title": "Contact",
-      "body": "Contact details will be added later."
+      "body": "We accept inquiries via GitHub Issues.",
+      "open": "Open contact page",
+      "missingUrl": "Contact page URL is not set yet.",
+      "openFail": "Couldn't open the contact page."
+    }
+  },
+  "updates": {
+    "title": "Roadmap & Changelog",
+    "subtitle": "A quick view of what's coming and what just improved.",
+    "roadmap": {
+      "title": "Roadmap",
+      "body": "Items in progress or under consideration, updated as we go.",
+      "empty": "Roadmap is being prepared.",
+      "detailTitle": "Design notes",
+      "detailHint": "Tap an item to view the current design idea.",
+      "status": {
+        "wip": "WIP",
+        "beta": "Beta",
+        "idea": "Idea",
+        "done": "Done"
+      }
+    },
+    "changelog": {
+      "title": "Changelog",
+      "body": "Recent improvements and fixes.",
+      "empty": "No updates yet."
     }
   },
   "licenses": {
@@ -268,7 +308,7 @@
     "count3": "Morning + Night + Memo",
     "tooltipUnknown": "Unknown date: none",
     "tooltipLabel": "{{date}}: {{status}}",
-    "tooltipTitle": "Tooltip",
+    "tooltipTitle": "Details",
     "tooltipHint": "Long-press to show date label",
     "legendTitle": "Legend",
     "legend0": "0: None",

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Glossary term detail screen. / 目的: 用語詳細画面。
+ * Responsibilities: resolve term data and render definition, notes, related terms, and sources. / 役割: 用語データ解決、定義/補足/関連/出典の表示。
+ * Inputs: route param termId, glossary data, translations. / 入力: termIdパラメータ、用語集データ、翻訳文言。
+ * Outputs: detailed term UI. / 出力: 用語詳細UI。
+ * Dependencies: glossary content loaders, Expo Router params, i18n. / 依存: 用語集ローダー、Expo Routerパラメータ、i18n。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: missing termId or term not found. / 例外: termId未指定、用語未発見。
+ */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,6 +25,7 @@ export default function GlossaryDetailScreen() {
   const glossary = getGlossary(lang);
   const entry = resolvedTermId ? getGlossaryEntry(lang, resolvedTermId) : undefined;
 
+  // Guard against unknown term IDs. / 不明なtermIdをガード。
   if (!entry) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -86,6 +96,7 @@ export default function GlossaryDetailScreen() {
   );
 }
 
+// Map level enum to i18n label. / レベル列挙をi18nラベルに変換。
 function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediate' | 'advanced') {
   switch (level) {
     case 'beginner':

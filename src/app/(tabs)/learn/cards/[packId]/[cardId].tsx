@@ -1,3 +1,12 @@
+/**
+ * Purpose: Card detail screen for a specific learn/practice card. / 目的: 学び/実践カード詳細画面。
+ * Responsibilities: resolve pack + card, render sections, and show references. / 役割: パック/カード解決、各セクション描画、参照表示。
+ * Inputs: route params (packId/cardId), content data, translations. / 入力: ルートパラメータ、コンテンツデータ、翻訳文言。
+ * Outputs: detailed card UI. / 出力: 詳細UI。
+ * Dependencies: content loaders, Expo Router params, themed styles, i18n. / 依存: コンテンツローダー、Expo Routerパラメータ、テーマスタイル、i18n。
+ * Side effects: none. / 副作用: なし。
+ * Edge cases: missing pack/card IDs, missing optional fields. / 例外: packId/cardId未指定、任意項目欠落。
+ */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,11 +27,13 @@ export default function CardDetailScreen() {
   const resolvedPackId = Array.isArray(packId) ? packId[0] : packId;
   const resolvedCardId = Array.isArray(cardId) ? cardId[0] : cardId;
 
+  // Resolve pack + card based on route params. / ルートパラメータからパック/カードを解決。
   const { pack, card } =
     resolvedPackId && resolvedCardId
       ? getCardById(lang, resolvedPackId, resolvedCardId)
       : { pack: undefined, card: undefined };
 
+  // Guard against unknown IDs. / 不明IDをガード。
   if (!pack || !card) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -117,6 +128,7 @@ export default function CardDetailScreen() {
   );
 }
 
+// Map level enum to i18n label. / レベル列挙をi18nラベルに変換。
 function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediate' | 'advanced') {
   switch (level) {
     case 'beginner':

@@ -1,3 +1,12 @@
+/**
+ * Purpose: History screen with a 365-day contribution heatmap and legend. / 目的: 365日ヒートマップと凡例の履歴画面。
+ * Responsibilities: load heatmap values, render chart, handle day navigation, and show tooltips. / 役割: ヒートマップ読込、描画、日別遷移、ツールチップ表示。
+ * Inputs: stored history data, theme tokens, translations. / 入力: 保存履歴データ、テーマトークン、翻訳文言。
+ * Outputs: chart UI + navigation to per-day detail. / 出力: チャートUIと日別詳細への遷移。
+ * Dependencies: react-native-chart-kit, heatmap data loader, Expo Router, i18n. / 依存: react-native-chart-kit、ヒートマップローダー、Expo Router、i18n。
+ * Side effects: data load from storage; navigation on day press. / 副作用: ストレージ読込、日付タップで遷移。
+ * Edge cases: empty data, invalid tooltip data, screen width changes. / 例外: データなし、ツールチップ不正、画面幅変化。
+ */
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -11,6 +20,7 @@ import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
+// Layout constants for the contribution graph. / ヒートマップレイアウト定数。
 const screenWidth = Dimensions.get('window').width;
 const chartDays = 365;
 const chartSquareSize = 12;
@@ -23,6 +33,7 @@ const chartHeight =
   (chartSquareSize + chartMonthLabelGutter - chartGutterSize) +
   36;
 
+// Compute required graph width so all weeks fit without clipping. / 週表示が欠けない幅を算出。
 const getContributionGraphWidth = (endDate: Date) => {
   const startDate = new Date(endDate);
   startDate.setDate(endDate.getDate() - (chartDays - 1));
@@ -33,6 +44,7 @@ const getContributionGraphWidth = (endDate: Date) => {
   return chartPaddingLeft + weekCount * squareSizeWithGutter - chartGutterSize;
 };
 
+// Map practice count to human-friendly label. / 実践回数をラベル化。
 const labelForCount = (
   t: (key: string, options?: Record<string, unknown>) => string,
   count: number,
@@ -43,6 +55,7 @@ const labelForCount = (
   return t('common.none');
 };
 
+// Normalize date input into a label for tooltips. / ツールチップ用の日付表記へ正規化。
 const formatDateLabel = (t: (key: string) => string, date: string | Date | null | undefined) => {
   if (!date) return t('common.unknownDate');
   if (date instanceof Date) return toISODateLocal(date);
@@ -50,6 +63,7 @@ const formatDateLabel = (t: (key: string) => string, date: string | Date | null 
   return t('common.unknownDate');
 };
 
+// Build tooltip string for chart accessibility + long-press. / アクセシビリティと長押し用のツールチップ文言。
 const buildTooltipLabel = (
   t: (key: string, options?: Record<string, unknown>) => string,
   value: unknown,
@@ -62,6 +76,7 @@ const buildTooltipLabel = (
   return t('history.tooltipLabel', { date: dateLabel, status: labelForCount(t, count) });
 };
 
+// Shared entrance animation for sections. / セクション共通の登場アニメーション。
 const entranceStyle = (anim: Animated.Value) => ({
   opacity: anim,
   transform: [
@@ -91,6 +106,7 @@ export default function HistoryScreen() {
   const graphAnim = useRef(new Animated.Value(0)).current;
   const legendAnim = useRef(new Animated.Value(0)).current;
 
+  // Load heatmap values when focused or refreshed. / フォーカス時・更新時に値を読込。
   const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -104,12 +120,14 @@ export default function HistoryScreen() {
     }
   }, [t]);
 
+  // Refresh on focus to reflect recent changes. / フォーカス時に最新状態へ更新。
   useFocusEffect(
     useCallback(() => {
       void refresh();
     }, [refresh]),
   );
 
+  // Stagger in header/graph/legend visuals. / ヘッダー・グラフ・凡例を順次表示。
   useEffect(() => {
     Animated.stagger(140, [
       Animated.timing(headerAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
@@ -152,6 +170,7 @@ export default function HistoryScreen() {
                 gutterSize={chartGutterSize}
                 squareSize={chartSquareSize}
                 showMonthLabels
+                // Navigate to day detail only when a date is available. / 日付がある場合のみ詳細へ遷移。
                 onDayPress={(item: { date?: string | Date; count?: number }) => {
                   if (!item?.date) return;
                   const dateLabel =
@@ -168,6 +187,7 @@ export default function HistoryScreen() {
                   color: () => theme.colors.accent,
                   labelColor: () => theme.colors.inkMuted,
                 }}
+                // Enable accessibility label + long-press tooltip. / アクセシビリティと長押しツールチップを設定。
                 tooltipDataAttrs={(value) => ({
                   accessibilityLabel: buildTooltipLabel(t, value),
                   onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),

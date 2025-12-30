@@ -1,0 +1,2 @@
+UI/UX conventions: use theme tokens in src/ui/theme.tsx; screen backgrounds use theme.colors.background; cards use theme.colors.surface. Wrap screens in SafeAreaView from react-native-safe-area-context. Root layout uses SafeAreaProvider (src/app/_layout.tsx). Tabs use SF Symbols on iOS via expo-symbols with MaterialIcons fallback (src/app/(tabs)/_layout.tsx).
+Code style: TypeScript + React Native; Expo Router file-based routing in src/app.

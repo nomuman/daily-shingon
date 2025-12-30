@@ -17,7 +17,7 @@ describe('TagRow', () => {
     );
     const texts = tree.root.findAllByType(Text).map((node) => node.props.children);
     const flat = texts.flat().filter(Boolean);
-    expect(flat).toContain('全部');
+    expect(flat).toContain('すべて');
     expect(flat).toContain('a');
     expect(flat).toContain('b');
     expect(flat.filter((t) => t === 'b')).toHaveLength(1);

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Local notification scheduling helpers. / 目的: ローカル通知スケジューリングのヘルパー。
+ * Responsibilities: request permissions, configure Android channel, schedule/cancel daily reminders. / 役割: 権限要求、Androidチャンネル設定、日次通知の予約/解除。
+ * Inputs: reminder times (HH:mm) and translated copy. / 入力: 通知時刻（HH:mm）と翻訳文言。
+ * Outputs: scheduled notification IDs and permission status. / 出力: 通知IDと権限状態。
+ * Dependencies: expo-notifications, i18n instance, Platform API. / 依存: expo-notifications、i18n、Platform API。
+ * Side effects: OS notification permission prompts and schedule changes. / 副作用: OSの権限ダイアログ、スケジュール変更。
+ * Edge cases: invalid time strings, i18n not initialized, Android-only channel setup. / 例外: 時刻不正、i18n未初期化、Androidのみのチャンネル設定。
+ */
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
@@ -12,6 +21,7 @@ export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
 const ANDROID_CHANNEL_ID = 'sanmitsu-reminders';
 
+// i18n-safe translator with fallback to avoid raw keys. / キーそのまま表示を避けるフォールバック付き翻訳。
 const translate = (key: string, fallback: string) => {
   const i18n = getI18n();
   if (!i18n.isInitialized) return fallback;
@@ -19,6 +29,7 @@ const translate = (key: string, fallback: string) => {
   return value === key ? fallback : value;
 };
 
+// Build user-visible copy for reminders. / 通知表示文言の生成。
 const getNotificationCopy = () => ({
   channelName: translate('notifications.channelName', 'Daily reminders'),
   morningTitle: translate('notifications.morning.title', 'Morning reset'),
@@ -30,6 +41,7 @@ const getNotificationCopy = () => ({
   nightBody: translate('notifications.night.body', 'Close the day in 45 seconds.'),
 });
 
+// Android requires a notification channel for scheduled reminders. / Androidでは通知チャンネルが必要。
 export async function configureNotificationChannel(): Promise<void> {
   if (Platform.OS !== 'android') return;
   const copy = getNotificationCopy();
@@ -39,6 +51,7 @@ export async function configureNotificationChannel(): Promise<void> {
   });
 }
 
+// Ensure permission and return the resulting status. / 権限を確認し結果を返す。
 export async function ensureNotificationPermission(): Promise<PermissionStatus> {
   const current = await Notifications.getPermissionsAsync();
   if (current.status === 'granted') return 'granted';
@@ -47,6 +60,7 @@ export async function ensureNotificationPermission(): Promise<PermissionStatus> 
   return requested.status;
 }
 
+// Convert HH:mm to scheduler trigger parts. / HH:mmをトリガー値に変換。
 export function parseTimeToTrigger(time: string): { hour: number; minute: number } | null {
   const match = time.match(/^([01]\d|2[0-3]):([0-5]\d)$/);
   if (!match) return null;
@@ -55,6 +69,7 @@ export function parseTimeToTrigger(time: string): { hour: number; minute: number
   return { hour, minute };
 }
 
+// Schedule two daily notifications and return their IDs. / 日次通知2件を予約しIDを返す。
 export async function scheduleDailyReminders(
   morningTime: string,
   nightTime: string,
@@ -97,6 +112,7 @@ export async function scheduleDailyReminders(
   return { morningId, nightId };
 }
 
+// Cancel scheduled notifications by ID. / ID指定で通知をキャンセル。
 export async function cancelDailyReminders(ids: NotificationIds): Promise<void> {
   const tasks: Promise<void>[] = [];
   if (ids.morningId) {

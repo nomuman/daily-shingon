@@ -1,3 +1,12 @@
+/**
+ * Purpose: Daily learn screen that presents today's card and action selection. / 目的: 今日の学びカードと行い選択を表示する画面。
+ * Responsibilities: load program day + card, resolve selected action, save selection, and link to learn lists. / 役割: 日数/カード読込、選択解決、保存、学び一覧への導線。
+ * Inputs: curriculum content, stored selection, translations, theme tokens. / 入力: カリキュラム内容、保存選択、翻訳文言、テーマトークン。
+ * Outputs: learn UI, selection persistence, and navigation to other learn routes. / 出力: 学びUI、選択保存、他ルート遷移。
+ * Dependencies: content loaders, AsyncStorage-backed logs, Expo Router, i18n. / 依存: コンテンツローダー、AsyncStorageログ、Expo Router、i18n。
+ * Side effects: reads/writes local storage; navigation on confirm. / 副作用: ストレージ読書き、確定時の遷移。
+ * Edge cases: missing card, content load errors, save failures. / 例外: カード欠落、読込失敗、保存失敗。
+ */
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -18,6 +27,7 @@ type SelectedAction = {
   text: string;
 };
 
+// Choose a safe default action if nothing is saved yet. / 保存がない場合の安全なデフォルト選択。
 const resolveFallbackAction = (card: CurriculumDay): SelectedAction => {
   const recommended = card.actionOptions.find((o) => o.key === card.recommendedActionKey);
   const fallback = card.actionOptions[0];
@@ -27,6 +37,7 @@ const resolveFallbackAction = (card: CurriculumDay): SelectedAction => {
   };
 };
 
+// Use saved selection if still valid; otherwise fall back to recommended/default. / 保存済みが有効なら使用、無効なら推薦/デフォルトへ。
 const resolveSelectedAction = (
   card: CurriculumDay,
   saved: TodayActionSelection | null,
@@ -55,6 +66,7 @@ export default function LearnScreen() {
 
   const [selected, setSelected] = useState<SelectedAction | null>(null);
 
+  // Fetch day info, card data, and saved selection. / 日数情報・カード・保存選択を取得。
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -75,10 +87,12 @@ export default function LearnScreen() {
     }
   }, [contentLang, t]);
 
+  // Initial load + reload when language changes. / 初回ロード＋言語変更時の再読込。
   useEffect(() => {
     void load();
   }, [load]);
 
+  // Resolve source IDs to URLs for display (if present). / 出典IDをURLへ解決（存在時）。
   const sourceLinks = useMemo(() => {
     if (!card?.sources?.length) return [];
     const curriculum = getCurriculum30(contentLang);
@@ -87,6 +101,7 @@ export default function LearnScreen() {
       .filter((x) => !!x.url);
   }, [card, contentLang]);
 
+  // Loading/error/empty gates before rendering the main screen. / ロード・エラー・空状態の分岐。
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -111,6 +126,7 @@ export default function LearnScreen() {
     );
   }
 
+  // Main learn content with action selection and confirmation. / 学び本体＋選択＋確定UI。
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
@@ -206,6 +222,7 @@ export default function LearnScreen() {
             if (saving) return;
             setSaving(true);
             try {
+              // Persist the user's "today action" selection. / 今日の行い選択を保存。
               await setTodayActionSelection({
                 selectedKey: selected.key,
                 selectedText: selected.text,

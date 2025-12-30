@@ -1,3 +1,12 @@
+<!--
+  Purpose: SVG icon asset for "arrow-forward". / 目的: 「arrow-forward」用のSVGアイコン資産。
+  Responsibilities: provide vector paths with currentColor. / 役割: currentColorで塗るベクターパスを提供。
+  Inputs: currentColor from AppIcon. / 入力: AppIconからのcurrentColor。
+  Outputs: scalable vector graphic. / 出力: スケーラブルなSVG。
+  Dependencies: none (static asset). / 依存: なし（静的資産）。
+  Side effects: none. / 副作用: なし。
+  Edge cases: none. / 例外: なし。
+-->
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
   <path d="M4 10H14" stroke="currentColor" stroke-width="2.0" stroke-linecap="round"/>
   <path d="M10.8 5.8L15 10L10.8 14.2" stroke="currentColor" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"/>

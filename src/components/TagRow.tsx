@@ -1,3 +1,12 @@
+/**
+ * Purpose: Horizontal wrap of filter chips with an "All" option. / 目的: 「全部」付きのフィルターチップ行。
+ * Responsibilities: render tags, highlight active selection, and emit selection changes. / 役割: タグ表示、選択強調、選択変更の通知。
+ * Inputs: tags list, active tag, selection handler, optional all-label. / 入力: タグ一覧、選択中タグ、選択ハンドラ、任意の全件ラベル。
+ * Outputs: chip row UI. / 出力: チップ行UI。
+ * Dependencies: i18n copy, theme tokens. / 依存: i18n文言、テーマトークン。
+ * Side effects: none (delegates selection via onSelect). / 副作用: なし（選択はコールバックへ）。
+ * Edge cases: empty tags list (renders nothing). / 例外: タグが空の場合は描画しない。
+ */
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
@@ -49,6 +58,7 @@ export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowPr
   );
   if (!tags.length) return null;
 
+  // Deduplicate tags while preserving insertion order. / 追加順を保ってタグを重複排除。
   const unique = Array.from(new Set(tags));
 
   return (

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Persistent app settings (notifications). / 目的: 永続化するアプリ設定（通知）。
+ * Responsibilities: define default settings and get/set storage helpers. / 役割: 既定値定義と取得/保存。
+ * Inputs: AppSettings objects. / 入力: AppSettingsオブジェクト。
+ * Outputs: merged settings with defaults applied. / 出力: 既定値をマージした設定。
+ * Dependencies: storage helpers. / 依存: ストレージヘルパー。
+ * Side effects: reads/writes AsyncStorage. / 副作用: AsyncStorage読書き。
+ * Edge cases: missing saved settings fall back to defaults. / 例外: 保存設定なしは既定値へ。
+ */
 import { getJSON, setJSON } from './storage';
 
 export type NotificationSettings = {

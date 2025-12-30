@@ -1,3 +1,12 @@
+/**
+ * Purpose: Reusable search input field with consistent styling. / 目的: 共通スタイルの検索入力。
+ * Responsibilities: render a TextInput with default placeholder and search-friendly settings. / 役割: 既定プレースホルダーと検索向け設定でTextInputを描画。
+ * Inputs: current value, change handler, optional placeholder. / 入力: 値、変更ハンドラ、任意のプレースホルダー。
+ * Outputs: search input UI. / 出力: 検索入力UI。
+ * Dependencies: i18n copy, theme tokens. / 依存: i18n文言、テーマトークン。
+ * Side effects: none (delegates changes via onChangeText). / 副作用: なし（変更はコールバックへ）。
+ * Edge cases: no placeholder provided. / 例外: プレースホルダー未指定。
+ */
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';

@@ -1,3 +1,12 @@
+/**
+ * Purpose: Reusable full-screen error state with optional actions. / 目的: 画面全体で使えるエラー表示コンポーネント。
+ * Responsibilities: show error title/message and render primary/secondary actions. / 役割: タイトル/本文表示と主/副アクション表示。
+ * Inputs: optional title/labels and callbacks. / 入力: 任意のタイトル/ラベル/コールバック。
+ * Outputs: error UI block within SafeAreaView. / 出力: SafeAreaView内のエラーUI。
+ * Dependencies: i18n for default labels, theme tokens. / 依存: 既定ラベル用i18n、テーマトークン。
+ * Side effects: none (delegates actions via callbacks). / 副作用: なし（コールバックへ委譲）。
+ * Edge cases: missing callbacks hide buttons. / 例外: コールバック未指定時はボタン非表示。
+ */
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

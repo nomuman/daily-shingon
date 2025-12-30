@@ -1,3 +1,12 @@
+/**
+ * Purpose: Morning check-in screen (body/speech/mind). / 目的: 朝のチェックイン画面（身・口・意）。
+ * Responsibilities: load saved morning log, toggle checks, save/reset entries. / 役割: 朝ログ読込、チェック切替、保存/リセット。
+ * Inputs: optional date param, stored morning log, translations. / 入力: 任意の日付パラメータ、保存済み朝ログ、翻訳文言。
+ * Outputs: checklist UI + persistence actions. / 出力: チェックリストUIと保存アクション。
+ * Dependencies: morning log storage, date utilities, Expo Router, i18n. / 依存: 朝ログストレージ、日付ユーティリティ、Expo Router、i18n。
+ * Side effects: reads/writes storage; navigation back to home. / 副作用: ストレージ読み書き、ホームへの遷移。
+ * Edge cases: missing date param, storage failures. / 例外: 日付未指定、ストレージ失敗。
+ */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -24,6 +33,7 @@ export default function MorningScreen() {
   const styles = useThemedStyles(createStyles);
   const { date } = useLocalSearchParams<{ date?: string }>();
 
+  // Resolve the target date (explicit param or today). / 対象日を解決（指定日または今日）。
   const dateParam = useMemo(() => (date ? parseISODateLocal(date) : null), [date]);
   const getTargetDate = useCallback(() => dateParam ?? new Date(), [dateParam]);
 
@@ -33,6 +43,7 @@ export default function MorningScreen() {
   const [mindDone, setMindDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Load persisted morning check states for the target date. / 対象日の朝チェック状態を読込。
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -51,10 +62,12 @@ export default function MorningScreen() {
     }
   }, [getTargetDate, t]);
 
+  // Initial load. / 初回ロード。
   useEffect(() => {
     void load();
   }, [load]);
 
+  // Derived completion status for the summary row. / サマリー表示用の完了状態。
   const complete = useMemo(() => {
     return isMorningComplete({
       dateISO: dateParam ? toISODateLocal(dateParam) : 'today',
@@ -65,12 +78,14 @@ export default function MorningScreen() {
     });
   }, [bodyDone, dateParam, mindDone, speechDone]);
 
+  // Toggle a single check item. / 単一チェックのトグル。
   const toggle = (k: CheckKey) => {
     if (k === 'body') setBodyDone((v) => !v);
     if (k === 'speech') setSpeechDone((v) => !v);
     if (k === 'mind') setMindDone((v) => !v);
   };
 
+  // Reusable checklist row with icon + description. / アイコン＋説明付きのチェック行。
   const Item = ({
     title,
     desc,
@@ -106,6 +121,7 @@ export default function MorningScreen() {
     );
   };
 
+  // Loading/error gates before main UI. / ローディング・エラー時の分岐。
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -168,6 +184,7 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
+              // Persist morning log and return to home. / 朝ログを保存してホームへ戻る。
               await setMorningLog({ bodyDone, speechDone, mindDone, date: getTargetDate() });
               router.replace('/');
             } catch (err) {
@@ -183,6 +200,7 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
+              // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearMorningLog(getTargetDate());
               setBodyDone(false);
               setSpeechDone(false);

@@ -1,4 +1,13 @@
-/* eslint-disable import/no-named-as-default-member */
+/**
+ * Purpose: i18n initialization and language preference handling. / 目的: i18n初期化と言語設定の管理。
+ * Responsibilities: initialize i18next, switch languages, and sync on foreground. / 役割: i18next初期化、言語切替、フォアグラウンド同期。
+ * Inputs: stored language preference and device language. / 入力: 保存済み言語設定と端末言語。
+ * Outputs: configured i18n instance and setters/getters. / 出力: 設定済みi18nインスタンスと操作関数。
+ * Dependencies: i18next, react-i18next, AsyncStorage, device locale detection. / 依存: i18next、react-i18next、AsyncStorage、端末言語検出。
+ * Side effects: i18n init and language change; AppState listener registration. / 副作用: i18n初期化/言語変更、AppStateリスナー登録。
+ * Edge cases: init failures fall back to English. / 例外: 初期化失敗時は英語にフォールバック。
+ */
+/* eslint-disable import/no-named-as-default-member -- i18nリソースのデフォルト取り込みに対するLintを無効化 */
 import '@formatjs/intl-pluralrules/locale-data/en.js';
 import '@formatjs/intl-pluralrules/locale-data/ja.js';
 import '@formatjs/intl-pluralrules/polyfill-force.js';
@@ -15,6 +24,7 @@ import jaCommon from '../../locales/ja/common.json';
 
 export const SUPPORTED_LANGUAGES: LanguageCode[] = ['ja', 'en'];
 
+// Static resource bundle for common namespace. / common名前空間の静的リソース。
 const resources = {
   ja: { common: jaCommon },
   en: { common: enCommon },
@@ -24,6 +34,7 @@ let currentPref: LanguagePreference = 'system';
 let attached = false;
 let appStateSubscription: ReturnType<typeof AppState.addEventListener> | null = null;
 
+// Initialize i18n with stored or system preference. / 保存済みまたはシステム設定でi18n初期化。
 export async function initI18n() {
   try {
     currentPref = await loadLanguagePreference();
@@ -80,6 +91,7 @@ export function getI18n() {
   return i18n;
 }
 
+// Persist preference and apply it, with rollback on failure. / 設定を保存して適用（失敗時はロールバック）。
 export async function setLanguagePreference(pref: LanguagePreference) {
   const prev = currentPref;
   currentPref = pref;
@@ -105,6 +117,7 @@ export async function getLanguagePreference(): Promise<LanguagePreference> {
   return currentPref;
 }
 
+// Sync language when app comes to foreground and pref is "system". / フォアグラウンド復帰時にシステム言語へ同期。
 async function syncWithDeviceIfNeeded() {
   if (currentPref !== 'system') return;
   const lang = detectDeviceLanguage();
@@ -113,6 +126,7 @@ async function syncWithDeviceIfNeeded() {
   }
 }
 
+// Register AppState listener once. / AppStateリスナーを一度だけ登録。
 function attachForegroundLocaleSync() {
   if (attached) return;
   attached = true;
@@ -126,6 +140,7 @@ function attachForegroundLocaleSync() {
   });
 }
 
+// Remove AppState listener and reset attachment state. / AppStateリスナー解除と状態リセット。
 export function detachForegroundLocaleSync() {
   appStateSubscription?.remove();
   appStateSubscription = null;

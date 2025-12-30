@@ -1,3 +1,12 @@
+/**
+ * Purpose: Settings screen for preferences, notifications, language, theme, legal links, and reset. / 目的: 設定（通知/言語/テーマ/法務/リセット）画面。
+ * Responsibilities: load/persist settings, schedule/cancel reminders, and expose system/legal actions. / 役割: 設定読込/保存、通知スケジュール、システム/法務アクションの提供。
+ * Inputs: stored settings + language preference, app config URLs, and translated copy. / 入力: 保存済み設定/言語設定、アプリ設定URL、翻訳文言。
+ * Outputs: settings UI sections and user-triggered actions (navigation, scheduling, reset). / 出力: 設定UIとユーザー操作（遷移/通知/リセット）。
+ * Dependencies: i18n, AsyncStorage-backed settings, expo-notifications, expo-web-browser, router. / 依存: i18n、AsyncStorage設定、expo-notifications、expo-web-browser、router。
+ * Side effects: storage writes, notification scheduling, opening system settings/browser, reset progress. / 副作用: ストレージ書込、通知予約、設定/ブラウザ起動、進捗リセット。
+ * Edge cases: permission denied, invalid time input, missing URLs, load/save failures. / 例外: 権限拒否、時間入力不正、URL欠落、読込/保存失敗。
+ */
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
@@ -33,6 +42,7 @@ import { useTheme, useThemedStyles } from '../../ui/theme';
 
 type TimeField = 'morning' | 'night';
 
+// Shared entrance animation for card sections (staggered on mount). / カードセクションの登場アニメ（順次表示）。
 const entranceStyle = (anim: Animated.Value) => ({
   opacity: anim,
   transform: [
@@ -314,6 +324,7 @@ export default function SettingsScreen() {
   const timeAnim = useRef(new Animated.Value(0)).current;
   const resetAnim = useRef(new Animated.Value(0)).current;
 
+  // Load settings and normalize local editable state. / 設定を読み込みローカル編集状態へ反映。
   const load = useCallback(async () => {
     setLoading(true);
     setFatalError(null);
@@ -330,14 +341,17 @@ export default function SettingsScreen() {
     }
   }, [t]);
 
+  // Initial data fetch for settings. / 設定の初回取得。
   useEffect(() => {
     void load();
   }, [load]);
 
+  // Load language preference separately (for local selection UI). / 言語設定を別途取得。
   useEffect(() => {
     getLanguagePreference().then(setLanguagePref);
   }, []);
 
+  // Stagger in header/sections once on mount. / ヘッダー/セクションの順次表示。
   useEffect(() => {
     Animated.stagger(140, [
       Animated.timing(headerAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
@@ -349,21 +363,26 @@ export default function SettingsScreen() {
 
   const reminderEnabled = settings.notifications.enabled;
   const permissionStatus = settings.notifications.permissionStatus;
-  const privacyPolicyUrl =
-    Constants.expoConfig?.extra?.privacyPolicyUrl ??
-    Constants.manifest?.extra?.privacyPolicyUrl ??
-    '';
+  const appExtra = (Constants.expoConfig?.extra ?? {}) as {
+    privacyPolicyUrl?: string;
+    contactUrl?: string;
+  };
+  const privacyPolicyUrl = appExtra.privacyPolicyUrl ?? '';
+  const contactUrl = appExtra.contactUrl ?? '';
 
+  // Validate "HH:mm" time input from manual edits/pickers. / "HH:mm"形式の検証。
   const validateTime = (value: string) => {
     return /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
   };
 
+  // Convert Date -> "HH:mm" for display and storage. / Dateから"HH:mm"へ変換。
   const toTimeString = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
   };
 
+  // Convert "HH:mm" -> Date (today), with fallback for invalid values. / "HH:mm"を今日の日付へ変換（不正はフォールバック）。
   const timeToDate = (time: string) => {
     if (!validateTime(time)) return new Date();
     const [h, m] = time.split(':').map(Number);
@@ -372,11 +391,13 @@ export default function SettingsScreen() {
     return date;
   };
 
+  // Persist settings locally and in storage. / ローカルとストレージに設定を保存。
   const persistSettings = async (next: typeof settings) => {
     setLocalSettings(next);
     await setSettings(next);
   };
 
+  // Apply time change and reschedule reminders if enabled. / 時刻変更を適用し、必要なら通知再予約。
   const applyTime = async (field: TimeField, value: string) => {
     if (!validateTime(value)) {
       setNotice(t('settings.time.invalid'));
@@ -417,6 +438,7 @@ export default function SettingsScreen() {
     }
   };
 
+  // Wire picker changes to state and persistence. / ピッカー変更を状態/保存に反映。
   const handleTimeChange = (field: TimeField) => (event: DateTimePickerEvent, date?: Date) => {
     if (Platform.OS === 'android') {
       setShowMorningPicker(false);
@@ -431,6 +453,7 @@ export default function SettingsScreen() {
     void applyTime(field, value);
   };
 
+  // Turn reminders on/off and sync with OS permission state. / 通知ON/OFFと権限状態の同期。
   const toggleReminders = async (nextEnabled: boolean) => {
     setNotice(null);
     if (!nextEnabled) {
@@ -484,6 +507,7 @@ export default function SettingsScreen() {
     }
   };
 
+  // Deep-link to app settings for permission recovery. / 権限復旧のため設定画面へ。
   const openSystemSettings = async () => {
     try {
       await Linking.openSettings();
@@ -492,6 +516,7 @@ export default function SettingsScreen() {
     }
   };
 
+  // Open privacy policy in an in-app browser. / プライバシーポリシーをブラウザで開く。
   const openPrivacyPolicy = async () => {
     if (!privacyPolicyUrl) {
       setNotice(t('settings.legal.missingUrl'));
@@ -504,6 +529,20 @@ export default function SettingsScreen() {
     }
   };
 
+  // Open external contact page in an in-app browser. / お問い合わせページをブラウザで開く。
+  const openContactPage = async () => {
+    if (!contactUrl) {
+      setNotice(t('settings.contact.missingUrl'));
+      return;
+    }
+    try {
+      await WebBrowser.openBrowserAsync(contactUrl);
+    } catch {
+      setNotice(t('settings.contact.openFail'));
+    }
+  };
+
+  // Confirm and execute a full progress reset. / 進捗の全リセット確認と実行。
   const handleReset = () => {
     Alert.alert(t('settings.reset.title'), t('settings.reset.body'), [
       { text: t('common.cancel'), style: 'cancel' },
@@ -521,10 +560,12 @@ export default function SettingsScreen() {
     ]);
   };
 
+  // Derived labels for status chips and rows. / ステータス表示用ラベル。
   const settingsSummary = useMemo(() => {
     return reminderEnabled ? t('settings.notifications.on') : t('settings.notifications.off');
   }, [reminderEnabled, t]);
 
+  // Display options for language selection. / 言語選択の表示オプション。
   const languageOptions = useMemo(
     () => [
       { value: 'system' as const, label: t('settings.language.system') },
@@ -534,6 +575,7 @@ export default function SettingsScreen() {
     [t],
   );
 
+  // Display options for theme selection. / テーマ選択の表示オプション。
   const themeOptions = useMemo(
     () => [
       { value: 'system' as const, label: t('settings.theme.system') },
@@ -543,11 +585,13 @@ export default function SettingsScreen() {
     [t],
   );
 
+  // Save language preference and switch i18n locale. / 言語設定を保存してi18n切替。
   const handleLanguageSelect = async (value: LanguagePreference) => {
     setLanguagePref(value);
     await setLanguagePreference(value);
   };
 
+  // Load-state and error-state gates before main UI. / ロード/エラー状態の分岐。
   if (loading) {
     return (
       <View style={styles.loading}>
@@ -734,6 +778,20 @@ export default function SettingsScreen() {
         </Animated.View>
 
         <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.updates.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.updates.body')}</Text>
+          <View style={styles.linkList}>
+            <Pressable
+              onPress={() => router.push('/updates')}
+              style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+            >
+              <Text style={styles.linkText}>{t('settings.updates.open')}</Text>
+              <AppIcon name="arrow-forward" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.legal.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.legal.body')}</Text>
           <View style={styles.linkList}>
@@ -761,7 +819,15 @@ export default function SettingsScreen() {
         <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.contact.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.contact.body')}</Text>
-          {/* TODO: 問い合わせ先（メール or フォームURL）を設定する */}
+          <View style={styles.linkList}>
+            <Pressable
+              onPress={openContactPage}
+              style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+            >
+              <Text style={styles.linkText}>{t('settings.contact.open')}</Text>
+              <AppIcon name="arrow-ne" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+          </View>
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
