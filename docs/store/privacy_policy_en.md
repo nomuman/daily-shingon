@@ -55,4 +55,5 @@ If changes are significant, we will provide notice in the App and/or on the publ
 For privacy-related questions, contact:
 
 - Support: GitHub Issues (https://github.com/nomuman/sanmitsu-app/issues)
+- Updates: X (https://x.com/nomuman_)
 - Support page: Contact page (https://nomuman.github.io/sanmitsu-app/contact/en/)
