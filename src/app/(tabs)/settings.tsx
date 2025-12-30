@@ -778,6 +778,20 @@ export default function SettingsScreen() {
         </Animated.View>
 
         <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.updates.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.updates.body')}</Text>
+          <View style={styles.linkList}>
+            <Pressable
+              onPress={() => router.push('/updates')}
+              style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+            >
+              <Text style={styles.linkText}>{t('settings.updates.open')}</Text>
+              <AppIcon name="arrow-forward" size={18} color={theme.colors.inkMuted} />
+            </Pressable>
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.legal.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.legal.body')}</Text>
           <View style={styles.linkList}>

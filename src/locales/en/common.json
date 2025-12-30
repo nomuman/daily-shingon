@@ -279,6 +279,8 @@
       "title": "Roadmap",
       "body": "Items in progress or under consideration, updated as we go.",
       "empty": "Roadmap is being prepared.",
+      "detailTitle": "Design notes",
+      "detailHint": "Tap an item to view the current design idea.",
       "status": {
         "wip": "WIP",
         "beta": "Beta",
