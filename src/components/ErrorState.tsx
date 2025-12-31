@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from './BackButton';
+import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles } from '../ui/theme';
 
 type ErrorStateProps = {
@@ -36,6 +37,7 @@ export default function ErrorState({
   backLabel,
 }: ErrorStateProps) {
   const { t } = useTranslation('common');
+  const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
       safeArea: {
@@ -108,7 +110,7 @@ export default function ErrorState({
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <View style={styles.wrapper}>
         {showBack && <BackButton label={backLabel} style={styles.backButton} />}
-        <View style={styles.container}>
+        <View style={[styles.container, responsive.contentStyle]}>
           <Text style={styles.title}>{resolvedTitle}</Text>
           <Text style={styles.message}>{message}</Text>
 

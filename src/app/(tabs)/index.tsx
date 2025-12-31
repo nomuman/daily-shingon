@@ -24,6 +24,7 @@ import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { getTodayActionSelection } from '../../lib/todayLog';
+import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type NextRoute = '/morning' | '/learn' | '/night';
@@ -46,6 +47,7 @@ export default function HomeScreen() {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const contentLang = useContentLang();
 
   const [dayNumber, setDayNumber] = useState<number>(1);
@@ -152,7 +154,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <View style={styles.topBar}>
           <Pressable
             onPress={() => router.push('/settings')}

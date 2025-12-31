@@ -19,12 +19,14 @@ import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
 import type { Card } from '../../../../content/types';
 import { useContentLang } from '../../../../content/useContentLang';
+import { useResponsiveLayout } from '../../../../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function CardListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const lang = useContentLang();
   const { packId } = useLocalSearchParams<{ packId?: string | string[] }>();
   const resolvedPackId = Array.isArray(packId) ? packId[0] : packId;
@@ -75,13 +77,21 @@ export default function CardListScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <BackButton style={styles.backButton} />
-      <SearchInput value={q} onChangeText={setQ} placeholder={t('learnCards.search')} />
+      <View style={responsive.contentStyle}>
+        <BackButton style={styles.backButton} />
+      </View>
+      <SearchInput
+        value={q}
+        onChangeText={setQ}
+        placeholder={t('learnCards.search')}
+        containerStyle={responsive.contentStyle}
+      />
       <TagRow
         tags={allTags}
         activeTag={activeTag}
         onSelect={setActiveTag}
         allLabel={t('common.all')}
+        containerStyle={responsive.contentStyle}
       />
 
       <FlatList
@@ -109,7 +119,7 @@ export default function CardListScreen() {
             styles={styles}
           />
         )}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
     </SafeAreaView>
   );

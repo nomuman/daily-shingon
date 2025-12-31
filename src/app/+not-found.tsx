@@ -13,11 +13,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
+import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles } from '../ui/theme';
 
 export default function NotFoundScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
       safeArea: {
@@ -54,7 +56,7 @@ export default function NotFoundScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <View style={styles.container}>
+      <View style={[styles.container, responsive.contentStyle]}>
         <BackButton
           label={t('notFound.backHome')}
           onPress={() => router.replace('/')}

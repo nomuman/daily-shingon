@@ -15,11 +15,13 @@ import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
 import { getGlossary, getGlossaryEntry } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
+import { useResponsiveLayout } from '../../../../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryDetailScreen() {
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const lang = useContentLang();
   const { termId } = useLocalSearchParams<{ termId?: string | string[] }>();
   const resolvedTermId = Array.isArray(termId) ? termId[0] : termId;
@@ -44,7 +46,10 @@ export default function GlossaryDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <View style={styles.header}>
           <Text style={styles.title}>{entry.term}</Text>

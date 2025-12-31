@@ -23,6 +23,7 @@ import {
   isMorningComplete,
   setMorningLog,
 } from '../../lib/morningLog';
+import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type CheckKey = 'body' | 'speech' | 'mind';
@@ -32,6 +33,7 @@ export default function MorningScreen() {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const { date } = useLocalSearchParams<{ date?: string }>();
 
   // Resolve the target date (explicit param or today). / 対象日を解決（指定日または今日）。
@@ -154,7 +156,10 @@ export default function MorningScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <Text style={styles.title}>{t('morning.title')}</Text>
 

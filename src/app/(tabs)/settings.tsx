@@ -39,6 +39,7 @@ import {
 } from '../../lib/notifications';
 import { resetAllProgress } from '../../lib/reset';
 import { DEFAULT_SETTINGS, getSettings, setSettings } from '../../lib/settings';
+import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles } from '../../ui/theme';
 
 type TimeField = 'morning' | 'night';
@@ -60,6 +61,7 @@ export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
   const { theme, preference, setPreference } = useTheme();
+  const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme, cardShadow) =>
     StyleSheet.create({
       screen: {
@@ -619,7 +621,10 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
           <Text style={styles.kicker}>{t('settings.kicker')}</Text>

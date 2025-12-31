@@ -16,12 +16,14 @@ import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
 import { getCardPacks } from '../../../../content/cards';
 import { useContentLang } from '../../../../content/useContentLang';
+import { useResponsiveLayout } from '../../../../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function CardPackListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const lang = useContentLang();
   // Memoize content pack list per language. / 言語ごとのパック一覧をメモ化。
   const packs = useMemo(() => getCardPacks(lang), [lang]);
@@ -51,7 +53,7 @@ export default function CardPackListScreen() {
             </Text>
           </Pressable>
         )}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
     </SafeAreaView>
   );

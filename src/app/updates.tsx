@@ -15,12 +15,14 @@ import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
 import { getUpdatesContent, type RoadmapStatus } from '../content/updates';
 import { useContentLang } from '../content/useContentLang';
+import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 export default function UpdatesScreen() {
   const { t } = useTranslation('common');
   const lang = useContentLang();
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const content = getUpdatesContent(lang);
   const [selectedRoadmapId, setSelectedRoadmapId] = useState<string | null>(null);
   const selectedRoadmap = content.roadmap.find((item) => item.id === selectedRoadmapId) ?? null;
@@ -47,7 +49,10 @@ export default function UpdatesScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>

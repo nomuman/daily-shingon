@@ -7,7 +7,7 @@
  * Side effects: none (delegates changes via onChangeText). / 副作用: なし（変更はコールバックへ）。
  * Edge cases: no placeholder provided. / 例外: プレースホルダー未指定。
  */
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import { useTheme, useThemedStyles } from '../ui/theme';
@@ -16,9 +16,15 @@ type SearchInputProps = {
   value: string;
   onChangeText: (value: string) => void;
   placeholder?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function SearchInput({ value, onChangeText, placeholder }: SearchInputProps) {
+export default function SearchInput({
+  value,
+  onChangeText,
+  placeholder,
+  containerStyle,
+}: SearchInputProps) {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles((theme) =>
@@ -45,7 +51,7 @@ export default function SearchInput({ value, onChangeText, placeholder }: Search
   const resolvedPlaceholder = placeholder ?? t('common.search');
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, containerStyle]}>
       <TextInput
         value={value}
         onChangeText={onChangeText}

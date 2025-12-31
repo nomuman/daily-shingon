@@ -29,6 +29,7 @@ import { useContentLang } from '../../content/useContentLang';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
+import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type CheckKey = 'sange' | 'hotsugan' | 'ekou';
@@ -80,6 +81,7 @@ export default function NightScreen() {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const contentLang = useContentLang();
   const { date } = useLocalSearchParams<{ date?: string }>();
 
@@ -179,7 +181,10 @@ export default function NightScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <Text style={styles.title}>{t('night.title')}</Text>
 

@@ -13,15 +13,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
 import { OSS_LICENSES } from '../content/oss-licenses';
+import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 export default function LicensesScreen() {
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>

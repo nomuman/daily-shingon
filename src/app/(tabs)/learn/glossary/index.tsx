@@ -18,12 +18,14 @@ import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getGlossary } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
+import { useResponsiveLayout } from '../../../../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryListScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const lang = useContentLang();
   const glossary = useMemo(() => getGlossary(lang), [lang]);
   const [q, setQ] = useState('');
@@ -56,13 +58,21 @@ export default function GlossaryListScreen() {
   // Render search, filter chips, and a virtualized list for performance. / 検索・タグ・仮想化リストを描画。
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <BackButton style={styles.backButton} />
-      <SearchInput value={q} onChangeText={setQ} placeholder={t('glossary.search')} />
+      <View style={responsive.contentStyle}>
+        <BackButton style={styles.backButton} />
+      </View>
+      <SearchInput
+        value={q}
+        onChangeText={setQ}
+        placeholder={t('glossary.search')}
+        containerStyle={responsive.contentStyle}
+      />
       <TagRow
         tags={categories}
         activeTag={activeCategory}
         onSelect={setActiveCategory}
         allLabel={t('common.all')}
+        containerStyle={responsive.contentStyle}
       />
 
       <FlatList
@@ -90,7 +100,7 @@ export default function GlossaryListScreen() {
             </Text>
           </Pressable>
         )}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
     </SafeAreaView>
   );

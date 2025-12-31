@@ -19,12 +19,14 @@ import { AppIcon } from '../../components/AppIcon';
 import { parseISODateLocal } from '../../lib/date';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
+import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles } from '../../ui/theme';
 
 export default function DayDetailScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
   const { theme } = useTheme();
+  const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme, cardShadow) =>
     StyleSheet.create({
       safeArea: {
@@ -149,7 +151,10 @@ export default function DayDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <View style={styles.headerRow}>
           <Text style={styles.title}>{date}</Text>

@@ -10,7 +10,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { ContributionGraph } from 'react-native-chart-kit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -19,10 +19,10 @@ import BackButton from '../components/BackButton';
 import ErrorState from '../components/ErrorState';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
+import { useResponsiveLayout } from '../ui/responsive';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 // Layout constants for the contribution graph. / ヒートマップレイアウト定数。
-const screenWidth = Dimensions.get('window').width;
 const chartDays = 365;
 const chartSquareSize = 12;
 const chartGutterSize = 2;
@@ -93,15 +93,21 @@ const entranceStyle = (anim: Animated.Value) => ({
 export default function HistoryScreen() {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { width } = useWindowDimensions();
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
 
   const [values, setValues] = useState<HeatmapValue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tooltipLabel, setTooltipLabel] = useState<string | null>(null);
   const endDate = new Date();
-  const graphWidth = Math.max(screenWidth - 32, getContributionGraphWidth(endDate));
+  const containerWidth = Math.min(width, responsive.maxWidth ?? width);
+  const graphWidth = Math.max(
+    containerWidth - theme.spacing.lg * 2,
+    getContributionGraphWidth(endDate),
+  );
 
   const headerAnim = useRef(new Animated.Value(0)).current;
   const graphAnim = useRef(new Animated.Value(0)).current;
@@ -143,7 +149,10 @@ export default function HistoryScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
           <View style={styles.headerRow}>

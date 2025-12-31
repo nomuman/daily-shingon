@@ -7,7 +7,7 @@
  * Side effects: none (delegates selection via onSelect). / 副作用: なし（選択はコールバックへ）。
  * Edge cases: empty tags list (renders nothing). / 例外: タグが空の場合は描画しない。
  */
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import { useThemedStyles } from '../ui/theme';
@@ -17,9 +17,16 @@ type TagRowProps = {
   activeTag: string | null;
   onSelect: (tag: string | null) => void;
   allLabel?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowProps) {
+export default function TagRow({
+  tags,
+  activeTag,
+  onSelect,
+  allLabel,
+  containerStyle,
+}: TagRowProps) {
   const { t } = useTranslation('common');
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
@@ -62,7 +69,7 @@ export default function TagRow({ tags, activeTag, onSelect, allLabel }: TagRowPr
   const unique = Array.from(new Set(tags));
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, containerStyle]}>
       <Pressable
         onPress={() => onSelect(null)}
         style={({ pressed }) => [

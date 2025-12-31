@@ -15,11 +15,13 @@ import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../../components/BackButton';
 import { getCardById } from '../../../../../content/cards';
 import { useContentLang } from '../../../../../content/useContentLang';
+import { useResponsiveLayout } from '../../../../../ui/responsive';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../../ui/theme';
 
 export default function CardDetailScreen() {
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
+  const responsive = useResponsiveLayout();
   const lang = useContentLang();
   const { packId, cardId } = useLocalSearchParams<{
     packId?: string | string[];
@@ -55,7 +57,10 @@ export default function CardDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      >
         <BackButton />
         <View style={styles.header}>
           <Text style={styles.title}>{card.title}</Text>
