@@ -10,11 +10,12 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ContributionGraph } from 'react-native-chart-kit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../components/BackButton';
 import ErrorState from '../components/ErrorState';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
@@ -137,21 +138,16 @@ export default function HistoryScreen() {
   }, [graphAnim, headerAnim, legendAnim]);
 
   if (error) {
-    return <ErrorState message={error} onRetry={refresh} />;
+    return <ErrorState message={error} onRetry={refresh} showBack />;
   }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
           <View style={styles.headerRow}>
             <Text style={styles.headerTitle}>{t('history.title')}</Text>
-            <Pressable
-              onPress={() => router.back()}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
-            </Pressable>
           </View>
           <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
         </Animated.View>

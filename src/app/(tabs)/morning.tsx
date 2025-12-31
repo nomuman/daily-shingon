@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../../components/AppIcon';
+import BackButton from '../../components/BackButton';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import ErrorState from '../../components/ErrorState';
 import {
@@ -42,6 +43,18 @@ export default function MorningScreen() {
   const [speechDone, setSpeechDone] = useState(false);
   const [mindDone, setMindDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const goBackOrHome = () => {
+    if ('canGoBack' in router && typeof router.canGoBack === 'function') {
+      if (router.canGoBack()) {
+        router.back();
+        return;
+      }
+      router.replace('/');
+      return;
+    }
+    router.back();
+  };
 
   // Load persisted morning check states for the target date. / 対象日の朝チェック状態を読込。
   const load = useCallback(async () => {
@@ -125,20 +138,24 @@ export default function MorningScreen() {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.loading}>
-          <ActivityIndicator color={theme.colors.accent} />
+        <View style={styles.loadingWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.loading}>
+            <ActivityIndicator color={theme.colors.accent} />
+          </View>
         </View>
       </SafeAreaView>
     );
   }
 
   if (error) {
-    return <ErrorState message={error} onRetry={load} />;
+    return <ErrorState message={error} onRetry={load} showBack />;
   }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <Text style={styles.title}>{t('morning.title')}</Text>
 
         <View style={styles.card}>
@@ -184,9 +201,9 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
-              // Persist morning log and return to home. / 朝ログを保存してホームへ戻る。
+              // Persist morning log and return to previous screen. / 朝ログを保存して前画面へ戻る。
               await setMorningLog({ bodyDone, speechDone, mindDone, date: getTargetDate() });
-              router.replace('/');
+              goBackOrHome();
             } catch (err) {
               console.error('Failed to save morning log.', err);
               setError(t('errors.saveFail'));
@@ -233,6 +250,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       padding: theme.spacing.lg,
       paddingBottom: 40,
       gap: theme.spacing.md,
+    },
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
+    },
+    loadingWrap: {
+      flex: 1,
     },
     loading: {
       flex: 1,

@@ -14,6 +14,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../components/BackButton';
 import { AppIcon } from '../../components/AppIcon';
 import { parseISODateLocal } from '../../lib/date';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
@@ -149,14 +150,9 @@ export default function DayDetailScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <View style={styles.headerRow}>
           <Text style={styles.title}>{date}</Text>
-          <Pressable
-            onPress={() => router.back()}
-            style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-          >
-            <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
-          </Pressable>
         </View>
 
         <View style={styles.card}>

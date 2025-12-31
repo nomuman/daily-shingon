@@ -13,6 +13,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../../components/BackButton';
 import ErrorState from '../../../components/ErrorState';
 import { getCurriculum30, getDayCard } from '../../../content/curriculum30';
 import { useContentLang } from '../../../content/useContentLang';
@@ -66,6 +67,18 @@ export default function LearnScreen() {
 
   const [selected, setSelected] = useState<SelectedAction | null>(null);
 
+  const goBackOrHome = () => {
+    if ('canGoBack' in router && typeof router.canGoBack === 'function') {
+      if (router.canGoBack()) {
+        router.back();
+        return;
+      }
+      router.replace('/');
+      return;
+    }
+    router.back();
+  };
+
   // Fetch day info, card data, and saved selection. / 日数情報・カード・保存選択を取得。
   const load = useCallback(async () => {
     setLoading(true);
@@ -105,22 +118,28 @@ export default function LearnScreen() {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.loading}>
-          <ActivityIndicator color={theme.colors.accent} />
+        <View style={styles.loadingWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.loading}>
+            <ActivityIndicator color={theme.colors.accent} />
+          </View>
         </View>
       </SafeAreaView>
     );
   }
 
   if (error) {
-    return <ErrorState message={error} onRetry={load} />;
+    return <ErrorState message={error} onRetry={load} showBack />;
   }
 
   if (!card || !dayInfo || !selected) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>{t('learn.emptyCard')}</Text>
+        <View style={styles.emptyWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>{t('learn.emptyCard')}</Text>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -130,6 +149,7 @@ export default function LearnScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <Text style={styles.title}>
           {t('learn.dayLabel', { day: dayInfo.dayNumber, total: 30 })}
         </Text>
@@ -227,7 +247,7 @@ export default function LearnScreen() {
                 selectedKey: selected.key,
                 selectedText: selected.text,
               });
-              router.replace('/');
+              goBackOrHome();
             } catch (err) {
               console.error('Failed to save today action selection.', err);
               setError(t('errors.saveFail'));
@@ -270,15 +290,23 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       paddingBottom: 40,
       gap: theme.spacing.md,
     },
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
+    },
+    loadingWrap: {
+      flex: 1,
+    },
     loading: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
     },
-    emptyState: {
+    emptyWrap: {
       flex: 1,
+    },
+    emptyState: {
       padding: theme.spacing.lg,
-      justifyContent: 'center',
     },
     emptyText: {
       color: theme.colors.inkMuted,

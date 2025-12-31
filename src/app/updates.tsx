@@ -8,17 +8,16 @@
  * Edge cases: empty lists render placeholders. / 例外: データなし時は空状態を表示。
  */
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../components/BackButton';
 import { getUpdatesContent, type RoadmapStatus } from '../content/updates';
 import { useContentLang } from '../content/useContentLang';
 import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 export default function UpdatesScreen() {
-  const router = useRouter();
   const { t } = useTranslation('common');
   const lang = useContentLang();
   const styles = useThemedStyles(createStyles);
@@ -49,15 +48,10 @@ export default function UpdatesScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>
             <Text style={styles.headerTitle}>{t('updates.title')}</Text>
-            <Pressable
-              onPress={() => router.back()}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
-            </Pressable>
           </View>
           <Text style={styles.headerBody}>{t('updates.subtitle')}</Text>
         </View>

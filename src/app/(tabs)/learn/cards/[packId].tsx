@@ -13,6 +13,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../../../components/BackButton';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
@@ -60,10 +61,13 @@ export default function CardListScreen() {
   if (!pack) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>
-            {t('learnCards.packNotFound', { packId: resolvedPackId ?? t('common.unknown') })}
-          </Text>
+        <View style={styles.emptyWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>
+              {t('learnCards.packNotFound', { packId: resolvedPackId ?? t('common.unknown') })}
+            </Text>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -71,6 +75,7 @@ export default function CardListScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <BackButton style={styles.backButton} />
       <SearchInput value={q} onChangeText={setQ} placeholder={t('learnCards.search')} />
       <TagRow
         tags={allTags}
@@ -160,10 +165,16 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-    emptyState: {
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
+    },
+    emptyWrap: {
       flex: 1,
-      justifyContent: 'center',
-      padding: theme.spacing.lg,
+    },
+    emptyState: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.lg,
     },
     emptyText: {
       color: theme.colors.inkMuted,

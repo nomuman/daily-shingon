@@ -20,10 +20,10 @@ import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
 import { getReturnStatus } from '../../lib/engagement';
 import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
-import { clearMorningLog, getMorningLog, isMorningComplete } from '../../lib/morningLog';
-import { clearNightLog, getNightLog, isNightComplete } from '../../lib/nightLog';
+import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
+import { getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
-import { clearTodayActionSelection, getTodayActionSelection } from '../../lib/todayLog';
+import { getTodayActionSelection } from '../../lib/todayLog';
 import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
 
 type NextRoute = '/morning' | '/learn' | '/night';
@@ -47,14 +47,6 @@ export default function HomeScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
   const contentLang = useContentLang();
-
-  // Compact status chip for morning/learn/night completion. / 朝・学び・夜の進捗チップ。
-  const ProgressChip = ({ label, done }: { label: string; done: boolean }) => (
-    <View style={[styles.progressChip, done && styles.progressChipActive]}>
-      <View style={[styles.progressDot, done && styles.progressDotActive]} />
-      <Text style={[styles.progressText, done && styles.progressTextActive]}>{label}</Text>
-    </View>
-  );
 
   const [dayNumber, setDayNumber] = useState<number>(1);
   const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -161,6 +153,16 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <View style={styles.topBar}>
+          <Pressable
+            onPress={() => router.push('/settings')}
+            accessibilityRole="button"
+            accessibilityLabel={t('nav.settings')}
+            style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+          >
+            <AppIcon name="settings" size={18} color={theme.colors.ink} />
+          </Pressable>
+        </View>
         <Animated.View style={[styles.heroCard, entranceStyle(heroAnim)]}>
           <View style={styles.heroTop}>
             <View>
@@ -193,12 +195,6 @@ export default function HomeScreen() {
             </View>
           )}
 
-          <View style={styles.progressRow}>
-            <ProgressChip label={t('nav.morning')} done={morningDone} />
-            <ProgressChip label={t('nav.learn')} done={learnDone} />
-            <ProgressChip label={t('nav.night')} done={nightDone} />
-          </View>
-
           <Pressable
             disabled={!nextAction.route}
             onPress={() => {
@@ -226,43 +222,6 @@ export default function HomeScreen() {
           </Pressable>
         </Animated.View>
 
-        <Animated.View style={[styles.card, styles.cardAccent, entranceStyle(actionsAnim)]}>
-          <View style={styles.cardHeaderRow}>
-            <View>
-              <Text style={styles.sectionTitle}>{t('home.yearTitle')}</Text>
-              <Text style={styles.sectionSubtitle}>{t('home.yearSubtitle')}</Text>
-            </View>
-            <View style={styles.badgeSoft}>
-              <Text style={styles.badgeSoftText}>{t('home.yearBadge')}</Text>
-            </View>
-          </View>
-
-          <Text style={styles.sectionBody}>{t('home.yearBody')}</Text>
-
-          <View style={styles.rowButtons}>
-            <Pressable
-              onPress={() => router.push('/history')}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
-              ]}
-            >
-              <View style={styles.primaryButtonContent}>
-                <Text style={styles.primaryButtonText}>{t('home.yearView')}</Text>
-                <AppIcon name="arrow-ne" size={18} color={theme.colors.surface} />
-              </View>
-            </Pressable>
-
-            <Pressable
-              onPress={() => router.push('/history')}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('home.yearDetail')}</Text>
-            </Pressable>
-          </View>
-        </Animated.View>
-
         <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
           <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
 
@@ -279,34 +238,18 @@ export default function HomeScreen() {
               </View>
             </View>
             <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
-            <View style={styles.rowButtons}>
-              <Pressable
-                onPress={() => router.push('/morning')}
-                style={({ pressed }) => [
-                  styles.primaryButton,
-                  styles.primaryButtonCompact,
-                  pressed && styles.primaryButtonPressed,
-                ]}
-              >
-                <Text style={styles.primaryButtonText}>
-                  {morningDone ? t('common.review') : t('common.do')}
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={async () => {
-                  try {
-                    await clearMorningLog();
-                    await refresh();
-                  } catch (err) {
-                    console.error('Failed to reset morning log.', err);
-                    setError(t('errors.updateFail'));
-                  }
-                }}
-                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-              >
-                <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              onPress={() => router.push('/morning')}
+              style={({ pressed }) => [
+                styles.primaryButton,
+                styles.primaryButtonCompact,
+                pressed && styles.primaryButtonPressed,
+              ]}
+            >
+              <Text style={styles.primaryButtonText}>
+                {morningDone ? t('common.review') : t('common.do')}
+              </Text>
+            </Pressable>
           </View>
 
           <View style={styles.actionCard}>
@@ -329,32 +272,16 @@ export default function HomeScreen() {
                   })
                 : t('home.selectionEmpty')}
             </Text>
-            <View style={styles.rowButtons}>
-              <Pressable
-                onPress={() => router.push('/learn')}
-                style={({ pressed }) => [
-                  styles.primaryButton,
-                  styles.primaryButtonCompact,
-                  pressed && styles.primaryButtonPressed,
-                ]}
-              >
-                <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
-              </Pressable>
-              <Pressable
-                onPress={async () => {
-                  try {
-                    await clearTodayActionSelection();
-                    await refresh();
-                  } catch (err) {
-                    console.error('Failed to clear today action selection.', err);
-                    setError(t('errors.updateFail'));
-                  }
-                }}
-                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-              >
-                <Text style={styles.ghostButtonText}>{t('home.selectionClear')}</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              onPress={() => router.push('/learn')}
+              style={({ pressed }) => [
+                styles.primaryButton,
+                styles.primaryButtonCompact,
+                pressed && styles.primaryButtonPressed,
+              ]}
+            >
+              <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
+            </Pressable>
           </View>
 
           <View style={styles.actionCard}>
@@ -370,34 +297,18 @@ export default function HomeScreen() {
               </View>
             </View>
             <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
-            <View style={styles.rowButtons}>
-              <Pressable
-                onPress={() => router.push('/night')}
-                style={({ pressed }) => [
-                  styles.primaryButton,
-                  styles.primaryButtonCompact,
-                  pressed && styles.primaryButtonPressed,
-                ]}
-              >
-                <Text style={styles.primaryButtonText}>
-                  {nightDone ? t('common.review') : t('common.do')}
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={async () => {
-                  try {
-                    await clearNightLog();
-                    await refresh();
-                  } catch (err) {
-                    console.error('Failed to reset night log.', err);
-                    setError(t('errors.updateFail'));
-                  }
-                }}
-                style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-              >
-                <Text style={styles.ghostButtonText}>{t('common.reset')}</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              onPress={() => router.push('/night')}
+              style={({ pressed }) => [
+                styles.primaryButton,
+                styles.primaryButtonCompact,
+                pressed && styles.primaryButtonPressed,
+              ]}
+            >
+              <Text style={styles.primaryButtonText}>
+                {nightDone ? t('common.review') : t('common.do')}
+              </Text>
+            </Pressable>
           </View>
         </Animated.View>
 
@@ -464,6 +375,24 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       padding: theme.spacing.lg,
       paddingBottom: 40,
       gap: theme.spacing.md,
+    },
+    topBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+    },
+    iconButton: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    iconButtonPressed: {
+      opacity: 0.85,
     },
     heroCard: {
       padding: theme.spacing.lg,
@@ -540,22 +469,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },
-    progressRow: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-    },
-    progressChip: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 10,
-      paddingVertical: 6,
-      borderRadius: 999,
-      backgroundColor: theme.colors.surfaceMuted,
-      gap: 6,
-    },
-    progressChipActive: {
-      backgroundColor: theme.colors.successSoft,
-    },
     progressDot: {
       width: 10,
       height: 10,
@@ -564,15 +477,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     progressDotActive: {
       backgroundColor: theme.colors.success,
-    },
-    progressText: {
-      fontSize: 12,
-      color: theme.colors.inkMuted,
-      fontFamily: theme.font.body,
-    },
-    progressTextActive: {
-      color: theme.colors.success,
-      fontWeight: '700',
     },
     primaryButton: {
       minHeight: 48,
@@ -618,6 +522,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       minHeight: 34,
       paddingHorizontal: 12,
       borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: theme.colors.surfaceMuted,
       borderColor: theme.colors.surfaceMuted,
     },
@@ -636,44 +542,17 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       gap: theme.spacing.sm,
       ...cardShadow,
     },
-    cardAccent: {
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.accentSoft,
-    },
     cardHeaderRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       gap: theme.spacing.sm,
     },
-    badgeSoft: {
-      paddingHorizontal: 10,
-      paddingVertical: 4,
-      borderRadius: 999,
-      backgroundColor: theme.colors.accentSoft,
-    },
-    badgeSoftText: {
-      fontSize: 11,
-      fontWeight: '700',
-      color: theme.colors.accentDark,
-      fontFamily: theme.font.body,
-    },
     sectionTitle: {
       fontSize: 16,
       fontWeight: '700',
       color: theme.colors.ink,
       fontFamily: theme.font.display,
-    },
-    sectionSubtitle: {
-      color: theme.colors.inkMuted,
-      fontSize: 12,
-      fontFamily: theme.font.body,
-    },
-    sectionBody: {
-      color: theme.colors.ink,
-      lineHeight: 20,
-      fontFamily: theme.font.body,
     },
     sectionStack: {
       gap: theme.spacing.md,
@@ -726,11 +605,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     iconBadgeNight: {
       backgroundColor: theme.colors.successSoft,
-    },
-    rowButtons: {
-      flexDirection: 'row',
-      gap: theme.spacing.sm,
-      flexWrap: 'wrap',
     },
     historyHeader: {
       flexDirection: 'row',

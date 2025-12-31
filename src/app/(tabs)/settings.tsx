@@ -28,6 +28,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../../components/AppIcon';
+import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
 import { getLanguagePreference, setLanguagePreference } from '../../lib/i18n';
 import type { LanguagePreference } from '../../lib/i18n/storage';
@@ -73,6 +74,13 @@ export default function SettingsScreen() {
         padding: theme.spacing.lg,
         paddingBottom: 40,
         gap: theme.spacing.md,
+      },
+      backButton: {
+        paddingHorizontal: theme.spacing.lg,
+        paddingTop: theme.spacing.sm,
+      },
+      loadingWrap: {
+        flex: 1,
       },
       loading: {
         flex: 1,
@@ -594,19 +602,25 @@ export default function SettingsScreen() {
   // Load-state and error-state gates before main UI. / ロード/エラー状態の分岐。
   if (loading) {
     return (
-      <View style={styles.loading}>
-        <Text style={styles.loadingText}>{t('common.loadingSimple')}</Text>
-      </View>
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={styles.loadingWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.loading}>
+            <Text style={styles.loadingText}>{t('common.loadingSimple')}</Text>
+          </View>
+        </View>
+      </SafeAreaView>
     );
   }
 
   if (fatalError) {
-    return <ErrorState message={fatalError} onRetry={load} />;
+    return <ErrorState message={fatalError} onRetry={load} showBack />;
   }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
           <Text style={styles.kicker}>{t('settings.kicker')}</Text>
           <View style={styles.headerRow}>

@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../../../components/BackButton';
 import { getCardPacks } from '../../../../content/cards';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
@@ -33,6 +34,7 @@ export default function CardPackListScreen() {
         keyExtractor={(item) => item.packId}
         ListHeaderComponent={
           <View style={styles.header}>
+            <BackButton />
             <Text style={styles.title}>{t('learnCards.title')}</Text>
             <Text style={styles.subtitle}>{t('learnCards.subtitle')}</Text>
           </View>

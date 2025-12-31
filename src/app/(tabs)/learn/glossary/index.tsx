@@ -13,6 +13,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../../../components/BackButton';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getGlossary } from '../../../../content/glossary';
@@ -55,6 +56,7 @@ export default function GlossaryListScreen() {
   // Render search, filter chips, and a virtualized list for performance. / 検索・タグ・仮想化リストを描画。
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <BackButton style={styles.backButton} />
       <SearchInput value={q} onChangeText={setQ} placeholder={t('glossary.search')} />
       <TagRow
         tags={categories}
@@ -99,6 +101,10 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     safeArea: {
       flex: 1,
       backgroundColor: theme.colors.background,
+    },
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
     },
     header: {
       paddingHorizontal: theme.spacing.lg,

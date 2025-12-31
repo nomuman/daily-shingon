@@ -22,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../../components/AppIcon';
+import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
@@ -97,6 +98,18 @@ export default function NightScreen() {
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  const goBackOrHome = () => {
+    if ('canGoBack' in router && typeof router.canGoBack === 'function') {
+      if (router.canGoBack()) {
+        router.back();
+        return;
+      }
+      router.replace('/');
+      return;
+    }
+    router.back();
+  };
+
   // Load program day context + saved night log. / 当日カード文脈と保存済み夜ログを読込。
   const load = useCallback(async () => {
     setLoading(true);
@@ -150,20 +163,24 @@ export default function NightScreen() {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.loading}>
-          <ActivityIndicator color={theme.colors.accent} />
+        <View style={styles.loadingWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.loading}>
+            <ActivityIndicator color={theme.colors.accent} />
+          </View>
         </View>
       </SafeAreaView>
     );
   }
 
   if (error) {
-    return <ErrorState message={error} onRetry={load} />;
+    return <ErrorState message={error} onRetry={load} showBack />;
   }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <Text style={styles.title}>{t('night.title')}</Text>
 
         <View style={styles.card}>
@@ -235,9 +252,9 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
-              // Persist night log and return to home. / 夜ログを保存してホームへ戻る。
+              // Persist night log and return to previous screen. / 夜ログを保存して前画面へ戻る。
               await setNightLog({ sangeDone, hotsuganDone, ekouDone, note, date: getTargetDate() });
-              router.replace('/');
+              goBackOrHome();
             } catch (err) {
               console.error('Failed to save night log.', err);
               setError(t('errors.saveFail'));
@@ -287,6 +304,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       padding: theme.spacing.lg,
       paddingBottom: 40,
       gap: theme.spacing.md,
+    },
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
+    },
+    loadingWrap: {
+      flex: 1,
     },
     loading: {
       flex: 1,

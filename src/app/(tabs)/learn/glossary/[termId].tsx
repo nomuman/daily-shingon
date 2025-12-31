@@ -12,6 +12,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../../../../components/BackButton';
 import { getGlossary, getGlossaryEntry } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
@@ -29,10 +30,13 @@ export default function GlossaryDetailScreen() {
   if (!entry) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>
-            {t('glossary.termNotFound', { termId: resolvedTermId ?? t('common.unknown') })}
-          </Text>
+        <View style={styles.emptyWrap}>
+          <BackButton style={styles.backButton} />
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>
+              {t('glossary.termNotFound', { termId: resolvedTermId ?? t('common.unknown') })}
+            </Text>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -41,6 +45,7 @@ export default function GlossaryDetailScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <View style={styles.header}>
           <Text style={styles.title}>{entry.term}</Text>
           <Text style={styles.meta}>
@@ -114,6 +119,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       flex: 1,
       backgroundColor: theme.colors.background,
     },
+    backButton: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.sm,
+    },
+    emptyWrap: {
+      flex: 1,
+    },
     screen: {
       flex: 1,
       backgroundColor: theme.colors.background,
@@ -154,9 +166,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontFamily: theme.font.body,
     },
     emptyState: {
-      flex: 1,
       padding: theme.spacing.lg,
-      justifyContent: 'center',
     },
     emptyText: {
       color: theme.colors.inkMuted,

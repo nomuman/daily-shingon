@@ -11,6 +11,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from './BackButton';
 import { useThemedStyles } from '../ui/theme';
 
 type ErrorStateProps = {
@@ -20,6 +21,8 @@ type ErrorStateProps = {
   onRetry?: () => void;
   secondaryLabel?: string;
   onSecondaryPress?: () => void;
+  showBack?: boolean;
+  backLabel?: string;
 };
 
 export default function ErrorState({
@@ -29,6 +32,8 @@ export default function ErrorState({
   onRetry,
   secondaryLabel,
   onSecondaryPress,
+  showBack = false,
+  backLabel,
 }: ErrorStateProps) {
   const { t } = useTranslation('common');
   const styles = useThemedStyles((theme) =>
@@ -36,6 +41,13 @@ export default function ErrorState({
       safeArea: {
         flex: 1,
         backgroundColor: theme.colors.background,
+      },
+      wrapper: {
+        flex: 1,
+      },
+      backButton: {
+        paddingHorizontal: theme.spacing.lg,
+        paddingTop: theme.spacing.lg,
       },
       container: {
         flex: 1,
@@ -94,27 +106,30 @@ export default function ErrorState({
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{resolvedTitle}</Text>
-        <Text style={styles.message}>{message}</Text>
+      <View style={styles.wrapper}>
+        {showBack && <BackButton label={backLabel} style={styles.backButton} />}
+        <View style={styles.container}>
+          <Text style={styles.title}>{resolvedTitle}</Text>
+          <Text style={styles.message}>{message}</Text>
 
-        {onRetry && (
-          <Pressable
-            onPress={onRetry}
-            style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-          >
-            <Text style={styles.primaryButtonText}>{resolvedRetryLabel}</Text>
-          </Pressable>
-        )}
+          {onRetry && (
+            <Pressable
+              onPress={onRetry}
+              style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
+            >
+              <Text style={styles.primaryButtonText}>{resolvedRetryLabel}</Text>
+            </Pressable>
+          )}
 
-        {secondaryLabel && onSecondaryPress && (
-          <Pressable
-            onPress={onSecondaryPress}
-            style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-          >
-            <Text style={styles.ghostButtonText}>{secondaryLabel}</Text>
-          </Pressable>
-        )}
+          {secondaryLabel && onSecondaryPress && (
+            <Pressable
+              onPress={onSecondaryPress}
+              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
+            >
+              <Text style={styles.ghostButtonText}>{secondaryLabel}</Text>
+            </Pressable>
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );

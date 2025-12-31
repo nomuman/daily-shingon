@@ -7,14 +7,16 @@
  * Side effects: none. / 副作用: なし。
  * Edge cases: none (static screen). / 例外: なし（静的画面）。
  */
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../components/BackButton';
 import { useThemedStyles } from '../ui/theme';
 
 export default function NotFoundScreen() {
+  const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
@@ -24,10 +26,17 @@ export default function NotFoundScreen() {
       },
       container: {
         flex: 1,
+        gap: theme.spacing.sm,
+        padding: theme.spacing.lg,
+      },
+      backButton: {
+        paddingTop: theme.spacing.xs,
+      },
+      content: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         gap: theme.spacing.sm,
-        padding: theme.spacing.lg,
       },
       title: {
         fontSize: 18,
@@ -40,22 +49,21 @@ export default function NotFoundScreen() {
         textAlign: 'center',
         fontFamily: theme.font.body,
       },
-      link: {
-        color: theme.colors.accentDark,
-        fontWeight: '700',
-        fontFamily: theme.font.body,
-      },
     }),
   );
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <View style={styles.container}>
-        <Text style={styles.title}>{t('notFound.title')}</Text>
-        <Text style={styles.body}>{t('notFound.body')}</Text>
-        <Link href="/" style={styles.link}>
-          {t('notFound.backHome')}
-        </Link>
+        <BackButton
+          label={t('notFound.backHome')}
+          onPress={() => router.replace('/')}
+          style={styles.backButton}
+        />
+        <View style={styles.content}>
+          <Text style={styles.title}>{t('notFound.title')}</Text>
+          <Text style={styles.body}>{t('notFound.body')}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );

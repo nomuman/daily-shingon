@@ -7,31 +7,25 @@
  * Side effects: none (navigation only). / 副作用: なし（遷移のみ）。
  * Edge cases: empty license list. / 例外: ライセンスが空。
  */
-import { useRouter } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import BackButton from '../components/BackButton';
 import { OSS_LICENSES } from '../content/oss-licenses';
 import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
 
 export default function LicensesScreen() {
-  const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles(createStyles);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+        <BackButton />
         <View style={styles.headerCard}>
           <View style={styles.headerRow}>
             <Text style={styles.headerTitle}>{t('licenses.title')}</Text>
-            <Pressable
-              onPress={() => router.back()}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{t('common.back')}</Text>
-            </Pressable>
           </View>
           <Text style={styles.headerBody}>{t('licenses.subtitle')}</Text>
         </View>
