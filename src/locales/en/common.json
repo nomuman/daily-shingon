@@ -98,8 +98,7 @@
     "recentCta": "Go to 365",
     "historyDate": "Date",
     "historyMemo": "Memo",
-    "historyFootnote": "This isn't a score - just a scaffold for reflection. Gaps are fine.",
-    "footerNote": "Data refreshes when this screen comes into focus, so tab switches/back actions show the latest."
+    "historyFootnote": "This isn't a score - just a scaffold for reflection. Gaps are fine."
   },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
@@ -201,8 +200,7 @@
     "noteHint": "Long text not needed. One line is fine. Empty is OK.",
     "notePlaceholder": "e.g., I spoke too sharply. Tomorrow I'll pause and breathe.",
     "saveButton": "Save night close and return",
-    "resetButton": "Reset today's night check",
-    "footerNote": "Accessibility: selection state is readable for screen readers."
+    "resetButton": "Reset today's night check"
   },
   "settings": {
     "kicker": "Settings",

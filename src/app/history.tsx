@@ -29,6 +29,7 @@ const chartGutterSize = 2;
 const chartPaddingLeft = 32;
 const chartDaysInWeek = 7;
 const chartMonthLabelGutter = 8;
+const chartSquareRadius = 3;
 const chartHeight =
   chartDaysInWeek * (chartSquareSize + chartGutterSize) +
   (chartSquareSize + chartMonthLabelGutter - chartGutterSize) +
@@ -77,6 +78,14 @@ const buildTooltipLabel = (
   return t('history.tooltipLabel', { date: dateLabel, status: labelForCount(t, count) });
 };
 
+// Match chart colors to legend steps. / 凡例の色段階に合わせる。
+const resolveHeatmapColor = (theme: Theme, opacity = 1) => {
+  if (opacity <= 0.2) return theme.colors.border;
+  if (opacity < 0.6) return `${theme.colors.accent}55`;
+  if (opacity < 0.85) return `${theme.colors.accent}99`;
+  return theme.colors.accent;
+};
+
 // Shared entrance animation for sections. / セクション共通の登場アニメーション。
 const entranceStyle = (anim: Animated.Value) => ({
   opacity: anim,
@@ -112,6 +121,9 @@ export default function HistoryScreen() {
   const headerAnim = useRef(new Animated.Value(0)).current;
   const graphAnim = useRef(new Animated.Value(0)).current;
   const legendAnim = useRef(new Animated.Value(0)).current;
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollOffset = useRef(0);
+  const pendingRestore = useRef(false);
 
   // Load heatmap values when focused or refreshed. / フォーカス時・更新時に値を読込。
   const refresh = useCallback(async () => {
@@ -130,6 +142,7 @@ export default function HistoryScreen() {
   // Refresh on focus to reflect recent changes. / フォーカス時に最新状態へ更新。
   useFocusEffect(
     useCallback(() => {
+      pendingRestore.current = true;
       void refresh();
     }, [refresh]),
   );
@@ -143,6 +156,15 @@ export default function HistoryScreen() {
     ]).start();
   }, [graphAnim, headerAnim, legendAnim]);
 
+  useEffect(() => {
+    if (loading || !pendingRestore.current) return;
+    pendingRestore.current = false;
+    if (scrollOffset.current <= 0) return;
+    requestAnimationFrame(() => {
+      scrollRef.current?.scrollTo({ y: scrollOffset.current, animated: false });
+    });
+  }, [loading]);
+
   if (error) {
     return <ErrorState message={error} onRetry={refresh} showBack />;
   }
@@ -152,6 +174,11 @@ export default function HistoryScreen() {
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
+        ref={scrollRef}
+        onScroll={(event) => {
+          scrollOffset.current = event.nativeEvent.contentOffset.y;
+        }}
+        scrollEventThrottle={16}
       >
         <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
@@ -165,7 +192,11 @@ export default function HistoryScreen() {
           {loading ? (
             <Text style={styles.loadingText}>{t('common.loading')}</Text>
           ) : (
-            <ScrollView horizontal contentContainerStyle={{ paddingRight: 12 }}>
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.graphScrollContent}
+              showsHorizontalScrollIndicator={false}
+            >
               <ContributionGraph
                 values={values}
                 endDate={endDate}
@@ -189,7 +220,7 @@ export default function HistoryScreen() {
                   backgroundGradientFromOpacity: 0,
                   backgroundGradientToOpacity: 0,
                   decimalPlaces: 0,
-                  color: () => theme.colors.accent,
+                  color: (opacity = 1) => resolveHeatmapColor(theme, opacity),
                   labelColor: () => theme.colors.inkMuted,
                 }}
                 // Enable accessibility label + long-press tooltip. / アクセシビリティと長押しツールチップを設定。
@@ -197,6 +228,8 @@ export default function HistoryScreen() {
                   accessibilityLabel: buildTooltipLabel(t, value),
                   onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
                   delayLongPress: 150,
+                  rx: chartSquareRadius,
+                  ry: chartSquareRadius,
                 })}
               />
             </ScrollView>
@@ -281,6 +314,11 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       borderRadius: theme.radius.lg,
       backgroundColor: theme.colors.surface,
       ...cardShadow,
+    },
+    graphScrollContent: {
+      paddingHorizontal: 12,
+      flexGrow: 1,
+      justifyContent: 'center',
     },
     loadingText: {
       color: theme.colors.inkMuted,

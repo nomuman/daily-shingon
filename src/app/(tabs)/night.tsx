@@ -288,8 +288,6 @@ export default function NightScreen() {
         >
           <Text style={styles.ghostButtonText}>{t('night.resetButton')}</Text>
         </Pressable>
-
-        <Text style={styles.footerNote}>{t('night.footerNote')}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -449,11 +447,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     ghostButtonText: {
       fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
-    },
-    footerNote: {
-      fontSize: 12,
-      color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
   });

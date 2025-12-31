@@ -359,8 +359,6 @@ export default function HomeScreen() {
 
           <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
         </Animated.View>
-
-        <Text style={styles.footerNote}>{t('home.footerNote')}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -645,12 +643,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       alignItems: 'center',
     },
     historyFootnote: {
-      fontSize: 12,
-      color: theme.colors.inkMuted,
-      lineHeight: 18,
-      fontFamily: theme.font.body,
-    },
-    footerNote: {
       fontSize: 12,
       color: theme.colors.inkMuted,
       lineHeight: 18,

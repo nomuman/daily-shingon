@@ -98,8 +98,7 @@
     "recentCta": "365日へ",
     "historyDate": "日付",
     "historyMemo": "メモ",
-    "historyFootnote": "※これはスコアではなく「ふり返りの足場」。抜けても責めない。",
-    "footerNote": "※ タブ移動や戻る操作で最新を反映するため、画面に戻った時点で再読み込みします。"
+    "historyFootnote": "※これはスコアではなく「ふり返りの足場」。抜けても責めない。"
   },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
@@ -201,8 +200,7 @@
     "noteHint": "※長文不要。1行でもOK。空欄でもOK。",
     "notePlaceholder": "例：言い方がきつかった。明日は一呼吸おく。",
     "saveButton": "夜のしめを保存して戻る",
-    "resetButton": "今日の夜チェックをリセット",
-    "footerNote": "※ アクセシビリティ対応として選択状態の読み上げに対応しています。"
+    "resetButton": "今日の夜チェックをリセット"
   },
   "settings": {
     "kicker": "設定",
@@ -302,7 +300,7 @@
   },
   "history": {
     "title": "365日",
-    "headerBody": "実践が終わった日（朝/夜/両方/メモ）を、静かに積み上げる可視化。",
+    "headerBody": "実践が終わった日（朝/夜/両方/メモ）を、静かに積み上げる。",
     "count1": "朝または夜",
     "count2": "朝と夜",
     "count3": "朝・夜・メモ",
@@ -315,7 +313,7 @@
     "legend1": "1: 朝or夜",
     "legend2": "2: 朝+夜",
     "legend3": "3: 朝+夜+メモ",
-    "legendNote": "※連続日数（streak）は出さない。空白があっても戻れる設計。"
+    "legendNote": "※連続日数は出さない。空白があっても戻れる。"
   },
   "dayDetail": {
     "statusTitle": "状態",
