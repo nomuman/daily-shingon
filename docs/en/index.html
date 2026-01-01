@@ -10,12 +10,12 @@
     <title>Daily Shingon | まいにち真言</title>
     <style>
       :root {
-        color-scheme: light;
+        color-scheme: light dark;
+        --bg-top: #faf7f2;
         --bg: #f6f3ef;
-        --card: #ffffff;
         --ink: #1f1f1f;
         --muted: #6b6b6b;
-        --accent: #2f5d62;
+        --accent: #4e7cff;
         --border: #e4e0da;
       }
       * {
@@ -24,10 +24,7 @@
       body {
         margin: 0;
         font-family: "Georgia", "Times New Roman", serif;
-        background: var(--bg);
-        background-image:
-          radial-gradient(circle at top right, rgba(47, 93, 98, 0.08), transparent 55%),
-          radial-gradient(circle at 15% 80%, rgba(47, 93, 98, 0.05), transparent 55%);
+        background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 100%);
         color: var(--ink);
         line-height: 1.75;
       }
@@ -36,11 +33,10 @@
         text-decoration: none;
       }
       header {
-        background: linear-gradient(120deg, #f2ede7, #ffffff);
         border-bottom: 1px solid var(--border);
       }
       .wrap {
-        max-width: 880px;
+        max-width: 760px;
         margin: 0 auto;
         padding: 28px 20px;
       }
@@ -49,7 +45,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 20px;
+        font-size: 0.95rem;
       }
       .brand {
         font-weight: 700;
@@ -58,52 +54,53 @@
       .nav-links {
         display: flex;
         align-items: center;
-        gap: 16px;
-        font-size: 0.95rem;
+        gap: 14px;
+        color: var(--muted);
       }
-      .lang {
-        font-size: 0.9rem;
+      .nav-links a {
+        color: inherit;
       }
       .hero {
+        margin-top: 28px;
         display: grid;
-        gap: 12px;
-      }
-      .eyebrow {
-        font-size: 0.85rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 0;
+        gap: 8px;
       }
       h1 {
         margin: 0;
         font-size: 2rem;
+        font-weight: 600;
       }
       .subtitle {
         margin: 0;
         color: var(--muted);
         font-size: 1.05rem;
       }
-      .updated {
-        margin: 4px 0 0;
+      .note {
+        margin: 0;
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+      }
+      .updated {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.85rem;
       }
       .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 12px;
+        gap: 10px;
+        margin-top: 8px;
       }
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 10px 16px;
+        padding: 8px 14px;
         border-radius: 999px;
         border: 1px solid var(--border);
-        background: #ffffff;
+        background: transparent;
         font-weight: 600;
+        font-size: 0.95rem;
       }
       .button.primary {
         background: var(--accent);
@@ -111,73 +108,89 @@
         border-color: var(--accent);
       }
       main {
-        padding: 24px 0 40px;
+        padding: 18px 0 40px;
       }
       section {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 18px 20px;
-        margin-bottom: 16px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+        padding: 18px 0;
+        border-top: 1px solid var(--border);
       }
       h2 {
-        margin: 0 0 8px;
-        font-size: 1.1rem;
+        margin: 0 0 6px;
+        font-size: 1.05rem;
+        font-weight: 600;
       }
       p {
         margin: 0;
       }
       ul {
-        padding-left: 20px;
+        padding-left: 18px;
         margin: 8px 0 0;
       }
-      .grid {
+      .rhythm {
         display: grid;
-        gap: 12px;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        margin-top: 12px;
+        grid-template-columns: 110px 1fr;
+        gap: 6px 12px;
+        margin: 8px 0 0;
       }
-      .card {
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 14px;
-        background: #ffffff;
-      }
-      .card-title {
-        margin: 0 0 4px;
+      .rhythm dt {
         font-weight: 600;
       }
-      .card-caption {
-        margin: 0 0 8px;
+      .rhythm dd {
+        margin: 0;
         color: var(--muted);
-        font-size: 0.9rem;
       }
-      .pill-row {
+      .links {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 12px;
-      }
-      .pill {
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(47, 93, 98, 0.12);
-        color: var(--accent);
-        font-weight: 600;
-        font-size: 0.9rem;
+        gap: 12px 16px;
+        margin-top: 8px;
+        font-size: 0.95rem;
       }
       footer {
         padding: 20px 0 40px;
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+      }
+      .reveal {
+        animation: fade-up 700ms ease forwards;
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      .reveal:nth-child(2) {
+        animation-delay: 80ms;
+      }
+      .reveal:nth-child(3) {
+        animation-delay: 140ms;
+      }
+      .reveal:nth-child(4) {
+        animation-delay: 200ms;
+      }
+      @keyframes fade-up {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-top: #0b1230;
+          --bg: #050816;
+          --ink: #f5f7ff;
+          --muted: #b6c1e6;
+          --accent: #7aa7ff;
+          --border: #1a2a5a;
+        }
       }
       @media (max-width: 600px) {
         h1 {
           font-size: 1.6rem;
-        }
-        section {
-          padding: 16px;
         }
         .nav {
           flex-direction: column;
@@ -185,8 +198,10 @@
         }
         .nav-links {
           width: 100%;
-          justify-content: flex-start;
           flex-wrap: wrap;
+        }
+        .rhythm {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -199,13 +214,13 @@
           <div class="nav-links">
             <a href="../contact/en/">Contact</a>
             <a href="../privacy/en/">Privacy</a>
-            <a class="lang" href="../">日本語</a>
+            <a href="../">日本語</a>
           </div>
         </div>
-        <div class="hero">
-          <p class="eyebrow">Daily Shingon</p>
+        <div class="hero reveal">
           <h1>Bring body, speech, and mind into one daily act.</h1>
-          <p class="subtitle">A calm companion for daily learning and practice, in under five minutes.</p>
+          <p class="subtitle">3 minutes in the morning, 30 seconds midday, 45 seconds at night.</p>
+          <p class="note">A gentle entry point for daily practice, not a substitute for religion.</p>
           <p class="updated">Last updated: 2026-01-01</p>
           <div class="actions">
             <a class="button primary" href="../contact/en/">Contact</a>
@@ -215,47 +230,32 @@
       </div>
     </header>
     <main class="wrap">
-      <section>
+      <section class="reveal">
         <h2>About</h2>
         <p>
-          Daily Shingon is a gentle entry point for daily practice. It is not a substitute for religion, but a small,
-          clear routine you can return to.
+          Daily Shingon is a small, steady companion that helps bring learning into everyday practice. It aims to be
+          quiet, clear, and easy to return to.
         </p>
       </section>
 
-      <section>
+      <section class="reveal">
         <h2>Daily rhythm</h2>
-        <p>3 minutes in the morning, 30 seconds at midday, 45 seconds at night.</p>
-        <div class="grid">
-          <div class="card">
-            <p class="card-title">Morning | Align</p>
-            <p class="card-caption">~3 minutes</p>
-            <p>Settle body, speech, and mind, then pick one simple act for today.</p>
-          </div>
-          <div class="card">
-            <p class="card-title">Midday | Learn</p>
-            <p class="card-caption">~30 seconds</p>
-            <p>A short learning card turns ideas into a concrete action.</p>
-          </div>
-          <div class="card">
-            <p class="card-title">Night | Close</p>
-            <p class="card-caption">~45 seconds</p>
-            <p>Confession → vow → dedication to close the day quietly.</p>
-          </div>
-        </div>
+        <dl class="rhythm">
+          <dt>Morning | Align</dt>
+          <dd>~3 minutes. Settle body, speech, and mind.</dd>
+          <dt>Midday | Learn</dt>
+          <dd>~30 seconds. Turn a short idea into one act.</dd>
+          <dt>Night | Close</dt>
+          <dd>~45 seconds. Confession → vow → dedication.</dd>
+        </dl>
       </section>
 
-      <section>
-        <h2>Three axes: body, speech, mind</h2>
-        <p>These three axes stay visible throughout the experience.</p>
-        <div class="pill-row">
-          <div class="pill">Body | Posture &amp; action</div>
-          <div class="pill">Speech | Mantra &amp; words</div>
-          <div class="pill">Mind | Contemplation</div>
-        </div>
+      <section class="reveal">
+        <h2>Three axes</h2>
+        <p>Body, speech, and mind remain visible throughout.</p>
       </section>
 
-      <section>
+      <section class="reveal">
         <h2>What we value</h2>
         <ul>
           <li>Short, clear guidance</li>
@@ -265,12 +265,12 @@
         </ul>
       </section>
 
-      <section>
+      <section class="reveal">
         <h2>Links</h2>
-        <div class="actions">
-          <a class="button" href="../privacy/en/">Privacy Policy</a>
-          <a class="button" href="../contact/en/">Contact</a>
-          <a class="button" href="https://x.com/nomuman_">X (@nomuman_)</a>
+        <div class="links">
+          <a href="../privacy/en/">Privacy Policy</a>
+          <a href="../contact/en/">Contact</a>
+          <a href="https://x.com/nomuman_">X (@nomuman_)</a>
         </div>
       </section>
     </main>
