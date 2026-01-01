@@ -19,7 +19,7 @@ export type NotificationIds = {
 
 export type PermissionStatus = 'granted' | 'denied' | 'undetermined';
 
-const ANDROID_CHANNEL_ID = 'sanmitsu-reminders';
+const ANDROID_CHANNEL_ID = 'dailyshingon-reminders';
 
 // i18n-safe translator with fallback to avoid raw keys. / キーそのまま表示を避けるフォールバック付き翻訳。
 const translate = (key: string, fallback: string) => {

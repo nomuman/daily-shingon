@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
+import { saveEntry, softDeleteEntry } from '../../features/entries/saveEntry';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import ErrorState from '../../components/ErrorState';
 import {
@@ -206,8 +207,18 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
+              const entryDate = toISODateLocal(getTargetDate());
               // Persist morning log and return to previous screen. / 朝ログを保存して前画面へ戻る。
               await setMorningLog({ bodyDone, speechDone, mindDone, date: getTargetDate() });
+              void saveEntry({
+                date: entryDate,
+                slot: 'morning',
+                bodyDone,
+                speechDone,
+                mindDone,
+              }).catch((err) => {
+                console.warn('Failed to sync morning entry.', err);
+              });
               goBackOrHome();
             } catch (err) {
               console.error('Failed to save morning log.', err);
@@ -222,11 +233,15 @@ export default function MorningScreen() {
         <Pressable
           onPress={async () => {
             try {
+              const entryDate = toISODateLocal(getTargetDate());
               // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearMorningLog(getTargetDate());
               setBodyDone(false);
               setSpeechDone(false);
               setMindDone(false);
+              void softDeleteEntry(entryDate, 'morning').catch((err) => {
+                console.warn('Failed to sync morning deletion.', err);
+              });
             } catch (err) {
               console.error('Failed to reset morning log.', err);
               setError(t('errors.updateFail'));

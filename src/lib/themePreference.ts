@@ -11,7 +11,7 @@ import { getString, setString } from './storage';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
 
-const THEME_KEY = '@sanmitsu/theme-preference';
+const THEME_KEY = '@dailyshingon/theme-preference';
 
 const isThemePreference = (value: string | null): value is ThemePreference => {
   return value === 'system' || value === 'light' || value === 'dark';

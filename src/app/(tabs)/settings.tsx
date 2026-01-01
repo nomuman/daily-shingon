@@ -8,6 +8,7 @@
  * Edge cases: permission denied, invalid time input, missing URLs, load/save failures. / 例外: 権限拒否、時間入力不正、URL欠落、読込/保存失敗。
  */
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import type { User } from '@supabase/supabase-js';
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
@@ -22,11 +23,13 @@ import {
   StyleSheet,
   Switch,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import { signInWithEmail } from '../../auth/signInWithEmail';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
@@ -39,6 +42,8 @@ import {
 } from '../../lib/notifications';
 import { resetAllProgress } from '../../lib/reset';
 import { DEFAULT_SETTINGS, getSettings, setSettings } from '../../lib/settings';
+import { supabase } from '../../lib/supabase';
+import { syncNow } from '../../sync/syncNow';
 import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles } from '../../ui/theme';
 
@@ -274,6 +279,58 @@ export default function SettingsScreen() {
         color: theme.colors.ink,
         fontFamily: theme.font.body,
       },
+      actionRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: theme.spacing.sm,
+        marginTop: theme.spacing.sm,
+      },
+      actionButton: {
+        minHeight: 40,
+        paddingHorizontal: 14,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.accentSoft,
+      },
+      actionButtonPressed: {
+        opacity: 0.85,
+      },
+      actionButtonText: {
+        fontWeight: '700',
+        color: theme.colors.accentDark,
+        fontFamily: theme.font.body,
+      },
+      actionButtonOutline: {
+        minHeight: 40,
+        paddingHorizontal: 14,
+        borderRadius: theme.radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surface,
+      },
+      actionButtonOutlineText: {
+        fontWeight: '700',
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      authInput: {
+        minHeight: 44,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        borderRadius: theme.radius.md,
+        paddingHorizontal: 12,
+        backgroundColor: theme.colors.surface,
+        color: theme.colors.ink,
+        fontFamily: theme.font.body,
+      },
+      authStatus: {
+        color: theme.colors.inkMuted,
+        fontFamily: theme.font.body,
+        marginTop: theme.spacing.sm,
+      },
       timeBlock: {
         gap: theme.spacing.xs,
       },
@@ -327,6 +384,11 @@ export default function SettingsScreen() {
   const [showNightPicker, setShowNightPicker] = useState(false);
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [authUser, setAuthUser] = useState<User | null>(null);
+  const [authBusy, setAuthBusy] = useState(false);
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [authNotice, setAuthNotice] = useState<string | null>(null);
+  const [authEmail, setAuthEmail] = useState('');
   const [languagePref, setLanguagePref] = useState<LanguagePreference>('system');
 
   const headerAnim = useRef(new Animated.Value(0)).current;
@@ -360,6 +422,34 @@ export default function SettingsScreen() {
   useEffect(() => {
     getLanguagePreference().then(setLanguagePref);
   }, []);
+
+  // Track Supabase auth session for sync UI. / Supabase認証セッションを監視。
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth
+      .getUser()
+      .then(({ data, error }) => {
+        if (!mounted) return;
+        if (error) {
+          setAuthNotice(t('settings.sync.sessionFail'));
+          return;
+        }
+        setAuthUser(data.user ?? null);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setAuthNotice(t('settings.sync.sessionFail'));
+      });
+
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAuthUser(session?.user ?? null);
+    });
+
+    return () => {
+      mounted = false;
+      data.subscription.unsubscribe();
+    };
+  }, [t]);
 
   // Stagger in header/sections once on mount. / ヘッダー/セクションの順次表示。
   useEffect(() => {
@@ -552,6 +642,61 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleSignIn = async () => {
+    setAuthNotice(null);
+    const email = authEmail.trim();
+    if (!email) {
+      setAuthNotice(t('settings.sync.emailRequired'));
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      setAuthNotice(t('settings.sync.emailInvalid'));
+      return;
+    }
+    setAuthBusy(true);
+    try {
+      await signInWithEmail(email);
+      setAuthNotice(t('settings.sync.emailSent'));
+    } catch (err) {
+      console.error('Failed to sign in.', err);
+      setAuthNotice(t('settings.sync.signInFail'));
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setAuthNotice(null);
+    setAuthBusy(true);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (err) {
+      console.error('Failed to sign out.', err);
+      setAuthNotice(t('settings.sync.signOutFail'));
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleSyncNow = async () => {
+    setAuthNotice(null);
+    if (!authUser) {
+      setAuthNotice(t('settings.sync.signInRequired'));
+      return;
+    }
+    setSyncBusy(true);
+    try {
+      await syncNow();
+      setAuthNotice(t('settings.sync.syncSuccess'));
+    } catch (err) {
+      console.error('Failed to sync.', err);
+      setAuthNotice(t('settings.sync.syncFail'));
+    } finally {
+      setSyncBusy(false);
+    }
+  };
+
   // Confirm and execute a full progress reset. / 進捗の全リセット確認と実行。
   const handleReset = () => {
     Alert.alert(t('settings.reset.title'), t('settings.reset.body'), [
@@ -574,6 +719,12 @@ export default function SettingsScreen() {
   const settingsSummary = useMemo(() => {
     return reminderEnabled ? t('settings.notifications.on') : t('settings.notifications.off');
   }, [reminderEnabled, t]);
+
+  const authStatus = useMemo(() => {
+    if (!authUser) return t('settings.sync.signedOut');
+    if (authUser.email) return t('settings.sync.signedIn', { email: authUser.email });
+    return t('settings.sync.signedInNoEmail');
+  }, [authUser, t]);
 
   // Display options for language selection. / 言語選択の表示オプション。
   const languageOptions = useMemo(
@@ -642,6 +793,63 @@ export default function SettingsScreen() {
             <Text style={styles.noticeText}>{notice}</Text>
           </Animated.View>
         )}
+
+        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.sync.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.sync.description')}</Text>
+          <Text style={styles.authStatus}>{authStatus}</Text>
+          {!!authNotice && <Text style={styles.sectionHint}>{authNotice}</Text>}
+
+          <View style={styles.actionRow}>
+            {!authUser ? (
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  value={authEmail}
+                  onChangeText={setAuthEmail}
+                  placeholder={t('settings.sync.emailPlaceholder')}
+                  placeholderTextColor={theme.colors.inkMuted}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={styles.authInput}
+                />
+                <Pressable
+                  onPress={handleSignIn}
+                  disabled={authBusy}
+                  style={({ pressed }) => [
+                    styles.actionButton,
+                    pressed && styles.actionButtonPressed,
+                    { marginTop: theme.spacing.sm },
+                  ]}
+                >
+                  <Text style={styles.actionButtonText}>{t('settings.sync.signIn')}</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <Pressable
+                onPress={handleSignOut}
+                disabled={authBusy}
+                style={({ pressed }) => [
+                  styles.actionButtonOutline,
+                  pressed && styles.actionButtonPressed,
+                ]}
+              >
+                <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
+              </Pressable>
+            )}
+
+            <Pressable
+              onPress={handleSyncNow}
+              disabled={syncBusy || authBusy}
+              style={({ pressed }) => [
+                styles.actionButton,
+                pressed && styles.actionButtonPressed,
+              ]}
+            >
+              <Text style={styles.actionButtonText}>{t('settings.sync.syncNow')}</Text>
+            </Pressable>
+          </View>
+        </Animated.View>
 
         <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>

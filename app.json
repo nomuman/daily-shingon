@@ -1,16 +1,16 @@
 {
   "expo": {
     "name": "まいにち真言",
-    "slug": "sanmitsu-app",
+    "slug": "daily-shingon",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "sanmitsuapp",
+    "scheme": "dailyshingon",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nomuman.sanmitsuapp",
+      "bundleIdentifier": "com.nomuman.dailyshingon",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.nomuman.sanmitsuapp"
+      "package": "com.nomuman.dailyshingon"
     },
     "web": {
       "output": "static",
@@ -59,10 +59,10 @@
       "router": {
         "root": "src/app"
       },
-      "privacyPolicyUrl": "https://nomuman.github.io/sanmitsu-app/privacy/",
-      "contactUrl": "https://nomuman.github.io/sanmitsu-app/contact/",
+      "privacyPolicyUrl": "https://nomuman.github.io/daily-shingon/privacy/",
+      "contactUrl": "https://nomuman.github.io/daily-shingon/contact/",
       "eas": {
-        "projectId": "68881611-d222-43df-852b-d8cb00796125"
+        "projectId": "2a47cc9b-4842-45b5-b1da-731c46401c3a"
       }
     },
     "owner": "nomuman"

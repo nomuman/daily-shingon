@@ -18,7 +18,7 @@ describe('settings', () => {
 
   it('merges defaults with partial saved settings', async () => {
     await AsyncStorage.setItem(
-      '@sanmitsu/settings',
+      '@dailyshingon/settings',
       JSON.stringify({ notifications: { enabled: true, morningTime: '06:00' } }),
     );
 

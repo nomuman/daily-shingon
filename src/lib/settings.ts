@@ -22,7 +22,7 @@ export type AppSettings = {
   notifications: NotificationSettings;
 };
 
-const SETTINGS_KEY = '@sanmitsu/settings';
+const SETTINGS_KEY = '@dailyshingon/settings';
 
 export const DEFAULT_SETTINGS: AppSettings = {
   notifications: {

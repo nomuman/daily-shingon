@@ -1,4 +1,4 @@
-Project: sanmitsu-app (Expo + Expo Router).
+Project: daily-shingon (Expo + Expo Router).
 Purpose: Daily practice support app for Shingon Buddhism "三密" (morning check-in, learn card, night close, logs). Not a religion replacement; supports daily practice.
 Tech stack: Expo SDK (RN), Expo Router file-based routing (app root: src/app), TypeScript, i18next, AsyncStorage, expo-notifications.
 Structure: src/app (routes), src/components (UI), src/lib (domain logic: storage, date math, notifications), src/content (content loaders + typed data), src/types, src/ui/theme.tsx. content/ holds raw curriculum JSON. docs/ contains product/UX docs (see docs/00_summary.md).

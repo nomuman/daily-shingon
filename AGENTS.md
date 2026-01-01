@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Project: sanmitsu-app (Expo + Expo Router)
+Project: daily-shingon (Expo + Expo Router)
 
 ## Quickstart
 

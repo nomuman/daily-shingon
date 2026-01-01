@@ -114,7 +114,7 @@ const UPDATES_CONTENT: Record<ContentLang, UpdatesContent> = {
 ・最後は「朝を1分だけ試す」など“次の一歩を1つ”だけ提示。
 
 【状態/実装】
-・既読フラグを端末内保存（例：@sanmitsu/progress）。
+・既読フラグを端末内保存（例：@dailyshingon/progress）。
 ・更新で文言が変わった場合のみ再提示（contentVersionで制御）。
 
 【例外】
