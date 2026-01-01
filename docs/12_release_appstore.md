@@ -9,7 +9,7 @@
 
 ### 既に揃っている/設定済み
 
-* ✅ Bundle ID: `com.nomuman.sanmitsuapp`（`app.json`）
+* ✅ Bundle ID: `com.nomuman.dailyshingon`（`app.json`）
 * ✅ `version`: `1.0.0`（`app.json`）
 * ✅ EAS Project ID: `68881611-d222-43df-852b-d8cb00796125`（`app.json`）
 * ✅ `eas.json` の build/submit プロファイル（`eas.json`）
@@ -44,7 +44,7 @@ Expo公式の提出手順（iOS）と Submit 全体の説明：([Expo Documentat
 `app.json` / `app.config.ts` に最低限これを設定：
 
 * `ios.bundleIdentifier`（一意。後から変えるのは大変）
-  - このプロジェクト: `com.nomuman.sanmitsuapp`
+  - このプロジェクト: `com.nomuman.dailyshingon`
 * `version`（例: 1.0.0）
   - このプロジェクト: `1.0.0`
 * `ios.buildNumber`（審査ごとに上げる数値）

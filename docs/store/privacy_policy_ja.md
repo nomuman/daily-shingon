@@ -49,6 +49,6 @@
 
 本ポリシーに関するお問い合わせは、下記までご連絡ください。
 
-- サポート窓口: [GitHub Issues](https://github.com/nomuman/sanmitsu-app/issues)
+- サポート窓口: [GitHub Issues](https://github.com/nomuman/daily-shingon/issues)
 - 更新情報: [X](https://x.com/nomuman_)
-- サポートページ: [お問い合わせページ](https://nomuman.github.io/sanmitsu-app/contact/)
+- サポートページ: [お問い合わせページ](https://nomuman.github.io/daily-shingon/contact/)

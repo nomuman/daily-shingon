@@ -47,10 +47,10 @@
 
 キー設計
 
-- `@sanmitsu/settings` → UserSettings
-- `@sanmitsu/entries/{YYYY-MM-DD}` → Entry[]（朝/夜）
-- `@sanmitsu/progress` → 既読カードIDなど（任意）
-- `@sanmitsu/contentVersion` → コンテンツバージョン（任意）
+- `@dailyshingon/settings` → UserSettings
+- `@dailyshingon/entries/{YYYY-MM-DD}` → Entry[]（朝/夜）
+- `@dailyshingon/progress` → 既読カードIDなど（任意）
+- `@dailyshingon/contentVersion` → コンテンツバージョン（任意）
 
 ## 4. 集計（UI用に作る計算）
 

@@ -214,14 +214,34 @@
       "english": "英語",
       "note": "一部の表示は画面を開き直すと反映されます。"
     },
-    "theme": {
-      "title": "テーマ",
-      "description": "表示テーマを選びます。",
-      "system": "端末の設定に従う",
-      "light": "ライト",
-      "dark": "ダーク"
-    },
-    "notifications": {
+  "theme": {
+    "title": "テーマ",
+    "description": "表示テーマを選びます。",
+    "system": "端末の設定に従う",
+    "light": "ライト",
+    "dark": "ダーク"
+  },
+  "sync": {
+    "title": "同期とアカウント",
+    "description": "サインインすると端末間で記録を同期できます。",
+    "signedOut": "未ログインです。",
+    "signedIn": "{{email}} でサインイン中",
+    "signedInNoEmail": "サインイン中",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "メールアドレスを入力してください。",
+    "emailInvalid": "正しいメールアドレスを入力してください。",
+    "emailSent": "サインイン用のリンクを送信しました。",
+    "signIn": "メールリンクを送信",
+    "signOut": "サインアウト",
+    "signInFail": "サインインに失敗しました。",
+    "signOutFail": "サインアウトに失敗しました。",
+    "signInRequired": "同期するにはサインインが必要です。",
+    "syncNow": "今すぐ同期",
+    "syncSuccess": "同期が完了しました。",
+    "syncFail": "同期に失敗しました。しばらくして再試行してください。",
+    "sessionFail": "セッションの取得に失敗しました。"
+  },
+  "notifications": {
       "title": "通知",
       "toggle": "朝/夜リマインダー",
       "on": "通知ON",

@@ -26,6 +26,7 @@ import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
+import { saveEntry, softDeleteEntry } from '../../features/entries/saveEntry';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
@@ -257,8 +258,21 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
+              const entryDate = toISODateLocal(getTargetDate());
+              const noteCiphertext = note.trim() ? note.trim() : null;
               // Persist night log and return to previous screen. / 夜ログを保存して前画面へ戻る。
               await setNightLog({ sangeDone, hotsuganDone, ekouDone, note, date: getTargetDate() });
+              void saveEntry({
+                date: entryDate,
+                slot: 'night',
+                bodyDone: sangeDone,
+                speechDone: hotsuganDone,
+                mindDone: ekouDone,
+                noteCiphertext,
+                noteVersion: noteCiphertext ? 0 : 1,
+              }).catch((err) => {
+                console.warn('Failed to sync night entry.', err);
+              });
               goBackOrHome();
             } catch (err) {
               console.error('Failed to save night log.', err);
@@ -273,12 +287,16 @@ export default function NightScreen() {
         <Pressable
           onPress={async () => {
             try {
+              const entryDate = toISODateLocal(getTargetDate());
               // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearNightLog(getTargetDate());
               setSangeDone(false);
               setHotsuganDone(false);
               setEkouDone(false);
               setNote('');
+              void softDeleteEntry(entryDate, 'night').catch((err) => {
+                console.warn('Failed to sync night deletion.', err);
+              });
             } catch (err) {
               console.error('Failed to reset night log.', err);
               setError(t('errors.updateFail'));

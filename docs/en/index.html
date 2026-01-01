@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Daily Shingon is a short, calm companion for daily practice, built around body, speech, and mind."
+    />
+    <title>Daily Shingon | まいにち真言</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f3ef;
+        --card: #ffffff;
+        --ink: #1f1f1f;
+        --muted: #6b6b6b;
+        --accent: #2f5d62;
+        --border: #e4e0da;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Georgia", "Times New Roman", serif;
+        background: var(--bg);
+        background-image:
+          radial-gradient(circle at top right, rgba(47, 93, 98, 0.08), transparent 55%),
+          radial-gradient(circle at 15% 80%, rgba(47, 93, 98, 0.05), transparent 55%);
+        color: var(--ink);
+        line-height: 1.75;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      header {
+        background: linear-gradient(120deg, #f2ede7, #ffffff);
+        border-bottom: 1px solid var(--border);
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 28px 20px;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 0.95rem;
+      }
+      .lang {
+        font-size: 0.9rem;
+      }
+      .hero {
+        display: grid;
+        gap: 12px;
+      }
+      .eyebrow {
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+      h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .updated {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: #ffffff;
+        font-weight: 600;
+      }
+      .button.primary {
+        background: var(--accent);
+        color: #ffffff;
+        border-color: var(--accent);
+      }
+      main {
+        padding: 24px 0 40px;
+      }
+      section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+      p {
+        margin: 0;
+      }
+      ul {
+        padding-left: 20px;
+        margin: 8px 0 0;
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        margin-top: 12px;
+      }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        background: #ffffff;
+      }
+      .card-title {
+        margin: 0 0 4px;
+        font-weight: 600;
+      }
+      .card-caption {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .pill {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(47, 93, 98, 0.12);
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      footer {
+        padding: 20px 0 40px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.6rem;
+        }
+        section {
+          padding: 16px;
+        }
+        .nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .nav-links {
+          width: 100%;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="nav">
+          <div class="brand">Daily Shingon</div>
+          <div class="nav-links">
+            <a href="../contact/en/">Contact</a>
+            <a href="../privacy/en/">Privacy</a>
+            <a class="lang" href="../">日本語</a>
+          </div>
+        </div>
+        <div class="hero">
+          <p class="eyebrow">Daily Shingon</p>
+          <h1>Bring body, speech, and mind into one daily act.</h1>
+          <p class="subtitle">A calm companion for daily learning and practice, in under five minutes.</p>
+          <p class="updated">Last updated: 2026-01-01</p>
+          <div class="actions">
+            <a class="button primary" href="../contact/en/">Contact</a>
+            <a class="button" href="https://github.com/nomuman/daily-shingon">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="wrap">
+      <section>
+        <h2>About</h2>
+        <p>
+          Daily Shingon is a gentle entry point for daily practice. It is not a substitute for religion, but a small,
+          clear routine you can return to.
+        </p>
+      </section>
+
+      <section>
+        <h2>Daily rhythm</h2>
+        <p>3 minutes in the morning, 30 seconds at midday, 45 seconds at night.</p>
+        <div class="grid">
+          <div class="card">
+            <p class="card-title">Morning | Align</p>
+            <p class="card-caption">~3 minutes</p>
+            <p>Settle body, speech, and mind, then pick one simple act for today.</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Midday | Learn</p>
+            <p class="card-caption">~30 seconds</p>
+            <p>A short learning card turns ideas into a concrete action.</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Night | Close</p>
+            <p class="card-caption">~45 seconds</p>
+            <p>Confession → vow → dedication to close the day quietly.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Three axes: body, speech, mind</h2>
+        <p>These three axes stay visible throughout the experience.</p>
+        <div class="pill-row">
+          <div class="pill">Body | Posture &amp; action</div>
+          <div class="pill">Speech | Mantra &amp; words</div>
+          <div class="pill">Mind | Contemplation</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What we value</h2>
+        <ul>
+          <li>Short, clear guidance</li>
+          <li>A return-friendly flow</li>
+          <li>Respectful, non-absolute language</li>
+          <li>Logs remain on your device</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Links</h2>
+        <div class="actions">
+          <a class="button" href="../privacy/en/">Privacy Policy</a>
+          <a class="button" href="../contact/en/">Contact</a>
+          <a class="button" href="https://x.com/nomuman_">X (@nomuman_)</a>
+        </div>
+      </section>
+    </main>
+    <footer class="wrap">© Daily Shingon</footer>
+  </body>
+</html>

@@ -214,14 +214,34 @@
       "english": "English",
       "note": "Some screens update after reopening."
     },
-    "theme": {
-      "title": "Theme",
-      "description": "Choose the app appearance.",
-      "system": "Match system",
-      "light": "Light",
-      "dark": "Dark"
-    },
-    "notifications": {
+  "theme": {
+    "title": "Theme",
+    "description": "Choose the app appearance.",
+    "system": "Match system",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "sync": {
+    "title": "Sync & account",
+    "description": "Sign in to sync your entries across devices.",
+    "signedOut": "Not signed in.",
+    "signedIn": "Signed in as {{email}}.",
+    "signedInNoEmail": "Signed in.",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "Enter your email address.",
+    "emailInvalid": "Please enter a valid email address.",
+    "emailSent": "We sent a sign-in link to your email.",
+    "signIn": "Send magic link",
+    "signOut": "Sign out",
+    "signInFail": "Sign-in failed. Please try again.",
+    "signOutFail": "Failed to sign out.",
+    "signInRequired": "Please sign in to sync.",
+    "syncNow": "Sync now",
+    "syncSuccess": "Sync complete.",
+    "syncFail": "Sync failed. Try again later.",
+    "sessionFail": "Failed to load session."
+  },
+  "notifications": {
       "title": "Notifications",
       "toggle": "Morning/Night reminders",
       "on": "Notifications ON",

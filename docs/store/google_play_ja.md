@@ -41,6 +41,6 @@
 
 ## 連絡先
 
-- サポート窓口: [GitHub Issues](https://github.com/nomuman/sanmitsu-app/issues)
-- サポートページ: [お問い合わせページ](https://nomuman.github.io/sanmitsu-app/contact/)
-- プライバシーポリシー: [プライバシーポリシー](https://nomuman.github.io/sanmitsu-app/privacy/)
+- サポート窓口: [GitHub Issues](https://github.com/nomuman/daily-shingon/issues)
+- サポートページ: [お問い合わせページ](https://nomuman.github.io/daily-shingon/contact/)
+- プライバシーポリシー: [プライバシーポリシー](https://nomuman.github.io/daily-shingon/privacy/)
