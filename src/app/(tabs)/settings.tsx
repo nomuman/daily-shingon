@@ -29,7 +29,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
-import { signInWithEmail } from '../../auth/signInWithEmail';
+import { signInWithEmailPassword, signUpWithEmailPassword } from '../../auth/signInWithEmail';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
@@ -389,6 +389,7 @@ export default function SettingsScreen() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [authNotice, setAuthNotice] = useState<string | null>(null);
   const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
   const [languagePref, setLanguagePref] = useState<LanguagePreference>('system');
 
   const headerAnim = useRef(new Animated.Value(0)).current;
@@ -653,13 +654,44 @@ export default function SettingsScreen() {
       setAuthNotice(t('settings.sync.emailInvalid'));
       return;
     }
+    if (!authPassword) {
+      setAuthNotice(t('settings.sync.passwordRequired'));
+      return;
+    }
     setAuthBusy(true);
     try {
-      await signInWithEmail(email);
-      setAuthNotice(t('settings.sync.emailSent'));
+      await signInWithEmailPassword(email, authPassword);
+      setAuthNotice(t('settings.sync.signInSuccess'));
     } catch (err) {
       console.error('Failed to sign in.', err);
       setAuthNotice(t('settings.sync.signInFail'));
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleSignUp = async () => {
+    setAuthNotice(null);
+    const email = authEmail.trim();
+    if (!email) {
+      setAuthNotice(t('settings.sync.emailRequired'));
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      setAuthNotice(t('settings.sync.emailInvalid'));
+      return;
+    }
+    if (!authPassword || authPassword.length < 8) {
+      setAuthNotice(t('settings.sync.passwordWeak'));
+      return;
+    }
+    setAuthBusy(true);
+    try {
+      await signUpWithEmailPassword(email, authPassword);
+      setAuthNotice(t('settings.sync.signUpSuccess'));
+    } catch (err) {
+      console.error('Failed to sign up.', err);
+      setAuthNotice(t('settings.sync.signUpFail'));
     } finally {
       setAuthBusy(false);
     }
@@ -813,6 +845,16 @@ export default function SettingsScreen() {
                   autoCorrect={false}
                   style={styles.authInput}
                 />
+                <TextInput
+                  value={authPassword}
+                  onChangeText={setAuthPassword}
+                  placeholder={t('settings.sync.passwordPlaceholder')}
+                  placeholderTextColor={theme.colors.inkMuted}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  style={[styles.authInput, { marginTop: theme.spacing.sm }]}
+                />
                 <Pressable
                   onPress={handleSignIn}
                   disabled={authBusy}
@@ -823,6 +865,19 @@ export default function SettingsScreen() {
                   ]}
                 >
                   <Text style={styles.actionButtonText}>{t('settings.sync.signIn')}</Text>
+                </Pressable>
+                <Pressable
+                  onPress={handleSignUp}
+                  disabled={authBusy}
+                  style={({ pressed }) => [
+                    styles.actionButtonOutline,
+                    pressed && styles.actionButtonPressed,
+                    { marginTop: theme.spacing.sm },
+                  ]}
+                >
+                  <Text style={styles.actionButtonOutlineText}>
+                    {t('settings.sync.signUp')}
+                  </Text>
                 </Pressable>
               </View>
             ) : (

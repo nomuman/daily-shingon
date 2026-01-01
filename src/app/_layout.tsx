@@ -7,12 +7,14 @@
  * Side effects: global notification handler setup, i18n initialization. / 副作用: 通知ハンドラ設定、i18n初期化。
  * Edge cases: i18n init failure (falls back to ready state to avoid blocking). / 例外: i18n初期化失敗時は表示継続のためreadyにフォールバック。
  */
+import * as LinkingExpo from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { handleAuthCallbackUrl } from '../auth/signInWithEmail';
 import { initI18n } from '../lib/i18n';
 import { ThemeProvider, useTheme, useThemedStyles } from '../ui/theme';
 
@@ -62,6 +64,32 @@ function RootLayoutContent() {
       .catch(() => mounted && setReady(true));
     return () => {
       mounted = false;
+    };
+  }, []);
+
+  // Handle deep links for email auth (native only). / メール認証のディープリンク処理（ネイティブのみ）。
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+    let mounted = true;
+
+    LinkingExpo.getInitialURL()
+      .then((url) => {
+        if (!mounted || !url) return;
+        return handleAuthCallbackUrl(url);
+      })
+      .catch((err) => {
+        console.warn('Failed to handle initial auth link.', err);
+      });
+
+    const subscription = LinkingExpo.addEventListener('url', ({ url }) => {
+      handleAuthCallbackUrl(url).catch((err) => {
+        console.warn('Failed to handle auth link.', err);
+      });
+    });
+
+    return () => {
+      mounted = false;
+      subscription.remove();
     };
   }, []);
 
