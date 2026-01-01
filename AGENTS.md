@@ -29,6 +29,7 @@ Project: daily-shingon (Expo + Expo Router)
 ## Docs
 
 - Product and UX docs live in `docs/` (see `docs/00_summary.md`).
+- Update `docs/dev/src_map.md` whenever new files are added under `src/`.
 
 ## UI/UX conventions
 
