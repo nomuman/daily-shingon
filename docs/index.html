@@ -42,7 +42,8 @@
         --accent: #4e7cff;
         --border: #e4e0da;
         --font-display: 'Zen Old Mincho', 'Times New Roman', serif;
-        --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', 'Noto Sans',
+        --font-body:
+          'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', 'Noto Sans',
           sans-serif;
       }
       * {
@@ -240,7 +241,7 @@
         }
       }
       @media (prefers-color-scheme: dark) {
-        :root {
+        :root:not([data-theme]) {
           --bg-top: #0b1230;
           --bg: #050816;
           --ink: #f5f7ff;
@@ -309,7 +310,7 @@
           <h1>身・口・意を、今日の一つの行いへ。</h1>
           <p class="subtitle">朝3分・昼30秒・夜45秒。短く整える。</p>
           <p class="note">宗教の代替ではなく、日々の実践の入口として。</p>
-          <p class="updated">最終更新日: 2026-01-01</p>
+          <p class="updated">最終更新日: 2026-01-03</p>
           <div class="actions">
             <a class="button primary" href="./app/">Webで使う</a>
             <a class="button" href="./contact/">お問い合わせ</a>

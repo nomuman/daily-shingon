@@ -52,6 +52,7 @@
       "@react-native-community/datetimepicker"
     ],
     "experiments": {
+      "baseUrl": "/daily-shingon/app",
       "typedRoutes": true,
       "reactCompiler": true
     },
