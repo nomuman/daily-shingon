@@ -213,9 +213,8 @@ const createStyles = (theme: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.display,
+      fontFamily: theme.font.displayBold,
     },
     sectionSubtitle: {
       color: theme.colors.inkMuted,
@@ -299,8 +298,7 @@ const createStyles = (theme: Theme) =>
     },
     roadmapStatusText: {
       fontSize: 11,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     roadmapStatusTextWip: {
       color: theme.colors.accentDark,
@@ -324,9 +322,8 @@ const createStyles = (theme: Theme) =>
     },
     detailTitle: {
       fontSize: 13,
-      fontWeight: '700',
       color: theme.colors.inkMuted,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     detailStatus: {
       paddingHorizontal: 6,
@@ -335,14 +332,12 @@ const createStyles = (theme: Theme) =>
     },
     detailStatusText: {
       fontSize: 11,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     detailItemTitle: {
       fontSize: 15,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     detailBody: {
       color: theme.colors.inkMuted,
@@ -398,8 +393,7 @@ const createStyles = (theme: Theme) =>
     },
     changelogTag: {
       color: theme.colors.accentDark,
-      fontFamily: theme.font.body,
-      fontWeight: '700',
+      fontFamily: theme.font.bodyBold,
       fontSize: 12,
     },
     changelogCard: {
@@ -408,9 +402,8 @@ const createStyles = (theme: Theme) =>
     },
     changelogTitle: {
       fontSize: 15,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     changelogBody: {
       color: theme.colors.inkMuted,
@@ -431,7 +424,6 @@ const createStyles = (theme: Theme) =>
     changelogBadgeText: {
       fontSize: 11,
       color: theme.colors.inkMuted,
-      fontFamily: theme.font.body,
-      fontWeight: '600',
+      fontFamily: theme.font.bodyMedium,
     },
   });

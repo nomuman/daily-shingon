@@ -74,8 +74,7 @@ export default function AppButton({
       },
       text: {
         fontSize: resolvedSize.fontSize,
-        fontWeight: '700',
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       primary: {
         backgroundColor: theme.colors.ink,

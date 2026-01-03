@@ -324,9 +324,8 @@ const createStyles = (theme: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
       letterSpacing: 0.2,
     },
     bodyText: {
@@ -357,13 +356,12 @@ const createStyles = (theme: Theme) =>
       opacity: 0.85,
     },
     optionText: {
-      fontWeight: '500',
       lineHeight: 22,
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyMedium,
     },
     optionTextSelected: {
-      fontWeight: '700',
+      fontFamily: theme.font.bodyBold,
     },
     optionMeta: {
       flexDirection: 'row',

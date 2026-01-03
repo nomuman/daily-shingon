@@ -304,9 +304,8 @@ const createStyles = (theme: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     bodyText: {
       lineHeight: 22,
@@ -343,9 +342,8 @@ const createStyles = (theme: Theme) =>
     },
     checkTitle: {
       fontSize: 16,
-      fontWeight: '600',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyMedium,
     },
     checkTitleRow: {
       flexDirection: 'row',
@@ -353,7 +351,7 @@ const createStyles = (theme: Theme) =>
       gap: 8,
     },
     checkTitleSelected: {
-      fontWeight: '700',
+      fontFamily: theme.font.bodyBold,
     },
     ritualSeal: {
       width: 6,

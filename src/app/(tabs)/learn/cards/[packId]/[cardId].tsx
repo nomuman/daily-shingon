@@ -189,9 +189,8 @@ const createStyles = (theme: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     bodyText: {
       lineHeight: 22,

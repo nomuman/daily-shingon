@@ -404,9 +404,8 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.colors.successSoft,
     },
     heroBadgeText: {
-      fontWeight: '700',
       color: theme.colors.accentDark,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     heroBadgeTextComplete: {
       color: theme.colors.success,
@@ -457,9 +456,8 @@ const createStyles = (theme: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.display,
+      fontFamily: theme.font.displayBold,
       letterSpacing: 0.4,
     },
     sectionStack: {
@@ -494,9 +492,8 @@ const createStyles = (theme: Theme) =>
     },
     actionTitle: {
       fontSize: 15,
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     actionStatus: {
       fontSize: 12,
@@ -542,9 +539,8 @@ const createStyles = (theme: Theme) =>
     },
     historyLabel: {
       fontSize: 12,
-      fontWeight: '700',
       color: theme.colors.inkMuted,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     historyValue: {
       color: theme.colors.ink,

@@ -55,9 +55,8 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
       },
       sectionTitle: {
         fontSize: 16,
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
         letterSpacing: 0.2,
       },
       bodyText: {
@@ -75,14 +74,12 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
         paddingVertical: 8,
       },
       optionText: {
-        fontWeight: '400',
         color: theme.colors.ink,
         fontFamily: theme.font.body,
       },
       optionTextStrong: {
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       sourceItem: {
         opacity: 0.8,

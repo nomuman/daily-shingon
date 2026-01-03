@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="../../assets/favicon.png" sizes="any" />
     <link rel="apple-touch-icon" href="../../assets/ogp.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&family=Zen+Old+Mincho&display=swap"
+      rel="stylesheet"
+    />
     <meta property="og:title" content="Privacy Policy | Daily Shingon" />
     <meta property="og:description" content="Privacy policy for Daily Shingon." />
     <meta property="og:type" content="website" />
@@ -25,13 +31,16 @@
         --muted: #6b6b6b;
         --accent: #2f5d62;
         --border: #e4e0da;
+        --font-display: 'Zen Old Mincho', 'Times New Roman', serif;
+        --font-body: 'Zen Kaku Gothic New', 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
       }
       * {
         box-sizing: border-box;
       }
       body {
         margin: 0;
-        font-family: 'Georgia', 'Times New Roman', serif;
+        font-family: var(--font-body);
+        font-weight: 400;
         background: var(--bg);
         color: var(--ink);
         line-height: 1.75;
@@ -57,7 +66,8 @@
         margin-bottom: 16px;
       }
       .brand {
-        font-weight: 700;
+        font-family: var(--font-display);
+        font-weight: 400;
         letter-spacing: 0.02em;
       }
       .lang {
@@ -66,6 +76,9 @@
       h1 {
         margin: 0 0 4px;
         font-size: 1.8rem;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0.02em;
       }
       .updated {
         margin: 0;
@@ -86,6 +99,9 @@
       h2 {
         margin: 0 0 8px;
         font-size: 1.1rem;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0.01em;
       }
       ul {
         padding-left: 20px;

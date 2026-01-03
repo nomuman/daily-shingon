@@ -331,9 +331,8 @@ const createStyles = (theme: Theme) =>
       fontFamily: theme.font.body,
     },
     tooltipValue: {
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     helperText: {
       fontSize: 12,
@@ -344,9 +343,8 @@ const createStyles = (theme: Theme) =>
       gap: theme.spacing.xs,
     },
     legendTitle: {
-      fontWeight: '700',
       color: theme.colors.ink,
-      fontFamily: theme.font.body,
+      fontFamily: theme.font.bodyBold,
     },
     legendRow: {
       flexDirection: 'row',

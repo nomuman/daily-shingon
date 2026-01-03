@@ -135,8 +135,7 @@ const createStyles = (theme: Theme) =>
     },
     licenseBadgeText: {
       color: theme.colors.accentDark,
-      fontFamily: theme.font.body,
-      fontWeight: '700',
+      fontFamily: theme.font.bodyBold,
       fontSize: 12,
     },
     emptyText: {

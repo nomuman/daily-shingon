@@ -134,9 +134,8 @@ export default function SettingsScreen() {
         backgroundColor: theme.colors.accentSoft,
       },
       badgeText: {
-        fontWeight: '700',
         color: theme.colors.accentDark,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       noticeCard: {
         padding: theme.spacing.sm,
@@ -156,9 +155,8 @@ export default function SettingsScreen() {
       },
       sectionTitle: {
         fontSize: 16,
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.display,
+        fontFamily: theme.font.displayBold,
       },
       sectionSubtitle: {
         color: theme.colors.inkMuted,
@@ -176,9 +174,8 @@ export default function SettingsScreen() {
         alignItems: 'center',
       },
       switchLabel: {
-        fontWeight: '600',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyMedium,
       },
       inlineNotice: {
         gap: theme.spacing.sm,
@@ -271,9 +268,8 @@ export default function SettingsScreen() {
         opacity: 0.85,
       },
       ghostButtonText: {
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       actionRow: {
         flexDirection: 'row',
@@ -293,9 +289,8 @@ export default function SettingsScreen() {
         opacity: 0.85,
       },
       actionButtonText: {
-        fontWeight: '700',
         color: theme.colors.accentDark,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       actionButtonOutline: {
         minHeight: 40,
@@ -308,9 +303,8 @@ export default function SettingsScreen() {
         backgroundColor: theme.colors.surface,
       },
       actionButtonOutlineText: {
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       authInput: {
         minHeight: 44,
@@ -331,9 +325,8 @@ export default function SettingsScreen() {
         gap: theme.spacing.xs,
       },
       timeLabel: {
-        fontWeight: '600',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyMedium,
       },
       timeInput: {
         minHeight: 44,
@@ -366,9 +359,8 @@ export default function SettingsScreen() {
         opacity: 0.85,
       },
       dangerButtonText: {
-        fontWeight: '700',
         color: theme.colors.danger,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
     }),
   );

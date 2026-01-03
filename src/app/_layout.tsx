@@ -9,10 +9,16 @@
  */
 import * as LinkingExpo from 'expo-linking';
 import * as Notifications from 'expo-notifications';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ZenOldMincho_400Regular } from '@expo-google-fonts/zen-old-mincho';
+import {
+  ZenKakuGothicNew_400Regular,
+  ZenKakuGothicNew_500Medium,
+} from '@expo-google-fonts/zen-kaku-gothic-new';
 
 import { handleAuthCallbackUrl } from '../auth/signInWithEmail';
 import { initI18n } from '../lib/i18n';
@@ -40,6 +46,11 @@ export default function RootLayout() {
 
 function RootLayoutContent() {
   const [ready, setReady] = useState(false);
+  const [fontsLoaded] = useFonts({
+    ZenOldMincho_400Regular,
+    ZenKakuGothicNew_400Regular,
+    ZenKakuGothicNew_500Medium,
+  });
   const { theme } = useTheme();
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
@@ -94,7 +105,7 @@ function RootLayoutContent() {
   }, []);
 
   // Gate UI until i18n is initialized (or fails gracefully). / i18n初期化までUIを待機。
-  if (!ready) {
+  if (!ready || !fontsLoaded) {
     return (
       <View style={styles.loadingOverlay}>
         <ActivityIndicator color={theme.colors.accent} />

@@ -58,9 +58,8 @@ export default function DayDetailScreen() {
       },
       sectionTitle: {
         fontSize: 16,
-        fontWeight: '700',
         color: theme.colors.ink,
-        fontFamily: theme.font.body,
+        fontFamily: theme.font.bodyBold,
       },
       bodyText: {
         color: theme.colors.ink,

@@ -9,7 +9,7 @@
  */
 import type { ReactNode } from 'react';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 
 import {
   getThemePreference,
@@ -17,18 +17,13 @@ import {
   type ThemePreference,
 } from '../lib/themePreference';
 
-// Typeface mapping per platform. / プラットフォーム別のフォント指定。
+// Typeface mapping (custom fonts loaded in RootLayout). / カスタムフォント指定（RootLayoutで読込）。
 const font = {
-  display: Platform.select({
-    ios: 'Georgia',
-    android: 'serif',
-    default: 'serif',
-  }),
-  body: Platform.select({
-    ios: 'Avenir Next',
-    android: 'sans-serif',
-    default: 'sans-serif',
-  }),
+  display: 'ZenOldMincho_400Regular',
+  displayBold: 'ZenOldMincho_400Regular',
+  body: 'ZenKakuGothicNew_400Regular',
+  bodyMedium: 'ZenKakuGothicNew_400Regular',
+  bodyBold: 'ZenKakuGothicNew_500Medium',
 };
 
 // Global sizing scales. / 全体のサイズスケール。

@@ -59,7 +59,7 @@ export default function TagRow({
       },
       chipTextActive: {
         color: theme.colors.surface,
-        fontWeight: '600',
+        fontFamily: theme.font.bodyMedium,
       },
     }),
   );

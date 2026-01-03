@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="../assets/favicon.png" sizes="any" />
     <link rel="apple-touch-icon" href="../assets/ogp.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&family=Zen+Old+Mincho&display=swap"
+      rel="stylesheet"
+    />
     <meta
       name="description"
       content="Daily Shingon is a short, calm companion for daily practice, built around body, speech, and mind."
@@ -35,13 +41,16 @@
         --muted: #6b6b6b;
         --accent: #4e7cff;
         --border: #e4e0da;
+        --font-display: 'Zen Old Mincho', 'Times New Roman', serif;
+        --font-body: 'Zen Kaku Gothic New', 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
       }
       * {
         box-sizing: border-box;
       }
       body {
         margin: 0;
-        font-family: "Georgia", "Times New Roman", serif;
+        font-family: var(--font-body);
+        font-weight: 400;
         background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 100%);
         color: var(--ink);
         line-height: 1.75;
@@ -66,7 +75,8 @@
         font-size: 0.95rem;
       }
       .brand {
-        font-weight: 700;
+        font-family: var(--font-display);
+        font-weight: 400;
         letter-spacing: 0.02em;
       }
       .nav-links {
@@ -112,7 +122,9 @@
       h1 {
         margin: 0;
         font-size: 2rem;
-        font-weight: 600;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0.02em;
       }
       .subtitle {
         margin: 0;
@@ -143,7 +155,8 @@
         border-radius: 999px;
         border: 1px solid var(--border);
         background: transparent;
-        font-weight: 600;
+        font-family: var(--font-body);
+        font-weight: 500;
         font-size: 0.95rem;
       }
       .button.primary {
@@ -161,7 +174,9 @@
       h2 {
         margin: 0 0 6px;
         font-size: 1.05rem;
-        font-weight: 600;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0.01em;
       }
       p {
         margin: 0;
@@ -177,7 +192,8 @@
         margin: 8px 0 0;
       }
       .rhythm dt {
-        font-weight: 600;
+        font-family: var(--font-body);
+        font-weight: 500;
       }
       .rhythm dd {
         margin: 0;
