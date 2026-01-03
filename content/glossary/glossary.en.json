@@ -50,7 +50,7 @@
       "category": "Doctrine and Keywords",
       "level": "beginner",
       "short": "Explained as a Buddhist tradition that realizes hidden meaning through practice.",
-      "definition": "Koyasan Shingon explanations list, among the differences between esoteric and exoteric teachings, a mode of training that learns hidden meaning (shuhou), and describe practices such as Sanmitsu Kaji (Sanmitsu Yoga).",
+      "definition": "Koyasan Shingon explanations list, among the differences between esoteric and exoteric teachings, a mode of training that reveals the hidden meaning (shuhou), and describe practices such as Sanmitsu Kaji (Sanmitsu Yoga).",
       "notes": "In the app, treat hidden as something understood through experience and practice rather than something merely concealed.",
       "see_also": ["core.exoteric_buddhism", "doctrine.sanmitsu_kaji"],
       "sources": ["S_KOYASAN_SHINGONSHU"]
@@ -62,7 +62,7 @@
       "category": "Doctrine and Keywords",
       "level": "beginner",
       "short": "A term contrasted with esoteric Buddhism, centered on open teachings and sutras.",
-      "definition": "Koyasan Shingon explanations point out several differences between esoteric and exoteric teachings and note esoteric practice such as Sanmitsu Kaji as one fundamental difference.",
+      "definition": "Koyasan Shingon explanations point out several differences between esoteric and exoteric teachings and note esoteric practices such as Sanmitsu Kaji as a fundamental difference.",
       "notes": "Use this as comparative vocabulary rather than a statement of superiority between schools.",
       "see_also": ["core.esoteric_buddhism"],
       "sources": ["S_KOYASAN_SHINGONSHU"]
@@ -75,7 +75,7 @@
       "level": "beginner",
       "short": "Widely known as the monk who systematized and developed Shingon esoteric Buddhism in Japan.",
       "definition": "Philosophical and historical overviews note that Kukai's writings provided theoretical foundations for existing practices such as mantra and dharani, bridging ritual practice and doctrine.",
-      "notes": "In the app, it is helpful to standardize naming such as Kukai, Kobo Daishi, and O-Daishi-sama.",
+      "notes": "In the app, it is helpful to standardize names such as Kukai, Kobo Daishi, and O-Daishi-sama.",
       "see_also": ["persons.kobo_daishi"],
       "sources": ["S_SEP_KUKAI"]
     },
@@ -98,7 +98,7 @@
       "category": "Central Buddhas and Worldview",
       "level": "beginner",
       "short": "Explained as the central Buddha in Shingon Buddhism.",
-      "definition": "Toji Shingon (official) explains that Shingon relies on the root sutras (Mahavairocana and Vajrasekhara) and places Dainichi Nyorai as the central main image. There are also descriptions of Dainichi as the entire universe.",
+      "definition": "Toji Shingon (official) explains that Shingon relies on the root sutras (Mahavairocana and Vajrasekhara) and places Dainichi Nyorai as the central image. There are also descriptions of Dainichi as the entire universe.",
       "notes": "Descriptions of the central Buddha vary by context; fix them with sources.",
       "see_also": ["cosmos.hosshinbutsu", "texts.dainichikyo", "texts.kongochokyo"],
       "sources": ["S_TOJI_SHINGON_ABOUT", "S_KOYASAN_SHINGONSHU"]
@@ -121,7 +121,7 @@
       "reading": "shingon",
       "category": "Doctrine and Keywords",
       "level": "beginner",
-      "short": "Official explanations state that Shingon mantra refers to mantra.",
+      "short": "Official explanations state that shingon refers to mantra.",
       "definition": "Toji Shingon (official) explains that the Shingon term shingon is called mantra in ancient India and means the Buddha's words or true words.",
       "notes": "If the app includes specific mantra text, it must include source and caution about sect and practice differences.",
       "see_also": ["practice.sanmitsu_speech", "practice.kongyo"],
@@ -200,7 +200,7 @@
       "level": "intermediate",
       "short": "Explained as the four mandalas: Great, Samaya, Dharma, and Karma.",
       "definition": "A Koyasan University research bulletin (PDF) states that the four mandalas are the Great, Samaya, Dharma, and Karma mandalas. Kongobuji explanations also mention the four mandalas in the context of sokushin jobutsu.",
-      "notes": "In app design, presenting the same content as image, symbol, text, and action deepens understanding.",
+      "notes": "In the app design, presenting the same content as image, symbol, text, and action deepens understanding.",
       "see_also": [
         "mandala.mahamandala",
         "mandala.samaya_mandala",
@@ -217,7 +217,7 @@
       "level": "intermediate",
       "short": "Explained as a mandala that shows the forms of the deities.",
       "definition": "The Koyasan University research bulletin (PDF) lists the Great Mandala as one of the four mandalas.",
-      "notes": "In UI, this corresponds to the domain of showing images and layouts.",
+      "notes": "In the UI, this corresponds to the domain of showing images and layouts.",
       "see_also": ["mandala.shiman"],
       "sources": ["S_KOYASAN_U_MANDALA_PDF"]
     },
@@ -241,7 +241,7 @@
       "level": "advanced",
       "short": "Listed as one of the four mandalas: the mandala of dharma.",
       "definition": "The Koyasan University research bulletin (PDF) lists the Dharma Mandala as a component of the four mandalas.",
-      "notes": "In UI, this corresponds to text and seed syllables or mantra.",
+      "notes": "In the UI, this corresponds to text and seed syllables or mantra.",
       "see_also": ["mandala.shiman", "doctrine.shingon_mantra"],
       "sources": ["S_KOYASAN_U_MANDALA_PDF"]
     },
@@ -264,7 +264,7 @@
       "category": "Mandala and Symbols",
       "level": "beginner",
       "short": "Officially explained as an expression of esoteric teachings.",
-      "definition": "Toji (official) explains that mandala is an easy-to-understand expression of esoteric teachings and that there are the Womb Realm Mandala and the Diamond Realm Mandala.",
+      "definition": "Toji (official) explains that mandala is an easy-to-understand expression of esoteric teachings and that there are the Womb Realm and Diamond Realm Mandalas.",
       "notes": "When handling images, pay attention to ownership, rights, and credits for the source of the explanation.",
       "see_also": ["mandala.taizokai", "mandala.kongokai"],
       "sources": ["S_TOJI_MANDALA"]
@@ -443,7 +443,7 @@
       "reading": "denpo kanjo",
       "category": "Practice and Ritual",
       "level": "advanced",
-      "short": "A kanjo that grants the ajari rank to a practitioner who trained in esoteric teachings (dictionary).",
+      "short": "A kanjo that grants the ajari rank to a practitioner who has trained in esoteric teachings (dictionary).",
       "definition": "Kotobank explains denpo kanjo as an initiation that grants the ajari rank to a skilled practitioner who has trained in esoteric teachings in Shingon Buddhism.",
       "notes": "Because it is strongly internal to priestly training, a general app should limit it to term understanding.",
       "see_also": ["ritual.ajari"],

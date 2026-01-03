@@ -47,14 +47,14 @@
   },
   "errors": {
     "defaultTitle": "Failed to load",
-    "learnLoadFail": "Failed to load learning data. If retry doesn't fix it, please restart the app.",
-    "saveFail": "Failed to save. If retry doesn't fix it, please restart the app.",
-    "dataLoadFail": "Failed to load saved data. If retry doesn't fix it, please restart the app.",
-    "updateFail": "Failed to update saved data. If retry doesn't fix it, please restart the app.",
-    "morningLoadFail": "Failed to load morning log. If retry doesn't fix it, please restart the app.",
-    "nightLoadFail": "Failed to load night log. If retry doesn't fix it, please restart the app.",
-    "settingsLoadFail": "Failed to load settings. If retry doesn't fix it, please restart the app.",
-    "historyLoadFail": "Failed to load history data. If retry doesn't fix it, please restart the app."
+    "learnLoadFail": "Failed to load learning data. If retrying doesn't fix it, please restart the app.",
+    "saveFail": "Failed to save. If retrying doesn't fix it, please restart the app.",
+    "dataLoadFail": "Failed to load saved data. If retrying doesn't fix it, please restart the app.",
+    "updateFail": "Failed to update saved data. If retrying doesn't fix it, please restart the app.",
+    "morningLoadFail": "Failed to load morning log. If retrying doesn't fix it, please restart the app.",
+    "nightLoadFail": "Failed to load night log. If retrying doesn't fix it, please restart the app.",
+    "settingsLoadFail": "Failed to load settings. If retrying doesn't fix it, please restart the app.",
+    "historyLoadFail": "Failed to load history data. If retrying doesn't fix it, please restart the app."
   },
   "notFound": {
     "title": "Page not found",
@@ -79,7 +79,7 @@
     "yearTitle": "365 Days (Quiet Accumulation)",
     "yearSubtitle": "On days you finish, the colors quietly add up.",
     "yearBadge": "Progress",
-    "yearBody": "Even with gaps, returning continues the line. Add one quiet step today.",
+    "yearBody": "Even with gaps, coming back keeps the line going. Add one quiet step today.",
     "yearView": "View 365 days",
     "yearDetail": "Details",
     "flowTitle": "Today's flow",
@@ -106,7 +106,7 @@
     "example": "Example: {{text}}",
     "actionTitle": "Today's action (choose one)",
     "actionOption": "• [{{key}}] {{text}}",
-    "actionFootnote": "Recommended is just a guide. Choose what feels right today.",
+    "actionFootnote": "Recommended is only a guide. Choose what feels right today.",
     "nightQuestion": "Night question",
     "sources": "Sources",
     "moreTitle": "Learn more",
@@ -118,11 +118,11 @@
   },
   "learnCards": {
     "title": "Learning Cards",
-    "subtitle": "Short learning + action + question",
+    "subtitle": "Short learning, action, and a question",
     "count": "{{total}} cards",
     "search": "Search cards",
     "packNotFound": "Pack not found: {{packId}}",
-    "resultCount": "{{shown}} / {{total}} cards",
+    "resultCount": "Showing {{shown}} of {{total}} cards",
     "typeLearn": "Learn",
     "typePractice": "Practice",
     "level": {
@@ -147,7 +147,7 @@
     "short": "Short description",
     "definition": "Definition",
     "notes": "Notes",
-    "related": "Related",
+    "related": "Related terms",
     "sources": "Sources",
     "level": {
       "beginner": "Beginner",
@@ -158,7 +158,7 @@
   "morning": {
     "title": "Morning (Align)",
     "policyTitle": "Today's intention",
-    "policyBody": "Align body, speech, and mind. It doesn't need to be perfect - only what you can do.",
+    "policyBody": "Align body, speech, and mind. It doesn't need to be perfect - just what you can do.",
     "checkTitle": "Checklist (3)",
     "check": {
       "body": {
@@ -197,7 +197,7 @@
       }
     },
     "noteTitle": "One line (optional)",
-    "noteHint": "Long text not needed. One line is fine. Empty is OK.",
+    "noteHint": "No long text needed. One line is fine. Empty is OK.",
     "notePlaceholder": "e.g., I spoke too sharply. Tomorrow I'll pause and breathe.",
     "saveButton": "Save night close and return",
     "resetButton": "Reset today's night check"
@@ -205,7 +205,7 @@
   "settings": {
     "kicker": "Settings",
     "headerTitle": "Quiet support for your daily alignment",
-    "headerBody": "Adjust notifications and the start date here - only when you need it.",
+    "headerBody": "Adjust notifications and the start date here when you need to.",
     "language": {
       "title": "Language",
       "description": "Choose the language used in the app.",
@@ -252,7 +252,7 @@
       "toggle": "Morning/Night reminders",
       "on": "Notifications ON",
       "off": "Notifications OFF",
-      "permissionDenied": "Notifications are denied. Please allow them in Settings.",
+      "permissionDenied": "Notification permission is denied. Please allow it in Settings.",
       "openSettings": "Open Settings app",
       "rescheduleFail": "Failed to reschedule notifications. Please try again.",
       "stopFail": "Failed to stop notifications.",
@@ -333,7 +333,7 @@
     "tooltipUnknown": "Unknown date: none",
     "tooltipLabel": "{{date}}: {{status}}",
     "tooltipTitle": "Details",
-    "tooltipHint": "Long-press to show date label",
+    "tooltipHint": "Long-press to show the date label",
     "legendTitle": "Legend",
     "legend0": "0: None",
     "legend1": "1: Morning or Night",

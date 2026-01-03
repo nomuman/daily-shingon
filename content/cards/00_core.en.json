@@ -24,16 +24,16 @@
       "id": "core.esoteric_vs_exoteric",
       "type": "learn",
       "level": "beginner",
-      "title": "Esoteric and Exoteric: the difference includes how you practice",
-      "summary": "Official explanations note that esoteric and exoteric are not opposites; they differ in how one enters understanding.",
-      "body_md": "Official explanations from the Koyasan Shingon tradition cite one difference between esoteric and exoteric teachings as the training that learns the hidden meaning (shuhou). Shingon practices are explained as Three Mysteries empowerment (Sanmitsu Yoga), among others.\n\nIn this app, we don't stop at knowledge alone. We translate it into a small, daily practice: align body, speech, and mind today.",
+      "title": "Esoteric and Exoteric: the difference is also in how you practice",
+      "summary": "Official explanations note that esoteric and exoteric are not opposites; they differ in how one approaches understanding.",
+      "body_md": "Official explanations from the Koyasan Shingon tradition cite one difference between esoteric and exoteric teachings as training that reveals the hidden meaning (shuhou). Shingon practices are described as the empowerment of the Three Mysteries (Sanmitsu Yoga), among others.\n\nIn this app, we don't stop at knowledge alone. We translate it into a small, daily practice: align body, speech, and mind today.",
       "micro_practice": {
         "morning": "First align posture (Body). Next, speak one short phrase carefully (Speech). Finally, decide one focus for today (Mind).",
         "day": "When your words are about to turn harsh, take one breath and rephrase (practice of speech).",
         "night": "Recall and write one moment you were aligned today (check the mind)."
       },
       "reflection_questions": [
-        "Today, what did you move into action instead of leaving as knowledge?",
+        "What did you put into action today instead of leaving it as knowledge?",
         "If training happened in daily life rather than in a special time, what would you change?"
       ],
       "tags": ["doctrine", "gateway", "exoteric", "esoteric"],
@@ -44,11 +44,11 @@
       "type": "learn",
       "level": "beginner",
       "title": "The Three Mysteries: align body, speech, and mind",
-      "summary": "Kongobuji (official) explains that body, speech, and mind mysteries together are the Three Mysteries.",
-      "body_md": "Kongobuji (official) explains that the Three Mysteries are the three together: the mystery of the body through actions, the mystery of speech through words, and the mystery of mind through thought.\n\nIf you map the app's \"morning = align\" and \"night = reflect\" to body, speech, and mind, it becomes easier to follow.",
+      "summary": "Kongobuji (official) explains that the mysteries of body, speech, and mind together are the Three Mysteries.",
+      "body_md": "Kongobuji (official) explains that the Three Mysteries are the mysteries of body through action, speech through words, and mind through thought.\n\nIf you map the app's \"morning = align\" and \"night = reflect\" to body, speech, and mind, it becomes easier to follow.",
       "micro_practice": {
         "morning": "Body: posture / Speech: one careful phrase / Mind: decide one focus for today.",
-        "day": "Speech: choose brief but sincere words. Mind: imagine the other person's position once.",
+        "day": "Speech: choose brief but sincere words. Mind: imagine the other person's perspective once.",
         "night": "Mind: admit one disturbance today and decide one small correction for tomorrow."
       },
       "reflection_questions": [
@@ -62,16 +62,16 @@
       "id": "core.sanmitsu_kaji",
       "type": "learn",
       "level": "intermediate",
-      "title": "Sanmitsu Kaji: the Three Mysteries appear as action",
+      "title": "Sanmitsu Kaji: the Three Mysteries appear in action",
       "summary": "Official writings describe kaji as the practice that makes the Three Mysteries manifest.",
       "body_md": "Official writings at Kongobuji explain that the Three Mysteries are the union of body, speech, and mind, and that the practice that makes them manifest for us is called kaji (empowerment).\n\nIn this app, we treat it not as ritual reenactment, but as support for aligning body, speech, and mind in daily life.",
       "micro_practice": {
-        "morning": "Body: careful movements / Speech: one careful word / Mind: choose one axis for today.",
+        "morning": "Body: careful movements / Speech: one careful word / Mind: choose one focus for today.",
         "day": "During conflict, avoid attacking words and speak in the order of facts, then requests.",
         "night": "Write one line about today's difficulty as observation rather than blame."
       },
       "reflection_questions": [
-        "What became visible (manifested) today?",
+        "What became visible today?",
         "If you were to realign, where would you start: body, speech, or mind?"
       ],
       "tags": ["doctrine", "sanmitsu kaji"],
@@ -106,10 +106,10 @@
       "micro_practice": {
         "morning": "Release tension in one place in the body (shoulders, jaw, etc.).",
         "day": "Choose one honest phrase.",
-        "night": "Turn one action today into the next step (write one correction)."
+        "night": "Turn one action from today into the next step (write one correction)."
       },
       "reflection_questions": [
-        "If you translate an abstract teaching into today's action, what becomes it?",
+        "If you translate an abstract teaching into today's action, what does it become?",
         "What small, concrete action could embody it today?"
       ],
       "tags": ["doctrine", "dharma body buddha", "worldview"],
@@ -119,12 +119,12 @@
       "id": "core.sokushin_jobutsu",
       "type": "learn",
       "level": "beginner",
-      "title": "Sokushin Jobutsu: described as moving away from suffering in this very body",
+      "title": "Sokushin Jobutsu: described as leaving suffering in this very body",
       "summary": "Official Kongobuji writings refer to sokushin jobutsu.",
-      "body_md": "An official Kongobuji text states that through the Three Mysteries, \"leaving suffering in this very body\" is sokushin jobutsu (becoming a Buddha in this body), in its contextual explanation.\n\nIn this app, we treat it as a direction rather than a destination: align body, speech, and mind today and connect it to tomorrow.",
+      "body_md": "An official Kongobuji text states that, through the Three Mysteries, \"leaving suffering in this very body\" refers to sokushin jobutsu (becoming a Buddha in this body).\n\nIn this app, we treat it as a direction rather than a destination: align body, speech, and mind today and connect it to tomorrow.",
       "micro_practice": {
-        "morning": "Predict one \"seed of suffering\" today and take one step in advance (e.g., make 5 minutes of margin).",
-        "day": "When suffering appears, first return the body (posture) -> align speech (words) -> align mind (attention).",
+        "morning": "Predict one \"seed of suffering\" today and take one step in advance (e.g., build in a 5-minute buffer).",
+        "day": "When suffering appears, first return to the body (posture) -> align speech (words) -> align mind (attention).",
         "night": "Write today's suffering in one line, then write one way to make it 1 mm lighter tomorrow."
       },
       "reflection_questions": [

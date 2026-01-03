@@ -34,7 +34,7 @@
       "micro_practice": {
         "morning": "Prioritize returning over increasing color.",
         "day": "If you miss a day, simply return the next day.",
-        "night": "When a color fills in, affirm today's one step and close."
+        "night": "When a color fills in, affirm today's one step and close out."
       },
       "reflection_questions": ["What does a colored square signal to you?"],
       "tags": ["design", "calendar", "continuity"],
@@ -78,7 +78,7 @@
       "level": "beginner",
       "title": "Sources first: every card needs a basis",
       "summary": "A minimum quality rule for clear attribution.",
-      "body_md": "Operational rule:\n- Always attach sources when creating new cards\n- Choose sources in order: official -> dictionary -> academic\n- Avoid strongly assertive wording\n\n(This is a content quality rule.)",
+      "body_md": "Operational rule:\n- Always attach sources when creating new cards\n- Choose sources in order: official -> dictionary -> academic\n- Avoid overly assertive wording\n\n(This is a content quality rule.)",
       "micro_practice": {
         "morning": "Find sources first for any cards you add today.",
         "day": "Fill in sources before writing the body.",
@@ -92,7 +92,7 @@
       "id": "ux.respect_without_gatekeeping",
       "type": "practice",
       "level": "beginner",
-      "title": "Keep the entry open: protect the beginner's entry",
+      "title": "Keep the entry open: protect beginners",
       "summary": "Move difficult terms to the glossary so practice does not stop.",
       "body_md": "Design policy:\n- When a difficult term appears, keep reading and supplement via the glossary\n- The glossary holds short definitions and sources\n- Prioritize practice (action)\n\n(Not a doctrinal claim, but a design policy.)",
       "micro_practice": {

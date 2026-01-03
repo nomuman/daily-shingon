@@ -17,7 +17,7 @@
       "body_md": "Kotobank defines gongyo as reciting sutras before the Buddha at a set time (and notes it can also mean diligent effort).\n\nThe app's heatmap (one square per day) pairs well with this idea of practicing at a set time.",
       "micro_practice": {
         "morning": "Even one minute is fine. Anchor it to the same time each day.",
-        "day": "If you missed it, do not blame yourself. Just secure the next time.",
+        "day": "If you missed it, do not blame yourself. Just set the next time.",
         "night": "Write one line about why it did or didn't happen today (no blame)."
       },
       "reflection_questions": [
@@ -33,7 +33,7 @@
       "level": "beginner",
       "title": "Zange (repentance): confess and amend past wrongs (dictionary)",
       "summary": "Kotobank explains zange as confessing wrongdoing and asking forgiveness, among other meanings.",
-      "body_md": "Kotobank defines zange (zange/sange) as confessing past wrongdoing to ask forgiveness, and regretting and apologizing for wrongdoing.\n\nIn this app's night flow, we avoid self-denial and handle it as observation -> correction.",
+      "body_md": "Kotobank defines zange (zange/sange) as confessing past wrongdoing to ask forgiveness, and regretting or apologizing for it.\n\nIn this app's night flow, we avoid self-denial and treat it as observation -> correction.",
       "micro_practice": {
         "morning": "Translate yesterday's reflection into one improvement today.",
         "day": "If you fail, state the facts before excuses (speech).",
@@ -69,9 +69,9 @@
       "summary": "Kotobank explains ekou as dedicating merit to others and to their awakening.",
       "body_md": "Kotobank defines ekou as dedicating merit to the deceased, and directing one's cultivated merit toward others to help both self and others attain awakening.\n\nIn the app, it is helpful to close the night with a single line that turns today's goodness toward someone.",
       "micro_practice": {
-        "morning": "Decide one person you will direct today toward.",
+        "morning": "Choose one person to direct today's merit toward.",
         "day": "Do one small, careful act for that person.",
-        "night": "Close with words that direct today's small goodness toward someone."
+        "night": "Close with words that direct today's small goodness to someone."
       },
       "reflection_questions": ["Who did you dedicate to today? Did it show up in action?"],
       "tags": ["practice", "dedication", "night"],
@@ -89,7 +89,7 @@
         "day": "If words are hard, a single line of gratitude is enough.",
         "night": "Write one line of dedication (free text)."
       },
-      "reflection_questions": ["To whom, and how, will you direct today's merit (goodness)?"],
+      "reflection_questions": ["To whom, and how, will you direct today's merit?"],
       "tags": ["practice", "dedication verse", "gongyo"],
       "sources": ["S_KOTOBANK_EKOU_MON"]
     },

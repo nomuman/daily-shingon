@@ -30,7 +30,7 @@
       "level": "beginner",
       "title": "Shingon equals mantra (official)",
       "summary": "Toji Shingon (official) explains shingon as mantra.",
-      "body_md": "Toji Shingon (official) explains that the Shingon term shingon is called mantra in ancient India and means the Buddha's words or true words.\n\nIn the app, even without fixing a specific text, it can still count as having chanted by recording the act.",
+      "body_md": "Toji Shingon (official) explains that the Shingon term shingon is called mantra in ancient India and means the Buddha's words or true words.\n\nIn the app, even without fixing a specific text, it can still count as chanting if you record the act.",
       "micro_practice": {
         "morning": "Speech: choose one careful word (start there).",
         "day": "Reduce one rough word.",
@@ -60,9 +60,9 @@
       "id": "texts.dainichi_as_center",
       "type": "learn",
       "level": "beginner",
-      "title": "Dainichi Nyorai: explained as the central main image (official)",
-      "summary": "Toji Shingon (official) explains Dainichi Nyorai as the central main image.",
-      "body_md": "Toji Shingon (official) explains that Shingon relies on the two root sutras and that Dainichi Nyorai is the central main image.\n\nIn the app, this can be translated as a design: the center equals the daily form (morning/night).",
+      "title": "Dainichi Nyorai: explained as the central image (official)",
+      "summary": "Toji Shingon (official) explains Dainichi Nyorai as the central image.",
+      "body_md": "Toji Shingon (official) explains that Shingon relies on the two root sutras and that Dainichi Nyorai is the central image.\n\nIn the app, this can be translated as a design: the center equals the daily form (morning/night).",
       "micro_practice": {
         "morning": "Fix the center (morning form).",
         "day": "Change only one surrounding action.",
@@ -92,9 +92,9 @@
       "id": "texts.safe_quote_policy",
       "type": "practice",
       "level": "beginner",
-      "title": "Safe policy for quoting texts (app policy)",
+      "title": "Safety policy for quoting texts (app policy)",
       "summary": "Mantra and sutra texts vary by edition, sect, and practice, so handle with care.",
-      "body_md": "This card is an app production policy.\n\n- If you include a text (mantra or sutra), always specify the source (which book or which temple/shrine)\n- In areas with practice differences, prioritize references over assertive statements\n- Early versions can rely on logging chanted or practiced without fixed text\n\nNot a doctrinal claim, but a quality management rule.",
+      "body_md": "This card is an app production policy.\n\n- If you include a text (mantra or sutra), always specify the source (which book or which temple/shrine)\n- In areas with practice differences, prioritize references over assertive statements\n- Early versions can rely on logging that a chant or practice was done without a fixed text\n\nNot a doctrinal claim, but a quality management rule.",
       "micro_practice": {
         "morning": "Set up source management before quoting texts.",
         "day": "Do not include uncertain texts.",

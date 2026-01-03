@@ -4,7 +4,7 @@
     "language": "en",
     "pack_id": "mandala",
     "title": "Mandala (Learning Through Symbols)",
-    "description": "Cards that follow official explanations and connect mandala study to practice rather than getting lost in iconography details.",
+    "description": "Cards that follow official explanations and connect mandala study to practice without getting lost in iconography details.",
     "generated_at": "2025-12-27"
   },
   "cards": [
@@ -14,7 +14,7 @@
       "level": "beginner",
       "title": "Mandala: a clear expression of esoteric teachings (official)",
       "summary": "Toji (official) states that a mandala expresses esoteric teachings in an easy-to-understand form.",
-      "body_md": "Toji (official) explains that a mandala expresses esoteric teachings in a clear, accessible form.\n\nIn this app, it is not about memorizing images, but about asking what today's actions express.",
+      "body_md": "Toji (official) explains that a mandala expresses esoteric teachings in a clear, accessible form.\n\nIn this app, it's not about memorizing images, but about asking what today's actions express.",
       "micro_practice": {
         "morning": "Read one learning point -> choose one action (see -> do).",
         "day": "Align the invisible mind through words (speech) and posture (body).",
@@ -30,10 +30,10 @@
       "level": "beginner",
       "title": "Womb Realm and Diamond Realm: conveying principle and wisdom (official)",
       "summary": "Toji (official) explains that the two mandalas convey the teachings of principle and wisdom.",
-      "body_md": "Toji (official) explains that the mandalas include the Womb Realm Mandala and the Diamond Realm Mandala, and that they convey the teachings of principle and wisdom, respectively.\n\nIn the app, translate Womb = nurture (keep going gently), Diamond = pierce through (do the chosen step).",
+      "body_md": "Toji (official) explains that the mandalas include the Womb Realm Mandala and the Diamond Realm Mandala, and that they convey the teachings of principle and wisdom, respectively.\n\nIn the app, translate Womb to nurture (keep going gently), Diamond to pierce through (do the chosen step).",
       "micro_practice": {
         "morning": "Womb: shape it so you can continue gently.",
-        "day": "Diamond: do the chosen step exactly once without fail.",
+        "day": "Diamond: do the chosen step once, without skipping.",
         "night": "Choose and write which was lacking today: Womb or Diamond."
       },
       "reflection_questions": [
@@ -48,7 +48,7 @@
       "level": "intermediate",
       "title": "Ryobu Mandala: learn the two as a pair",
       "summary": "Based on the official Toji explanation, design learning in pairs to avoid bias.",
-      "body_md": "Toji (official) explains the mandala as the Womb Realm and the Diamond Realm.\n\nIn app learning, we avoid digging into only one side by always pairing cards (to prevent bias).",
+      "body_md": "Toji (official) explains the mandala as the Womb Realm and the Diamond Realm.\n\nIn the app, we avoid focusing on only one side by pairing cards (to prevent bias).",
       "micro_practice": {
         "morning": "Decide whether to emphasize nurture or pierce-through today.",
         "day": "Do the other side once as well (balance).",
@@ -64,7 +64,7 @@
       "level": "intermediate",
       "title": "Karma Mandala (Three-dimensional Mandala): a plan to embody the teaching (official)",
       "summary": "Toji (official) explains the Karma Mandala as a three-dimensional mandala.",
-      "body_md": "Toji (official) explains that the plan to embody the mandala more realistically is the Karma Mandala (commonly called a three-dimensional mandala).\n\nIn the app, the heatmap (coloring in) can be designed as a way to visualize and embody the teaching.",
+      "body_md": "Toji (official) explains that the plan to embody the mandala more realistically is the Karma Mandala (commonly called a three-dimensional mandala).\n\nIn the app, the heatmap (coloring in) can serve as a way to visualize and embody the teaching.",
       "micro_practice": {
         "morning": "Make today's practice visible (check it).",
         "day": "Record one action (visualize it).",
@@ -80,7 +80,7 @@
       "level": "beginner",
       "title": "Centering on Dainichi Nyorai (official explanation)",
       "summary": "Toji (official) mentions placing Dainichi at the center in the three-dimensional mandala.",
-      "body_md": "Toji (official) explains that the lecture hall's platform presents 21 Buddhas with Dainichi Nyorai at the center (in the context of the three-dimensional mandala).\n\nIn the app, fix the center as the daily form (morning/night), and swap the surrounding pieces (learning/action) to keep continuity.",
+      "body_md": "Toji (official) explains that the lecture hall's platform presents 21 Buddhas with Dainichi Nyorai at the center (in the context of the three-dimensional mandala).\n\nIn the app, fix the center as the daily form (morning/night), and swap the surrounding pieces (learning/action) to maintain continuity.",
       "micro_practice": {
         "morning": "Do not break the center (morning form).",
         "day": "Swap only the surrounding action each day.",
@@ -96,15 +96,15 @@
       "id": "mandala.safe_handling",
       "type": "practice",
       "level": "beginner",
-      "title": "Safety rules for handling mandala (app policy)",
+      "title": "Safety rules for handling mandalas (app policy)",
       "summary": "Avoid assertive iconography details and stay close to official explanations.",
-      "body_md": "This card is an app operation rule.\n\n- Keep iconography details within the scope of official pages\n- If you include images, clearly state the source, rights, and credit\n- Prefer source-based explanations over assertive tone\n\nNot a doctrinal claim, but a content production guide.",
+      "body_md": "This card is an app operation rule.\n\n- Keep iconography details within the scope of official sources\n- If you include images, clearly state the source, rights, and credit\n- Prefer source-based explanations over overly assertive wording\n\nNot a doctrinal claim, but a content production guide.",
       "micro_practice": {
         "morning": "Always check source links.",
         "day": "Do not make cards from uncertain information.",
         "night": "Review sources for any cards you added."
       },
-      "reflection_questions": ["Where can you say this explanation is written?"],
+      "reflection_questions": ["Where is this explanation written?"],
       "tags": ["operations", "sources", "safety"],
       "sources": ["S_TOJI_MANDALA"]
     }
