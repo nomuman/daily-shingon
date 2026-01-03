@@ -10,16 +10,17 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
+import Screen from '../../../../components/Screen';
+import SurfaceCard from '../../../../components/SurfaceCard';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getGlossary } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useResponsiveLayout } from '../../../../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
+import { useThemedStyles, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryListScreen() {
   const router = useRouter();
@@ -57,7 +58,7 @@ export default function GlossaryListScreen() {
 
   // Render search, filter chips, and a virtualized list for performance. / 検索・タグ・仮想化リストを描画。
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <View style={responsive.contentStyle}>
         <BackButton style={styles.backButton} />
       </View>
@@ -76,6 +77,7 @@ export default function GlossaryListScreen() {
       />
 
       <FlatList
+        style={styles.list}
         data={filtered}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
@@ -88,29 +90,30 @@ export default function GlossaryListScreen() {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => router.push(`/learn/glossary/${item.id}`)}
-            style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+            style={({ pressed }) => [styles.rowPressable, pressed && styles.rowPressed]}
           >
-            <Text style={styles.term}>{item.term}</Text>
-            <Text style={styles.rowMeta}>
-              {item.reading ? `${item.reading} ・ ` : ''}
-              {item.category ?? ''}
-            </Text>
-            <Text style={styles.desc} numberOfLines={2}>
-              {item.short}
-            </Text>
+            <SurfaceCard style={styles.row}>
+              <Text style={styles.term}>{item.term}</Text>
+              <Text style={styles.rowMeta}>
+                {item.reading ? `${item.reading} ・ ` : ''}
+                {item.category ?? ''}
+              </Text>
+              <Text style={styles.desc} numberOfLines={2}>
+                {item.short}
+              </Text>
+            </SurfaceCard>
           </Pressable>
         )}
         contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
+    list: {
+      backgroundColor: 'transparent',
     },
     backButton: {
       paddingHorizontal: theme.spacing.lg,
@@ -125,6 +128,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 22,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     subtitle: {
       color: theme.colors.inkMuted,
@@ -139,13 +144,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       paddingBottom: 32,
       gap: theme.spacing.md,
     },
-    row: {
-      padding: theme.spacing.lg,
+    rowPressable: {
       marginHorizontal: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
+    },
+    row: {
+      borderRadius: theme.radius.lg,
       gap: 6,
-      ...cardShadow,
     },
     rowPressed: {
       opacity: 0.9,

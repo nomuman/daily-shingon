@@ -9,14 +9,15 @@
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
+import Screen from '../../../../components/Screen';
+import SurfaceCard from '../../../../components/SurfaceCard';
 import { getGlossary, getGlossaryEntry } from '../../../../content/glossary';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useResponsiveLayout } from '../../../../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
+import { useThemedStyles, type Theme } from '../../../../ui/theme';
 
 export default function GlossaryDetailScreen() {
   const { t } = useTranslation('common');
@@ -31,7 +32,7 @@ export default function GlossaryDetailScreen() {
   // Guard against unknown term IDs. / 不明なtermIdをガード。
   if (!entry) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.emptyWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.emptyState}>
@@ -40,12 +41,12 @@ export default function GlossaryDetailScreen() {
             </Text>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -60,35 +61,35 @@ export default function GlossaryDetailScreen() {
           </Text>
         </View>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('glossary.short')}</Text>
           <Text style={styles.bodyText}>{entry.short}</Text>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('glossary.definition')}</Text>
           <Text style={styles.bodyText}>{entry.definition}</Text>
-        </View>
+        </SurfaceCard>
 
         {!!entry.notes && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card}>
             <Text style={styles.sectionTitle}>{t('glossary.notes')}</Text>
             <Text style={styles.bodyText}>{entry.notes}</Text>
-          </View>
+          </SurfaceCard>
         )}
 
         {!!entry.see_also?.length && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card}>
             <Text style={styles.sectionTitle}>{t('glossary.related')}</Text>
             {entry.see_also.map((id) => (
               <Text key={id} style={styles.bodyText}>
                 ・{id}
               </Text>
             ))}
-          </View>
+          </SurfaceCard>
         )}
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('glossary.sources')}</Text>
           {entry.sources.map((key) => {
             const ref = glossary.bibliography?.[key];
@@ -100,9 +101,9 @@ export default function GlossaryDetailScreen() {
               </Text>
             );
           })}
-        </View>
+        </SurfaceCard>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
@@ -118,12 +119,8 @@ function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediat
   }
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     backButton: {
       paddingHorizontal: theme.spacing.lg,
       paddingTop: theme.spacing.sm,
@@ -133,7 +130,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -147,17 +144,16 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 22,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 30,
     },
     meta: {
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     sectionTitle: {
       fontSize: 16,

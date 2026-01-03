@@ -10,11 +10,13 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import AppButton from '../../components/AppButton';
 import BackButton from '../../components/BackButton';
+import Screen from '../../components/Screen';
+import SurfaceCard from '../../components/SurfaceCard';
 import { AppIcon } from '../../components/AppIcon';
 import { parseISODateLocal } from '../../lib/date';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
@@ -27,15 +29,11 @@ export default function DayDetailScreen() {
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const responsive = useResponsiveLayout();
-  const styles = useThemedStyles((theme, cardShadow) =>
+  const styles = useThemedStyles((theme) =>
     StyleSheet.create({
-      safeArea: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
-      },
       screen: {
         flex: 1,
-        backgroundColor: theme.colors.background,
+        backgroundColor: 'transparent',
       },
       content: {
         padding: theme.spacing.lg,
@@ -52,31 +50,11 @@ export default function DayDetailScreen() {
         fontSize: 18,
         fontFamily: theme.font.display,
         color: theme.colors.ink,
-      },
-      ghostButton: {
-        minHeight: 36,
-        paddingHorizontal: 12,
-        borderRadius: theme.radius.md,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: theme.colors.border,
-        backgroundColor: theme.colors.surface,
-      },
-      ghostButtonPressed: {
-        opacity: 0.85,
-      },
-      ghostButtonText: {
-        color: theme.colors.ink,
-        fontFamily: theme.font.body,
-        fontWeight: '600',
+        letterSpacing: 0.3,
+        lineHeight: 26,
       },
       card: {
-        padding: theme.spacing.lg,
-        borderRadius: theme.radius.lg,
-        backgroundColor: theme.colors.surface,
         gap: theme.spacing.sm,
-        ...cardShadow,
       },
       sectionTitle: {
         fontSize: 16,
@@ -104,19 +82,6 @@ export default function DayDetailScreen() {
       },
       primaryButton: {
         flex: 1,
-        minHeight: 44,
-        borderRadius: theme.radius.md,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.ink,
-      },
-      primaryButtonPressed: {
-        opacity: 0.85,
-      },
-      primaryButtonText: {
-        color: theme.colors.surface,
-        fontFamily: theme.font.body,
-        fontWeight: '700',
       },
     }),
   );
@@ -150,7 +115,7 @@ export default function DayDetailScreen() {
   if (!date) return null;
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -160,7 +125,7 @@ export default function DayDetailScreen() {
           <Text style={styles.title}>{date}</Text>
         </View>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('dayDetail.statusTitle')}</Text>
           <View style={styles.statusRow}>
             <Text style={styles.bodyText}>
@@ -182,32 +147,32 @@ export default function DayDetailScreen() {
               color={nightDone ? theme.colors.accentDark : theme.colors.inkMuted}
             />
           </View>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('dayDetail.noteTitle')}</Text>
           {note.trim().length > 0 ? (
             <Text style={styles.bodyText}>{note}</Text>
           ) : (
             <Text style={styles.mutedText}>{t('dayDetail.noteEmpty')}</Text>
           )}
-        </View>
+        </SurfaceCard>
 
         <View style={styles.rowButtons}>
-          <Pressable
+          <AppButton
+            label={t('dayDetail.goMorning')}
             onPress={() => router.push({ pathname: '/morning', params: { date } })}
-            style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-          >
-            <Text style={styles.primaryButtonText}>{t('dayDetail.goMorning')}</Text>
-          </Pressable>
-          <Pressable
+            variant="primary"
+            style={styles.primaryButton}
+          />
+          <AppButton
+            label={t('dayDetail.goNight')}
             onPress={() => router.push({ pathname: '/night', params: { date } })}
-            style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-          >
-            <Text style={styles.primaryButtonText}>{t('dayDetail.goNight')}</Text>
-          </Pressable>
+            variant="primary"
+            style={styles.primaryButton}
+          />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }

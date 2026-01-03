@@ -8,9 +8,10 @@
  * Edge cases: no navigation stack (falls back to router.back()). / 例外: スタックなし（router.backに委譲）。
  */
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import AppButton from './AppButton';
 import { useThemedStyles } from '../ui/theme';
 
 type BackButtonProps = {
@@ -28,39 +29,18 @@ export default function BackButton({ label, onPress, style }: BackButtonProps) {
         alignSelf: 'flex-start',
         marginBottom: theme.spacing.sm,
       },
-      button: {
-        minHeight: 34,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.surface,
-        borderWidth: 1,
-        borderColor: theme.colors.border,
-      },
-      buttonPressed: {
-        opacity: 0.85,
-      },
-      text: {
-        fontSize: 13,
-        fontWeight: '700',
-        color: theme.colors.ink,
-        fontFamily: theme.font.body,
-      },
     }),
   );
 
   return (
     <View style={[styles.container, style]}>
-      <Pressable
+      <AppButton
+        label={label ?? t('common.back')}
         onPress={onPress ?? (() => router.back())}
-        accessibilityRole="button"
         accessibilityLabel={label ?? t('common.back')}
-        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-      >
-        <Text style={styles.text}>{label ?? t('common.back')}</Text>
-      </Pressable>
+        variant="ghost"
+        size="sm"
+      />
     </View>
   );
 }

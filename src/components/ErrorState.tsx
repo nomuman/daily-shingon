@@ -7,11 +7,12 @@
  * Side effects: none (delegates actions via callbacks). / 副作用: なし（コールバックへ委譲）。
  * Edge cases: missing callbacks hide buttons. / 例外: コールバック未指定時はボタン非表示。
  */
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import AppButton from './AppButton';
 import BackButton from './BackButton';
+import Screen from './Screen';
 import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles } from '../ui/theme';
 
@@ -40,10 +41,6 @@ export default function ErrorState({
   const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
-      safeArea: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
-      },
       wrapper: {
         flex: 1,
       },
@@ -67,47 +64,13 @@ export default function ErrorState({
         color: theme.colors.inkMuted,
         fontFamily: theme.font.body,
       },
-      primaryButton: {
-        minHeight: 44,
-        paddingHorizontal: 14,
-        borderRadius: theme.radius.md,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.ink,
-      },
-      primaryButtonPressed: {
-        opacity: 0.9,
-      },
-      primaryButtonText: {
-        color: theme.colors.surface,
-        fontWeight: '700',
-        fontFamily: theme.font.body,
-      },
-      ghostButton: {
-        minHeight: 44,
-        paddingHorizontal: 14,
-        borderRadius: theme.radius.md,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: theme.colors.border,
-        backgroundColor: theme.colors.surface,
-      },
-      ghostButtonPressed: {
-        opacity: 0.85,
-      },
-      ghostButtonText: {
-        fontWeight: '700',
-        color: theme.colors.ink,
-        fontFamily: theme.font.body,
-      },
     }),
   );
   const resolvedTitle = title ?? t('errors.defaultTitle');
   const resolvedRetryLabel = retryLabel ?? t('common.retry');
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <View style={styles.wrapper}>
         {showBack && <BackButton label={backLabel} style={styles.backButton} />}
         <View style={[styles.container, responsive.contentStyle]}>
@@ -115,24 +78,14 @@ export default function ErrorState({
           <Text style={styles.message}>{message}</Text>
 
           {onRetry && (
-            <Pressable
-              onPress={onRetry}
-              style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-            >
-              <Text style={styles.primaryButtonText}>{resolvedRetryLabel}</Text>
-            </Pressable>
+            <AppButton label={resolvedRetryLabel} onPress={onRetry} variant="primary" />
           )}
 
           {secondaryLabel && onSecondaryPress && (
-            <Pressable
-              onPress={onSecondaryPress}
-              style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-            >
-              <Text style={styles.ghostButtonText}>{secondaryLabel}</Text>
-            </Pressable>
+            <AppButton label={secondaryLabel} onPress={onSecondaryPress} variant="ghost" />
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

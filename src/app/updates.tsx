@@ -9,14 +9,15 @@
  */
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
+import Screen from '../components/Screen';
+import SurfaceCard from '../components/SurfaceCard';
 import { getUpdatesContent, type RoadmapStatus } from '../content/updates';
 import { useContentLang } from '../content/useContentLang';
 import { useResponsiveLayout } from '../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
+import { useThemedStyles, type Theme } from '../ui/theme';
 
 export default function UpdatesScreen() {
   const { t } = useTranslation('common');
@@ -48,20 +49,20 @@ export default function UpdatesScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
       >
         <BackButton />
-        <View style={styles.headerCard}>
+        <SurfaceCard style={styles.headerCard}>
           <View style={styles.headerRow}>
             <Text style={styles.headerTitle}>{t('updates.title')}</Text>
           </View>
           <Text style={styles.headerBody}>{t('updates.subtitle')}</Text>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.sectionCard}>
+        <SurfaceCard style={styles.sectionCard}>
           <Text style={styles.sectionTitle}>{t('updates.roadmap.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('updates.roadmap.body')}</Text>
           {content.roadmap.length === 0 ? (
@@ -106,7 +107,7 @@ export default function UpdatesScreen() {
           )}
 
           {selectedRoadmap ? (
-            <View style={styles.detailCard}>
+            <SurfaceCard style={styles.detailCard} padding="md" elevated={false} variant="muted">
               <View style={styles.detailHeader}>
                 <Text style={styles.detailTitle}>{t('updates.roadmap.detailTitle')}</Text>
                 {!!selectedRoadmap.status && (
@@ -119,13 +120,13 @@ export default function UpdatesScreen() {
               </View>
               <Text style={styles.detailItemTitle}>{selectedRoadmap.title}</Text>
               <Text style={styles.detailBody}>{selectedRoadmap.detail}</Text>
-            </View>
+            </SurfaceCard>
           ) : (
             <Text style={styles.detailHint}>{t('updates.roadmap.detailHint')}</Text>
           )}
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.sectionCard}>
+        <SurfaceCard style={styles.sectionCard}>
           <Text style={styles.sectionTitle}>{t('updates.changelog.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('updates.changelog.body')}</Text>
           {content.changelog.length === 0 ? (
@@ -145,7 +146,12 @@ export default function UpdatesScreen() {
                     </View>
                   </View>
 
-                  <View style={styles.changelogCard}>
+                  <SurfaceCard
+                    style={styles.changelogCard}
+                    padding="md"
+                    elevated={false}
+                    variant="outlined"
+                  >
                     <Text style={styles.changelogTitle}>{entry.title}</Text>
                     <Text style={styles.changelogBody}>{entry.body}</Text>
                     {!!entry.badges?.length && (
@@ -157,27 +163,22 @@ export default function UpdatesScreen() {
                         ))}
                       </View>
                     )}
-                  </View>
+                  </SurfaceCard>
                 </View>
               ))}
             </View>
           )}
-        </View>
-
+        </SurfaceCard>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -185,11 +186,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       gap: theme.spacing.md,
     },
     headerCard: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.xl,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     headerRow: {
       flexDirection: 'row',
@@ -202,37 +200,16 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 18,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
-      lineHeight: 24,
+      lineHeight: 26,
+      letterSpacing: 0.3,
     },
     headerBody: {
       color: theme.colors.inkMuted,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
-    },
-    ghostButton: {
-      minHeight: 36,
-      paddingHorizontal: 12,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
-    },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-      fontWeight: '600',
     },
     sectionCard: {
-      padding: theme.spacing.lg,
-      borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     sectionTitle: {
       fontSize: 16,
@@ -336,11 +313,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     detailCard: {
       marginTop: theme.spacing.md,
-      padding: theme.spacing.md,
       borderRadius: theme.radius.lg,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
     },
     detailHeader: {
@@ -430,11 +403,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 12,
     },
     changelogCard: {
-      padding: theme.spacing.md,
       borderRadius: theme.radius.lg,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
     },
     changelogTitle: {

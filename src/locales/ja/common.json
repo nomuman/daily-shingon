@@ -71,7 +71,7 @@
     "resetFromSettings": "設定でリセット",
     "nextAction": {
       "morning": "朝を整える",
-      "learn": "学びを見る",
+      "learn": "学びに向き合う",
       "night": "夜を閉じる",
       "done": "今日はここまで"
     },
@@ -89,8 +89,8 @@
     "selectionDone": "選択済み",
     "selectionNone": "未選択",
     "selectionDetail": "・[{{key}}] {{text}}",
-    "selectionEmpty": "まだ選んでいません。学びで「今日はこれでいく」を押してください。",
-    "learnCta": "学びへ",
+    "selectionEmpty": "まだ選んでいません。学びで「今日の一つを定める」を押してください。",
+    "learnCta": "学びに向き合う",
     "selectionClear": "選択を解除",
     "flowNightTitle": "夜のしめ（懺悔→発願→回向）",
     "flowNightBody": "45秒で一日を閉じる。",
@@ -104,7 +104,7 @@
     "dayLabel": "Day {{day}} / {{total}}",
     "completeNotice": "30日を完走しました。ここからは薄く長く。必要なら開始日をリセットしてもう一周できます。",
     "example": "例：{{text}}",
-    "actionTitle": "今日の行い（1つ選ぶ）",
+    "actionTitle": "今日の行い（ひとつ選ぶ）",
     "actionOption": "・[{{key}}] {{text}}",
     "actionFootnote": "※おすすめは目安。今日はあなたの感覚で選んで大丈夫。",
     "nightQuestion": "夜の問い",
@@ -113,7 +113,7 @@
     "moreBody": "カードや用語集を一覧で読む。",
     "moreCards": "学びカード",
     "moreGlossary": "用語集",
-    "confirmAction": "今日はこれでいく",
+    "confirmAction": "今日の一つを定める",
     "emptyCard": "今日のカードを読み込めませんでした。"
   },
   "learnCards": {
@@ -174,8 +174,8 @@
         "desc": "焦りを一度おく。いまの一手に心を置く。"
       }
     },
-    "saveButton": "朝の整えを保存して戻る",
-    "resetButton": "今日の朝チェックをリセット"
+    "saveButton": "朝を整えて記録する",
+    "resetButton": "朝の整えをやり直す"
   },
   "night": {
     "title": "夜（しめ）",
@@ -199,8 +199,8 @@
     "noteTitle": "ひとこと（任意）",
     "noteHint": "※長文不要。1行でもOK。空欄でもOK。",
     "notePlaceholder": "例：言い方がきつかった。明日は一呼吸おく。",
-    "saveButton": "夜のしめを保存して戻る",
-    "resetButton": "今日の夜チェックをリセット"
+    "saveButton": "夜を静かに閉じて記録する",
+    "resetButton": "夜のしめをやり直す"
   },
   "settings": {
     "kicker": "設定",

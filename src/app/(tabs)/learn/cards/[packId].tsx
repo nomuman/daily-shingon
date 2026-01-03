@@ -10,17 +10,18 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
+import Screen from '../../../../components/Screen';
+import SurfaceCard from '../../../../components/SurfaceCard';
 import SearchInput from '../../../../components/SearchInput';
 import TagRow from '../../../../components/TagRow';
 import { getPackById } from '../../../../content/cards';
 import type { Card } from '../../../../content/types';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useResponsiveLayout } from '../../../../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
+import { useThemedStyles, type Theme } from '../../../../ui/theme';
 
 export default function CardListScreen() {
   const router = useRouter();
@@ -62,7 +63,7 @@ export default function CardListScreen() {
   // Guard against unknown pack IDs. / 不明なpackIdをガード。
   if (!pack) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.emptyWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.emptyState}>
@@ -71,12 +72,12 @@ export default function CardListScreen() {
             </Text>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <View style={responsive.contentStyle}>
         <BackButton style={styles.backButton} />
       </View>
@@ -95,6 +96,7 @@ export default function CardListScreen() {
       />
 
       <FlatList
+        style={styles.list}
         data={filtered}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
@@ -121,7 +123,7 @@ export default function CardListScreen() {
         )}
         contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
-    </SafeAreaView>
+    </Screen>
   );
 }
 
@@ -144,15 +146,17 @@ function CardRow({
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+      style={({ pressed }) => [styles.rowPressable, pressed && styles.rowPressed]}
     >
-      <Text style={styles.rowTitle}>{card.title}</Text>
-      <Text style={styles.rowMeta}>
-        {typeLabel} ・ {levelLabel}
-      </Text>
-      <Text style={styles.rowSummary} numberOfLines={2}>
-        {card.summary}
-      </Text>
+      <SurfaceCard style={styles.row}>
+        <Text style={styles.rowTitle}>{card.title}</Text>
+        <Text style={styles.rowMeta}>
+          {typeLabel} ・ {levelLabel}
+        </Text>
+        <Text style={styles.rowSummary} numberOfLines={2}>
+          {card.summary}
+        </Text>
+      </SurfaceCard>
     </Pressable>
   );
 }
@@ -169,11 +173,10 @@ function levelLabel(t: (key: string) => string, level: Card['level']) {
   }
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
+    list: {
+      backgroundColor: 'transparent',
     },
     backButton: {
       paddingHorizontal: theme.spacing.lg,
@@ -199,6 +202,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 20,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     subtitle: {
       color: theme.colors.inkMuted,
@@ -213,13 +218,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       paddingBottom: 32,
       gap: theme.spacing.md,
     },
-    row: {
-      padding: theme.spacing.lg,
+    rowPressable: {
       marginHorizontal: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
+    },
+    row: {
+      borderRadius: theme.radius.lg,
       gap: 6,
-      ...cardShadow,
     },
     rowPressed: {
       opacity: 0.9,
@@ -228,6 +233,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 16,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.2,
+      lineHeight: 22,
     },
     rowMeta: {
       color: theme.colors.inkMuted,

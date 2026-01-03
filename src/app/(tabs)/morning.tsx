@@ -9,12 +9,15 @@
  */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import * as Haptics from 'expo-haptics';
+import AppButton from '../../components/AppButton';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
+import Screen from '../../components/Screen';
+import SurfaceCard from '../../components/SurfaceCard';
 import { saveEntry, softDeleteEntry } from '../../features/entries/saveEntry';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import ErrorState from '../../components/ErrorState';
@@ -25,7 +28,7 @@ import {
   setMorningLog,
 } from '../../lib/morningLog';
 import { useResponsiveLayout } from '../../ui/responsive';
-import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
+import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
 
 type CheckKey = 'body' | 'speech' | 'mind';
 
@@ -46,6 +49,11 @@ export default function MorningScreen() {
   const [speechDone, setSpeechDone] = useState(false);
   const [mindDone, setMindDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const triggerHaptic = () => {
+    if (Platform.OS === 'web') return;
+    void Haptics.selectionAsync();
+  };
 
   const goBackOrHome = () => {
     if ('canGoBack' in router && typeof router.canGoBack === 'function') {
@@ -115,7 +123,10 @@ export default function MorningScreen() {
   }) => {
     return (
       <Pressable
-        onPress={onPress}
+        onPress={() => {
+          triggerHaptic();
+          onPress();
+        }}
         accessibilityRole="button"
         accessibilityState={{ selected: checked }}
         style={({ pressed }) => [
@@ -130,6 +141,7 @@ export default function MorningScreen() {
             size={18}
             color={checked ? theme.colors.accentDark : theme.colors.inkMuted}
           />
+          <View style={[styles.ritualSeal, checked && styles.ritualSealActive]} />
           <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
         </View>
         <Text style={styles.checkDesc}>{desc}</Text>
@@ -140,14 +152,14 @@ export default function MorningScreen() {
   // Loading/error gates before main UI. / ローディング・エラー時の分岐。
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -156,7 +168,7 @@ export default function MorningScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -164,7 +176,7 @@ export default function MorningScreen() {
         <BackButton />
         <Text style={styles.title}>{t('morning.title')}</Text>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <Text style={styles.sectionTitle}>{t('morning.policyTitle')}</Text>
           <Text style={styles.bodyText}>{t('morning.policyBody')}</Text>
           <View style={styles.statusRow}>
@@ -179,9 +191,10 @@ export default function MorningScreen() {
               color={complete ? theme.colors.accentDark : theme.colors.inkMuted}
             />
           </View>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
+          <View style={styles.ritualBar} />
           <Text style={styles.sectionTitle}>{t('morning.checkTitle')}</Text>
 
           <Item
@@ -202,9 +215,12 @@ export default function MorningScreen() {
             checked={mindDone}
             onPress={() => toggle('mind')}
           />
-        </View>
+        </SurfaceCard>
 
-        <Pressable
+        <AppButton
+          label={t('morning.saveButton')}
+          variant="primary"
+          size="lg"
           onPress={async () => {
             try {
               const entryDate = toISODateLocal(getTargetDate());
@@ -225,12 +241,11 @@ export default function MorningScreen() {
               setError(t('errors.saveFail'));
             }
           }}
-          style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-        >
-          <Text style={styles.primaryButtonText}>{t('morning.saveButton')}</Text>
-        </Pressable>
+        />
 
-        <Pressable
+        <AppButton
+          label={t('morning.resetButton')}
+          variant="ghost"
           onPress={async () => {
             try {
               const entryDate = toISODateLocal(getTargetDate());
@@ -247,24 +262,17 @@ export default function MorningScreen() {
               setError(t('errors.updateFail'));
             }
           }}
-          style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-        >
-          <Text style={styles.ghostButtonText}>{t('morning.resetButton')}</Text>
-        </Pressable>
+        />
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -287,13 +295,12 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 20,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     sectionTitle: {
       fontSize: 16,
@@ -302,7 +309,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontFamily: theme.font.body,
     },
     bodyText: {
-      lineHeight: 20,
+      lineHeight: 22,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },
@@ -331,6 +338,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     checkItemPressed: {
       opacity: 0.85,
+      transform: [{ scale: 0.98 }],
+      backgroundColor: theme.colors.surfaceMuted,
     },
     checkTitle: {
       fontSize: 16,
@@ -346,44 +355,28 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     checkTitleSelected: {
       fontWeight: '700',
     },
+    ritualSeal: {
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: theme.colors.inkMuted,
+    },
+    ritualSealActive: {
+      borderColor: theme.colors.accentDark,
+      backgroundColor: theme.colors.accentSoft,
+    },
+    ritualBar: {
+      height: 3,
+      width: 56,
+      borderRadius: 999,
+      backgroundColor: theme.colors.accentSoft,
+      alignSelf: 'flex-start',
+    },
     checkDesc: {
       marginTop: 6,
       color: theme.colors.inkMuted,
-      lineHeight: 20,
-      fontFamily: theme.font.body,
-    },
-    primaryButton: {
-      minHeight: 48,
-      paddingHorizontal: 16,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: theme.colors.ink,
-    },
-    primaryButtonPressed: {
-      opacity: 0.9,
-    },
-    primaryButtonText: {
-      color: theme.colors.surface,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
-    },
-    ghostButton: {
-      minHeight: 46,
-      paddingHorizontal: 14,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
-    },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      fontWeight: '700',
-      color: theme.colors.ink,
+      lineHeight: 22,
       fontFamily: theme.font.body,
     },
   });

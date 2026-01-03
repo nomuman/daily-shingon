@@ -10,6 +10,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import SurfaceCard from './SurfaceCard';
 import type { CurriculumDay } from '../types/curriculum';
 import { useThemedStyles } from '../ui/theme';
 
@@ -26,7 +27,7 @@ type LearnCardProps = {
 
 export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: LearnCardProps) {
   const { t } = useTranslation('common');
-  const styles = useThemedStyles((theme, cardShadow) =>
+  const styles = useThemedStyles((theme) =>
     StyleSheet.create({
       stack: {
         gap: theme.spacing.md,
@@ -35,37 +36,38 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
         fontSize: 20,
         fontFamily: theme.font.display,
         color: theme.colors.ink,
+        letterSpacing: 0.4,
+        lineHeight: 28,
       },
       notice: {
         color: theme.colors.inkMuted,
         fontFamily: theme.font.body,
       },
       card: {
-        padding: theme.spacing.lg,
-        borderRadius: theme.radius.lg,
-        backgroundColor: theme.colors.surface,
         gap: theme.spacing.sm,
-        ...cardShadow,
       },
       cardTitle: {
         fontSize: 18,
         fontFamily: theme.font.display,
         color: theme.colors.ink,
+        letterSpacing: 0.3,
+        lineHeight: 26,
       },
       sectionTitle: {
         fontSize: 16,
         fontWeight: '700',
         color: theme.colors.ink,
         fontFamily: theme.font.body,
+        letterSpacing: 0.2,
       },
       bodyText: {
-        lineHeight: 20,
+        lineHeight: 22,
         color: theme.colors.ink,
         fontFamily: theme.font.body,
       },
       mutedText: {
         opacity: 0.75,
-        lineHeight: 20,
+        lineHeight: 22,
         color: theme.colors.inkMuted,
         fontFamily: theme.font.body,
       },
@@ -96,16 +98,16 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
 
       {isComplete && <Text style={styles.notice}>{t('learn.completeNotice')}</Text>}
 
-      <View style={styles.card}>
+      <SurfaceCard style={styles.card}>
         <Text style={styles.cardTitle}>{card.title}</Text>
         <Text style={styles.bodyText}>{card.learn}</Text>
 
         {!!card.example && (
           <Text style={styles.mutedText}>{t('learn.example', { text: card.example })}</Text>
         )}
-      </View>
+      </SurfaceCard>
 
-      <View style={styles.card}>
+      <SurfaceCard style={styles.card}>
         <Text style={styles.sectionTitle}>{t('learn.actionTitle')}</Text>
         {card.actionOptions.map((opt, idx) => (
           <View key={`${opt.key}-${idx}`} style={styles.optionRow}>
@@ -118,22 +120,22 @@ export default function LearnCard({ dayNumber, isComplete, card, sourceLinks }: 
             </Text>
           </View>
         ))}
-      </View>
+      </SurfaceCard>
 
-      <View style={styles.card}>
+      <SurfaceCard style={styles.card}>
         <Text style={styles.sectionTitle}>{t('learn.nightQuestion')}</Text>
         <Text style={styles.bodyText}>{card.nightQuestion}</Text>
-      </View>
+      </SurfaceCard>
 
       {!!sourceLinks?.length && (
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('learn.sources')}</Text>
           {sourceLinks.map((s) => (
             <Text key={s.id} style={styles.sourceItem}>
               ・{s.id}
             </Text>
           ))}
-        </View>
+        </SurfaceCard>
       )}
     </View>
   );

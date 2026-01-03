@@ -27,10 +27,13 @@
 ## 2. UI レイヤ（再利用部品 / デザイン基盤 / アセット）
 
 - `src/components/AppIcon.tsx`: アプリアイコン表示
+- `src/components/AppButton.tsx`: 統一ボタン
 - `src/components/BackButton.tsx`: 戻るボタン
 - `src/components/ErrorState.tsx`: エラー表示
 - `src/components/LearnCard.tsx`: 学習カード UI
+- `src/components/Screen.tsx`: グラデーション背景の画面ラッパー
 - `src/components/SearchInput.tsx`: 検索入力
+- `src/components/SurfaceCard.tsx`: 統一カード面
 - `src/components/TagRow.tsx`: タグ表示
 - `src/ui/theme.tsx`: テーマトークン
 - `src/ui/responsive.tsx`: レスポンシブ補助

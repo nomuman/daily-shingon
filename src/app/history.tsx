@@ -12,15 +12,16 @@ import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { ContributionGraph } from 'react-native-chart-kit';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
 import ErrorState from '../components/ErrorState';
+import Screen from '../components/Screen';
+import SurfaceCard from '../components/SurfaceCard';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
 import { useResponsiveLayout } from '../ui/responsive';
-import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
+import { useTheme, useThemedStyles, type Theme } from '../ui/theme';
 
 // Layout constants for the contribution graph. / ヒートマップレイアウト定数。
 const chartDays = 365;
@@ -170,7 +171,7 @@ export default function HistoryScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -181,72 +182,76 @@ export default function HistoryScreen() {
         scrollEventThrottle={16}
       >
         <BackButton />
-        <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
-          <View style={styles.headerRow}>
-            <Text style={styles.headerTitle}>{t('history.title')}</Text>
-          </View>
-          <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
+        <Animated.View style={entranceStyle(headerAnim)}>
+          <SurfaceCard style={styles.headerCard}>
+            <View style={styles.headerRow}>
+              <Text style={styles.headerTitle}>{t('history.title')}</Text>
+            </View>
+            <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
+          </SurfaceCard>
         </Animated.View>
 
-        <Animated.View style={[styles.graphCard, entranceStyle(graphAnim)]}>
-          {loading ? (
-            <Text style={styles.loadingText}>{t('common.loading')}</Text>
-          ) : (
-            <ScrollView
-              horizontal
-              contentContainerStyle={styles.graphScrollContent}
-              showsHorizontalScrollIndicator={false}
-            >
-              <ContributionGraph
-                values={values}
-                endDate={endDate}
-                numDays={chartDays}
-                width={graphWidth}
-                height={chartHeight}
-                gutterSize={chartGutterSize}
-                squareSize={chartSquareSize}
-                showMonthLabels
-                // Navigate to day detail only when a date is available. / 日付がある場合のみ詳細へ遷移。
-                onDayPress={(item: { date?: string | Date; count?: number }) => {
-                  if (!item?.date) return;
-                  const dateLabel =
-                    item.date instanceof Date ? toISODateLocal(item.date) : item.date;
-                  router.push(`/day/${dateLabel}`);
-                }}
-                titleForValue={(value) => buildTooltipLabel(t, value)}
-                chartConfig={{
-                  backgroundGradientFrom: theme.colors.surface,
-                  backgroundGradientTo: theme.colors.surface,
-                  backgroundGradientFromOpacity: 0,
-                  backgroundGradientToOpacity: 0,
-                  decimalPlaces: 0,
-                  color: (opacity = 1) => resolveHeatmapColor(theme, opacity),
-                  labelColor: () => theme.colors.inkMuted,
-                }}
-                // Enable accessibility label + long-press tooltip. / アクセシビリティと長押しツールチップを設定。
-                tooltipDataAttrs={(value) => ({
-                  accessibilityLabel: buildTooltipLabel(t, value),
-                  onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
-                  delayLongPress: 150,
-                  rx: chartSquareRadius,
-                  ry: chartSquareRadius,
-                })}
-              />
-            </ScrollView>
-          )}
+        <Animated.View style={entranceStyle(graphAnim)}>
+          <SurfaceCard style={styles.graphCard} padding="md">
+            {loading ? (
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
+            ) : (
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.graphScrollContent}
+                showsHorizontalScrollIndicator={false}
+              >
+                <ContributionGraph
+                  values={values}
+                  endDate={endDate}
+                  numDays={chartDays}
+                  width={graphWidth}
+                  height={chartHeight}
+                  gutterSize={chartGutterSize}
+                  squareSize={chartSquareSize}
+                  showMonthLabels
+                  // Navigate to day detail only when a date is available. / 日付がある場合のみ詳細へ遷移。
+                  onDayPress={(item: { date?: string | Date; count?: number }) => {
+                    if (!item?.date) return;
+                    const dateLabel =
+                      item.date instanceof Date ? toISODateLocal(item.date) : item.date;
+                    router.push(`/day/${dateLabel}`);
+                  }}
+                  titleForValue={(value) => buildTooltipLabel(t, value)}
+                  chartConfig={{
+                    backgroundGradientFrom: theme.colors.surface,
+                    backgroundGradientTo: theme.colors.surface,
+                    backgroundGradientFromOpacity: 0,
+                    backgroundGradientToOpacity: 0,
+                    decimalPlaces: 0,
+                    color: (opacity = 1) => resolveHeatmapColor(theme, opacity),
+                    labelColor: () => theme.colors.inkMuted,
+                  }}
+                  // Enable accessibility label + long-press tooltip. / アクセシビリティと長押しツールチップを設定。
+                  tooltipDataAttrs={(value) => ({
+                    accessibilityLabel: buildTooltipLabel(t, value),
+                    onLongPress: () => setTooltipLabel(buildTooltipLabel(t, value)),
+                    delayLongPress: 150,
+                    rx: chartSquareRadius,
+                    ry: chartSquareRadius,
+                  })}
+                />
+              </ScrollView>
+            )}
+          </SurfaceCard>
         </Animated.View>
 
         <Animated.View style={[styles.metaStack, entranceStyle(legendAnim)]}>
           {tooltipLabel ? (
-            <View style={styles.tooltipCard}>
+            <SurfaceCard style={styles.tooltipCard} padding="sm" elevated={false} variant="muted">
               <Text style={styles.tooltipLabel}>{t('history.tooltipTitle')}</Text>
               <Text style={styles.tooltipValue}>{tooltipLabel}</Text>
-            </View>
+            </SurfaceCard>
           ) : (
             <Text style={styles.helperText}>{t('history.tooltipHint')}</Text>
           )}
 
-          <View style={styles.legendCard}>
+          <SurfaceCard style={styles.legendCard} padding="md" elevated={false} variant="outlined">
             <Text style={styles.legendTitle}>{t('history.legendTitle')}</Text>
             <View style={styles.legendRow}>
               <View style={[styles.legendSwatch, styles.legendSwatch0]} />
@@ -265,22 +270,18 @@ export default function HistoryScreen() {
               <Text style={styles.legendText}>{t('history.legend3')}</Text>
             </View>
             <Text style={styles.legendNote}>{t('history.legendNote')}</Text>
-          </View>
+          </SurfaceCard>
         </Animated.View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -288,11 +289,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       gap: theme.spacing.md,
     },
     headerCard: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.xl,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     headerRow: {
       flexDirection: 'row',
@@ -303,17 +301,15 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 22,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     headerBody: {
       color: theme.colors.inkMuted,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
     },
     graphCard: {
-      padding: theme.spacing.md,
-      borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
-      ...cardShadow,
     },
     graphScrollContent: {
       paddingHorizontal: 12,
@@ -324,27 +320,10 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
-    ghostButton: {
-      paddingVertical: 6,
-      paddingHorizontal: 12,
-      borderRadius: 999,
-      backgroundColor: theme.colors.surfaceMuted,
-    },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      fontWeight: '700',
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-    },
     metaStack: {
       gap: theme.spacing.sm,
     },
     tooltipCard: {
-      padding: theme.spacing.sm,
-      borderRadius: theme.radius.md,
-      backgroundColor: theme.colors.surfaceMuted,
     },
     tooltipLabel: {
       fontSize: 11,
@@ -362,11 +341,6 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontFamily: theme.font.body,
     },
     legendCard: {
-      padding: theme.spacing.md,
-      borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
       gap: theme.spacing.xs,
     },
     legendTitle: {

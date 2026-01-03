@@ -7,19 +7,15 @@
  */
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { handleAuthCallbackUrl } from '../../auth/signInWithEmail';
+import Screen from '../../components/Screen';
 import { useThemedStyles } from '../../ui/theme';
 
 export default function AuthCallbackScreen() {
   const [message, setMessage] = useState('Signing you in...');
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
-      safeArea: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
-      },
       container: {
         flex: 1,
         alignItems: 'center',
@@ -50,11 +46,11 @@ export default function AuthCallbackScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <View style={styles.container}>
         <Text style={styles.title}>Supabase</Text>
         <Text style={styles.body}>{message}</Text>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

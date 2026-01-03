@@ -58,6 +58,7 @@ export const themeLight = {
   colors: {
     // Light: moonlit paper / ライト: 月光の紙のような背景
     background: '#F7F8FF',
+    backgroundGradient: ['#F7F8FF', '#E9F0FF', '#F7F8FF'],
     surface: '#FFFFFF',
     surfaceMuted: '#EEF1FF',
 
@@ -89,6 +90,7 @@ export const themeDark = {
   colors: {
     // Dark: deep indigo night / ダーク: 深い藍色の夜
     background: '#050816',
+    backgroundGradient: ['#050816', '#0E1B3A', '#050816'],
     surface: '#0B1230',
     surfaceMuted: '#101A3F',
 

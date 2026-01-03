@@ -8,13 +8,14 @@
  * Edge cases: empty license list. / 例外: ライセンスが空。
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
+import Screen from '../components/Screen';
+import SurfaceCard from '../components/SurfaceCard';
 import { OSS_LICENSES } from '../content/oss-licenses';
 import { useResponsiveLayout } from '../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../ui/theme';
+import { useThemedStyles, type Theme } from '../ui/theme';
 
 export default function LicensesScreen() {
   const { t } = useTranslation('common');
@@ -22,20 +23,20 @@ export default function LicensesScreen() {
   const responsive = useResponsiveLayout();
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
       >
         <BackButton />
-        <View style={styles.headerCard}>
+        <SurfaceCard style={styles.headerCard}>
           <View style={styles.headerRow}>
             <Text style={styles.headerTitle}>{t('licenses.title')}</Text>
           </View>
           <Text style={styles.headerBody}>{t('licenses.subtitle')}</Text>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.listCard}>
+        <SurfaceCard style={styles.listCard} padding={0} variant="outlined">
           {OSS_LICENSES.length === 0 ? (
             <Text style={styles.emptyText}>{t('licenses.empty')}</Text>
           ) : (
@@ -56,21 +57,17 @@ export default function LicensesScreen() {
               </View>
             ))
           )}
-        </View>
+        </SurfaceCard>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -78,11 +75,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       gap: theme.spacing.md,
     },
     headerCard: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.xl,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     headerRow: {
       flexDirection: 'row',
@@ -95,38 +89,17 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 18,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
-      lineHeight: 24,
+      lineHeight: 26,
+      letterSpacing: 0.3,
     },
     headerBody: {
       color: theme.colors.inkMuted,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
-    },
-    ghostButton: {
-      minHeight: 36,
-      paddingHorizontal: 12,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
-    },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-      fontWeight: '600',
     },
     listCard: {
       borderRadius: theme.radius.lg,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
       overflow: 'hidden',
-      ...cardShadow,
     },
     licenseRow: {
       paddingHorizontal: theme.spacing.md,

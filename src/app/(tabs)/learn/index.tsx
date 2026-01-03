@@ -10,11 +10,13 @@
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import AppButton from '../../../components/AppButton';
 import BackButton from '../../../components/BackButton';
 import ErrorState from '../../../components/ErrorState';
+import Screen from '../../../components/Screen';
+import SurfaceCard from '../../../components/SurfaceCard';
 import { getCurriculum30, getDayCard } from '../../../content/curriculum30';
 import { useContentLang } from '../../../content/useContentLang';
 import { getProgramDayInfo } from '../../../lib/programDay';
@@ -22,7 +24,7 @@ import type { TodayActionSelection } from '../../../lib/todayLog';
 import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
 import type { CurriculumDay, SanmitsuKey } from '../../../types/curriculum';
 import { useResponsiveLayout } from '../../../ui/responsive';
-import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../../ui/theme';
+import { useTheme, useThemedStyles, type Theme } from '../../../ui/theme';
 
 type SelectedAction = {
   key: SanmitsuKey;
@@ -119,14 +121,14 @@ export default function LearnScreen() {
   // Loading/error/empty gates before rendering the main screen. / ロード・エラー・空状態の分岐。
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -136,20 +138,20 @@ export default function LearnScreen() {
 
   if (!card || !dayInfo || !selected) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.emptyWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.emptyState}>
             <Text style={styles.emptyText}>{t('learn.emptyCard')}</Text>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
   // Main learn content with action selection and confirmation. / 学び本体＋選択＋確定UI。
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -159,16 +161,17 @@ export default function LearnScreen() {
           {t('learn.dayLabel', { day: dayInfo.dayNumber, total: 30 })}
         </Text>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.cardTitle}>{card.title}</Text>
           <Text style={styles.bodyText}>{card.learn}</Text>
 
           {!!card.example && (
             <Text style={styles.mutedText}>{t('learn.example', { text: card.example })}</Text>
           )}
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
+          <View style={styles.ritualBar} />
           <Text style={styles.sectionTitle}>{t('learn.actionTitle')}</Text>
 
           {card.actionOptions.map((opt, idx) => {
@@ -200,48 +203,50 @@ export default function LearnScreen() {
           })}
 
           <Text style={styles.footnote}>{t('learn.actionFootnote')}</Text>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <Text style={styles.sectionTitle}>{t('learn.nightQuestion')}</Text>
           <Text style={styles.bodyText}>{card.nightQuestion}</Text>
-        </View>
+        </SurfaceCard>
 
         {!!sourceLinks.length && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card} elevated={false} variant="muted">
             <Text style={styles.sectionTitle}>{t('learn.sources')}</Text>
             {sourceLinks.map((s) => (
               <Text key={s.id} style={styles.sourceItem}>
                 ・{s.id}
               </Text>
             ))}
-          </View>
+          </SurfaceCard>
         )}
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <Text style={styles.sectionTitle}>{t('learn.moreTitle')}</Text>
           <Text style={styles.mutedText}>{t('learn.moreBody')}</Text>
           <View style={styles.linkRow}>
-            <Pressable
+            <AppButton
+              label={t('learn.moreCards')}
+              variant="ghost"
+              size="sm"
+              style={styles.linkButton}
               onPress={() => router.push('/learn/cards')}
-              accessibilityRole="button"
-              accessibilityLabel={t('learn.moreCards')}
-              style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
-            >
-              <Text style={styles.linkButtonText}>{t('learn.moreCards')}</Text>
-            </Pressable>
-            <Pressable
+            />
+            <AppButton
+              label={t('learn.moreGlossary')}
+              variant="ghost"
+              size="sm"
+              style={styles.linkButton}
               onPress={() => router.push('/learn/glossary')}
-              accessibilityRole="button"
-              accessibilityLabel={t('learn.moreGlossary')}
-              style={({ pressed }) => [styles.linkButton, pressed && styles.linkButtonPressed]}
-            >
-              <Text style={styles.linkButtonText}>{t('learn.moreGlossary')}</Text>
-            </Pressable>
+            />
           </View>
-        </View>
+        </SurfaceCard>
 
-        <Pressable
+        <AppButton
+          label={t('learn.confirmAction')}
+          variant="primary"
+          size="lg"
+          loading={saving}
           disabled={saving}
           onPress={async () => {
             if (saving) return;
@@ -260,35 +265,17 @@ export default function LearnScreen() {
               setSaving(false);
             }
           }}
-          accessibilityRole="button"
-          accessibilityLabel={t('learn.confirmAction')}
-          accessibilityState={{ disabled: saving }}
-          style={({ pressed }) => [
-            styles.primaryButton,
-            saving && styles.primaryButtonDisabled,
-            pressed && styles.primaryButtonPressed,
-          ]}
-        >
-          {saving ? (
-            <ActivityIndicator color={theme.colors.surface} />
-          ) : (
-            <Text style={styles.primaryButtonText}>{t('learn.confirmAction')}</Text>
-          )}
-        </Pressable>
+        />
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -321,33 +308,35 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 20,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     cardTitle: {
       fontSize: 18,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.3,
+      lineHeight: 26,
     },
     sectionTitle: {
       fontSize: 16,
       fontWeight: '700',
       color: theme.colors.ink,
       fontFamily: theme.font.body,
+      letterSpacing: 0.2,
     },
     bodyText: {
-      lineHeight: 20,
+      lineHeight: 22,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },
     mutedText: {
       opacity: 0.75,
-      lineHeight: 20,
+      lineHeight: 22,
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
@@ -369,7 +358,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     optionText: {
       fontWeight: '500',
-      lineHeight: 20,
+      lineHeight: 22,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },
@@ -396,24 +385,12 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
-    primaryButton: {
-      minHeight: 48,
-      paddingHorizontal: 16,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: theme.colors.ink,
-    },
-    primaryButtonPressed: {
-      opacity: 0.9,
-    },
-    primaryButtonDisabled: {
-      opacity: 0.6,
-    },
-    primaryButtonText: {
-      color: theme.colors.surface,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
+    ritualBar: {
+      height: 3,
+      width: 56,
+      borderRadius: 999,
+      backgroundColor: theme.colors.accentSoft,
+      alignSelf: 'flex-start',
     },
     linkRow: {
       flexDirection: 'row',
@@ -422,20 +399,5 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     linkButton: {
       flex: 1,
-      minHeight: 44,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
-    },
-    linkButtonPressed: {
-      opacity: 0.85,
-    },
-    linkButtonText: {
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-      fontWeight: '600',
     },
   });

@@ -9,14 +9,15 @@
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../../components/BackButton';
+import Screen from '../../../../../components/Screen';
+import SurfaceCard from '../../../../../components/SurfaceCard';
 import { getCardById } from '../../../../../content/cards';
 import { useContentLang } from '../../../../../content/useContentLang';
 import { useResponsiveLayout } from '../../../../../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../../../../../ui/theme';
+import { useThemedStyles, type Theme } from '../../../../../ui/theme';
 
 export default function CardDetailScreen() {
   const { t } = useTranslation('common');
@@ -39,7 +40,7 @@ export default function CardDetailScreen() {
   // Guard against unknown IDs. / 不明IDをガード。
   if (!pack || !card) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.emptyWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.emptyState}>
@@ -51,12 +52,12 @@ export default function CardDetailScreen() {
             </Text>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -71,25 +72,25 @@ export default function CardDetailScreen() {
           </Text>
         </View>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('learnCards.summary')}</Text>
           <Text style={styles.bodyText}>{card.summary}</Text>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('learnCards.body')}</Text>
           <Text style={styles.bodyText}>{card.body_md}</Text>
-        </View>
+        </SurfaceCard>
 
         {!!card.tags?.length && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card}>
             <Text style={styles.sectionTitle}>{t('learnCards.tags')}</Text>
             <Text style={styles.bodyText}>{card.tags.join(' / ')}</Text>
-          </View>
+          </SurfaceCard>
         )}
 
         {!!card.micro_practice && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card}>
             <Text style={styles.sectionTitle}>{t('learnCards.microPractice')}</Text>
             {!!card.micro_practice.morning && (
               <Text style={styles.bodyText}>
@@ -106,21 +107,21 @@ export default function CardDetailScreen() {
                 {t('common.night')}: {card.micro_practice.night}
               </Text>
             )}
-          </View>
+          </SurfaceCard>
         )}
 
         {!!card.reflection_questions?.length && (
-          <View style={styles.card}>
+          <SurfaceCard style={styles.card}>
             <Text style={styles.sectionTitle}>{t('learnCards.questions')}</Text>
             {card.reflection_questions.map((q, idx) => (
               <Text key={idx} style={styles.bodyText}>
                 ・{q}
               </Text>
             ))}
-          </View>
+          </SurfaceCard>
         )}
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
           <Text style={styles.sectionTitle}>{t('learnCards.sources')}</Text>
           {card.sources.map((key) => {
             const ref = pack.bibliography?.[key];
@@ -132,9 +133,9 @@ export default function CardDetailScreen() {
               </Text>
             );
           })}
-        </View>
+        </SurfaceCard>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
@@ -150,12 +151,8 @@ function levelLabel(t: (key: string) => string, level: 'beginner' | 'intermediat
   }
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     backButton: {
       paddingHorizontal: theme.spacing.lg,
       paddingTop: theme.spacing.sm,
@@ -165,7 +162,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -179,17 +176,16 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 22,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 30,
     },
     meta: {
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     sectionTitle: {
       fontSize: 16,

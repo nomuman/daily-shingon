@@ -11,6 +11,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -18,11 +19,14 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import * as Haptics from 'expo-haptics';
+import AppButton from '../../components/AppButton';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
+import Screen from '../../components/Screen';
+import SurfaceCard from '../../components/SurfaceCard';
 import ErrorState from '../../components/ErrorState';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
@@ -31,7 +35,7 @@ import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { useResponsiveLayout } from '../../ui/responsive';
-import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
+import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
 
 type CheckKey = 'sange' | 'hotsugan' | 'ekou';
 
@@ -101,6 +105,11 @@ export default function NightScreen() {
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  const triggerHaptic = () => {
+    if (Platform.OS === 'web') return;
+    void Haptics.selectionAsync();
+  };
+
   const goBackOrHome = () => {
     if ('canGoBack' in router && typeof router.canGoBack === 'function') {
       if (router.canGoBack()) {
@@ -165,14 +174,14 @@ export default function NightScreen() {
   // Loading/error gates before main UI. / ロード・エラー時の分岐。
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -181,7 +190,7 @@ export default function NightScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -189,7 +198,7 @@ export default function NightScreen() {
         <BackButton />
         <Text style={styles.title}>{t('night.title')}</Text>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <Text style={styles.kicker}>{t('night.todayLearn')}</Text>
           <Text style={styles.cardTitle}>{dayTitle}</Text>
 
@@ -208,16 +217,20 @@ export default function NightScreen() {
               color={complete ? theme.colors.accentDark : theme.colors.inkMuted}
             />
           </View>
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card}>
+          <View style={styles.ritualBar} />
           <Text style={styles.sectionTitle}>{t('night.stepsTitle')}</Text>
 
           <CheckItem
             title={t('night.steps.sange.title')}
             desc={t('night.steps.sange.desc')}
             checked={sangeDone}
-            onPress={() => toggle('sange')}
+            onPress={() => {
+              triggerHaptic();
+              toggle('sange');
+            }}
             styles={styles}
             iconCheckedColor={theme.colors.accentDark}
             iconUncheckedColor={theme.colors.inkMuted}
@@ -226,7 +239,10 @@ export default function NightScreen() {
             title={t('night.steps.hotsugan.title')}
             desc={t('night.steps.hotsugan.desc')}
             checked={hotsuganDone}
-            onPress={() => toggle('hotsugan')}
+            onPress={() => {
+              triggerHaptic();
+              toggle('hotsugan');
+            }}
             styles={styles}
             iconCheckedColor={theme.colors.accentDark}
             iconUncheckedColor={theme.colors.inkMuted}
@@ -235,14 +251,17 @@ export default function NightScreen() {
             title={t('night.steps.ekou.title')}
             desc={t('night.steps.ekou.desc')}
             checked={ekouDone}
-            onPress={() => toggle('ekou')}
+            onPress={() => {
+              triggerHaptic();
+              toggle('ekou');
+            }}
             styles={styles}
             iconCheckedColor={theme.colors.accentDark}
             iconUncheckedColor={theme.colors.inkMuted}
           />
-        </View>
+        </SurfaceCard>
 
-        <View style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <Text style={styles.sectionTitle}>{t('night.noteTitle')}</Text>
           <Text style={styles.mutedText}>{t('night.noteHint')}</Text>
           <TextInput
@@ -253,9 +272,12 @@ export default function NightScreen() {
             multiline
             style={styles.noteInput}
           />
-        </View>
+        </SurfaceCard>
 
-        <Pressable
+        <AppButton
+          label={t('night.saveButton')}
+          variant="primary"
+          size="lg"
           onPress={async () => {
             try {
               const entryDate = toISODateLocal(getTargetDate());
@@ -279,12 +301,11 @@ export default function NightScreen() {
               setError(t('errors.saveFail'));
             }
           }}
-          style={({ pressed }) => [styles.primaryButton, pressed && styles.primaryButtonPressed]}
-        >
-          <Text style={styles.primaryButtonText}>{t('night.saveButton')}</Text>
-        </Pressable>
+        />
 
-        <Pressable
+        <AppButton
+          label={t('night.resetButton')}
+          variant="ghost"
           onPress={async () => {
             try {
               const entryDate = toISODateLocal(getTargetDate());
@@ -302,24 +323,17 @@ export default function NightScreen() {
               setError(t('errors.updateFail'));
             }
           }}
-          style={({ pressed }) => [styles.ghostButton, pressed && styles.ghostButtonPressed]}
-        >
-          <Text style={styles.ghostButtonText}>{t('night.resetButton')}</Text>
-        </Pressable>
+        />
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -342,6 +356,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 20,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     kicker: {
       fontSize: 12,
@@ -349,17 +365,15 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontFamily: theme.font.body,
     },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     cardTitle: {
       fontSize: 16,
       fontWeight: '700',
       color: theme.colors.ink,
       fontFamily: theme.font.body,
+      lineHeight: 22,
     },
     sectionTitle: {
       fontSize: 16,
@@ -368,7 +382,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontFamily: theme.font.body,
     },
     bodyText: {
-      lineHeight: 20,
+      lineHeight: 22,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },
@@ -401,6 +415,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     checkItemPressed: {
       opacity: 0.85,
+      transform: [{ scale: 0.98 }],
+      backgroundColor: theme.colors.surfaceMuted,
     },
     checkTitle: {
       fontSize: 16,
@@ -419,8 +435,15 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     checkDesc: {
       marginTop: 6,
       color: theme.colors.inkMuted,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
+    },
+    ritualBar: {
+      height: 3,
+      width: 56,
+      borderRadius: 999,
+      backgroundColor: theme.colors.accentSoft,
+      alignSelf: 'flex-start',
     },
     noteInput: {
       minHeight: 90,
@@ -429,41 +452,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       borderRadius: theme.radius.md,
       padding: 12,
       textAlignVertical: 'top',
-      backgroundColor: theme.colors.surface,
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-    },
-    primaryButton: {
-      minHeight: 48,
-      paddingHorizontal: 16,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: theme.colors.ink,
-    },
-    primaryButtonPressed: {
-      opacity: 0.9,
-    },
-    primaryButtonText: {
-      color: theme.colors.surface,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
-    },
-    ghostButton: {
-      minHeight: 46,
-      paddingHorizontal: 14,
-      borderRadius: theme.radius.md,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      backgroundColor: theme.colors.surface,
-    },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      fontWeight: '700',
+      backgroundColor: theme.colors.surfaceMuted,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
     },

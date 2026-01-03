@@ -11,11 +11,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
+import AppButton from '../../components/AppButton';
 import { AppIcon } from '../../components/AppIcon';
 import ErrorState from '../../components/ErrorState';
+import Screen from '../../components/Screen';
+import SurfaceCard from '../../components/SurfaceCard';
 import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
 import { getReturnStatus } from '../../lib/engagement';
@@ -25,7 +27,7 @@ import { getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
 import { getTodayActionSelection } from '../../lib/todayLog';
 import { useResponsiveLayout } from '../../ui/responsive';
-import { useTheme, useThemedStyles, type CardShadow, type Theme } from '../../ui/theme';
+import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
 
 type NextRoute = '/morning' | '/learn' | '/night';
 
@@ -153,7 +155,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -168,69 +170,59 @@ export default function HomeScreen() {
             <AppIcon name="settings" size={18} color={theme.colors.ink} />
           </Pressable>
         </View>
-        <Animated.View style={[styles.heroCard, entranceStyle(heroAnim)]}>
-          <View style={styles.heroTop}>
-            <View>
-              <Text style={styles.kicker}>{t('home.kicker')}</Text>
-              <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
+        <Animated.View style={entranceStyle(heroAnim)}>
+          <SurfaceCard style={styles.heroCard}>
+            <View style={styles.heroTop}>
+              <View>
+                <Text style={styles.kicker}>{t('home.kicker')}</Text>
+                <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
+              </View>
+              <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
+                <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
+                  {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
+                </Text>
+              </View>
             </View>
-            <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
-              <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
-                {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
-              </Text>
-            </View>
-          </View>
 
-          <Text style={styles.heroTitle}>{title}</Text>
+            <Text style={styles.heroTitle}>{title}</Text>
 
-          {statusMessage && (
-            <View style={styles.heroNotice}>
-              <Text style={styles.heroNoticeText}>{statusMessage}</Text>
-              {isComplete && (
-                <Pressable
-                  onPress={() => router.push('/settings')}
-                  style={({ pressed }) => [
-                    styles.noticeButton,
-                    pressed && styles.noticeButtonPressed,
-                  ]}
-                >
-                  <Text style={styles.noticeButtonText}>{t('home.resetFromSettings')}</Text>
-                </Pressable>
-              )}
-            </View>
-          )}
+            {statusMessage && (
+              <View style={styles.heroNotice}>
+                <Text style={styles.heroNoticeText}>{statusMessage}</Text>
+                {isComplete && (
+                  <AppButton
+                    label={t('home.resetFromSettings')}
+                    variant="ghost"
+                    size="sm"
+                    style={styles.noticeButton}
+                    onPress={() => router.push('/settings')}
+                  />
+                )}
+              </View>
+            )}
 
-          <Pressable
-            disabled={!nextAction.route}
-            onPress={() => {
-              if (nextAction.route) router.push(nextAction.route);
-            }}
-            style={({ pressed }) => [
-              styles.primaryButton,
-              !nextAction.route && styles.primaryButtonDisabled,
-              pressed && nextAction.route && styles.primaryButtonPressed,
-            ]}
-          >
-            <View style={styles.primaryButtonContent}>
-              <Text
-                style={[
-                  styles.primaryButtonText,
-                  !nextAction.route && styles.primaryButtonTextDisabled,
-                ]}
-              >
-                {primaryButtonLabel}
-              </Text>
-              {nextAction.route && (
-                <AppIcon name="arrow-forward" size={20} color={theme.colors.surface} />
-              )}
-            </View>
-          </Pressable>
+            <AppButton
+              label={primaryButtonLabel}
+              variant="primary"
+              size="lg"
+              disabled={!nextAction.route}
+              rightIcon={
+                nextAction.route ? (
+                  <AppIcon name="arrow-forward" size={20} color={theme.colors.surface} />
+                ) : null
+              }
+              onPress={() => {
+                if (nextAction.route) router.push(nextAction.route);
+              }}
+            />
+          </SurfaceCard>
         </Animated.View>
 
         <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
           <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
 
-          <View style={styles.actionCard}>
+          <SurfaceCard style={styles.actionCard} padding="md" elevated variant="outlined">
+            <View style={[styles.ritualBar, styles.ritualBarMorning]} />
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeMorning]}>
                 <AppIcon name="morning" size={20} color={theme.colors.accentDark} />
@@ -243,21 +235,16 @@ export default function HomeScreen() {
               </View>
             </View>
             <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
-            <Pressable
+            <AppButton
+              label={morningDone ? t('common.review') : t('common.do')}
+              variant="primary"
+              size="sm"
               onPress={() => router.push('/morning')}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
-              ]}
-            >
-              <Text style={styles.primaryButtonText}>
-                {morningDone ? t('common.review') : t('common.do')}
-              </Text>
-            </Pressable>
-          </View>
+            />
+          </SurfaceCard>
 
-          <View style={styles.actionCard}>
+          <SurfaceCard style={styles.actionCard} padding="md" elevated variant="outlined">
+            <View style={[styles.ritualBar, styles.ritualBarLearn]} />
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeLearn]}>
                 <AppIcon name="learn" size={20} color={theme.colors.accentDark} />
@@ -277,19 +264,16 @@ export default function HomeScreen() {
                   })
                 : t('home.selectionEmpty')}
             </Text>
-            <Pressable
+            <AppButton
+              label={t('home.learnCta')}
+              variant="primary"
+              size="sm"
               onPress={() => router.push('/learn')}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
-              ]}
-            >
-              <Text style={styles.primaryButtonText}>{t('home.learnCta')}</Text>
-            </Pressable>
-          </View>
+            />
+          </SurfaceCard>
 
-          <View style={styles.actionCard}>
+          <SurfaceCard style={styles.actionCard} padding="md" elevated variant="outlined">
+            <View style={[styles.ritualBar, styles.ritualBarNight]} />
             <View style={styles.actionHeader}>
               <View style={[styles.iconBadge, styles.iconBadgeNight]}>
                 <AppIcon name="night" size={20} color={theme.colors.accentDark} />
@@ -302,77 +286,67 @@ export default function HomeScreen() {
               </View>
             </View>
             <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
-            <Pressable
+            <AppButton
+              label={nightDone ? t('common.review') : t('common.do')}
+              variant="primary"
+              size="sm"
               onPress={() => router.push('/night')}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                styles.primaryButtonCompact,
-                pressed && styles.primaryButtonPressed,
-              ]}
-            >
-              <Text style={styles.primaryButtonText}>
-                {nightDone ? t('common.review') : t('common.do')}
-              </Text>
-            </Pressable>
-          </View>
+            />
+          </SurfaceCard>
         </Animated.View>
 
-        <Animated.View style={[styles.card, entranceStyle(historyAnim)]}>
-          <View style={styles.cardHeaderRow}>
-            <Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text>
-            <Pressable
-              onPress={() => router.push('/history')}
-              style={({ pressed }) => [
-                styles.ghostButtonSmall,
-                pressed && styles.ghostButtonPressed,
-              ]}
-            >
-              <Text style={styles.ghostButtonText}>{t('home.recentCta')}</Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.historyHeader}>
-            <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
-            <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
-            <Text style={styles.historyLabel}>{t('nav.night')}</Text>
-            <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
-          </View>
-
-          {history.map((h) => (
-            <View key={h.dateISO} style={styles.historyRow}>
-              <Text style={[styles.historyValue, styles.historyDate]}>{h.dateISO}</Text>
-              <View style={styles.historyCell}>
-                <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
-              </View>
-              <View style={styles.historyCell}>
-                <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
-              </View>
-              <View style={styles.historyCell}>
-                {h.nightHasNote ? (
-                  <AppIcon name="memo" size={16} color={theme.colors.ink} />
-                ) : (
-                  <Text style={styles.historyValue}>{t('common.dash')}</Text>
-                )}
-              </View>
+        <Animated.View style={entranceStyle(historyAnim)}>
+          <SurfaceCard style={styles.card} elevated={false} variant="muted">
+            <View style={styles.cardHeaderRow}>
+              <Text style={styles.sectionTitle}>{t('home.recentTitle')}</Text>
+              <AppButton
+                label={t('home.recentCta')}
+                variant="ghost"
+                size="sm"
+                style={styles.ghostButtonSmall}
+                onPress={() => router.push('/history')}
+              />
             </View>
-          ))}
 
-          <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
+            <View style={styles.historyHeader}>
+              <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
+              <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
+              <Text style={styles.historyLabel}>{t('nav.night')}</Text>
+              <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
+            </View>
+
+            {history.map((h) => (
+              <View key={h.dateISO} style={styles.historyRow}>
+                <Text style={[styles.historyValue, styles.historyDate]}>{h.dateISO}</Text>
+                <View style={styles.historyCell}>
+                  <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
+                </View>
+                <View style={styles.historyCell}>
+                  <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
+                </View>
+                <View style={styles.historyCell}>
+                  {h.nightHasNote ? (
+                    <AppIcon name="memo" size={16} color={theme.colors.ink} />
+                  ) : (
+                    <Text style={styles.historyValue}>{t('common.dash')}</Text>
+                  )}
+                </View>
+              </View>
+            ))}
+
+            <Text style={styles.historyFootnote}>{t('home.historyFootnote')}</Text>
+          </SurfaceCard>
         </Animated.View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
     screen: {
       flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     content: {
       padding: theme.spacing.lg,
@@ -398,11 +372,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       opacity: 0.85,
     },
     heroCard: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.xl,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.md,
-      ...cardShadow,
     },
     heroTop: {
       flexDirection: 'row',
@@ -420,6 +391,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 28,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.6,
+      lineHeight: 34,
     },
     heroBadge: {
       paddingVertical: 6,
@@ -442,7 +415,8 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 18,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
-      lineHeight: 24,
+      lineHeight: 26,
+      letterSpacing: 0.3,
     },
     heroNotice: {
       padding: theme.spacing.sm,
@@ -452,25 +426,11 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     heroNoticeText: {
       color: theme.colors.ink,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
     },
     noticeButton: {
       alignSelf: 'flex-start',
-      paddingHorizontal: 12,
-      paddingVertical: 6,
-      borderRadius: 999,
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-    },
-    noticeButtonPressed: {
-      opacity: 0.85,
-    },
-    noticeButtonText: {
-      fontWeight: '700',
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
     },
     progressDot: {
       width: 10,
@@ -481,69 +441,13 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     progressDotActive: {
       backgroundColor: theme.colors.success,
     },
-    primaryButton: {
-      minHeight: 48,
-      paddingHorizontal: 16,
-      borderRadius: 14,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: theme.colors.ink,
-    },
-    primaryButtonCompact: {
-      minHeight: 42,
-    },
-    primaryButtonPressed: {
-      opacity: 0.9,
-    },
-    primaryButtonDisabled: {
-      backgroundColor: theme.colors.border,
-    },
-    primaryButtonContent: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
-    },
-    primaryButtonText: {
-      color: theme.colors.surface,
-      fontWeight: '700',
-      fontFamily: theme.font.body,
-    },
-    primaryButtonTextDisabled: {
-      color: theme.colors.inkMuted,
-    },
-    ghostButton: {
-      minHeight: 42,
-      paddingHorizontal: 14,
-      borderRadius: 12,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-    },
     ghostButtonSmall: {
-      minHeight: 34,
-      paddingHorizontal: 12,
-      borderRadius: 10,
-      alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor: theme.colors.surfaceMuted,
       borderColor: theme.colors.surfaceMuted,
     },
-    ghostButtonPressed: {
-      opacity: 0.85,
-    },
-    ghostButtonText: {
-      fontWeight: '700',
-      color: theme.colors.ink,
-      fontFamily: theme.font.body,
-    },
     card: {
-      padding: theme.spacing.lg,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     cardHeaderRow: {
       flexDirection: 'row',
@@ -556,17 +460,29 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontWeight: '700',
       color: theme.colors.ink,
       fontFamily: theme.font.display,
+      letterSpacing: 0.4,
     },
     sectionStack: {
       gap: theme.spacing.md,
     },
     actionCard: {
-      padding: theme.spacing.md,
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
       gap: theme.spacing.sm,
+    },
+    ritualBar: {
+      height: 3,
+      width: 56,
+      borderRadius: 999,
+      alignSelf: 'flex-start',
+    },
+    ritualBarMorning: {
+      backgroundColor: theme.colors.accentSoft,
+    },
+    ritualBarLearn: {
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    ritualBarNight: {
+      backgroundColor: theme.colors.successSoft,
     },
     actionHeader: {
       flexDirection: 'row',
@@ -589,7 +505,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     },
     actionDescription: {
       color: theme.colors.ink,
-      lineHeight: 20,
+      lineHeight: 22,
       fontFamily: theme.font.body,
     },
     iconBadge: {
@@ -645,7 +561,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     historyFootnote: {
       fontSize: 12,
       color: theme.colors.inkMuted,
-      lineHeight: 18,
+      lineHeight: 20,
       fontFamily: theme.font.body,
     },
   });

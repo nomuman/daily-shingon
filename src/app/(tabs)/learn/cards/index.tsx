@@ -10,14 +10,15 @@
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
+import Screen from '../../../../components/Screen';
+import SurfaceCard from '../../../../components/SurfaceCard';
 import { getCardPacks } from '../../../../content/cards';
 import { useContentLang } from '../../../../content/useContentLang';
 import { useResponsiveLayout } from '../../../../ui/responsive';
-import { useThemedStyles, type CardShadow, type Theme } from '../../../../ui/theme';
+import { useThemedStyles, type Theme } from '../../../../ui/theme';
 
 export default function CardPackListScreen() {
   const router = useRouter();
@@ -30,8 +31,9 @@ export default function CardPackListScreen() {
 
   // Render a virtualized list of packs with header copy. / ヘッダー付きの仮想化リストを描画。
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <FlatList
+        style={styles.list}
         data={packs}
         keyExtractor={(item) => item.packId}
         ListHeaderComponent={
@@ -44,26 +46,28 @@ export default function CardPackListScreen() {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => router.push(`/learn/cards/${item.packId}`)}
-            style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
+            style={({ pressed }) => [styles.cardPressable, pressed && styles.cardPressed]}
           >
-            <Text style={styles.cardTitle}>{item.title}</Text>
-            <Text style={styles.cardMeta}>
-              {t('learnCards.count', { total: item.count })}
-              {item.description ? ` ・ ${item.description}` : ''}
-            </Text>
+            <SurfaceCard style={styles.card}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardMeta}>
+                {t('learnCards.count', { total: item.count })}
+                {item.description ? ` ・ ${item.description}` : ''}
+              </Text>
+            </SurfaceCard>
           </Pressable>
         )}
         contentContainerStyle={[styles.listContent, responsive.contentStyle]}
       />
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const createStyles = (theme: Theme, cardShadow: CardShadow) =>
+const createStyles = (theme: Theme) =>
   StyleSheet.create({
-    safeArea: {
+    list: {
       flex: 1,
-      backgroundColor: theme.colors.background,
+      backgroundColor: 'transparent',
     },
     listContent: {
       paddingHorizontal: theme.spacing.lg,
@@ -78,17 +82,19 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
       fontSize: 22,
       fontFamily: theme.font.display,
       color: theme.colors.ink,
+      letterSpacing: 0.4,
+      lineHeight: 28,
     },
     subtitle: {
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
-    card: {
-      padding: theme.spacing.lg,
+    cardPressable: {
       borderRadius: theme.radius.lg,
-      backgroundColor: theme.colors.surface,
+    },
+    card: {
+      borderRadius: theme.radius.lg,
       gap: theme.spacing.sm,
-      ...cardShadow,
     },
     cardPressed: {
       opacity: 0.9,

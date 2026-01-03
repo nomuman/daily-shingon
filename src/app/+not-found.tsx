@@ -9,10 +9,10 @@
  */
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../components/BackButton';
+import Screen from '../components/Screen';
 import { useResponsiveLayout } from '../ui/responsive';
 import { useThemedStyles } from '../ui/theme';
 
@@ -22,10 +22,6 @@ export default function NotFoundScreen() {
   const responsive = useResponsiveLayout();
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
-      safeArea: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
-      },
       container: {
         flex: 1,
         gap: theme.spacing.sm,
@@ -55,7 +51,7 @@ export default function NotFoundScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <Screen edges={['top', 'bottom']}>
       <View style={[styles.container, responsive.contentStyle]}>
         <BackButton
           label={t('notFound.backHome')}
@@ -67,6 +63,6 @@ export default function NotFoundScreen() {
           <Text style={styles.body}>{t('notFound.body')}</Text>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

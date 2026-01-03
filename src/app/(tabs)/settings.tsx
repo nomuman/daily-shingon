@@ -26,13 +26,13 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTranslation } from 'react-i18next';
 import { signInWithEmailPassword, signUpWithEmailPassword } from '../../auth/signInWithEmail';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
 import ErrorState from '../../components/ErrorState';
+import Screen from '../../components/Screen';
 import { getLanguagePreference, setLanguagePreference } from '../../lib/i18n';
 import type { LanguagePreference } from '../../lib/i18n/storage';
 import {
@@ -71,11 +71,7 @@ export default function SettingsScreen() {
     StyleSheet.create({
       screen: {
         flex: 1,
-        backgroundColor: theme.colors.background,
-      },
-      safeArea: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
+        backgroundColor: 'transparent',
       },
       content: {
         padding: theme.spacing.lg,
@@ -93,7 +89,7 @@ export default function SettingsScreen() {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.colors.background,
+        backgroundColor: 'transparent',
       },
       loadingText: {
         color: theme.colors.inkMuted,
@@ -787,14 +783,14 @@ export default function SettingsScreen() {
   // Load-state and error-state gates before main UI. / ロード/エラー状態の分岐。
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
           <BackButton style={styles.backButton} />
           <View style={styles.loading}>
             <Text style={styles.loadingText}>{t('common.loadingSimple')}</Text>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -803,7 +799,7 @@ export default function SettingsScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <Screen edges={['top']}>
       <ScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, responsive.contentStyle]}
@@ -1112,6 +1108,6 @@ export default function SettingsScreen() {
           </View>
         </Animated.View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
