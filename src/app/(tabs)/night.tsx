@@ -291,7 +291,7 @@ export default function NightScreen() {
                 speechDone: hotsuganDone,
                 mindDone: ekouDone,
                 noteCiphertext,
-                noteVersion: noteCiphertext ? 0 : 1,
+                noteVersion: 1,
               }).catch((err) => {
                 console.warn('Failed to sync night entry.', err);
               });
