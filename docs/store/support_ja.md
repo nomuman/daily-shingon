@@ -2,8 +2,9 @@
 
 ## 連絡先
 
-- サポートメール: TODO
-- サポートURL: TODO
+- サポートメール: （現在はメール窓口なし）
+- サポートURL: https://nomuman.github.io/daily-shingon/contact/
+- 不具合報告: https://github.com/nomuman/daily-shingon/issues
 
 ## 対応範囲
 
@@ -13,7 +14,7 @@
 
 ## 返信目安
 
-- TODO（例: 3営業日以内）
+- 3営業日以内（目安）
 
 ## 送ってほしい情報（不具合時）
 

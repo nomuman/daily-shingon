@@ -44,8 +44,8 @@ shingon,mantra,gongyo,kukai,kobo,esoteric,buddhism,habit,journal,practice
 
 ## Support URL
 
-- TODO: Public support URL
+- https://nomuman.github.io/daily-shingon/contact/en/
 
 ## Privacy Policy URL
 
-- TODO: Public privacy policy URL (hosted online)
+- https://nomuman.github.io/daily-shingon/privacy/en/

@@ -36,5 +36,6 @@ Privacy
 
 ## Contact
 
-- TODO: Support email / URL
-- TODO: Privacy Policy URL (must be a publicly accessible URL)
+- Support URL: https://nomuman.github.io/daily-shingon/contact/en/
+- Support issue tracker: https://github.com/nomuman/daily-shingon/issues
+- Privacy Policy URL: https://nomuman.github.io/daily-shingon/privacy/en/
