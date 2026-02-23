@@ -11,8 +11,19 @@ import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient, processLock } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
-const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? '';
+const envSupabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
+const envSupabaseKey = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? '';
+
+export const isSupabaseConfigured = Boolean(envSupabaseUrl && envSupabaseKey);
+
+const supabaseUrl = isSupabaseConfigured ? envSupabaseUrl : 'https://example.supabase.co';
+const supabaseKey = isSupabaseConfigured ? envSupabaseKey : 'public-anon-key-not-configured';
+
+if (!isSupabaseConfigured) {
+  console.warn(
+    'Supabase env is not configured. Sync and account features will stay unavailable.',
+  );
+}
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
