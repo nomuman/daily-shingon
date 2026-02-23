@@ -32,7 +32,7 @@ export interface EntryStore {
   upsertLocal(entry: Entry): Promise<void>;
   listByDate(date: string): Promise<Entry[]>;
   listDirty(): Promise<Entry[]>;
-  applyRemote(entries: Array<Omit<Entry, 'isDirty'>>): Promise<void>;
+  applyRemote(entries: Omit<Entry, 'isDirty'>[]): Promise<void>;
   markClean(key: { date: string; slot: EntrySlot }, serverUpdatedAt: string): Promise<void>;
   getLastSyncAt(): Promise<string | null>;
   setLastSyncAt(value: string): Promise<void>;
