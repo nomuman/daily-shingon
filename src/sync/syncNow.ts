@@ -80,23 +80,37 @@ export async function syncNow() {
 
   // --- PULL ---
   const last = await entryStore.getLastSyncAt();
-  let query = supabase
-    .from('entries')
-    .select('*')
-    .eq('user_id', user.id)
-    .order('server_updated_at', { ascending: true })
-    .limit(500);
+  const pageSize = 500;
+  let offset = 0;
 
-  if (last) query = query.gt('server_updated_at', last);
+  while (true) {
+    let query = supabase
+      .from('entries')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('server_updated_at', { ascending: true })
+      .range(offset, offset + pageSize - 1);
 
-  const { data: remote, error: pullError } = await query;
-  if (pullError) throw pullError;
+    if (last) {
+      query = query.gt('server_updated_at', last);
+    }
 
-  if (remote && remote.length > 0) {
+    const { data: remote, error: pullError } = await query;
+    if (pullError) throw pullError;
+
+    if (!remote || remote.length === 0) {
+      break;
+    }
+
     const mapped = remote.map(fromServerRow);
     await entryStore.applyRemote(mapped);
 
     const maxServerUpdatedAt = remote[remote.length - 1].server_updated_at as string;
     await entryStore.setLastSyncAt(maxServerUpdatedAt);
+
+    if (remote.length < pageSize) {
+      break;
+    }
+    offset += remote.length;
   }
 }
