@@ -13,10 +13,13 @@ import type { ContentLang } from './lang';
 import glossaryJa from '../../content/glossary/glossary.ja.json';
 import glossaryEn from '../../content/glossary/glossary.en.json';
 
+const glossaryJaData = glossaryJa as GlossaryJson;
+const glossaryEnData = glossaryEn as GlossaryJson;
+
 // Static glossary data registry by language. / 言語別の静的用語集レジストリ。
 const GLOSSARY_BY_LANG: Record<ContentLang, GlossaryJson> = {
-  ja: glossaryJa,
-  en: glossaryEn,
+  ja: glossaryJaData,
+  en: glossaryEnData,
 };
 
 // Overload: default language when none provided. / 言語未指定時は既定言語。
