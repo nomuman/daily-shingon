@@ -3,10 +3,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KEY_LAST_ACTIVE_DATE } from '../src/lib/engagement';
 import { KEY_START_DATE } from '../src/lib/programDay';
 import { resetAllProgress } from '../src/lib/reset';
+import { entryStore } from '../src/storage/entryStore';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
+
+jest.mock('../src/storage/entryStore', () => ({
+  entryStore: {
+    clearAll: jest.fn().mockResolvedValue(undefined),
+  },
+}));
+
+jest.mock('../src/lib/supabase', () => ({
+  isSupabaseConfigured: false,
+  supabase: {
+    auth: {
+      getUser: jest.fn(),
+    },
+    from: jest.fn(),
+  },
+}));
 
 describe('resetAllProgress', () => {
   beforeEach(async () => {
@@ -29,5 +46,6 @@ describe('resetAllProgress', () => {
     await expect(AsyncStorage.getItem('morningLog:2025-01-03')).resolves.toBeNull();
     await expect(AsyncStorage.getItem('nightLog:2025-01-03')).resolves.toBeNull();
     await expect(AsyncStorage.getItem('other:key')).resolves.toBe('keep');
+    expect(entryStore.clearAll).toHaveBeenCalledTimes(1);
   });
 });

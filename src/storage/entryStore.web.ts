@@ -76,4 +76,11 @@ export const entryStore: EntryStore = {
     if (!db) return;
     await db.put('meta', value, 'last_sync_at');
   },
+
+  async clearAll() {
+    const db = await getDb();
+    if (!db) return;
+    await db.clear('entries');
+    await db.clear('meta');
+  },
 };
