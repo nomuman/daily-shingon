@@ -22,6 +22,21 @@ jest.mock('expo-localization', () => ({
   getLocales: () => [{ languageCode: 'ja' }],
 }));
 
+jest.mock('expo-router', () => {
+  const React = require('react');
+
+  return {
+    useRouter: () => ({
+      back: jest.fn(),
+      push: jest.fn(),
+      replace: jest.fn(),
+      canGoBack: jest.fn(() => false),
+    }),
+    Stack: ({ children }) => React.createElement(React.Fragment, null, children),
+    Link: ({ children }) => React.createElement(React.Fragment, null, children),
+  };
+});
+
 const i18n = require('i18next');
 const { initReactI18next } = require('react-i18next');
 const enCommon = require('./src/locales/en/common.json');
