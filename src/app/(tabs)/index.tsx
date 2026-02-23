@@ -170,21 +170,38 @@ export default function HomeScreen() {
             <AppIcon name="settings" size={18} color={theme.colors.ink} />
           </Pressable>
         </View>
-        <Animated.View style={entranceStyle(heroAnim)}>
+        <Animated.View style={[styles.heroSection, entranceStyle(heroAnim)]}>
           <SurfaceCard style={styles.heroCard}>
-            <View style={styles.heroTop}>
-              <View>
-                <Text style={styles.kicker}>{t('home.kicker')}</Text>
-                <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
+            <View style={styles.heroIdentity}>
+              <View style={styles.heroTop}>
+                <View>
+                  <Text style={styles.kicker}>{t('home.kicker')}</Text>
+                  <Text style={styles.heroDay}>{t('home.dayLabel', { day: dayNumber })}</Text>
+                </View>
+                <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
+                  <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
+                    {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
+                  </Text>
+                </View>
               </View>
-              <View style={[styles.heroBadge, isComplete && styles.heroBadgeComplete]}>
-                <Text style={[styles.heroBadgeText, isComplete && styles.heroBadgeTextComplete]}>
-                  {isComplete ? t('home.badgeComplete') : t('home.badgeOngoing')}
-                </Text>
-              </View>
+
+              <Text style={styles.heroTitle}>{title}</Text>
             </View>
 
-            <Text style={styles.heroTitle}>{title}</Text>
+            <View style={styles.heroStatusRow}>
+              <View style={[styles.heroStatusChip, morningDone && styles.heroStatusChipDone]}>
+                <Text style={styles.heroStatusChipLabel}>{t('nav.morning')}</Text>
+                <View style={[styles.heroStatusDot, morningDone && styles.heroStatusDotDone]} />
+              </View>
+              <View style={[styles.heroStatusChip, learnDone && styles.heroStatusChipDone]}>
+                <Text style={styles.heroStatusChipLabel}>{t('nav.learn')}</Text>
+                <View style={[styles.heroStatusDot, learnDone && styles.heroStatusDotDone]} />
+              </View>
+              <View style={[styles.heroStatusChip, nightDone && styles.heroStatusChipDone]}>
+                <Text style={styles.heroStatusChipLabel}>{t('nav.night')}</Text>
+                <View style={[styles.heroStatusDot, nightDone && styles.heroStatusDotDone]} />
+              </View>
+            </View>
 
             {statusMessage && (
               <View style={styles.heroNotice}>
@@ -218,7 +235,7 @@ export default function HomeScreen() {
           </SurfaceCard>
         </Animated.View>
 
-        <Animated.View style={[styles.sectionStack, entranceStyle(actionsAnim)]}>
+        <Animated.View style={[styles.flowSection, entranceStyle(actionsAnim)]}>
           <Text style={styles.sectionTitle}>{t('home.flowTitle')}</Text>
 
           <SurfaceCard style={styles.actionCard} padding="md" elevated variant="outlined">
@@ -350,13 +367,17 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 40,
-      gap: theme.spacing.md,
+      paddingBottom: 56,
+      gap: theme.spacing.lg,
     },
     topBar: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
+      marginBottom: theme.spacing.xs,
+    },
+    heroSection: {
+      marginBottom: theme.spacing.xs,
     },
     iconButton: {
       width: 36,
@@ -374,6 +395,14 @@ const createStyles = (theme: Theme) =>
     heroCard: {
       borderRadius: theme.radius.xl,
       gap: theme.spacing.md,
+      borderWidth: 1,
+      borderColor: theme.colors.accentSoft,
+    },
+    heroIdentity: {
+      backgroundColor: theme.colors.surfaceMuted,
+      borderRadius: theme.radius.lg,
+      padding: theme.spacing.md,
+      gap: theme.spacing.xs,
     },
     heroTop: {
       flexDirection: 'row',
@@ -417,10 +446,48 @@ const createStyles = (theme: Theme) =>
       lineHeight: 26,
       letterSpacing: 0.3,
     },
+    heroStatusRow: {
+      flexDirection: 'row',
+      gap: theme.spacing.xs,
+    },
+    heroStatusChip: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: theme.spacing.sm,
+      paddingVertical: theme.spacing.xs,
+      borderRadius: 999,
+      backgroundColor: theme.colors.surfaceMuted,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+    },
+    heroStatusChipDone: {
+      backgroundColor: theme.colors.successSoft,
+      borderColor: theme.colors.success,
+    },
+    heroStatusChipLabel: {
+      fontSize: 11,
+      fontFamily: theme.font.bodyBold,
+      color: theme.colors.inkMuted,
+      textTransform: 'uppercase',
+      letterSpacing: 0.6,
+    },
+    heroStatusDot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: theme.colors.border,
+    },
+    heroStatusDotDone: {
+      backgroundColor: theme.colors.success,
+    },
     heroNotice: {
       padding: theme.spacing.sm,
       borderRadius: theme.radius.md,
       backgroundColor: theme.colors.surfaceMuted,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
       gap: theme.spacing.xs,
     },
     heroNoticeText: {
@@ -460,7 +527,10 @@ const createStyles = (theme: Theme) =>
       fontFamily: theme.font.displayBold,
       letterSpacing: 0.4,
     },
-    sectionStack: {
+    flowSection: {
+      paddingTop: theme.spacing.lg,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
       gap: theme.spacing.md,
     },
     actionCard: {
