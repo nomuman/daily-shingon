@@ -36,4 +36,5 @@ export interface EntryStore {
   markClean(key: { date: string; slot: EntrySlot }, serverUpdatedAt: string): Promise<void>;
   getLastSyncAt(): Promise<string | null>;
   setLastSyncAt(value: string): Promise<void>;
+  clearAll(): Promise<void>;
 }

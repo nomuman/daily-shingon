@@ -164,4 +164,12 @@ export const entryStore: EntryStore = {
       [value],
     );
   },
+
+  async clearAll() {
+    const db = await getDb();
+    await db.execAsync(`
+      delete from entries;
+      delete from meta;
+    `);
+  },
 };
