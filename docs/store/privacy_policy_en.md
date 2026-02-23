@@ -10,7 +10,7 @@ This Privacy Policy explains how information is handled in the App.
 ## 2. Information We Collect
 
 If you use the App without account sync, no personal information or usage data is sent to external servers.
-If you enable sync, authentication data (such as email) and sync-targeted records are transmitted to the sync backend.
+If you enable sync, your authentication data (such as email) and the data you choose to sync (such as practice logs and settings) are transmitted to Supabase.
 
 ## 3. On-Device Storage
 
