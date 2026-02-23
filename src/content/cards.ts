@@ -23,10 +23,15 @@ import textsEn from '../../content/cards/04_texts.en.json';
 import uxJa from '../../content/cards/05_app_integration.ja.json';
 import uxEn from '../../content/cards/05_app_integration.en.json';
 
+// JSON imports are structurally compatible but typed as broad string fields.
+// Narrow them once at the boundary.
+const jaPacks = [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa] as CardPackJson[];
+const enPacks = [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn] as CardPackJson[];
+
 // Static registry of packs per language. / 言語別パックの静的レジストリ。
 const PACKS_BY_LANG: Record<ContentLang, CardPackJson[]> = {
-  ja: [coreJa, peopleJa, practiceJa, mandalaJa, textsJa, uxJa],
-  en: [coreEn, peopleEn, practiceEn, mandalaEn, textsEn, uxEn],
+  ja: jaPacks,
+  en: enPacks,
 };
 
 export type CardPackSummary = {
