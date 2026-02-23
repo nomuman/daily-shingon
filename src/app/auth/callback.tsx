@@ -8,12 +8,14 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
 import { handleAuthCallbackUrl } from '../../auth/signInWithEmail';
 import Screen from '../../components/Screen';
 import { useThemedStyles } from '../../ui/theme';
 
 export default function AuthCallbackScreen() {
-  const [message, setMessage] = useState('Signing you in...');
+  const { t } = useTranslation('common');
+  const [message, setMessage] = useState(t('common.loadingSimple'));
   const styles = useThemedStyles((theme) =>
     StyleSheet.create({
       container: {
@@ -41,14 +43,14 @@ export default function AuthCallbackScreen() {
     if (typeof window === 'undefined') return;
 
     handleAuthCallbackUrl(window.location.href)
-      .then(() => setMessage('Signed in.'))
-      .catch(() => setMessage('Sign-in failed.'));
-  }, []);
+      .then(() => setMessage(t('settings.sync.signInSuccess')))
+      .catch(() => setMessage(t('settings.sync.signInFail')));
+  }, [t]);
 
   return (
     <Screen edges={['top', 'bottom']}>
       <View style={styles.container}>
-        <Text style={styles.title}>Supabase</Text>
+        <Text style={styles.title}>{t('app.name')}</Text>
         <Text style={styles.body}>{message}</Text>
       </View>
     </Screen>
