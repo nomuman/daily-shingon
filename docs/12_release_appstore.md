@@ -11,7 +11,7 @@
 
 * ✅ Bundle ID: `com.nomuman.dailyshingon`（`app.json`）
 * ✅ `version`: `1.0.0`（`app.json`）
-* ✅ EAS Project ID: `68881611-d222-43df-852b-d8cb00796125`（`app.json`）
+* ✅ EAS Project ID: `2a47cc9b-4842-45b5-b1da-731c46401c3a`（`app.json`）
 * ✅ `eas.json` の build/submit プロファイル（`eas.json`）
 * ✅ プライバシーポリシー公開ページ（`docs/privacy/index.html`）とURL設定（`app.json` の `extra.privacyPolicyUrl`）
 * ✅ お問い合わせページ（`docs/contact/index.html`）とURL設定（`app.json` の `extra.contactUrl`）
@@ -25,7 +25,7 @@
 * ⛳ Apple Developer Program / App Store Connect の口座（外部作業）
 * ⛳ App Store Connect での新規アプリ作成（外部作業）
 * ⛳ スクリーンショット作成（リポジトリ外の成果物）
-* ⛳ サポート連絡先の確定（`docs/store/support_ja.md` が TODO）
+* ✅ サポート連絡先の公開URLを設定済み（`docs/store/support_ja.md`）
 * ⛳ App Privacy Details 入力（App Store Connect 側で実施）
 
 ## 0. 事前に用意するもの（ここが揃ってないと先に進めない）

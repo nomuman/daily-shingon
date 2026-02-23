@@ -44,8 +44,8 @@
 
 ## サポートURL
 
-- TODO: 公式サポートURL（公開URL）
+- https://nomuman.github.io/daily-shingon/contact/
 
 ## プライバシーポリシーURL
 
-- TODO: 公開URL（`docs/store/privacy_policy_ja.md` を基に作成）
+- https://nomuman.github.io/daily-shingon/privacy/
