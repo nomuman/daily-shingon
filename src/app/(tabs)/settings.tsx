@@ -42,7 +42,7 @@ import {
 } from '../../lib/notifications';
 import { resetAllProgress } from '../../lib/reset';
 import { DEFAULT_SETTINGS, getSettings, setSettings } from '../../lib/settings';
-import { supabase } from '../../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 import { syncNow } from '../../sync/syncNow';
 import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles } from '../../ui/theme';
@@ -414,6 +414,12 @@ export default function SettingsScreen() {
 
   // Track Supabase auth session for sync UI. / Supabase認証セッションを監視。
   useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setAuthUser(null);
+      setAuthNotice(t('settings.sync.sessionFail'));
+      return;
+    }
+
     let mounted = true;
     supabase.auth
       .getUser()
@@ -633,6 +639,10 @@ export default function SettingsScreen() {
 
   const handleSignIn = async () => {
     setAuthNotice(null);
+    if (!isSupabaseConfigured) {
+      setAuthNotice(t('settings.sync.sessionFail'));
+      return;
+    }
     const email = authEmail.trim();
     if (!email) {
       setAuthNotice(t('settings.sync.emailRequired'));
@@ -660,6 +670,10 @@ export default function SettingsScreen() {
 
   const handleSignUp = async () => {
     setAuthNotice(null);
+    if (!isSupabaseConfigured) {
+      setAuthNotice(t('settings.sync.sessionFail'));
+      return;
+    }
     const email = authEmail.trim();
     if (!email) {
       setAuthNotice(t('settings.sync.emailRequired'));
@@ -687,6 +701,10 @@ export default function SettingsScreen() {
 
   const handleSignOut = async () => {
     setAuthNotice(null);
+    if (!isSupabaseConfigured) {
+      setAuthNotice(t('settings.sync.sessionFail'));
+      return;
+    }
     setAuthBusy(true);
     try {
       const { error } = await supabase.auth.signOut();
@@ -701,6 +719,10 @@ export default function SettingsScreen() {
 
   const handleSyncNow = async () => {
     setAuthNotice(null);
+    if (!isSupabaseConfigured) {
+      setAuthNotice(t('settings.sync.sessionFail'));
+      return;
+    }
     if (!authUser) {
       setAuthNotice(t('settings.sync.signInRequired'));
       return;
@@ -831,6 +853,7 @@ export default function SettingsScreen() {
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
+                  editable={isSupabaseConfigured}
                   style={styles.authInput}
                 />
                 <TextInput
@@ -841,14 +864,16 @@ export default function SettingsScreen() {
                   secureTextEntry
                   autoCapitalize="none"
                   autoCorrect={false}
+                  editable={isSupabaseConfigured}
                   style={[styles.authInput, { marginTop: theme.spacing.sm }]}
                 />
                 <Pressable
                   onPress={handleSignIn}
-                  disabled={authBusy}
+                  disabled={authBusy || !isSupabaseConfigured}
                   style={({ pressed }) => [
                     styles.actionButton,
                     pressed && styles.actionButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
                     { marginTop: theme.spacing.sm },
                   ]}
                 >
@@ -856,10 +881,11 @@ export default function SettingsScreen() {
                 </Pressable>
                 <Pressable
                   onPress={handleSignUp}
-                  disabled={authBusy}
+                  disabled={authBusy || !isSupabaseConfigured}
                   style={({ pressed }) => [
                     styles.actionButtonOutline,
                     pressed && styles.actionButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
                     { marginTop: theme.spacing.sm },
                   ]}
                 >
@@ -871,10 +897,11 @@ export default function SettingsScreen() {
             ) : (
               <Pressable
                 onPress={handleSignOut}
-                disabled={authBusy}
+                disabled={authBusy || !isSupabaseConfigured}
                 style={({ pressed }) => [
                   styles.actionButtonOutline,
                   pressed && styles.actionButtonPressed,
+                  (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
                 ]}
               >
                 <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
@@ -883,10 +910,11 @@ export default function SettingsScreen() {
 
             <Pressable
               onPress={handleSyncNow}
-              disabled={syncBusy || authBusy}
+              disabled={syncBusy || authBusy || !isSupabaseConfigured}
               style={({ pressed }) => [
                 styles.actionButton,
                 pressed && styles.actionButtonPressed,
+                (syncBusy || authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
               ]}
             >
               <Text style={styles.actionButtonText}>{t('settings.sync.syncNow')}</Text>
