@@ -9,12 +9,13 @@ This Privacy Policy explains how information is handled in the App.
 
 ## 2. Information We Collect
 
-At this time, the App does not collect or transmit personal information or usage data to external servers.
+If you use the App without account sync, no personal information or usage data is sent to external servers.
+If you enable sync, authentication data (such as email) and sync-targeted records are transmitted to the sync backend.
 
 ## 3. On-Device Storage
 
 Practice logs, settings, and related data are stored locally on your device.
-This data is not synced to any external server.
+Data is sent to an external server only when you explicitly use account sync.
 
 ## 4. Notifications
 
@@ -23,12 +24,14 @@ You can turn notifications on/off and adjust times in the App and/or your device
 
 ## 5. Sharing and Disclosure
 
-The App does not share your data with third parties.
+When sync is enabled, required data is transmitted to Supabase for synchronization.
+We do not share your data for advertising or analytics purposes.
 
 ## 6. Third-Party Services
 
-At this time, the App does not use third-party analytics, advertising, or tracking SDKs.
-If we add any third-party service in the future, we will clearly disclose:
+The App uses Supabase to provide optional account sync.
+We do not use third-party analytics, advertising, or tracking SDKs.
+If we add another service in the future, we will clearly disclose:
 
 - the service name,
 - what data may be processed,

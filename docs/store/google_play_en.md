@@ -21,7 +21,7 @@ Core features
 - Supportive guidance to return after breaks (no streak pressure)
 - Reminders for morning/night rhythm
 - Learning cards + glossary to deepen understanding
-- Logs are stored locally on your device (no sync)
+- Logs are stored locally by default (optional account sync available)
 
 Principles
 
@@ -31,7 +31,7 @@ Principles
 
 Privacy
 
-- Personal logs are stored on your device and are not synced to external servers
+- Personal logs are stored on your device by default; external sync is optional when signed in
 - No analytics or ad SDKs are used at this time (we will update this page if added)
 
 ## Contact
