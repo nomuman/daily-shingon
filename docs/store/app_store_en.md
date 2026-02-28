@@ -25,7 +25,7 @@ Features
 - Supportive guidance to return after breaks (no streak pressure)
 - Reminders for morning/night rhythm
 - Learning cards + glossary to deepen understanding
-- Logs are stored locally on your device (no sync)
+- Logs are stored locally by default (optional account sync available)
 
 For people who
 
