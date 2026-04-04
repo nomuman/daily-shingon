@@ -837,92 +837,6 @@ export default function SettingsScreen() {
         )}
 
         <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
-          <Text style={styles.sectionTitle}>{t('settings.sync.title')}</Text>
-          <Text style={styles.sectionSubtitle}>{t('settings.sync.description')}</Text>
-          <Text style={styles.authStatus}>{authStatus}</Text>
-          {!!authNotice && <Text style={styles.sectionHint}>{authNotice}</Text>}
-
-          <View style={styles.actionRow}>
-            {!authUser ? (
-              <View style={{ flex: 1 }}>
-                <TextInput
-                  value={authEmail}
-                  onChangeText={setAuthEmail}
-                  placeholder={t('settings.sync.emailPlaceholder')}
-                  placeholderTextColor={theme.colors.inkMuted}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  editable={isSupabaseConfigured}
-                  style={styles.authInput}
-                />
-                <TextInput
-                  value={authPassword}
-                  onChangeText={setAuthPassword}
-                  placeholder={t('settings.sync.passwordPlaceholder')}
-                  placeholderTextColor={theme.colors.inkMuted}
-                  secureTextEntry
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  editable={isSupabaseConfigured}
-                  style={[styles.authInput, { marginTop: theme.spacing.sm }]}
-                />
-                <Pressable
-                  onPress={handleSignIn}
-                  disabled={authBusy || !isSupabaseConfigured}
-                  style={({ pressed }) => [
-                    styles.actionButton,
-                    pressed && styles.actionButtonPressed,
-                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
-                    { marginTop: theme.spacing.sm },
-                  ]}
-                >
-                  <Text style={styles.actionButtonText}>{t('settings.sync.signIn')}</Text>
-                </Pressable>
-                <Pressable
-                  onPress={handleSignUp}
-                  disabled={authBusy || !isSupabaseConfigured}
-                  style={({ pressed }) => [
-                    styles.actionButtonOutline,
-                    pressed && styles.actionButtonPressed,
-                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
-                    { marginTop: theme.spacing.sm },
-                  ]}
-                >
-                  <Text style={styles.actionButtonOutlineText}>
-                    {t('settings.sync.signUp')}
-                  </Text>
-                </Pressable>
-              </View>
-            ) : (
-              <Pressable
-                onPress={handleSignOut}
-                disabled={authBusy || !isSupabaseConfigured}
-                style={({ pressed }) => [
-                  styles.actionButtonOutline,
-                  pressed && styles.actionButtonPressed,
-                  (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
-                ]}
-              >
-                <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
-              </Pressable>
-            )}
-
-            <Pressable
-              onPress={handleSyncNow}
-              disabled={syncBusy || authBusy || !isSupabaseConfigured}
-              style={({ pressed }) => [
-                styles.actionButton,
-                pressed && styles.actionButtonPressed,
-                (syncBusy || authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
-              ]}
-            >
-              <Text style={styles.actionButtonText}>{t('settings.sync.syncNow')}</Text>
-            </Pressable>
-          </View>
-        </Animated.View>
-
-        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
           <Text style={styles.sectionTitle}>{t('settings.language.title')}</Text>
           <Text style={styles.sectionSubtitle}>{t('settings.language.description')}</Text>
 
@@ -1061,6 +975,92 @@ export default function SettingsScreen() {
                 <Text style={styles.ghostButtonText}>{t('common.done')}</Text>
               </Pressable>
             )}
+          </View>
+        </Animated.View>
+
+        <Animated.View style={[styles.card, entranceStyle(notifyAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.sync.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.sync.description')}</Text>
+          <Text style={styles.authStatus}>{authStatus}</Text>
+          {!!authNotice && <Text style={styles.sectionHint}>{authNotice}</Text>}
+
+          <View style={styles.actionRow}>
+            {!authUser ? (
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  value={authEmail}
+                  onChangeText={setAuthEmail}
+                  placeholder={t('settings.sync.emailPlaceholder')}
+                  placeholderTextColor={theme.colors.inkMuted}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  editable={isSupabaseConfigured}
+                  style={styles.authInput}
+                />
+                <TextInput
+                  value={authPassword}
+                  onChangeText={setAuthPassword}
+                  placeholder={t('settings.sync.passwordPlaceholder')}
+                  placeholderTextColor={theme.colors.inkMuted}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  editable={isSupabaseConfigured}
+                  style={[styles.authInput, { marginTop: theme.spacing.sm }]}
+                />
+                <Pressable
+                  onPress={handleSignIn}
+                  disabled={authBusy || !isSupabaseConfigured}
+                  style={({ pressed }) => [
+                    styles.actionButton,
+                    pressed && styles.actionButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+                    { marginTop: theme.spacing.sm },
+                  ]}
+                >
+                  <Text style={styles.actionButtonText}>{t('settings.sync.signIn')}</Text>
+                </Pressable>
+                <Pressable
+                  onPress={handleSignUp}
+                  disabled={authBusy || !isSupabaseConfigured}
+                  style={({ pressed }) => [
+                    styles.actionButtonOutline,
+                    pressed && styles.actionButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+                    { marginTop: theme.spacing.sm },
+                  ]}
+                >
+                  <Text style={styles.actionButtonOutlineText}>
+                    {t('settings.sync.signUp')}
+                  </Text>
+                </Pressable>
+              </View>
+            ) : (
+              <Pressable
+                onPress={handleSignOut}
+                disabled={authBusy || !isSupabaseConfigured}
+                style={({ pressed }) => [
+                  styles.actionButtonOutline,
+                  pressed && styles.actionButtonPressed,
+                  (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+                ]}
+              >
+                <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
+              </Pressable>
+            )}
+
+            <Pressable
+              onPress={handleSyncNow}
+              disabled={syncBusy || authBusy || !isSupabaseConfigured}
+              style={({ pressed }) => [
+                styles.actionButton,
+                pressed && styles.actionButtonPressed,
+                (syncBusy || authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+              ]}
+            >
+              <Text style={styles.actionButtonText}>{t('settings.sync.syncNow')}</Text>
+            </Pressable>
           </View>
         </Animated.View>
 

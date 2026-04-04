@@ -4,8 +4,10 @@
 
 ## 1. 画面・ルーティング（Expo Router）
 
+- `src/app/index.tsx`: 初回オンボーディング分岐の入口
 - `src/app/_layout.tsx`: アプリ全体レイアウト
 - `src/app/+not-found.tsx`: 404
+- `src/app/onboarding.tsx`: 初回オンボーディング
 - `src/app/(tabs)/_layout.tsx`: タブ全体レイアウト
 - `src/app/(tabs)/index.tsx`: ホーム
 - `src/app/(tabs)/morning.tsx`: 朝の記録
@@ -82,9 +84,11 @@
 - `src/lib/engagement.ts`: 継続度合いの算出
 - `src/lib/heatmap365.ts`: 年間ヒートマップ
 - `src/lib/history.ts`: 履歴ロジック
+- `src/lib/learnLog.ts`: 学び完了ログ
 - `src/lib/morningLog.ts`: 朝ログ
 - `src/lib/nightLog.ts`: 夜ログ
 - `src/lib/notifications.ts`: 通知
+- `src/lib/onboarding.ts`: オンボーディング完了状態
 - `src/lib/programDay.ts`: 学習日程ロジック
 - `src/lib/reset.ts`: リセット処理
 - `src/lib/settings.ts`: 設定ロジック

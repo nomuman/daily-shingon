@@ -52,7 +52,7 @@ export default function AppButton({
   const { theme } = useTheme();
   const styles = useThemedStyles((theme) => {
     const sizeTokens = {
-      sm: { minHeight: 34, paddingHorizontal: 12, fontSize: 13 },
+      sm: { minHeight: 44, paddingHorizontal: 12, fontSize: 13 },
       md: { minHeight: 44, paddingHorizontal: 16, fontSize: 15 },
       lg: { minHeight: 50, paddingHorizontal: 18, fontSize: 16 },
     };

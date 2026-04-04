@@ -18,19 +18,56 @@ import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
 import Screen from '../../components/Screen';
 import SurfaceCard from '../../components/SurfaceCard';
+import { getDayCard } from '../../content/curriculum30';
+import { useContentLang } from '../../content/useContentLang';
 import { saveEntry, softDeleteEntry } from '../../features/entries/saveEntry';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import ErrorState from '../../components/ErrorState';
+import { clearLearnLog } from '../../lib/learnLog';
 import {
   clearMorningLog,
   getMorningLog,
   isMorningComplete,
   setMorningLog,
 } from '../../lib/morningLog';
+import { getProgramDayInfo } from '../../lib/programDay';
+import {
+  clearTodayActionSelection,
+  getTodayActionSelection,
+  setTodayActionSelection,
+  type TodayActionSelection,
+} from '../../lib/todayLog';
+import type { CurriculumDay, SanmitsuKey } from '../../types/curriculum';
 import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
 
 type CheckKey = 'body' | 'speech' | 'mind';
+type SelectedAction = {
+  key: SanmitsuKey;
+  text: string;
+};
+
+const resolveFallbackAction = (card: CurriculumDay): SelectedAction => {
+  const recommended = card.actionOptions.find((option) => option.key === card.recommendedActionKey);
+  const fallback = card.actionOptions[0];
+  return {
+    key: recommended?.key ?? fallback?.key ?? card.recommendedActionKey,
+    text: recommended?.text ?? fallback?.text ?? '',
+  };
+};
+
+const resolveSelectedAction = (
+  card: CurriculumDay,
+  saved: TodayActionSelection | null,
+): SelectedAction => {
+  if (saved) {
+    const matched = card.actionOptions.find((option) => option.key === saved.selectedKey);
+    if (matched) {
+      return { key: matched.key, text: matched.text };
+    }
+  }
+  return resolveFallbackAction(card);
+};
 
 export default function MorningScreen() {
   const router = useRouter();
@@ -38,6 +75,7 @@ export default function MorningScreen() {
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
   const responsive = useResponsiveLayout();
+  const contentLang = useContentLang();
   const { date } = useLocalSearchParams<{ date?: string }>();
 
   // Resolve the target date (explicit param or today). / 対象日を解決（指定日または今日）。
@@ -48,6 +86,8 @@ export default function MorningScreen() {
   const [bodyDone, setBodyDone] = useState(false);
   const [speechDone, setSpeechDone] = useState(false);
   const [mindDone, setMindDone] = useState(false);
+  const [card, setCard] = useState<CurriculumDay | null>(null);
+  const [selectedAction, setSelectedAction] = useState<SelectedAction | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const triggerHaptic = () => {
@@ -72,19 +112,26 @@ export default function MorningScreen() {
     setLoading(true);
     setError(null);
     try {
+      const info = await getProgramDayInfo(getTargetDate());
+      const dayCard = getDayCard(contentLang, info.dayNumber);
+      setCard(dayCard);
+
       const saved = await getMorningLog(getTargetDate());
       if (saved) {
         setBodyDone(saved.bodyDone);
         setSpeechDone(saved.speechDone);
         setMindDone(saved.mindDone);
       }
+
+      const savedAction = await getTodayActionSelection(getTargetDate());
+      setSelectedAction(resolveSelectedAction(dayCard, savedAction));
     } catch (err) {
       console.error('Failed to load morning log.', err);
       setError(t('errors.morningLoadFail'));
     } finally {
       setLoading(false);
     }
-  }, [getTargetDate, t]);
+  }, [contentLang, getTargetDate, t]);
 
   // Initial load. / 初回ロード。
   useEffect(() => {
@@ -167,6 +214,10 @@ export default function MorningScreen() {
     return <ErrorState message={error} onRetry={load} showBack />;
   }
 
+  if (!card || !selectedAction) {
+    return <ErrorState message={t('errors.dataLoadFail')} onRetry={load} showBack />;
+  }
+
   return (
     <Screen edges={['top']}>
       <ScrollView
@@ -217,6 +268,42 @@ export default function MorningScreen() {
           />
         </SurfaceCard>
 
+        <SurfaceCard style={styles.card}>
+          <View style={styles.ritualBar} />
+          <Text style={styles.sectionTitle}>{t('morning.actionTitle')}</Text>
+          <Text style={styles.bodyText}>{t('morning.actionBody')}</Text>
+
+          {card.actionOptions.map((option, index) => {
+            const isSelected =
+              selectedAction.key === option.key && selectedAction.text === option.text;
+            const isRecommended = option.key === card.recommendedActionKey;
+
+            return (
+              <Pressable
+                key={`${option.key}-${index}`}
+                onPress={() => setSelectedAction({ key: option.key, text: option.text })}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isSelected }}
+                style={({ pressed }) => [
+                  styles.option,
+                  isSelected && styles.optionSelected,
+                  pressed && styles.optionPressed,
+                ]}
+              >
+                <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
+                  {t('learn.actionOption', { key: option.key, text: option.text })}
+                </Text>
+                <View style={styles.optionMeta}>
+                  {isRecommended && <Text style={styles.optionTag}>{t('common.recommended')}</Text>}
+                  {isSelected && <Text style={styles.optionTag}>{t('common.selected')}</Text>}
+                </View>
+              </Pressable>
+            );
+          })}
+
+          <Text style={styles.footnote}>{t('morning.actionFootnote')}</Text>
+        </SurfaceCard>
+
         <AppButton
           label={t('morning.saveButton')}
           variant="primary"
@@ -226,12 +313,21 @@ export default function MorningScreen() {
               const entryDate = toISODateLocal(getTargetDate());
               // Persist morning log and return to previous screen. / 朝ログを保存して前画面へ戻る。
               await setMorningLog({ bodyDone, speechDone, mindDone, date: getTargetDate() });
+              await setTodayActionSelection(
+                {
+                  selectedKey: selectedAction.key,
+                  selectedText: selectedAction.text,
+                },
+                getTargetDate(),
+              );
+              await clearLearnLog(getTargetDate());
               void saveEntry({
                 date: entryDate,
                 slot: 'morning',
                 bodyDone,
                 speechDone,
                 mindDone,
+                actionPick: selectedAction.key,
               }).catch((err) => {
                 console.warn('Failed to sync morning entry.', err);
               });
@@ -251,9 +347,12 @@ export default function MorningScreen() {
               const entryDate = toISODateLocal(getTargetDate());
               // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearMorningLog(getTargetDate());
+              await clearTodayActionSelection(getTargetDate());
+              await clearLearnLog(getTargetDate());
               setBodyDone(false);
               setSpeechDone(false);
               setMindDone(false);
+              setSelectedAction(resolveFallbackAction(card));
               void softDeleteEntry(entryDate, 'morning').catch((err) => {
                 console.warn('Failed to sync morning deletion.', err);
               });
@@ -375,6 +474,46 @@ const createStyles = (theme: Theme) =>
       marginTop: 6,
       color: theme.colors.inkMuted,
       lineHeight: 22,
+      fontFamily: theme.font.body,
+    },
+    option: {
+      minHeight: 44,
+      paddingVertical: 12,
+      paddingHorizontal: 12,
+      borderRadius: theme.radius.md,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.surface,
+    },
+    optionSelected: {
+      borderColor: theme.colors.ink,
+      borderWidth: 2,
+    },
+    optionPressed: {
+      opacity: 0.85,
+      backgroundColor: theme.colors.surfaceMuted,
+    },
+    optionText: {
+      lineHeight: 22,
+      color: theme.colors.ink,
+      fontFamily: theme.font.bodyMedium,
+    },
+    optionTextSelected: {
+      fontFamily: theme.font.bodyBold,
+    },
+    optionMeta: {
+      flexDirection: 'row',
+      gap: 8,
+      marginTop: 6,
+    },
+    optionTag: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+    },
+    footnote: {
+      fontSize: 12,
+      color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
     },
   });

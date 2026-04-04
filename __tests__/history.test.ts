@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getLastNDaysStatus } from '../src/lib/history';
+import { setLearnLog } from '../src/lib/learnLog';
 import { setMorningLog } from '../src/lib/morningLog';
 import { setNightLog } from '../src/lib/nightLog';
 
@@ -18,17 +19,18 @@ describe('history', () => {
     const prevDate = new Date(2025, 0, 2, 12, 0, 0, 0);
 
     await setMorningLog({ bodyDone: true, speechDone: true, mindDone: true, date: baseDate });
+    await setLearnLog(baseDate);
     await setNightLog({
-      sangeDone: true,
-      hotsuganDone: true,
-      ekouDone: true,
+      sange: 'body',
+      hotsugan: 'mind',
+      ekou: 'all',
       note: 'note',
       date: baseDate,
     });
     await setNightLog({
-      sangeDone: true,
-      hotsuganDone: false,
-      ekouDone: true,
+      sange: 'speech',
+      hotsugan: null,
+      ekou: 'family',
       note: '   ',
       date: prevDate,
     });
@@ -37,11 +39,13 @@ describe('history', () => {
     expect(statuses).toHaveLength(2);
     expect(statuses[0].dateISO).toBe('2025-01-03');
     expect(statuses[0].morningDone).toBe(true);
+    expect(statuses[0].learnDone).toBe(true);
     expect(statuses[0].nightDone).toBe(true);
     expect(statuses[0].nightHasNote).toBe(true);
 
     expect(statuses[1].dateISO).toBe('2025-01-02');
     expect(statuses[1].morningDone).toBe(false);
+    expect(statuses[1].learnDone).toBe(false);
     expect(statuses[1].nightDone).toBe(false);
     expect(statuses[1].nightHasNote).toBe(false);
   });

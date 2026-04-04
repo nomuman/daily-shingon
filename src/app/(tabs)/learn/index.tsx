@@ -10,6 +10,7 @@
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
 
 import { useTranslation } from 'react-i18next';
 import AppButton from '../../../components/AppButton';
@@ -19,6 +20,7 @@ import Screen from '../../../components/Screen';
 import SurfaceCard from '../../../components/SurfaceCard';
 import { getCurriculum30, getDayCard } from '../../../content/curriculum30';
 import { useContentLang } from '../../../content/useContentLang';
+import { getLearnLog, isLearnComplete, setLearnLog } from '../../../lib/learnLog';
 import { getProgramDayInfo } from '../../../lib/programDay';
 import type { TodayActionSelection } from '../../../lib/todayLog';
 import { getTodayActionSelection, setTodayActionSelection } from '../../../lib/todayLog';
@@ -68,6 +70,7 @@ export default function LearnScreen() {
   const [dayInfo, setDayInfo] = useState<{ dayNumber: number; isComplete: boolean } | null>(null);
   const [card, setCard] = useState<CurriculumDay | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [learnDone, setLearnDone] = useState(false);
 
   const [selected, setSelected] = useState<SelectedAction | null>(null);
 
@@ -96,6 +99,9 @@ export default function LearnScreen() {
 
       const saved = await getTodayActionSelection();
       setSelected(resolveSelectedAction(c, saved));
+
+      const learnLog = await getLearnLog();
+      setLearnDone(isLearnComplete(learnLog));
     } catch (err) {
       console.error('Failed to load learn screen data.', err);
       setError(t('errors.learnLoadFail'));
@@ -115,8 +121,16 @@ export default function LearnScreen() {
     const curriculum = getCurriculum30(contentLang);
     return card.sources
       .map((id) => ({ id, url: curriculum.sourceIndex[id] }))
-      .filter((x) => !!x.url);
+      .filter((x): x is { id: string; url: string } => !!x.url);
   }, [card, contentLang]);
+
+  const openSource = useCallback(async (url: string) => {
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (err) {
+      console.error('Failed to open source link.', err);
+    }
+  }, []);
 
   // Loading/error/empty gates before rendering the main screen. / ロード・エラー・空状態の分岐。
   if (loading) {
@@ -170,9 +184,10 @@ export default function LearnScreen() {
           )}
         </SurfaceCard>
 
-        <SurfaceCard style={styles.card}>
+        <SurfaceCard style={styles.card} elevated={false} variant="muted">
           <View style={styles.ritualBar} />
-          <Text style={styles.sectionTitle}>{t('learn.actionTitle')}</Text>
+          <Text style={styles.sectionTitle}>{t('learn.selectedActionTitle')}</Text>
+          <Text style={styles.mutedText}>{t('learn.selectedActionBody')}</Text>
 
           {card.actionOptions.map((opt, idx) => {
             const isSelected = selected.key === opt.key && selected.text === opt.text;
@@ -214,9 +229,16 @@ export default function LearnScreen() {
           <SurfaceCard style={styles.card} elevated={false} variant="muted">
             <Text style={styles.sectionTitle}>{t('learn.sources')}</Text>
             {sourceLinks.map((s) => (
-              <Text key={s.id} style={styles.sourceItem}>
-                ・{s.id}
-              </Text>
+              <Pressable
+                key={s.id}
+                onPress={() => {
+                  void openSource(s.url);
+                }}
+                style={({ pressed }) => [styles.sourceLink, pressed && styles.sourceLinkPressed]}
+              >
+                <Text style={styles.sourceItem}>・{s.id}</Text>
+                <Text style={styles.sourceUrl}>{s.url}</Text>
+              </Pressable>
             ))}
           </SurfaceCard>
         )}
@@ -243,7 +265,7 @@ export default function LearnScreen() {
         </SurfaceCard>
 
         <AppButton
-          label={t('learn.confirmAction')}
+          label={learnDone ? t('common.review') : t('learn.completeButton')}
           variant="primary"
           size="lg"
           loading={saving}
@@ -257,6 +279,7 @@ export default function LearnScreen() {
                 selectedKey: selected.key,
                 selectedText: selected.text,
               });
+              await setLearnLog();
               goBackOrHome();
             } catch (err) {
               console.error('Failed to save today action selection.', err);
@@ -379,9 +402,23 @@ const createStyles = (theme: Theme) =>
       fontFamily: theme.font.body,
     },
     sourceItem: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.body,
+    },
+    sourceUrl: {
       opacity: 0.8,
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
+      fontSize: 12,
+      lineHeight: 18,
+    },
+    sourceLink: {
+      gap: 2,
+      paddingVertical: 4,
+      borderRadius: theme.radius.sm,
+    },
+    sourceLinkPressed: {
+      opacity: 0.8,
     },
     ritualBar: {
       height: 3,

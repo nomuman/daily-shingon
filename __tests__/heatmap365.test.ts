@@ -20,9 +20,9 @@ describe('heatmap365', () => {
 
     await setMorningLog({ bodyDone: true, speechDone: true, mindDone: true, date: baseDate });
     await setNightLog({
-      sangeDone: true,
-      hotsuganDone: true,
-      ekouDone: true,
+      sange: 'body',
+      hotsugan: 'speech',
+      ekou: 'all',
       note: '',
       date: prevDate,
     });
@@ -56,9 +56,9 @@ describe('heatmap365', () => {
       date: new Date(2025, 0, 3, 12, 0, 0, 0),
     });
     await setNightLog({
-      sangeDone: true,
-      hotsuganDone: true,
-      ekouDone: true,
+      sange: 'body',
+      hotsugan: 'speech',
+      ekou: 'all',
       note: '',
       date: new Date(2025, 0, 3, 12, 0, 0, 0),
     });
@@ -69,9 +69,9 @@ describe('heatmap365', () => {
       date: new Date(2025, 0, 4, 12, 0, 0, 0),
     });
     await setNightLog({
-      sangeDone: true,
-      hotsuganDone: true,
-      ekouDone: true,
+      sange: 'mind',
+      hotsugan: 'speech',
+      ekou: 'team',
       note: 'note',
       date: new Date(2025, 0, 4, 12, 0, 0, 0),
     });

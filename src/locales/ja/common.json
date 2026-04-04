@@ -7,7 +7,7 @@
     "Dependencies": "i18next initialization in lib/i18n. / 依存: lib/i18nの初期化。",
     "SideEffects": "None. / 副作用: なし。",
     "EdgeCases": "Missing keys fall back to the key string. / 例外: 欠けたキーはキー文字列にフォールバック。",
-    "TopLevelKeys": "app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
+    "TopLevelKeys": "app, nav, common, errors, notFound, home, onboarding, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, onboarding, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
   },
   "app": {
     "name": "まいにち真言"
@@ -34,6 +34,8 @@
     "reset": "リセット",
     "review": "振り返る",
     "do": "始める",
+    "next": "次へ",
+    "start": "はじめる",
     "cancel": "キャンセル",
     "loading": "読み込み中…",
     "loadingSimple": "読み込み中…",
@@ -89,7 +91,7 @@
     "selectionDone": "選択済み",
     "selectionNone": "未選択",
     "selectionDetail": "・[{{key}}] {{text}}",
-    "selectionEmpty": "まだ選んでいません。学びで「今日の一つを定める」を押してください。",
+    "selectionEmpty": "まだ決まっていません。朝の整えで「今日の一つ」を選んでください。",
     "learnCta": "学びに向き合う",
     "selectionClear": "選択を解除",
     "flowNightTitle": "夜のしめ（懺悔→発願→回向）",
@@ -100,11 +102,53 @@
     "historyMemo": "メモ",
     "historyFootnote": "※これはスコアではなく「ふり返りの足場」。抜けても責めない。"
   },
+  "onboarding": {
+    "kicker": "はじめに",
+    "intro": "最初に、続け方の前提だけ短く確認します。",
+    "progress": "{{current}} / {{total}}",
+    "saveFail": "開始の準備に失敗しました。もう一度お試しください。",
+    "steps": {
+      "concept": {
+        "kicker": "入口",
+        "title": "このアプリは、学びと実践の補助輪です",
+        "body": "宗教の代替ではなく、日常で短く整えるための入口だけを支えます。",
+        "note": "正しさを競わず、まず戻ってこられる型をつくります。"
+      },
+      "sanmitsu": {
+        "kicker": "三密",
+        "title": "身・口・意を、短く一緒に整えます",
+        "body": "朝の整えも、今日の学びも、夜のしめも、この3つの軸で迷わず回せるようにします。",
+        "note": "難しい手順より、毎日戻れる短い流れを優先します。"
+      },
+      "return": {
+        "kicker": "復帰",
+        "title": "途切れても、それで大丈夫です",
+        "body": "続かなかった日があっても、戻れた日が実践の続きになります。連続より復帰を大切にします。",
+        "note": "今日は短くでも十分です。"
+      }
+    },
+    "sanmitsu": {
+      "body": {
+        "title": "身",
+        "body": "姿勢やふるまいを整える"
+      },
+      "speech": {
+        "title": "口",
+        "body": "言葉を丁寧にする"
+      },
+      "mind": {
+        "title": "意",
+        "body": "心を置く場所を整える"
+      }
+    }
+  },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
     "completeNotice": "30日を完走しました。ここからは薄く長く。必要なら開始日をリセットしてもう一周できます。",
     "example": "例：{{text}}",
     "actionTitle": "今日の行い（ひとつ選ぶ）",
+    "selectedActionTitle": "今日の一つ",
+    "selectedActionBody": "朝で決めた一つです。必要ならここで選び直せます。",
     "actionOption": "・[{{key}}] {{text}}",
     "actionFootnote": "※おすすめは目安。今日はあなたの感覚で選んで大丈夫。",
     "nightQuestion": "夜の問い",
@@ -113,6 +157,7 @@
     "moreBody": "カードや用語集を一覧で読む。",
     "moreCards": "学びカード",
     "moreGlossary": "用語集",
+    "completeButton": "今日の学びを閉じる",
     "confirmAction": "今日の一つを定める",
     "emptyCard": "今日のカードを読み込めませんでした。"
   },
@@ -160,6 +205,9 @@
     "policyTitle": "今日の方針",
     "policyBody": "まず「身・口・意」を整える。完璧でなくていい。できた分だけで大丈夫。",
     "checkTitle": "チェック（3つ）",
+    "actionTitle": "今日の一つ",
+    "actionBody": "朝のうちに、今日のふるまいを一つだけ決めます。",
+    "actionFootnote": "※あとで学び画面から選び直しても大丈夫です。",
     "check": {
       "body": {
         "title": "身（からだ）",
@@ -182,6 +230,21 @@
     "todayLearn": "今日の学び",
     "nightQuestion": "夜の問い",
     "stepsTitle": "3ステップ（短くてOK）",
+    "legacyNote": "以前の記録は完了状態だけ保存されています。必要なら選び直して保存してください。",
+    "fields": {
+      "sangePrompt": "今日いちばん乱れたのはどこでしたか。",
+      "hotsuganPrompt": "明日、ひとつ整えるならどこにしますか。",
+      "ekouPrompt": "今日の善いことを、誰に回しますか。"
+    },
+    "choices": {
+      "body": "身",
+      "speech": "口",
+      "mind": "意",
+      "self": "自分",
+      "family": "家族",
+      "team": "チーム",
+      "all": "みんな"
+    },
     "steps": {
       "sange": {
         "title": "懺悔（ざんげ）",
@@ -327,6 +390,11 @@
   "history": {
     "title": "365日",
     "headerBody": "実践が終わった日（朝/夜/両方/メモ）を、静かに積み上げる。",
+    "weekTitle": "直近7日",
+    "weekBody": "朝・学び・夜の流れを、短く見直す。",
+    "weekMorning": "朝",
+    "weekLearn": "学び",
+    "weekNight": "夜",
     "count1": "朝または夜",
     "count2": "朝と夜",
     "count3": "朝・夜・メモ",

@@ -39,7 +39,7 @@ export async function setTodayActionSelection(
   const k = keyFor(date);
   const payload: TodayActionSelection = {
     ...selection,
-    savedAtISO: date.toISOString(),
+    savedAtISO: new Date().toISOString(),
   };
   // AsyncStorage stores strings, so we JSON-serialize the payload. / AsyncStorageは文字列保存のためJSON化。
   await setJSON(k, payload);

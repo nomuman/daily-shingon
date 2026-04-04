@@ -1,11 +1,11 @@
 /**
- * Purpose: Night reflection screen (sange / hotsugan / ekou + note). / 目的: 夜のしめ画面（懺悔/発願/回向＋メモ）。
- * Responsibilities: load day card context, track steps, save/reset night log. / 役割: 当日カード文脈の読込、手順管理、夜ログ保存/リセット。
- * Inputs: optional date param, program day info, night log, translations. / 入力: 任意の日付パラメータ、プログラム日情報、夜ログ、翻訳文言。
- * Outputs: checklist + note UI and persistence actions. / 出力: チェックリスト/メモUIと保存アクション。
+ * Purpose: Night reflection screen (repent / vow / dedicate + note). / 目的: 夜のしめ画面（懺悔/発願/回向＋メモ）。
+ * Responsibilities: load day context, capture semantic night choices, and save/reset logs. / 役割: 当日文脈の読込、意味付きの夜選択取得、ログ保存/リセット。
+ * Inputs: optional date param, program day info, saved night log, translations. / 入力: 任意の日付パラメータ、当日日数情報、保存済み夜ログ、翻訳文言。
+ * Outputs: choice-based reflection UI and persistence actions. / 出力: 選択式の振り返りUIと保存アクション。
  * Dependencies: night log storage, curriculum content, Expo Router, i18n. / 依存: 夜ログストレージ、カリキュラム内容、Expo Router、i18n。
  * Side effects: reads/writes storage; navigation back to home. / 副作用: ストレージ読書き、ホームへの遷移。
- * Edge cases: missing date param, storage failures, missing card. / 例外: 日付未指定、ストレージ失敗、カード欠落。
+ * Edge cases: legacy boolean-only logs keep completion state but lack detailed selections. / 例外: 旧booleanログは完了状態のみ保持し、詳細選択は欠ける。
  */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -34,50 +34,39 @@ import { saveEntry, softDeleteEntry } from '../../features/entries/saveEntry';
 import { parseISODateLocal, toISODateLocal } from '../../lib/date';
 import { clearNightLog, getNightLog, isNightComplete, setNightLog } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
+import type { EntryEko, EntryPick } from '../../storage/entryStore.types';
 import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
 
-type CheckKey = 'sange' | 'hotsugan' | 'ekou';
-
+type SanmitsuChoice = Exclude<EntryPick, null>;
+type EkoChoice = Exclude<EntryEko, null>;
 type NightStyles = ReturnType<typeof createStyles>;
 
-// Reusable checklist row with icon + description. / アイコン＋説明付きのチェック行。
-const CheckItem = ({
-  title,
-  desc,
-  checked,
+const sanmitsuChoices: SanmitsuChoice[] = ['body', 'speech', 'mind'];
+const ekoChoices: EkoChoice[] = ['self', 'family', 'team', 'all'];
+
+const ChoiceChip = ({
+  label,
+  selected,
   onPress,
   styles,
-  iconCheckedColor,
-  iconUncheckedColor,
 }: {
-  title: string;
-  desc: string;
-  checked: boolean;
+  label: string;
+  selected: boolean;
   onPress: () => void;
   styles: NightStyles;
-  iconCheckedColor: string;
-  iconUncheckedColor: string;
 }) => (
   <Pressable
     onPress={onPress}
     accessibilityRole="button"
-    accessibilityState={{ selected: checked }}
+    accessibilityState={{ selected }}
     style={({ pressed }) => [
-      styles.checkItem,
-      checked && styles.checkItemSelected,
-      pressed && styles.checkItemPressed,
+      styles.choiceChip,
+      selected && styles.choiceChipSelected,
+      pressed && styles.choiceChipPressed,
     ]}
   >
-    <View style={styles.checkTitleRow}>
-      <AppIcon
-        name={checked ? 'check' : 'uncheck'}
-        size={18}
-        color={checked ? iconCheckedColor : iconUncheckedColor}
-      />
-      <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
-    </View>
-    <Text style={styles.checkDesc}>{desc}</Text>
+    <Text style={[styles.choiceText, selected && styles.choiceTextSelected]}>{label}</Text>
   </Pressable>
 );
 
@@ -90,18 +79,16 @@ export default function NightScreen() {
   const contentLang = useContentLang();
   const { date } = useLocalSearchParams<{ date?: string }>();
 
-  // Resolve the target date (explicit param or today). / 対象日を解決（指定日または今日）。
   const dateParam = useMemo(() => (date ? parseISODateLocal(date) : null), [date]);
   const getTargetDate = useCallback(() => dateParam ?? new Date(), [dateParam]);
 
   const [loading, setLoading] = useState(true);
-
-  const [dayTitle, setDayTitle] = useState<string>('');
-  const [nightQuestion, setNightQuestion] = useState<string>('');
-
-  const [sangeDone, setSangeDone] = useState(false);
-  const [hotsuganDone, setHotsuganDone] = useState(false);
-  const [ekouDone, setEkouDone] = useState(false);
+  const [dayTitle, setDayTitle] = useState('');
+  const [nightQuestion, setNightQuestion] = useState('');
+  const [sange, setSange] = useState<EntryPick>(null);
+  const [hotsugan, setHotsugan] = useState<EntryPick>(null);
+  const [ekou, setEkou] = useState<EntryEko>(null);
+  const [legacySelectionMissing, setLegacySelectionMissing] = useState(false);
   const [note, setNote] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -122,7 +109,6 @@ export default function NightScreen() {
     router.back();
   };
 
-  // Load program day context + saved night log. / 当日カード文脈と保存済み夜ログを読込。
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -134,10 +120,19 @@ export default function NightScreen() {
 
       const saved = await getNightLog(getTargetDate());
       if (saved) {
-        setSangeDone(saved.sangeDone);
-        setHotsuganDone(saved.hotsuganDone);
-        setEkouDone(saved.ekouDone);
+        setSange(saved.sange ?? null);
+        setHotsugan(saved.hotsugan ?? null);
+        setEkou(saved.ekou ?? null);
+        setLegacySelectionMissing(
+          isNightComplete(saved) && (!saved.sange || !saved.hotsugan || !saved.ekou),
+        );
         setNote(saved.note ?? '');
+      } else {
+        setSange(null);
+        setHotsugan(null);
+        setEkou(null);
+        setLegacySelectionMissing(false);
+        setNote('');
       }
     } catch (err) {
       console.error('Failed to load night log.', err);
@@ -147,31 +142,24 @@ export default function NightScreen() {
     }
   }, [contentLang, getTargetDate, t]);
 
-  // Initial load. / 初回ロード。
   useEffect(() => {
     void load();
   }, [load]);
 
-  // Derived completion status for status row. / ステータス表示用の完了状態。
   const complete = useMemo(() => {
     return isNightComplete({
       dateISO: dateParam ? toISODateLocal(dateParam) : 'today',
-      sangeDone,
-      hotsuganDone,
-      ekouDone,
+      sangeDone: !!sange,
+      hotsuganDone: !!hotsugan,
+      ekouDone: !!ekou,
+      sange,
+      hotsugan,
+      ekou,
       note,
       savedAtISO: '',
     });
-  }, [dateParam, ekouDone, hotsuganDone, note, sangeDone]);
+  }, [dateParam, ekou, hotsugan, note, sange]);
 
-  // Toggle a single step. / 単一ステップのトグル。
-  const toggle = (k: CheckKey) => {
-    if (k === 'sange') setSangeDone((v) => !v);
-    if (k === 'hotsugan') setHotsuganDone((v) => !v);
-    if (k === 'ekou') setEkouDone((v) => !v);
-  };
-
-  // Loading/error gates before main UI. / ロード・エラー時の分岐。
   if (loading) {
     return (
       <Screen edges={['top']}>
@@ -217,48 +205,80 @@ export default function NightScreen() {
               color={complete ? theme.colors.accentDark : theme.colors.inkMuted}
             />
           </View>
+
+          {legacySelectionMissing && (
+            <SurfaceCard style={styles.legacyCard} elevated={false} variant="outlined" padding="sm">
+              <Text style={styles.legacyText}>{t('night.legacyNote')}</Text>
+            </SurfaceCard>
+          )}
         </SurfaceCard>
 
         <SurfaceCard style={styles.card}>
           <View style={styles.ritualBar} />
           <Text style={styles.sectionTitle}>{t('night.stepsTitle')}</Text>
 
-          <CheckItem
-            title={t('night.steps.sange.title')}
-            desc={t('night.steps.sange.desc')}
-            checked={sangeDone}
-            onPress={() => {
-              triggerHaptic();
-              toggle('sange');
-            }}
-            styles={styles}
-            iconCheckedColor={theme.colors.accentDark}
-            iconUncheckedColor={theme.colors.inkMuted}
-          />
-          <CheckItem
-            title={t('night.steps.hotsugan.title')}
-            desc={t('night.steps.hotsugan.desc')}
-            checked={hotsuganDone}
-            onPress={() => {
-              triggerHaptic();
-              toggle('hotsugan');
-            }}
-            styles={styles}
-            iconCheckedColor={theme.colors.accentDark}
-            iconUncheckedColor={theme.colors.inkMuted}
-          />
-          <CheckItem
-            title={t('night.steps.ekou.title')}
-            desc={t('night.steps.ekou.desc')}
-            checked={ekouDone}
-            onPress={() => {
-              triggerHaptic();
-              toggle('ekou');
-            }}
-            styles={styles}
-            iconCheckedColor={theme.colors.accentDark}
-            iconUncheckedColor={theme.colors.inkMuted}
-          />
+          <View style={styles.stepBlock}>
+            <Text style={styles.fieldTitle}>{t('night.steps.sange.title')}</Text>
+            <Text style={styles.fieldPrompt}>{t('night.fields.sangePrompt')}</Text>
+            <View style={styles.choiceWrap}>
+              {sanmitsuChoices.map((choice) => (
+                <ChoiceChip
+                  key={choice}
+                  label={t(`night.choices.${choice}`)}
+                  selected={sange === choice}
+                  onPress={() => {
+                    triggerHaptic();
+                    setSange(choice);
+                    setLegacySelectionMissing(false);
+                  }}
+                  styles={styles}
+                />
+              ))}
+            </View>
+            <Text style={styles.mutedText}>{t('night.steps.sange.desc')}</Text>
+          </View>
+
+          <View style={styles.stepBlock}>
+            <Text style={styles.fieldTitle}>{t('night.steps.hotsugan.title')}</Text>
+            <Text style={styles.fieldPrompt}>{t('night.fields.hotsuganPrompt')}</Text>
+            <View style={styles.choiceWrap}>
+              {sanmitsuChoices.map((choice) => (
+                <ChoiceChip
+                  key={choice}
+                  label={t(`night.choices.${choice}`)}
+                  selected={hotsugan === choice}
+                  onPress={() => {
+                    triggerHaptic();
+                    setHotsugan(choice);
+                    setLegacySelectionMissing(false);
+                  }}
+                  styles={styles}
+                />
+              ))}
+            </View>
+            <Text style={styles.mutedText}>{t('night.steps.hotsugan.desc')}</Text>
+          </View>
+
+          <View style={styles.stepBlock}>
+            <Text style={styles.fieldTitle}>{t('night.steps.ekou.title')}</Text>
+            <Text style={styles.fieldPrompt}>{t('night.fields.ekouPrompt')}</Text>
+            <View style={styles.choiceWrap}>
+              {ekoChoices.map((choice) => (
+                <ChoiceChip
+                  key={choice}
+                  label={t(`night.choices.${choice}`)}
+                  selected={ekou === choice}
+                  onPress={() => {
+                    triggerHaptic();
+                    setEkou(choice);
+                    setLegacySelectionMissing(false);
+                  }}
+                  styles={styles}
+                />
+              ))}
+            </View>
+            <Text style={styles.mutedText}>{t('night.steps.ekou.desc')}</Text>
+          </View>
         </SurfaceCard>
 
         <SurfaceCard style={styles.card} elevated={false} variant="muted">
@@ -282,14 +302,22 @@ export default function NightScreen() {
             try {
               const entryDate = toISODateLocal(getTargetDate());
               const noteCiphertext = note.trim() ? note.trim() : null;
-              // Persist night log and return to previous screen. / 夜ログを保存して前画面へ戻る。
-              await setNightLog({ sangeDone, hotsuganDone, ekouDone, note, date: getTargetDate() });
+              await setNightLog({
+                sange,
+                hotsugan,
+                ekou,
+                note,
+                date: getTargetDate(),
+              });
               void saveEntry({
                 date: entryDate,
                 slot: 'night',
-                bodyDone: sangeDone,
-                speechDone: hotsuganDone,
-                mindDone: ekouDone,
+                bodyDone: !!sange,
+                speechDone: !!hotsugan,
+                mindDone: !!ekou,
+                sange,
+                hatsugan: hotsugan,
+                eko: ekou,
                 noteCiphertext,
                 noteVersion: 1,
               }).catch((err) => {
@@ -309,11 +337,11 @@ export default function NightScreen() {
           onPress={async () => {
             try {
               const entryDate = toISODateLocal(getTargetDate());
-              // Clear saved log and reset local toggles. / 保存ログを削除し、ローカル状態をリセット。
               await clearNightLog(getTargetDate());
-              setSangeDone(false);
-              setHotsuganDone(false);
-              setEkouDone(false);
+              setSange(null);
+              setHotsugan(null);
+              setEkou(null);
+              setLegacySelectionMissing(false);
               setNote('');
               void softDeleteEntry(entryDate, 'night').catch((err) => {
                 console.warn('Failed to sync night deletion.', err);
@@ -368,6 +396,14 @@ const createStyles = (theme: Theme) =>
       borderRadius: theme.radius.lg,
       gap: theme.spacing.sm,
     },
+    legacyCard: {
+      marginTop: theme.spacing.xs,
+    },
+    legacyText: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      lineHeight: 20,
+    },
     cardTitle: {
       fontSize: 16,
       color: theme.colors.ink,
@@ -379,6 +415,16 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.ink,
       fontFamily: theme.font.bodyBold,
     },
+    fieldTitle: {
+      fontSize: 15,
+      color: theme.colors.ink,
+      fontFamily: theme.font.bodyBold,
+    },
+    fieldPrompt: {
+      color: theme.colors.ink,
+      lineHeight: 22,
+      fontFamily: theme.font.body,
+    },
     bodyText: {
       lineHeight: 22,
       color: theme.colors.ink,
@@ -387,6 +433,7 @@ const createStyles = (theme: Theme) =>
     mutedText: {
       color: theme.colors.inkMuted,
       fontFamily: theme.font.body,
+      lineHeight: 20,
     },
     statusText: {
       color: theme.colors.inkMuted,
@@ -398,42 +445,40 @@ const createStyles = (theme: Theme) =>
       alignItems: 'center',
       gap: 6,
     },
-    checkItem: {
+    stepBlock: {
+      gap: theme.spacing.xs,
+      paddingVertical: theme.spacing.xs,
+    },
+    choiceWrap: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: theme.spacing.xs,
+    },
+    choiceChip: {
       minHeight: 44,
-      paddingVertical: 12,
       paddingHorizontal: 12,
-      borderRadius: theme.radius.md,
+      paddingVertical: 10,
+      borderRadius: 999,
       borderWidth: 1,
       borderColor: theme.colors.border,
       backgroundColor: theme.colors.surface,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    checkItemSelected: {
+    choiceChipSelected: {
       borderColor: theme.colors.ink,
       borderWidth: 2,
-    },
-    checkItemPressed: {
-      opacity: 0.85,
-      transform: [{ scale: 0.98 }],
       backgroundColor: theme.colors.surfaceMuted,
     },
-    checkTitle: {
-      fontSize: 16,
+    choiceChipPressed: {
+      opacity: 0.85,
+    },
+    choiceText: {
       color: theme.colors.ink,
       fontFamily: theme.font.bodyMedium,
     },
-    checkTitleRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
-    },
-    checkTitleSelected: {
+    choiceTextSelected: {
       fontFamily: theme.font.bodyBold,
-    },
-    checkDesc: {
-      marginTop: 6,
-      color: theme.colors.inkMuted,
-      lineHeight: 22,
-      fontFamily: theme.font.body,
     },
     ritualBar: {
       height: 3,

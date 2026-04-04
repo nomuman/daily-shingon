@@ -7,7 +7,7 @@
     "Dependencies": "i18next initialization in lib/i18n. / 依存: lib/i18nの初期化。",
     "SideEffects": "None. / 副作用: なし。",
     "EdgeCases": "Missing keys fall back to the key string. / 例外: 欠けたキーはキー文字列にフォールバック。",
-    "TopLevelKeys": "app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
+    "TopLevelKeys": "app, nav, common, errors, notFound, home, onboarding, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications / トップレベルキー: app, nav, common, errors, notFound, home, onboarding, learn, learnCards, glossary, morning, night, settings, updates, licenses, history, dayDetail, notifications"
   },
   "app": {
     "name": "Daily Shingon"
@@ -34,6 +34,8 @@
     "reset": "Reset",
     "review": "Review",
     "do": "Begin",
+    "next": "Next",
+    "start": "Start",
     "cancel": "Cancel",
     "loading": "Loading...",
     "loadingSimple": "Loading...",
@@ -89,7 +91,7 @@
     "selectionDone": "Selected",
     "selectionNone": "Not selected",
     "selectionDetail": "• [{{key}}] {{text}}",
-    "selectionEmpty": "Not chosen yet. In Learn, tap \"I'll go with this today.\"",
+    "selectionEmpty": "Not chosen yet. Pick today's one focus in Morning.",
     "learnCta": "Go to Learn",
     "selectionClear": "Clear selection",
     "flowNightTitle": "Night close (Repent -> Vow -> Dedicate)",
@@ -100,11 +102,53 @@
     "historyMemo": "Memo",
     "historyFootnote": "This isn't a score - just a scaffold for reflection. Gaps are fine."
   },
+  "onboarding": {
+    "kicker": "Before you begin",
+    "intro": "First, a short grounding in how this app is meant to be used.",
+    "progress": "{{current}} / {{total}}",
+    "saveFail": "Couldn't finish setup. Please try again.",
+    "steps": {
+      "concept": {
+        "kicker": "Entry point",
+        "title": "This app is a support wheel for learning and daily practice",
+        "body": "It is not a substitute for religion. It only supports a short daily entry point for practice in ordinary life.",
+        "note": "The goal is not correctness. The goal is to have a form you can return to."
+      },
+      "sanmitsu": {
+        "kicker": "Sanmitsu",
+        "title": "Body, speech, and mind are aligned together, briefly",
+        "body": "Morning alignment, today's learning, and the night close all stay anchored to these three axes so the flow stays simple.",
+        "note": "Short repeatable rhythm comes before difficult procedures."
+      },
+      "return": {
+        "kicker": "Return",
+        "title": "If you miss a day, that is still okay",
+        "body": "A day you return is still part of the practice. This app values return more than streaks.",
+        "note": "Even a short day is enough."
+      }
+    },
+    "sanmitsu": {
+      "body": {
+        "title": "Body",
+        "body": "Settle posture and conduct"
+      },
+      "speech": {
+        "title": "Speech",
+        "body": "Choose words with care"
+      },
+      "mind": {
+        "title": "Mind",
+        "body": "Settle where attention rests"
+      }
+    }
+  },
   "learn": {
     "dayLabel": "Day {{day}} / {{total}}",
     "completeNotice": "You've completed 30 days. From here, keep it light and steady. Reset the start date if you want another round.",
     "example": "Example: {{text}}",
     "actionTitle": "Today's action (choose one)",
+    "selectedActionTitle": "Today's one focus",
+    "selectedActionBody": "This is the one you set in Morning. You can revise it here if needed.",
     "actionOption": "• [{{key}}] {{text}}",
     "actionFootnote": "Recommended is only a guide. Choose what feels right today.",
     "nightQuestion": "Night question",
@@ -113,6 +157,7 @@
     "moreBody": "Browse cards and the glossary.",
     "moreCards": "Learning cards",
     "moreGlossary": "Glossary",
+    "completeButton": "Close today's learning",
     "confirmAction": "I'll go with this today",
     "emptyCard": "Couldn't load today's card."
   },
@@ -160,6 +205,9 @@
     "policyTitle": "Today's intention",
     "policyBody": "Align body, speech, and mind. It doesn't need to be perfect - just what you can do.",
     "checkTitle": "Checklist (3)",
+    "actionTitle": "Today's one focus",
+    "actionBody": "Choose one way of carrying yourself before the day starts.",
+    "actionFootnote": "You can still change it later from Learn.",
     "check": {
       "body": {
         "title": "Body",
@@ -182,6 +230,21 @@
     "todayLearn": "Today's learning",
     "nightQuestion": "Night question",
     "stepsTitle": "3 steps (short is OK)",
+    "legacyNote": "Entries from older versions only kept completion state. Re-save if you want detailed choices.",
+    "fields": {
+      "sangePrompt": "Where did things feel most misaligned today?",
+      "hotsuganPrompt": "If you align one thing tomorrow, where will it be?",
+      "ekouPrompt": "Who do you want to dedicate today's good toward?"
+    },
+    "choices": {
+      "body": "Body",
+      "speech": "Speech",
+      "mind": "Mind",
+      "self": "Myself",
+      "family": "Family",
+      "team": "Team",
+      "all": "Everyone"
+    },
     "steps": {
       "sange": {
         "title": "Repent",
@@ -327,6 +390,11 @@
   "history": {
     "title": "365 Days",
     "headerBody": "A quiet accumulation of completed days (morning/night/both/memo).",
+    "weekTitle": "Last 7 days",
+    "weekBody": "A short check of the morning, learning, and night flow.",
+    "weekMorning": "Morning",
+    "weekLearn": "Learn",
+    "weekNight": "Night",
     "count1": "Morning or Night",
     "count2": "Morning + Night",
     "count3": "Morning + Night + Memo",

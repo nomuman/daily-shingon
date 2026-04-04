@@ -14,7 +14,7 @@ import { entryStore } from '../storage/entryStore';
 import { isSupabaseConfigured, supabase } from './supabase';
 
 // Prefixes for per-day logs to clear. / 日次ログ削除対象の接頭辞。
-const KEY_PREFIXES = ['todayLog:action:', 'morningLog:', 'nightLog:'];
+const KEY_PREFIXES = ['todayLog:action:', 'learnLog:', 'morningLog:', 'nightLog:'];
 
 export async function resetAllProgress(): Promise<void> {
   const keys = await getAllKeys();

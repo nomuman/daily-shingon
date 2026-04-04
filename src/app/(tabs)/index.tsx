@@ -22,6 +22,7 @@ import { getDayCard } from '../../content/curriculum30';
 import { useContentLang } from '../../content/useContentLang';
 import { getReturnStatus } from '../../lib/engagement';
 import { getLastNDaysStatus, type DailyStatus } from '../../lib/history';
+import { getLearnLog, isLearnComplete } from '../../lib/learnLog';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
@@ -59,6 +60,7 @@ export default function HomeScreen() {
   const [todayAction, setTodayAction] = useState<{ key: string; text: string } | null>(null);
 
   const [morningDone, setMorningDone] = useState<boolean>(false);
+  const [learnDone, setLearnDone] = useState<boolean>(false);
   const [nightDone, setNightDone] = useState<boolean>(false);
   const [statusState, setStatusState] = useState<'complete' | 'return' | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -92,6 +94,9 @@ export default function HomeScreen() {
 
       const m = await getMorningLog();
       setMorningDone(isMorningComplete(m));
+
+      const l = await getLearnLog();
+      setLearnDone(isLearnComplete(l));
 
       const n = await getNightLog();
       setNightDone(isNightComplete(n));
@@ -146,7 +151,6 @@ export default function HomeScreen() {
     return null;
   }, [statusState, t]);
 
-  const learnDone = !!todayAction;
   const primaryButtonLabel = nextAction.route ? nextAction.label : t('home.primaryDone');
 
   // Global error gate. / エラー時の共通ゲート。
@@ -254,7 +258,7 @@ export default function HomeScreen() {
             <Text style={styles.actionDescription}>{t('home.flowMorningBody')}</Text>
             <AppButton
               label={morningDone ? t('common.review') : t('common.do')}
-              variant="primary"
+              variant="ghost"
               size="sm"
               onPress={() => router.push('/morning')}
             />
@@ -269,7 +273,7 @@ export default function HomeScreen() {
               <View style={styles.actionHeaderText}>
                 <Text style={styles.actionTitle}>{t('home.flowLearnTitle')}</Text>
                 <Text style={styles.actionStatus}>
-                  {learnDone ? t('home.selectionDone') : t('home.selectionNone')}
+                  {learnDone ? t('common.done') : t('common.incomplete')}
                 </Text>
               </View>
             </View>
@@ -283,7 +287,7 @@ export default function HomeScreen() {
             </Text>
             <AppButton
               label={t('home.learnCta')}
-              variant="primary"
+              variant="ghost"
               size="sm"
               onPress={() => router.push('/learn')}
             />
@@ -305,7 +309,7 @@ export default function HomeScreen() {
             <Text style={styles.actionDescription}>{t('home.flowNightBody')}</Text>
             <AppButton
               label={nightDone ? t('common.review') : t('common.do')}
-              variant="primary"
+              variant="ghost"
               size="sm"
               onPress={() => router.push('/night')}
             />
@@ -328,8 +332,8 @@ export default function HomeScreen() {
             <View style={styles.historyHeader}>
               <Text style={[styles.historyLabel, styles.historyDate]}>{t('home.historyDate')}</Text>
               <Text style={styles.historyLabel}>{t('nav.morning')}</Text>
+              <Text style={styles.historyLabel}>{t('nav.learn')}</Text>
               <Text style={styles.historyLabel}>{t('nav.night')}</Text>
-              <Text style={styles.historyLabel}>{t('home.historyMemo')}</Text>
             </View>
 
             {history.map((h) => (
@@ -339,14 +343,10 @@ export default function HomeScreen() {
                   <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
                 </View>
                 <View style={styles.historyCell}>
-                  <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
+                  <View style={[styles.progressDot, h.learnDone && styles.progressDotActive]} />
                 </View>
                 <View style={styles.historyCell}>
-                  {h.nightHasNote ? (
-                    <AppIcon name="memo" size={16} color={theme.colors.ink} />
-                  ) : (
-                    <Text style={styles.historyValue}>{t('common.dash')}</Text>
-                  )}
+                  <View style={[styles.progressDot, h.nightDone && styles.progressDotActive]} />
                 </View>
               </View>
             ))}
@@ -380,9 +380,9 @@ const createStyles = (theme: Theme) =>
       marginBottom: theme.spacing.xs,
     },
     iconButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
+      width: 44,
+      height: 44,
+      borderRadius: 22,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: theme.colors.surface,

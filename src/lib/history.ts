@@ -8,12 +8,14 @@
  * Edge cases: days clamped to 1..31 to limit work. / 例外: 日数は1..31に制限。
  */
 import { toISODateLocal } from './date';
+import { getLearnLog, isLearnComplete } from './learnLog';
 import { getMorningLog, isMorningComplete } from './morningLog';
 import { getNightLog, isNightComplete } from './nightLog';
 
 export type DailyStatus = {
   dateISO: string; // YYYY-MM-DD (local)
   morningDone: boolean;
+  learnDone: boolean;
   nightDone: boolean;
   nightHasNote: boolean;
 };
@@ -40,11 +42,13 @@ export async function getLastNDaysStatus(
     const dateISO = toISODateLocal(date);
 
     const morning = await getMorningLog(date);
+    const learn = await getLearnLog(date);
     const night = await getNightLog(date);
 
     items.push({
       dateISO,
       morningDone: isMorningComplete(morning),
+      learnDone: isLearnComplete(learn),
       nightDone: isNightComplete(night),
       nightHasNote: !!(night?.note && night.note.trim().length > 0),
     });

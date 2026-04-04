@@ -20,6 +20,9 @@ describe('nightLog', () => {
         sangeDone: true,
         hotsuganDone: false,
         ekouDone: true,
+        sange: 'body',
+        hotsugan: null,
+        ekou: 'all',
         note: '',
         savedAtISO: 'now',
       }),
@@ -30,6 +33,9 @@ describe('nightLog', () => {
         sangeDone: true,
         hotsuganDone: true,
         ekouDone: true,
+        sange: 'body',
+        hotsugan: 'speech',
+        ekou: 'all',
         note: '',
         savedAtISO: 'now',
       }),
@@ -38,10 +44,13 @@ describe('nightLog', () => {
 
   it('stores and reads logs with note', async () => {
     const date = new Date(2025, 0, 2, 23, 0, 0, 0);
-    await setNightLog({ sangeDone: true, hotsuganDone: true, ekouDone: true, note: 'ok', date });
+    await setNightLog({ sange: 'body', hotsugan: 'mind', ekou: 'all', note: 'ok', date });
 
     const stored = await getNightLog(date);
     expect(stored?.dateISO).toBe('2025-01-02');
+    expect(stored?.sange).toBe('body');
+    expect(stored?.hotsugan).toBe('mind');
+    expect(stored?.ekou).toBe('all');
     expect(stored?.note).toBe('ok');
     expect(stored?.savedAtISO).toEqual(expect.any(String));
 

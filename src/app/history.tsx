@@ -9,7 +9,7 @@
  */
 import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { ContributionGraph } from 'react-native-chart-kit';
 
@@ -20,6 +20,7 @@ import Screen from '../components/Screen';
 import SurfaceCard from '../components/SurfaceCard';
 import { toISODateLocal } from '../lib/date';
 import { getHeatmap365Values, type HeatmapValue } from '../lib/heatmap365';
+import { getLastNDaysStatus, type DailyStatus } from '../lib/history';
 import { useResponsiveLayout } from '../ui/responsive';
 import { useTheme, useThemedStyles, type Theme } from '../ui/theme';
 
@@ -109,6 +110,7 @@ export default function HistoryScreen() {
   const responsive = useResponsiveLayout();
 
   const [values, setValues] = useState<HeatmapValue[]>([]);
+  const [recent, setRecent] = useState<DailyStatus[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tooltipLabel, setTooltipLabel] = useState<string | null>(null);
@@ -131,14 +133,26 @@ export default function HistoryScreen() {
     setLoading(true);
     setError(null);
     try {
-      const v = await getHeatmap365Values();
+      const [v, r] = await Promise.all([getHeatmap365Values(), getLastNDaysStatus(7)]);
       setValues(v);
+      setRecent(r);
     } catch {
       setError(t('errors.historyLoadFail'));
     } finally {
       setLoading(false);
     }
   }, [t]);
+
+  const recentSummary = useMemo(() => {
+    return recent.reduce(
+      (acc, item) => ({
+        morning: acc.morning + (item.morningDone ? 1 : 0),
+        learn: acc.learn + (item.learnDone ? 1 : 0),
+        night: acc.night + (item.nightDone ? 1 : 0),
+      }),
+      { morning: 0, learn: 0, night: 0 },
+    );
+  }, [recent]);
 
   // Refresh on focus to reflect recent changes. / フォーカス時に最新状態へ更新。
   useFocusEffect(
@@ -188,6 +202,27 @@ export default function HistoryScreen() {
               <Text style={styles.headerTitle}>{t('history.title')}</Text>
             </View>
             <Text style={styles.headerBody}>{t('history.headerBody')}</Text>
+          </SurfaceCard>
+        </Animated.View>
+
+        <Animated.View style={entranceStyle(headerAnim)}>
+          <SurfaceCard style={styles.summaryCard} elevated={false} variant="muted">
+            <Text style={styles.summaryTitle}>{t('history.weekTitle')}</Text>
+            <Text style={styles.summaryBody}>{t('history.weekBody')}</Text>
+            <View style={styles.summaryRow}>
+              <View style={styles.summaryItem}>
+                <Text style={styles.summaryValue}>{recentSummary.morning}</Text>
+                <Text style={styles.summaryLabel}>{t('history.weekMorning')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <Text style={styles.summaryValue}>{recentSummary.learn}</Text>
+                <Text style={styles.summaryLabel}>{t('history.weekLearn')}</Text>
+              </View>
+              <View style={styles.summaryItem}>
+                <Text style={styles.summaryValue}>{recentSummary.night}</Text>
+                <Text style={styles.summaryLabel}>{t('history.weekNight')}</Text>
+              </View>
+            </View>
           </SurfaceCard>
         </Animated.View>
 
@@ -308,6 +343,43 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.inkMuted,
       lineHeight: 22,
       fontFamily: theme.font.body,
+    },
+    summaryCard: {
+      gap: theme.spacing.sm,
+    },
+    summaryTitle: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.bodyBold,
+    },
+    summaryBody: {
+      color: theme.colors.inkMuted,
+      lineHeight: 20,
+      fontFamily: theme.font.body,
+    },
+    summaryRow: {
+      flexDirection: 'row',
+      gap: theme.spacing.sm,
+    },
+    summaryItem: {
+      flex: 1,
+      paddingVertical: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.sm,
+      borderRadius: theme.radius.md,
+      backgroundColor: theme.colors.surface,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      gap: 4,
+    },
+    summaryValue: {
+      color: theme.colors.ink,
+      fontFamily: theme.font.display,
+      fontSize: 24,
+      lineHeight: 28,
+    },
+    summaryLabel: {
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
     },
     graphCard: {
     },
