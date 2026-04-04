@@ -22,6 +22,28 @@ npx eas-cli build --profile preview --platform all
 
 - 配布リンクをチームへ共有
 
+## 2.5 環境変数（Supabase）の注入
+
+`EXPO_PUBLIC_*` はビルド時に埋め込まれるため、リポジトリ直書きではなく EAS Secrets を使う。
+
+```bash
+npx eas-cli secret:create --scope project --name EXPO_PUBLIC_SUPABASE_URL --value "https://YOUR_PROJECT.supabase.co"
+npx eas-cli secret:create --scope project --name EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY --value "YOUR_PUBLISHABLE_KEY"
+```
+
+確認:
+
+```bash
+npx eas-cli secret:list
+```
+
+更新が必要な場合:
+
+```bash
+npx eas-cli secret:delete --scope project --name EXPO_PUBLIC_SUPABASE_URL
+npx eas-cli secret:delete --scope project --name EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+```
+
 ## 3. EAS Update（OTA運用）
 
 ```bash
@@ -44,3 +66,9 @@ npx eas-cli update --branch dev --message "dev hotfix"
 npx eas-cli update --branch stg --message "staging test"
 npx eas-cli update --branch prod --message "prod fix"
 ```
+
+## 4. 本番向けビルド番号運用
+
+- iOS: `app.json` の `expo.ios.buildNumber` を申請ごとに +1
+- Android: `app.json` の `expo.android.versionCode` を申請ごとに +1
+- OTA: 今回の1.0リリースでは `runtimeVersion` は未設定（`expo-updates` 導入時に方針決定）

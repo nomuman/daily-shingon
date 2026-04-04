@@ -1,8 +1,10 @@
-# サポート情報（ドラフト）
+# サポート情報
+
+最終確認日: 2026-02-28
 
 ## 連絡先
 
-- サポートメール: （現在はメール窓口なし）
+- サポートメール: なし（お問い合わせはサポートURLまたは不具合報告窓口を利用）
 - サポートURL: https://nomuman.github.io/daily-shingon/contact/
 - 不具合報告: https://github.com/nomuman/daily-shingon/issues
 

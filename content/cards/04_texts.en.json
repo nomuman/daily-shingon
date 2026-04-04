@@ -101,7 +101,8 @@
         "night": "Review your sources."
       },
       "reflection_questions": ["Which source does this text come from? Which edition?"],
-      "tags": ["operations", "sources", "policy"]
+      "tags": ["operations", "sources", "policy"],
+      "sources": ["S_TOJI_SHINGON_ABOUT"]
     }
   ],
   "bibliography": {

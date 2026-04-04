@@ -7,8 +7,9 @@
  * Side effects: none. / 副作用: なし。
  * Edge cases: missing termId or term not found. / 例外: termId未指定、用語未発見。
  */
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 
 import { useTranslation } from 'react-i18next';
 import BackButton from '../../../../components/BackButton';
@@ -28,6 +29,14 @@ export default function GlossaryDetailScreen() {
   const resolvedTermId = Array.isArray(termId) ? termId[0] : termId;
   const glossary = getGlossary(lang);
   const entry = resolvedTermId ? getGlossaryEntry(lang, resolvedTermId) : undefined;
+
+  const openSource = async (url: string) => {
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (err) {
+      console.error('Failed to open source link.', err);
+    }
+  };
 
   // Guard against unknown term IDs. / 不明なtermIdをガード。
   if (!entry) {
@@ -93,12 +102,27 @@ export default function GlossaryDetailScreen() {
           <Text style={styles.sectionTitle}>{t('glossary.sources')}</Text>
           {entry.sources.map((key) => {
             const ref = glossary.bibliography?.[key];
+            const hasUrl = !!ref?.url;
             return (
-              <Text key={key} style={styles.bodyText}>
-                ・{key}
-                {ref?.title ? `：${ref.title}` : ''}
-                {ref?.url ? `（${ref.url}）` : ''}
-              </Text>
+              <Pressable
+                key={key}
+                disabled={!hasUrl}
+                onPress={() => {
+                  if (ref?.url) {
+                    void openSource(ref.url);
+                  }
+                }}
+                style={({ pressed }) => [
+                  styles.sourceItem,
+                  pressed && hasUrl && styles.sourceItemPressed,
+                ]}
+              >
+                <Text style={styles.bodyText}>
+                  ・{key}
+                  {ref?.title ? `：${ref.title}` : ''}
+                </Text>
+                {!!ref?.url && <Text style={styles.sourceUrl}>{ref.url}</Text>}
+              </Pressable>
             );
           })}
         </SurfaceCard>
@@ -164,6 +188,21 @@ const createStyles = (theme: Theme) =>
       lineHeight: 22,
       color: theme.colors.ink,
       fontFamily: theme.font.body,
+    },
+    sourceItem: {
+      gap: 2,
+      paddingVertical: 4,
+      borderRadius: theme.radius.sm,
+    },
+    sourceItemPressed: {
+      opacity: 0.8,
+    },
+    sourceUrl: {
+      opacity: 0.8,
+      color: theme.colors.inkMuted,
+      fontFamily: theme.font.body,
+      fontSize: 12,
+      lineHeight: 18,
     },
     emptyState: {
       padding: theme.spacing.lg,

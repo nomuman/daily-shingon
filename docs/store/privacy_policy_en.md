@@ -1,6 +1,6 @@
 # Privacy Policy (Daily Shingon)
 
-Last updated: 2025-12-29
+Last updated: 2026-02-28
 
 ## 1. Introduction
 
@@ -36,7 +36,7 @@ If we add another service in the future, we will clearly disclose:
 - the service name,
 - what data may be processed,
 - the purpose,
-  and we will update this policy.
+- and we will update this policy.
 
 ## 7. External Links
 
