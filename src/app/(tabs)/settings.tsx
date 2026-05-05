@@ -450,12 +450,14 @@ export default function SettingsScreen() {
 
   // Stagger in header/sections once on mount. / ヘッダー/セクションの順次表示。
   useEffect(() => {
-    Animated.stagger(140, [
+    const anim = Animated.stagger(140, [
       Animated.timing(headerAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(notifyAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(timeAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(resetAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
-    ]).start();
+    ]);
+    anim.start();
+    return () => anim.stop();
   }, [headerAnim, notifyAnim, resetAnim, timeAnim]);
 
   const reminderEnabled = settings.notifications.enabled;
@@ -934,6 +936,7 @@ export default function SettingsScreen() {
                 true: theme.colors.accentSoft,
               }}
               thumbColor={reminderEnabled ? theme.colors.accent : theme.colors.surface}
+              ios_backgroundColor={theme.colors.surfaceMuted}
             />
           </View>
 

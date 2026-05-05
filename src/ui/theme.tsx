@@ -30,24 +30,6 @@ const font = {
 const radius = { sm: 10, md: 14, lg: 20, xl: 28 };
 const spacing = { xs: 6, sm: 10, md: 16, lg: 20, xl: 28 };
 
-// Shadow presets for cards (light mode). / カードの影プリセット（ライト）。
-export const cardShadowLight = {
-  shadowColor: '#0A0F24',
-  shadowOffset: { width: 0, height: 8 },
-  shadowOpacity: 0.08,
-  shadowRadius: 18,
-  elevation: 3,
-};
-
-// Shadow presets for cards (dark mode). / カードの影プリセット（ダーク）。
-export const cardShadowDark = {
-  shadowColor: '#000000',
-  shadowOffset: { width: 0, height: 10 },
-  shadowOpacity: 0.22,
-  shadowRadius: 24,
-  elevation: 6,
-};
-
 // Light theme tokens. / ライトテーマのトークン。
 export const themeLight = {
   colors: {
@@ -71,6 +53,8 @@ export const themeLight = {
     successSoft: '#D9F3F0',
 
     border: '#DEE3F6',
+
+    shadow: '#0A0F24',
 
     danger: '#D84B5A',
     dangerSoft: '#FBE1E5',
@@ -104,6 +88,8 @@ export const themeDark = {
 
     border: '#1A2A5A',
 
+    shadow: '#000000',
+
     danger: '#FF6B7A',
     dangerSoft: '#2A101B',
   },
@@ -111,6 +97,19 @@ export const themeDark = {
   spacing,
   font,
 };
+
+// Build shadow presets from theme tokens. / テーマトークンから影プリセットを構築。
+const buildCardShadow = (shadowColor: string) => ({
+  shadowColor,
+  shadowOffset: { width: 0, height: 8 },
+  shadowOpacity: 0.08,
+  shadowRadius: 18,
+  elevation: 3,
+});
+
+// Note: kept as separate exports for backwards compat. / 後方互換のため別exportを維持。
+export const cardShadowLight = buildCardShadow(themeLight.colors.shadow);
+export const cardShadowDark = buildCardShadow(themeDark.colors.shadow);
 
 export type Theme = typeof themeLight;
 export type CardShadow = typeof cardShadowLight;

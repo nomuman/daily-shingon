@@ -37,4 +37,4 @@ Project: daily-shingon (Expo + Expo Router)
 - Screen backgrounds should use `theme.colors.background`; cards use `theme.colors.surface`.
 - Wrap screens in `SafeAreaView` from `react-native-safe-area-context` to respect notches.
 - Root layout uses `SafeAreaProvider` (`src/app/_layout.tsx`).
-- Tab icons use SF Symbols on iOS via `expo-symbols` with MaterialIcons fallback (`src/app/(tabs)/_layout.tsx`).
+- `(tabs)` group uses a plain Stack (no visible tab bar); navigation is handled via in-screen buttons and the home flow cards.

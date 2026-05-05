@@ -237,7 +237,9 @@ export default function LearnScreen() {
                 style={({ pressed }) => [styles.sourceLink, pressed && styles.sourceLinkPressed]}
               >
                 <Text style={styles.sourceItem}>・{s.id}</Text>
-                <Text style={styles.sourceUrl}>{s.url}</Text>
+                <Text style={styles.sourceUrl} numberOfLines={1}>
+                  {s.url}
+                </Text>
               </Pressable>
             ))}
           </SurfaceCard>

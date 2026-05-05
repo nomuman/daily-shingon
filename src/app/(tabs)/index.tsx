@@ -130,11 +130,13 @@ export default function HomeScreen() {
 
   // Stagger in hero/actions/history cards. / ヒーロー/アクション/履歴カードを順次表示。
   useEffect(() => {
-    Animated.stagger(120, [
+    const anim = Animated.stagger(120, [
       Animated.timing(heroAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(actionsAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(historyAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
-    ]).start();
+    ]);
+    anim.start();
+    return () => anim.stop();
   }, [actionsAnim, heroAnim, historyAnim]);
 
   // Compute next action based on completion status. / 完了状況から次の行動を決定。

@@ -164,11 +164,13 @@ export default function HistoryScreen() {
 
   // Stagger in header/graph/legend visuals. / ヘッダー・グラフ・凡例を順次表示。
   useEffect(() => {
-    Animated.stagger(140, [
+    const anim = Animated.stagger(140, [
       Animated.timing(headerAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(graphAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
       Animated.timing(legendAnim, { toValue: 1, duration: 520, useNativeDriver: true }),
-    ]).start();
+    ]);
+    anim.start();
+    return () => anim.stop();
   }, [graphAnim, headerAnim, legendAnim]);
 
   useEffect(() => {
