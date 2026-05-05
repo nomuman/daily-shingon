@@ -38,9 +38,9 @@
 
 ## 6. 参考URL（一次情報寄り）
 
-- Britannica: Shingon（body/speech/mind の儀礼実践）
-- 高野山 英語パンフ（Three Mysteries: mudra/mantra/meditation）
-- Britannica: Vajrayana / esoteric（師の指導の重要性）
-- 智山派：Ajikan Meditation
-- 高野山：Experience（Ajikan の体験導線）
-- 仁和寺：日常五心（三密・三業の説明）
+- Britannica: Shingon（body/speech/mind の儀礼実践）→ `SRC_BRITANNICA_SHINGON`
+- 高野山 英語パンフ（Three Mysteries: mudra/mantra/meditation）→ `SRC_KOYASAN_PAMPHLET`
+- Britannica: Vajrayana / esoteric（師の指導の重要性）→ `SRC_BRITANNICA_SHINGON`
+- 智山派：Ajikan Meditation → `SRC_CHISAN_AJIKAN`
+- 高野山：Experience（Ajikan の体験導線）→ `SRC_KOYASAN_EXPERIENCE_AJIKAN`
+- 仁和寺：日常五心（三密・三業の説明）→ `SRC_NINNAJI_GO_SHIN`

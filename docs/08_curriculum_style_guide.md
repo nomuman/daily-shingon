@@ -25,7 +25,7 @@
 - 夜の問い：**20〜50文字**
 - 例え（任意）：**60〜140文字**
 
-> “長い解説”は禁止。長くなりそうなら、用語集（docs/06_glossary.md）へ逃がす。
+> “長い解説”は禁止。長くなりそうなら、用語集（docs/07_glossary.md）へ逃がす。
 
 ---
 
@@ -90,7 +90,7 @@
 
 - カード本文にはURLを入れない（UIが崩れる）
 - “カードのメタ情報”として `sources: [url...]` をJSONに持たせる
-- `docs/08_sources.md` のID（例：`SRC_KOYASAN_PAMPHLET`）を使ってもOK
+- `docs/09_sources.md` のID（例：`SRC_KOYASAN_PAMPHLET`）を使ってもOK
 
 ---
 

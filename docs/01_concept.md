@@ -67,4 +67,4 @@
 - 智山派：Ajikan Meditation
 - 仁和寺：日常五心（三密・三業の説明）
 
-（URLは `docs/04_content_policy.md` にまとめる）
+（URLは `docs/05_content_policy.md` にまとめる）

@@ -6,7 +6,7 @@
   "sourceIndex": {
     "SRC_KOYASAN_PAMPHLET": "https://www.koyasan.or.jp/wp-content/themes/koyasan-child/pdf/kokusaikyoku_english_panfu.pdf",
     "SRC_CHISAN_AJIKAN": "https://chisan.or.jp/en/learn%E3%83%BBexperience/ajikan-meditation/",
-    "SRC_KOYASAN_EXPERIENCE": "https://www.koyasan.or.jp/en/experience/",
+    "SRC_KOYASAN_EXPERIENCE_AJIKAN": "https://www.koyasan.or.jp/en/experience/",
     "SRC_NINNAJI_GO_SHIN": "https://ninnaji.jp/news/sermonsep/"
   },
   "days": [
@@ -52,7 +52,7 @@
       "actionOptions": [
         { "key": "speech", "text": "Take one breath before speaking" },
         { "key": "body", "text": "If you speak too fast, relax your shoulders once" },
-        { "key": "mind", "text": "If you get irritated, label it in your mind: \"hot\"" }
+        { "key": "mind", "text": "If you get irritated, label it in your mind: \"now hot\"" }
       ],
       "nightQuestion": "Was there a moment you almost said an extra word today?",
       "tags": ["week1", "speech", "sanmitsu"],
@@ -111,7 +111,7 @@
       "day": 7,
       "title": "Week review: don't blame imbalance; cultivate it",
       "learn": "Look at imbalance in body, speech, and mind over the week. Imbalance is not a flaw but a marker of what to cultivate. Next week, care for just one weak area.",
-      "example": "Do not fix everything. Be one step more careful.",
+      "example": "Don't try to fix imbalance. Just one step more careful.",
       "recommendedActionKey": "mind",
       "actionOptions": [
         { "key": "mind", "text": "Pick one weak area and set it as tomorrow's vow" },
@@ -295,7 +295,7 @@
       "actionOptions": [
         { "key": "mind", "text": "When a thought appears, label it in your mind: thought" },
         { "key": "body", "text": "After labeling, drop your shoulders (10 seconds)" },
-        { "key": "speech", "text": "After labeling, say \"OK\" once" }
+        { "key": "speech", "text": "After labeling, say \"good\" once" }
       ],
       "nightQuestion": "Did labeling create a little distance?",
       "tags": ["week3", "mind"],
@@ -363,7 +363,7 @@
       ],
       "nightQuestion": "Was 3 minutes enough? Did you want more?",
       "tags": ["week4", "ajikan", "mind"],
-      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE"]
+      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE_AJIKAN"]
     },
     {
       "id": "day023",
@@ -405,7 +405,7 @@
       "example": "Short vows like \"be careful\" last longer.",
       "recommendedActionKey": "speech",
       "actionOptions": [
-        { "key": "speech", "text": "Say one short vow once (e.g., be careful)" },
+        { "key": "speech", "text": "Say one short vow once (e.g., carefully)" },
         { "key": "mind", "text": "After the vow, take one breath" },
         { "key": "body", "text": "After the vow, straighten your back (10 seconds)" }
       ],

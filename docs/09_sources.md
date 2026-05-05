@@ -102,3 +102,17 @@ https://m3.material.io/components/cards/guidelines
 
 Material Design 3 — Typography  
 https://m3.material.io/styles/typography/overview
+
+---
+
+## E. 美術・文化（曼荼羅等）
+
+### SRC_TOJI_MANDALA
+
+東寺 – 立体曼荼羅  
+https://toji.or.jp/smp/mandala/
+
+### SRC_KOYASAN_U_MANDALA_PDF
+
+高野山大学 — 空海の思想と曼荼羅（研究紀要 PDF）  
+https://www.koyasan-u.ac.jp/laboratory/pdf/kiyo10/10_murakami.pdf

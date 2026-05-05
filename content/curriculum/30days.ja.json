@@ -6,7 +6,7 @@
   "sourceIndex": {
     "SRC_KOYASAN_PAMPHLET": "https://www.koyasan.or.jp/wp-content/themes/koyasan-child/pdf/kokusaikyoku_english_panfu.pdf",
     "SRC_CHISAN_AJIKAN": "https://chisan.or.jp/en/learn%E3%83%BBexperience/ajikan-meditation/",
-    "SRC_KOYASAN_EXPERIENCE": "https://www.koyasan.or.jp/en/experience/",
+    "SRC_KOYASAN_EXPERIENCE_AJIKAN": "https://www.koyasan.or.jp/en/experience/",
     "SRC_NINNAJI_GO_SHIN": "https://ninnaji.jp/news/sermonsep/"
   },
   "days": [
@@ -363,7 +363,7 @@
       ],
       "nightQuestion": "3分でも十分だった？（足りない欲は出た？）",
       "tags": ["week4", "ajikan", "mind"],
-      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE"]
+      "sources": ["SRC_CHISAN_AJIKAN", "SRC_KOYASAN_EXPERIENCE_AJIKAN"]
     },
     {
       "id": "day023",
