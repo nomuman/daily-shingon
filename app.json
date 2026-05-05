@@ -53,7 +53,8 @@
       ],
       "@react-native-community/datetimepicker",
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      "expo-web-browser"
     ],
     "experiments": {
       "baseUrl": "/daily-shingon/app",
