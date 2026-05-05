@@ -141,7 +141,7 @@ const createStyles = (theme: Theme) =>
       fontSize: 12,
     },
     listContent: {
-      paddingBottom: 32,
+      paddingBottom: 66,
       gap: theme.spacing.md,
     },
     rowPressable: {

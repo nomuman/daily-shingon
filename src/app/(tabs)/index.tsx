@@ -26,6 +26,7 @@ import { getLearnLog, isLearnComplete } from '../../lib/learnLog';
 import { getMorningLog, isMorningComplete } from '../../lib/morningLog';
 import { getNightLog, isNightComplete } from '../../lib/nightLog';
 import { getProgramDayInfo } from '../../lib/programDay';
+import { parseISODateLocal } from '../../lib/date';
 import { getTodayActionSelection } from '../../lib/todayLog';
 import { useResponsiveLayout } from '../../ui/responsive';
 import { useTheme, useThemedStyles, type Theme } from '../../ui/theme';
@@ -47,7 +48,7 @@ const entranceStyle = (anim: Animated.Value) => ({
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
   const responsive = useResponsiveLayout();
@@ -152,6 +153,12 @@ export default function HomeScreen() {
   }, [statusState, t]);
 
   const primaryButtonLabel = nextAction.route ? nextAction.label : t('home.primaryDone');
+
+  const formatHistoryDate = (dateISO: string) => {
+    const date = parseISODateLocal(dateISO);
+    const locale = i18n.language === 'ja' ? 'ja-JP' : i18n.language || 'en-US';
+    return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+  };
 
   // Global error gate. / エラー時の共通ゲート。
   if (error) {
@@ -338,7 +345,7 @@ export default function HomeScreen() {
 
             {history.map((h) => (
               <View key={h.dateISO} style={styles.historyRow}>
-                <Text style={[styles.historyValue, styles.historyDate]}>{h.dateISO}</Text>
+                <Text style={[styles.historyValue, styles.historyDate]}>{formatHistoryDate(h.dateISO)}</Text>
                 <View style={styles.historyCell}>
                   <View style={[styles.progressDot, h.morningDone && styles.progressDotActive]} />
                 </View>
@@ -367,7 +374,7 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 56,
+      paddingBottom: 90,
       gap: theme.spacing.lg,
     },
     topBar: {

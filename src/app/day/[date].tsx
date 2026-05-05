@@ -37,7 +37,7 @@ export default function DayDetailScreen() {
       },
       content: {
         padding: theme.spacing.lg,
-        paddingBottom: 40,
+        paddingBottom: 74,
         gap: theme.spacing.md,
       },
       headerRow: {

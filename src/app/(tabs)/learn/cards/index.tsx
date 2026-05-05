@@ -71,7 +71,7 @@ const createStyles = (theme: Theme) =>
     },
     listContent: {
       paddingHorizontal: theme.spacing.lg,
-      paddingBottom: 24,
+      paddingBottom: 58,
       gap: theme.spacing.md,
     },
     header: {

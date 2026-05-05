@@ -14,10 +14,14 @@ import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ZenOldMincho_400Regular } from '@expo-google-fonts/zen-old-mincho';
+import {
+  ZenOldMincho_400Regular,
+  ZenOldMincho_700Bold,
+} from '@expo-google-fonts/zen-old-mincho';
 import {
   ZenKakuGothicNew_400Regular,
   ZenKakuGothicNew_500Medium,
+  ZenKakuGothicNew_700Bold,
 } from '@expo-google-fonts/zen-kaku-gothic-new';
 
 import { handleAuthCallbackUrl } from '../auth/signInWithEmail';
@@ -48,8 +52,10 @@ function RootLayoutContent() {
   const [ready, setReady] = useState(false);
   const [fontsLoaded] = useFonts({
     ZenOldMincho_400Regular,
+    ZenOldMincho_700Bold,
     ZenKakuGothicNew_400Regular,
     ZenKakuGothicNew_500Medium,
+    ZenKakuGothicNew_700Bold,
   });
   const { theme } = useTheme();
   const styles = useThemedStyles((theme) =>

@@ -71,7 +71,7 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 40,
+      paddingBottom: 74,
       gap: theme.spacing.md,
     },
     headerCard: {

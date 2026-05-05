@@ -197,7 +197,7 @@ const createStyles = (theme: Theme, cardShadow: CardShadow) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing.lg,
-      paddingBottom: 40,
+      paddingBottom: 74,
       gap: theme.spacing.lg,
       justifyContent: 'space-between',
     },

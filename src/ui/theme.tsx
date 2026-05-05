@@ -20,10 +20,10 @@ import {
 // Typeface mapping (custom fonts loaded in RootLayout). / カスタムフォント指定（RootLayoutで読込）。
 const font = {
   display: 'ZenOldMincho_400Regular',
-  displayBold: 'ZenOldMincho_400Regular',
+  displayBold: 'ZenOldMincho_700Bold',
   body: 'ZenKakuGothicNew_400Regular',
-  bodyMedium: 'ZenKakuGothicNew_400Regular',
-  bodyBold: 'ZenKakuGothicNew_500Medium',
+  bodyMedium: 'ZenKakuGothicNew_500Medium',
+  bodyBold: 'ZenKakuGothicNew_700Bold',
 };
 
 // Global sizing scales. / 全体のサイズスケール。

@@ -18,9 +18,10 @@ type BackButtonProps = {
   label?: string;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 };
 
-export default function BackButton({ label, onPress, style }: BackButtonProps) {
+export default function BackButton({ label, onPress, style, disabled }: BackButtonProps) {
   const router = useRouter();
   const { t } = useTranslation('common');
   const styles = useThemedStyles((theme) =>
@@ -40,6 +41,7 @@ export default function BackButton({ label, onPress, style }: BackButtonProps) {
         accessibilityLabel={label ?? t('common.back')}
         variant="ghost"
         size="sm"
+        disabled={disabled}
       />
     </View>
   );

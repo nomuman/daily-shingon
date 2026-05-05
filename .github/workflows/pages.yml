@@ -17,6 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      EXPO_BASE_URL: ${{ vars.EXPO_BASE_URL || format('{0}/app', github.event.repository.name) }}
+      EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+      EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,10 +35,6 @@ jobs:
           cp -R docs/. page-dist/
           touch page-dist/.nojekyll
       - name: Export Expo web
-        env:
-          EXPO_BASE_URL: ${{ vars.EXPO_BASE_URL || format('{0}/app', github.event.repository.name) }}
-          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
-          EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: |
           npx expo export --platform web --output-dir page-dist/app --clear
       - uses: actions/configure-pages@v5

@@ -1,0 +1,5 @@
+# Supabase configuration for Edge Functions
+project_id = "daily-shingon"
+
+[functions.delete-user]
+verify_jwt = false

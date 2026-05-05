@@ -16,6 +16,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
+  KeyboardAvoidingView,
   Linking,
   Platform,
   Pressable,
@@ -28,6 +29,7 @@ import {
 } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import { deleteAccount } from '../../lib/auth/deleteAccount';
 import { signInWithEmailPassword, signUpWithEmailPassword } from '../../auth/signInWithEmail';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
@@ -75,7 +77,7 @@ export default function SettingsScreen() {
       },
       content: {
         padding: theme.spacing.lg,
-        paddingBottom: 40,
+        paddingBottom: 74,
         gap: theme.spacing.md,
       },
       backButton: {
@@ -717,6 +719,32 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleDeleteAccount = () => {
+    Alert.alert(t('settings.sync.deleteAccountTitle'), t('settings.sync.deleteAccountBody'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('settings.sync.deleteAccountConfirm'),
+        style: 'destructive',
+        onPress: async () => {
+          if (!isSupabaseConfigured) {
+            setAuthNotice(t('settings.sync.sessionFail'));
+            return;
+          }
+          setAuthBusy(true);
+          setAuthNotice(null);
+          try {
+            await deleteAccount();
+          } catch (err) {
+            console.error('Failed to delete account.', err);
+            setAuthNotice(t('settings.sync.deleteAccountFail'));
+          } finally {
+            setAuthBusy(false);
+          }
+        },
+      },
+    ]);
+  };
+
   const handleSyncNow = async () => {
     setAuthNotice(null);
     if (!isSupabaseConfigured) {
@@ -814,10 +842,14 @@ export default function SettingsScreen() {
 
   return (
     <Screen edges={['top']}>
-      <ScrollView
-        style={styles.screen}
-        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
+        <ScrollView
+          style={styles.screen}
+          contentContainerStyle={[styles.content, responsive.contentStyle]}
+        >
         <BackButton />
         <Animated.View style={[styles.headerCard, entranceStyle(headerAnim)]}>
           <Text style={styles.kicker}>{t('settings.kicker')}</Text>
@@ -1037,17 +1069,30 @@ export default function SettingsScreen() {
                 </Pressable>
               </View>
             ) : (
-              <Pressable
-                onPress={handleSignOut}
-                disabled={authBusy || !isSupabaseConfigured}
-                style={({ pressed }) => [
-                  styles.actionButtonOutline,
-                  pressed && styles.actionButtonPressed,
-                  (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
-                ]}
-              >
-                <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
-              </Pressable>
+              <View style={{ flex: 1, gap: theme.spacing.sm }}>
+                <Pressable
+                  onPress={handleSignOut}
+                  disabled={authBusy || !isSupabaseConfigured}
+                  style={({ pressed }) => [
+                    styles.actionButtonOutline,
+                    pressed && styles.actionButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+                  ]}
+                >
+                  <Text style={styles.actionButtonOutlineText}>{t('settings.sync.signOut')}</Text>
+                </Pressable>
+                <Pressable
+                  onPress={handleDeleteAccount}
+                  disabled={authBusy || !isSupabaseConfigured}
+                  style={({ pressed }) => [
+                    styles.dangerButton,
+                    pressed && styles.dangerButtonPressed,
+                    (authBusy || !isSupabaseConfigured) && { opacity: 0.6 },
+                  ]}
+                >
+                  <Text style={styles.dangerButtonText}>{t('settings.sync.deleteAccount')}</Text>
+                </Pressable>
+              </View>
             )}
 
             <Pressable
@@ -1127,7 +1172,13 @@ export default function SettingsScreen() {
             </Pressable>
           </View>
         </Animated.View>
-      </ScrollView>
+
+        <Animated.View style={[styles.card, entranceStyle(resetAnim)]}>
+          <Text style={styles.sectionTitle}>{t('settings.disclaimer.title')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('settings.disclaimer.body')}</Text>
+        </Animated.View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }

@@ -26,6 +26,11 @@
 - `src/app/licenses.tsx`: OSS ライセンス
 - `src/app/auth/callback.tsx`: 認証コールバック
 
+## 7. Supabase Edge Functions
+
+- `supabase/config.toml`: Edge Functions 設定
+- `supabase/functions/delete-user/index.ts`: ユーザー自身のアカウント削除（JWT検証＋auth.admin.deleteUser）
+
 ## 2. UI レイヤ（再利用部品 / デザイン基盤 / アセット）
 
 - `src/components/AppIcon.tsx`: アプリアイコン表示
@@ -37,6 +42,7 @@
 - `src/components/SearchInput.tsx`: 検索入力
 - `src/components/SurfaceCard.tsx`: 統一カード面
 - `src/components/TagRow.tsx`: タグ表示
+- `src/components/InlineTerm.tsx`: インライン用語解説（タップで展開）
 - `src/ui/theme.tsx`: テーマトークン
 - `src/ui/responsive.tsx`: レスポンシブ補助
 - `src/assets/icons/icon-arrow-forward.svg`: アイコン
@@ -77,6 +83,7 @@
 - `src/storage/entryStore.web.ts`: Web 実装
 - `src/sync/syncNow.ts`: 同期実行
 - `src/auth/signInWithEmail.ts`: メール認証
+- `src/lib/auth/deleteAccount.ts`: アカウント削除（Edge Function呼び出し＋ローカル消去）
 
 ## 6. 共通ライブラリ / 型定義
 

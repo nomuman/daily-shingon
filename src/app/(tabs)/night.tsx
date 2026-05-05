@@ -11,6 +11,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
@@ -25,6 +26,7 @@ import * as Haptics from 'expo-haptics';
 import AppButton from '../../components/AppButton';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
+import InlineTerm from '../../components/InlineTerm';
 import Screen from '../../components/Screen';
 import SurfaceCard from '../../components/SurfaceCard';
 import ErrorState from '../../components/ErrorState';
@@ -164,7 +166,7 @@ export default function NightScreen() {
     return (
       <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
-          <BackButton style={styles.backButton} />
+          <BackButton style={styles.backButton} disabled={loading} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
@@ -179,10 +181,14 @@ export default function NightScreen() {
 
   return (
     <Screen edges={['top']}>
-      <ScrollView
-        style={styles.screen}
-        contentContainerStyle={[styles.content, responsive.contentStyle]}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
+        <ScrollView
+          style={styles.screen}
+          contentContainerStyle={[styles.content, responsive.contentStyle]}
+        >
         <BackButton />
         <Text style={styles.title}>{t('night.title')}</Text>
 
@@ -218,7 +224,9 @@ export default function NightScreen() {
           <Text style={styles.sectionTitle}>{t('night.stepsTitle')}</Text>
 
           <View style={styles.stepBlock}>
-            <Text style={styles.fieldTitle}>{t('night.steps.sange.title')}</Text>
+            <InlineTerm termId="practice.zange" textStyle={styles.fieldTitle}>
+              {t('night.steps.sange.title')}
+            </InlineTerm>
             <Text style={styles.fieldPrompt}>{t('night.fields.sangePrompt')}</Text>
             <View style={styles.choiceWrap}>
               {sanmitsuChoices.map((choice) => (
@@ -239,7 +247,9 @@ export default function NightScreen() {
           </View>
 
           <View style={styles.stepBlock}>
-            <Text style={styles.fieldTitle}>{t('night.steps.hotsugan.title')}</Text>
+            <InlineTerm termId="practice.hotsugan" textStyle={styles.fieldTitle}>
+              {t('night.steps.hotsugan.title')}
+            </InlineTerm>
             <Text style={styles.fieldPrompt}>{t('night.fields.hotsuganPrompt')}</Text>
             <View style={styles.choiceWrap}>
               {sanmitsuChoices.map((choice) => (
@@ -260,7 +270,9 @@ export default function NightScreen() {
           </View>
 
           <View style={styles.stepBlock}>
-            <Text style={styles.fieldTitle}>{t('night.steps.ekou.title')}</Text>
+            <InlineTerm termId="practice.ekou" textStyle={styles.fieldTitle}>
+              {t('night.steps.ekou.title')}
+            </InlineTerm>
             <Text style={styles.fieldPrompt}>{t('night.fields.ekouPrompt')}</Text>
             <View style={styles.choiceWrap}>
               {ekoChoices.map((choice) => (
@@ -352,7 +364,8 @@ export default function NightScreen() {
             }
           }}
         />
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
@@ -365,7 +378,7 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 40,
+      paddingBottom: 74,
       gap: theme.spacing.md,
     },
     backButton: {
@@ -468,7 +481,7 @@ const createStyles = (theme: Theme) =>
     choiceChipSelected: {
       borderColor: theme.colors.ink,
       borderWidth: 2,
-      backgroundColor: theme.colors.surfaceMuted,
+      backgroundColor: theme.colors.accentSoft,
     },
     choiceChipPressed: {
       opacity: 0.85,

@@ -16,6 +16,7 @@ import * as Haptics from 'expo-haptics';
 import AppButton from '../../components/AppButton';
 import { AppIcon } from '../../components/AppIcon';
 import BackButton from '../../components/BackButton';
+import InlineTerm from '../../components/InlineTerm';
 import Screen from '../../components/Screen';
 import SurfaceCard from '../../components/SurfaceCard';
 import { getDayCard } from '../../content/curriculum30';
@@ -163,7 +164,7 @@ export default function MorningScreen() {
     checked,
     onPress,
   }: {
-    title: string;
+    title: React.ReactNode;
     desc: string;
     checked: boolean;
     onPress: () => void;
@@ -189,7 +190,11 @@ export default function MorningScreen() {
             color={checked ? theme.colors.accentDark : theme.colors.inkMuted}
           />
           <View style={[styles.ritualSeal, checked && styles.ritualSealActive]} />
-          <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
+          {typeof title === 'string' ? (
+            <Text style={[styles.checkTitle, checked && styles.checkTitleSelected]}>{title}</Text>
+          ) : (
+            <View style={{ flex: 1 }}>{title}</View>
+          )}
         </View>
         <Text style={styles.checkDesc}>{desc}</Text>
       </Pressable>
@@ -201,7 +206,7 @@ export default function MorningScreen() {
     return (
       <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
-          <BackButton style={styles.backButton} />
+          <BackButton style={styles.backButton} disabled={loading} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
@@ -249,19 +254,31 @@ export default function MorningScreen() {
           <Text style={styles.sectionTitle}>{t('morning.checkTitle')}</Text>
 
           <Item
-            title={t('morning.check.body.title')}
+            title={
+              <InlineTerm termId="practice.sanmitsu_body" textStyle={styles.checkTitle}>
+                {t('morning.check.body.title')}
+              </InlineTerm>
+            }
             desc={t('morning.check.body.desc')}
             checked={bodyDone}
             onPress={() => toggle('body')}
           />
           <Item
-            title={t('morning.check.speech.title')}
+            title={
+              <InlineTerm termId="practice.sanmitsu_speech" textStyle={styles.checkTitle}>
+                {t('morning.check.speech.title')}
+              </InlineTerm>
+            }
             desc={t('morning.check.speech.desc')}
             checked={speechDone}
             onPress={() => toggle('speech')}
           />
           <Item
-            title={t('morning.check.mind.title')}
+            title={
+              <InlineTerm termId="practice.sanmitsu_mind" textStyle={styles.checkTitle}>
+                {t('morning.check.mind.title')}
+              </InlineTerm>
+            }
             desc={t('morning.check.mind.desc')}
             checked={mindDone}
             onPress={() => toggle('mind')}
@@ -375,7 +392,7 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 40,
+      paddingBottom: 74,
       gap: theme.spacing.md,
     },
     backButton: {
@@ -433,6 +450,7 @@ const createStyles = (theme: Theme) =>
     checkItemSelected: {
       borderColor: theme.colors.ink,
       borderWidth: 2,
+      backgroundColor: theme.colors.accentSoft,
     },
     checkItemPressed: {
       opacity: 0.85,

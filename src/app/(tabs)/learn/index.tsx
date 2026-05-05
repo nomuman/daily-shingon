@@ -137,7 +137,7 @@ export default function LearnScreen() {
     return (
       <Screen edges={['top']}>
         <View style={styles.loadingWrap}>
-          <BackButton style={styles.backButton} />
+          <BackButton style={styles.backButton} disabled={loading} />
           <View style={styles.loading}>
             <ActivityIndicator color={theme.colors.accent} />
           </View>
@@ -302,7 +302,7 @@ const createStyles = (theme: Theme) =>
     },
     content: {
       padding: theme.spacing.lg,
-      paddingBottom: 40,
+      paddingBottom: 74,
       gap: theme.spacing.md,
     },
     backButton: {
@@ -374,6 +374,7 @@ const createStyles = (theme: Theme) =>
     optionSelected: {
       borderColor: theme.colors.ink,
       borderWidth: 2,
+      backgroundColor: theme.colors.accentSoft,
     },
     optionPressed: {
       opacity: 0.85,
